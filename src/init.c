@@ -22,7 +22,6 @@ static const R_CMethodDef CEntries[] = {
     {"ClineRquad",     (DL_FUNC) &ClineRquad,     18},
     {"Clinvwhichdist", (DL_FUNC) &Clinvwhichdist, 12},
     {"Clixellate",     (DL_FUNC) &Clixellate,     16},
-    {"cocoGraph",      (DL_FUNC) &cocoGraph,       6},
     {"heatApprox",     (DL_FUNC) &heatApprox,      9},
     {"lincrossdist",   (DL_FUNC) &lincrossdist,   16},
     {"linearradius",   (DL_FUNC) &linearradius,    8},

@@ -16,6 +16,7 @@
 \alias{print.summary.lintess}
 \alias{resolve.heat.steps}
 \alias{summary.lintess}
+\alias{nobjects.lintess}
 \alias{Window.lintess}
 \alias{Window<-.linnet}
 \alias{Window<-.lpp}
@@ -65,6 +66,7 @@ makeLinnetTolerance(toler)
 \method{print}{summary.linnet}(x, \dots)
 \method{print}{summary.lintess}(x, \dots)
 \method{summary}{lintess}(object, \dots)
+\method{nobjects}{lintess}(x)
 \method{Window}{lintess}(X, \dots)
 \method{Window}{linnet}(X, \dots, check=TRUE) <- value
 \method{Window}{lpp}(X, \dots, check=TRUE) <- value

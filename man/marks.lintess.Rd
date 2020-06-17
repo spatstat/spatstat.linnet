@@ -2,7 +2,7 @@
 \alias{marks.lintess}
 \alias{marks<-.lintess}
 \alias{unmark.lintess}
-\title{Marks of a Tessellation on a Linear Network}
+\title{Marks of a Tessellation on a Network}
 \description{
   Extract or change the marks attached to
   the tiles of a tessellation on a linear network.
@@ -42,8 +42,7 @@
   attached to each of the tiles in the tessellation \code{x}.
   They are methods for the generic functions
   \code{\link[spatstat.core]{marks}},
-  \code{\link[spatstat.core]{marks<-}}
-  and \code{\link[spatstat.core]{unmark}}
+  \code{\link[spatstat.core]{marks<-}} and \code{\link[spatstat.core]{unmark}}
   for the class \code{"lintess"} of tessellations on a network.
     
   The expression \code{marks(x)} extracts the marks of \code{x}.
@@ -63,6 +62,7 @@
   To remove marks, use \code{marks(x) <- NULL} or \code{unmark(x)}.
 }
 \seealso{
+  \code{\link{lintess}},
   \code{\link[spatstat.core]{marks}},
   \code{\link[spatstat.core]{marks<-}}
 }

@@ -2,7 +2,7 @@
 \alias{identify.lpp}
 \title{Identify Points in a Point Pattern on a Linear Network}
 \description{
-  If a point pattern on a linear network is plotted in the graphics window,
+  If a point pattern on a network is plotted in the graphics window,
   this function will find the point of the pattern which is nearest to
   the mouse position, and print its mark value (or its serial number
   if there is no mark).
@@ -12,7 +12,8 @@
 }
 \arguments{
   \item{x}{
-    A point pattern on a linear network
+    A point pattern
+    on a linear network
     (object of class \code{"lpp"}).
   }
   \item{\dots}{
@@ -29,7 +30,7 @@
 }
 \details{
   This is a method for the generic function \code{\link[graphics]{identify}}
-  for point patterns on a linear network (class \code{"lpp"}).
+  for point patterns on a linear network (objects of class \code{"lpp"}).
 
   The point pattern \code{x} should first be plotted
   using \code{\link{plot.lpp}}.
@@ -47,9 +48,9 @@
   or its mark value (if \code{x} is marked).
 }
 \seealso{
-  \code{\link[graphics]{identify}},
   \code{\link[spatstat.core]{identify.ppp}},
-  \code{\link[spatstat.core]{clickppp}}
+  \code{\link[graphics]{identify}},
+  \code{\link{clicklpp}}
 }
 \author{
   \spatstatAuthors.
