@@ -1,4 +1,5 @@
-# spatstat.core
+# spatstat.linnet
 
 This is an EXPERIMENTAL package UNDER DEVELOPMENT.
-It contains a subset of the functionality of spatstat. 
+It contains the subset of the functionality of spatstat
+that deals with linear networks.
