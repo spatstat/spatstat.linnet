@@ -1,7 +1,7 @@
 Package: spatstat.linnet
-Version: 1.1-3
+Version: 1.65-0
 Date: 2020-07-06
-Title: Linear networks functionality of the 'spatstat' package
+Title: Linear Networks Functionality of the 'spatstat' Package
 Authors@R: c(person("Adrian", "Baddeley", 
                     role = c("aut", "cre"),
        	            email = "Adrian.Baddeley@curtin.edu.au"),
