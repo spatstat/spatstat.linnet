@@ -18,11 +18,11 @@
 }
 \value{
   An object of class \code{"owin"}
-  (see \code{\link[spatstat.core]{owin.object}})
+  (see \code{\link[spatstat.geom]{owin.object}})
   specifying an observation window.
 }
 \details{
-  These are methods for the generic function \code{\link[spatstat.core]{Window}}
+  These are methods for the generic function \code{\link[spatstat.geom]{Window}}
   which extract the spatial window in which the object \code{X}
   is defined. 
 
@@ -30,7 +30,7 @@
   on a linear network (object of class \code{"lpp"} or \code{"lppm"}).
 }
 \seealso{
-  \code{\link[spatstat.core]{Window}}.
+  \code{\link[spatstat.geom]{Window}}.
 }
 \examples{
    Window(spiders)

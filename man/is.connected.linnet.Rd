@@ -26,7 +26,7 @@
   and returns \code{FALSE} if \code{X} consists of several pieces
   which are not joined together.
   
-  The function \code{\link[spatstat.core]{is.connected}} is generic,
+  The function \code{\link[spatstat.geom]{is.connected}} is generic,
   with methods for several classes.
   This help file documents the 
   method for linear networks, \code{is.connected.linnet}.
@@ -35,8 +35,8 @@
   A logical value.
 }
 \seealso{
-  \code{\link[spatstat.core]{is.connected}},
-  \code{\link[spatstat.core]{connected}},
+  \code{\link[spatstat.geom]{is.connected}},
+  \code{\link[spatstat.geom]{connected}},
   \code{\link{connected.lpp}}.
 }
 \examples{

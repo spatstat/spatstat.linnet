@@ -35,7 +35,7 @@
   contains or involves marked points, \bold{and} that the
   marks are a factor.
   It is a method for the generic function
-  \code{\link[spatstat.core]{is.multitype}}.
+  \code{\link[spatstat.geom]{is.multitype}}.
   
   The argument \code{na.action} determines what action will be taken
   if the point pattern has a vector of marks but some or all of the
@@ -44,7 +44,7 @@
   and \code{"ignore"} to take no action except returning \code{TRUE}.
 }
 \seealso{
-  \code{\link[spatstat.core]{is.multitype}},
+  \code{\link[spatstat.geom]{is.multitype}},
   \code{\link{is.multitype.lppm}}
 }
 \examples{

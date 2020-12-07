@@ -43,7 +43,7 @@
 }
 \seealso{
   \code{\link[graphics]{text.default}},
-  \code{\link[spatstat.core]{text.ppp}}
+  \code{\link[spatstat.geom]{text.ppp}}
 }
 \examples{
   X <- runiflpp(5, simplenet)

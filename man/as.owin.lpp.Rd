@@ -25,24 +25,25 @@
 }
 \value{
   An object of class \code{"owin"}
-  (see \code{\link[spatstat.core]{owin.object}})
+  (see \code{\link[spatstat.geom]{owin.object}})
   specifying an observation window.
 }
 \details{
   The class \code{"owin"} is a way of specifying the observation window
-  for a point pattern. See \code{\link{owin.object}} for an overview.
+  for a point pattern. See \code{\link[spatstat.geom]{owin.object}}
+  for an overview.
  
-  The function \code{\link[spatstat.core]{as.owin}}
+  The function \code{\link[spatstat.geom]{as.owin}}
   converts data in any of several formats 
   into an object of class \code{"owin"} for use by the \pkg{spatstat}
-  package. The function \code{\link[spatstat.core]{as.owin}}
+  package. The function \code{\link[spatstat.geom]{as.owin}}
   is generic, with methods
   for different classes of objects, and a default method.
 
   A long list of methods for
-  \code{\link[spatstat.core]{as.owin}}
-  is documented in the help file for \code{\link[spatstat.core]{as.owin}}
-  in the \pkg{spatstat.core} package.
+  \code{\link[spatstat.geom]{as.owin}}
+  is documented in the help file for \code{\link[spatstat.geom]{as.owin}}
+  in the \pkg{spatstat.geom} package.
 
   This help file documents additional methods applicable when \code{W} is
   \itemize{
@@ -63,9 +64,9 @@
   will be returned (if \code{fatal=FALSE}).
 }
 \seealso{
-  \code{\link[spatstat.core]{as.owin}},
-  \code{\link[spatstat.core]{owin.object}},
-  \code{\link[spatstat.core]{owin}}.
+  \code{\link[spatstat.geom]{as.owin}},
+  \code{\link[spatstat.geom]{owin.object}},
+  \code{\link[spatstat.geom]{owin}}.
 
   Additional methods for \code{as.owin} are provided
   in the \pkg{maptools} package:

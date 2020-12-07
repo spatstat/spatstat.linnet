@@ -46,7 +46,7 @@
   as well as random point locations.
 }
 \seealso{
-  \code{\link[spatstat.core]{is.marked}}.
+  \code{\link[spatstat.geom]{is.marked}}.
 }
 \examples{
   fit <- lppm(chicago ~ x)

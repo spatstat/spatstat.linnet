@@ -104,7 +104,7 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{subset.ppp}},
+  \code{\link[spatstat.geom]{subset.ppp}},
   \code{\link{[.lpp}}.
 }
 \examples{

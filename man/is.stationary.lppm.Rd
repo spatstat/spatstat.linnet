@@ -41,10 +41,13 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{is.marked}}
+  \code{\link[spatstat.geom]{is.marked}}
   to determine whether a model is a marked
   point process. 
   
+  \code{\link[spatstat.core]{is.stationary}}, 
+  \code{\link[spatstat.core]{is.poisson}} for generics.
+
   \code{\link{summary.lppm}} for detailed information.
 
   Model-fitting function

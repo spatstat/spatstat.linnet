@@ -41,8 +41,8 @@
   These functions extract or change the marks
   attached to each of the tiles in the tessellation \code{x}.
   They are methods for the generic functions
-  \code{\link[spatstat.core]{marks}},
-  \code{\link[spatstat.core]{marks<-}} and \code{\link[spatstat.core]{unmark}}
+  \code{\link[spatstat.geom]{marks}},
+  \code{\link[spatstat.geom]{marks<-}} and \code{\link[spatstat.geom]{unmark}}
   for the class \code{"lintess"} of tessellations on a network.
     
   The expression \code{marks(x)} extracts the marks of \code{x}.
@@ -63,8 +63,8 @@
 }
 \seealso{
   \code{\link{lintess}},
-  \code{\link[spatstat.core]{marks}},
-  \code{\link[spatstat.core]{marks<-}}
+  \code{\link[spatstat.geom]{marks}},
+  \code{\link[spatstat.geom]{marks<-}}
 }
 \examples{
   B <- lineardirichlet(runiflpp(5, simplenet))

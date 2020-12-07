@@ -38,7 +38,7 @@ berman.test.lppm <- function(model, covariate,
   if(is.poisson(model) && is.stationary(model))
     modelname <- "CSR"
   do.call(bermantestEngine,
-          resolve.defaults(list(model, covariate, which, alternative),
+          resolve.defaults(list(quote(model), covariate, which, alternative),
                            list(...),
                            list(modelname=modelname,
                                 covname=covname,

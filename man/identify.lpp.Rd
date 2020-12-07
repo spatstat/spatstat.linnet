@@ -48,7 +48,7 @@
   or its mark value (if \code{x} is marked).
 }
 \seealso{
-  \code{\link[spatstat.core]{identify.ppp}},
+  \code{\link[spatstat.geom]{identify.ppp}},
   \code{\link[graphics]{identify}},
   \code{\link{clicklpp}}
 }

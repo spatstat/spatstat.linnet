@@ -54,8 +54,8 @@
 }
 \seealso{
   \code{\link[spatstat.core]{domain}},
-  \code{\link[spatstat.core]{Window}},
-  \code{\link[spatstat.core]{Frame}}
+  \code{\link[spatstat.geom]{Window}},
+  \code{\link[spatstat.geom]{Frame}}
 }
 \examples{
   domain(chicago)

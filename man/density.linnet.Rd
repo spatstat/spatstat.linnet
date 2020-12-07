@@ -48,7 +48,7 @@
 }
 \seealso{
   \code{\link[spatstat.core]{density.psp}},
-  \code{\link[spatstat.core]{im.object}},
+  \code{\link[spatstat.geom]{im.object}},
   \code{\link[stats]{density}}.
 }
 \examples{

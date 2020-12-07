@@ -47,7 +47,7 @@
   as well as random point locations.
 }
 \seealso{
-  \code{\link[spatstat.core]{is.multitype}},
+  \code{\link[spatstat.geom]{is.multitype}},
   \code{\link{is.multitype.lpp}}
 }
 \examples{

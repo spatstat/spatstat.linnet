@@ -61,7 +61,7 @@
     be plotted immediately.
     \item 
     If the original dataset was a multitype point pattern,
-    the result is a \code{\link{hyperframe}}
+    the result is a \code{\link[spatstat.geom]{hyperframe}}
     with one column for each possible type of points.
     Each column is a named list of pixel images on the network (objects of class
     \code{"linim"}) containing the values of the spatial covariates.
@@ -69,7 +69,7 @@
     determined by \code{\link[stats:model.matrix]{model.matrix.lm}}.
   }
   The pixel resolution is determined by the arguments \code{\dots}
-  and \code{\link[spatstat.core]{spatstat.options}}.
+  and \code{\link[spatstat.geom]{spatstat.options}}.
 
 }
 \value{

@@ -50,11 +50,11 @@
 \seealso{
   \code{\link[utils]{unstack}}
 
-  \code{\link[spatstat.core]{unstack.ppp}},
+  \code{\link[spatstat.geom]{unstack.ppp}},
   \code{\link[spatstat.core]{unstack.msr}}.
 
   See also methods for the generic \code{\link[base]{split}} such as
-  \code{\link{split.ppx}} which applies to \code{"lpp"} objects.
+  \code{\link[spatstat.geom]{split.ppx}} which applies to \code{"lpp"} objects.
 }
 \examples{
    X <- runiflpp(5, simplenet)

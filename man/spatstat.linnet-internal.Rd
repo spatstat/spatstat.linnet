@@ -44,6 +44,13 @@
 \alias{vnnFind}
 \alias{ldtEngine}
 \alias{qkdeEngine}
+\alias{Math.linimlist}
+\alias{Ops.linimlist}
+\alias{Summary.linimlist}
+\alias{Complex.linimlist}
+\alias{LinimOp}
+\alias{LinimListOp}
+
 
 %%%%%%%
 \description{
@@ -116,7 +123,18 @@ resolve.heat.steps(sigma, \dots, dx, dt,
 qkdeEngine(X, sigma, \dots, at, what,
            leaveoneout, diggle, raw, edge2D, edge,
            weights, varcov, positive, shortcut,
-           precomputed, savecomputed) 
+           precomputed, savecomputed)
+\special{Math(x, \dots)}
+\special{Ops(e1, e2)}
+\special{Complex(z)}
+\special{Summary(\dots, na.rm = FALSE)}
+%NAMESPACE S3method("Math", "linimlist")
+%NAMESPACE S3method("Ops", "linimlist")
+%NAMESPACE S3method("Complex", "linimlist")
+%NAMESPACE S3method("Summary", "linimlist")
+LinimOp(e1, e2, op)
+LinimListOp(e1, e2, op)
+
 }
 \details{
   These internal \pkg{spatstat.linnet} functions are not usually called

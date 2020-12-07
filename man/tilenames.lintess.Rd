@@ -29,7 +29,7 @@
 }
 \seealso{
   \code{\link{lintess}},
-  \code{\link[spatstat.core]{tiles}}
+  \code{\link[spatstat.geom]{tiles}}
 }
 \examples{
   B <- lineardirichlet(runiflpp(5, simplenet))
