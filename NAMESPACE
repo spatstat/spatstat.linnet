@@ -1,8 +1,9 @@
 # spatstat.linnet NAMESPACE file
 
-import(stats,graphics,grDevices,utils,methods)
-import(spatstat.utils,spatstat.data)
-import(spatstat.sparse,spatstat.geom,spatstat.core)
+import(stats,graphics,grDevices,methods,utils)
+
+import(spatstat.utils)
+import(spatstat.data,spatstat.geom,spatstat.core)
 import(Matrix)
 
 # ....  load dynamic library .....
