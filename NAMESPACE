@@ -3,15 +3,7 @@
 import(stats,graphics,grDevices,utils,methods)
 import(spatstat.utils,spatstat.data)
 import(spatstat.sparse,spatstat.geom,spatstat.core)
-import(polyclip,goftest)
-import(Matrix,nlme,rpart)
-importFrom(deldir,
-           deldir,duplicatedxy,tile.list)
-importFrom(abind,abind)
-importFrom(tensor,tensor)
-importFrom(mgcv,
-           gam,gam.control,anova.gam,formula.gam,predict.gam,
-           print.gam,summary.gam,vcov.gam,s)
+import(Matrix)
 
 # ....  load dynamic library .....
 #      (native routines are now registered in init.c)
