@@ -14,12 +14,18 @@ berman.test.lpp <-
            ...) {
     Xname <- short.deparse(substitute(X))
     covname <- short.deparse(substitute(covariate))
+    force(covariate)
     if(is.character(covariate)) covname <- covariate
     which <- match.arg(which)
     alternative <- match.arg(alternative)
 
+    model <- lppm(X)
+    dont.complain.about(model)
+    
     do.call(bermantestEngine,
-            resolve.defaults(list(lppm(X), covariate, which, alternative),
+            resolve.defaults(list(quote(model),
+                                  quote(covariate),
+                                  which, alternative),
                              list(...),
                              list(modelname="CSR",
                                   covname=covname, dataname=Xname)))
@@ -31,6 +37,8 @@ berman.test.lppm <- function(model, covariate,
                            ...) {
   modelname <- short.deparse(substitute(model))
   covname <- short.deparse(substitute(covariate))
+  force(model)
+  force(covariate)
   if(is.character(covariate)) covname <- covariate
   verifyclass(model, "lppm")
   which <- match.arg(which)
@@ -38,7 +46,9 @@ berman.test.lppm <- function(model, covariate,
   if(is.poisson(model) && is.stationary(model))
     modelname <- "CSR"
   do.call(bermantestEngine,
-          resolve.defaults(list(quote(model), covariate, which, alternative),
+          resolve.defaults(list(quote(model),
+                                quote(covariate),
+                                which, alternative),
                            list(...),
                            list(modelname=modelname,
                                 covname=covname,

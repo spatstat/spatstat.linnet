@@ -3,7 +3,7 @@
 #'
 #'  methods for linear networks
 #' 
-#'  $Revision: 1.1 $  $Date: 2020/06/17 04:34:21 $
+#'  $Revision: 1.2 $  $Date: 2020/12/19 05:25:06 $
 
 cdf.test.lpp <-
   function(X, covariate, test=c("ks", "cvm", "ad"), ...,
@@ -35,6 +35,7 @@ cdf.test.lpp <-
       model <- lppm(X)
       modelname <- "CSR"
     }
+    dont.complain.about(model)
     do.call(spatialCDFtest,
             resolve.defaults(list(quote(model), 
 				  quote(covariate), 
