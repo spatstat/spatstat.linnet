@@ -27,7 +27,7 @@ Remotes: spatstat/spatstat.utils, spatstat/spatstat.data, spatstat/spatstat.geom
 Description: This is a subset of the 'spatstat' package, containing
 	     its functionality for spatial data on a linear network. 
 License: GPL (>= 2)
-URL: http://spatstat.org
+URL: http://spatstat.org/
 LazyData: true
 NeedsCompilation: yes
 ByteCompile: true
