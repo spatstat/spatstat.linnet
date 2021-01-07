@@ -2,7 +2,7 @@
 #'
 #'  Nearest data point to each vertex of a network
 #'
-#'  $Revision: 1.3 $  $Date: 2020/03/16 10:28:51 $
+#'  $Revision: 1.4 $  $Date: 2021/01/07 03:53:14 $
 #'
 
 nnfromvertex <- function(X, what=c("dist", "which"), k=1) {
@@ -87,7 +87,7 @@ vnnFind <- function(seg, tp, ns, nv, from, to, seglen, huge, tol, kmax=1) {
   seg0  <- seg - 1L
   #'
   if(kmax == 1) {
-    z <- .C("Clinvwhichdist",
+    z <- .C(SL_Clinvwhichdist,
             np = as.integer(nX),
             sp = as.integer(seg0),
             tp = as.double(tp),
@@ -102,7 +102,7 @@ vnnFind <- function(seg, tp, ns, nv, from, to, seglen, huge, tol, kmax=1) {
             which = as.integer(integer(nv)),
             PACKAGE="spatstat.linnet")
   } else {
-    z <- .C("linvknndist",
+    z <- .C(SL_linvknndist,
             kmax = as.integer(kmax), 
             nq = as.integer(nX),
             sq = as.integer(seg0),

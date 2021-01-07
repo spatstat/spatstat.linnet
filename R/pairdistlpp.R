@@ -1,7 +1,7 @@
 #
 # pairdistlpp.R
 #
-#  $Revision: 1.20 $ $Date: 2020/03/29 09:08:05 $
+#  $Revision: 1.21 $ $Date: 2021/01/07 03:53:07 $
 #
 #
 #  pairdist.lpp
@@ -64,7 +64,7 @@ pairdist.lpp <- function(X, ..., method="C") {
     ##
     if(method == "testsymm") {
       ## test whether the sparse algorithm yields symmetric results
-      zz <- .C("linSpairUdist",
+      zz <- .C(SL_linSpairUdist,
                np = as.integer(n),
                sp = as.integer(Xseg0),
                tp = as.double(tX),
@@ -79,7 +79,7 @@ pairdist.lpp <- function(X, ..., method="C") {
                PACKAGE="spatstat.linnet")
     } else {
       ## use algorithm which exploits symmetry
-      zz <- .C("linSpairdist",
+      zz <- .C(SL_linSpairdist,
                np = as.integer(n),
                sp = as.integer(Xseg0),
                tp = as.double(tX),
@@ -140,7 +140,7 @@ pairdist.lpp <- function(X, ..., method="C") {
              from0 <- from - 1L
              to0   <- to - 1L
              segmap <- Xseg - 1L
-             zz <- .C("linpairdist",
+             zz <- .C(SL_linpairdist,
                       np = as.integer(n),
                       xp = as.double(Y$x),
                       yp = as.double(Y$y),

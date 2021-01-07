@@ -3,7 +3,7 @@
 #'
 #'   Divide each segment of a linear network into several pieces
 #' 
-#'     $Revision: 1.10 $  $Date: 2020/08/02 03:18:17 $
+#'     $Revision: 1.11 $  $Date: 2021/01/07 03:53:27 $
 #'
 
 lixellate <- function(X, ..., nsplit, eps, sparse=TRUE) {
@@ -68,7 +68,7 @@ lixellate <- function(X, ..., nsplit, eps, sparse=TRUE) {
   ## sort data in increasing order of 'sp'
   oo <- order(sp)
   
-  z <- .C("Clixellate",
+  z <- .C(SL_Clixellate,
           ns=as.integer(ns),
           fromcoarse=as.integer(from-1L),
           tocoarse = as.integer(to-1L),

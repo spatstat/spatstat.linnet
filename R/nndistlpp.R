@@ -1,7 +1,7 @@
 #
 # nndistlpp.R
 #
-#  $Revision: 1.27 $ $Date: 2020/04/24 03:52:39 $
+#  $Revision: 1.28 $ $Date: 2021/01/07 03:53:21 $
 #
 # Methods for nndist, nnwhich, nncross for linear networks
 #
@@ -81,7 +81,7 @@ nndist.lpp <- function(X, ..., k=1, by=NULL, method="C") {
     # space for result
     ans <- double(n)
     # call C
-    zz <- .C("linnndist",
+    zz <- .C(SL_linnndist,
              np = as.integer(n),
              xp = as.double(Y$x),
              yp = as.double(Y$y),
@@ -122,7 +122,7 @@ nndist.lpp <- function(X, ..., k=1, by=NULL, method="C") {
                diameter(Frame(L))/2^20)
     #'
     kmax1 <- kmax + 1L
-    zz <- .C("linknnd",
+    zz <- .C(SL_linknnd,
              kmax = as.integer(kmax1),
              np = as.integer(n),
              sp = as.integer(segmap),
@@ -238,7 +238,7 @@ nnwhich.lpp <- function(X, ..., k=1, method="C") {
     nnd <- double(n)
     nnw <- integer(n)
     # call C
-    zz <- .C("linnnwhich",
+    zz <- .C(SL_linnnwhich,
              np = as.integer(n),
              xp = as.double(Y$x),
              yp = as.double(Y$y),
@@ -283,7 +283,7 @@ nnwhich.lpp <- function(X, ..., k=1, method="C") {
                diameter(Frame(L))/2^20)
     #'
     kmax1 <- kmax + 1L
-    zz <- .C("linknnd",
+    zz <- .C(SL_linknnd,
              kmax = as.integer(kmax1),
              np = as.integer(n),
              sp = as.integer(segmap),
@@ -512,7 +512,7 @@ nncross.lpp <- local({
       tol <- max(.Machine$double.eps,
                  diameter(Frame(L))/2^20)
       if(kmax > 1) {
-        zz <- .C("linknncross",
+        zz <- .C(SL_linknncross,
                  kmax = as.integer(kmax),
                  np = as.integer(nX),
                  sp = as.integer(Xsegmap[ooX]),
@@ -550,7 +550,7 @@ nncross.lpp <- local({
           }
         }
       } else {
-        zz <- .C("linSnndwhich",
+        zz <- .C(SL_linSnndwhich,
                  np = as.integer(nX),
                  sp = as.integer(Xsegmap[ooX]),
                  tp = as.double(Xcoords$tp[ooX]),
@@ -579,7 +579,7 @@ nncross.lpp <- local({
     } else {
       ## slower code requiring dpath matrix
       if(!excludeinC) {
-        zz <- .C("linndcross",
+        zz <- .C(SL_linndcross,
                  np = as.integer(nX),
                  xp = as.double(P$x),
                  yp = as.double(P$y),
@@ -603,7 +603,7 @@ nncross.lpp <- local({
         nnw <- zz$nnwhich + 1L
       } else {
         ## excluding certain pairs (k=1)
-        zz <- .C("linndxcross",
+        zz <- .C(SL_linndxcross,
                  np = as.integer(nX),
                  xp = as.double(P$x),
                  yp = as.double(P$y),

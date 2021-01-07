@@ -1,7 +1,7 @@
 #
 # crossdistlpp.R
 #
-#  $Revision: 1.11 $ $Date: 2020/03/29 09:08:10 $
+#  $Revision: 1.12 $ $Date: 2021/01/07 03:54:27 $
 #
 #  crossdist.lpp
 #        Calculates the shortest-path distance from each point of X
@@ -75,7 +75,7 @@ crossdist.lpp <- function(X, Y, ..., method="C", check=TRUE) {
     huge <- 2 * sum(seglen)
     tol <- L$toler %orifnull% default.linnet.tolerance(L)
     ## 
-    zz <- .C("linScrossdist",
+    zz <- .C(SL_linScrossdist,
              np = as.integer(nX),
              sp = as.integer(Xseg0),
              tp = as.double(tX),
@@ -101,7 +101,7 @@ crossdist.lpp <- function(X, Y, ..., method="C", check=TRUE) {
              to0   <- to - 1L
              Xsegmap <- Xseg - 1L
              Ysegmap <- Yseg - 1L
-             zz <- .C("lincrossdist",
+             zz <- .C(SL_lincrossdist,
                       np = as.integer(nX),
                       xp = as.double(P$x),
                       yp = as.double(P$y),

@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.15 $ $Date: 2020/03/16 10:28:51 $
+#  $Revision: 1.16 $ $Date: 2021/01/07 03:53:56 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -58,7 +58,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     maxscratch <- max(ndumeach) + maxdataperseg
     if(!ismulti) {
       if(!random) {
-        z <- .C("Clinequad",
+        z <- .C(SL_Clinequad,
                 ns    = as.integer(nseg),
                 from  = as.integer(L$from-1L),
                 to    = as.integer(L$to-1L), 
@@ -79,7 +79,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 maxscratch = as.integer(maxscratch),
                 PACKAGE="spatstat.linnet")
       } else {
-        z <- .C("ClineRquad",
+        z <- .C(SL_ClineRquad,
                 ns    = as.integer(nseg),
                 from  = as.integer(L$from-1L),
                 to    = as.integer(L$to-1L), 
@@ -111,7 +111,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       ndummax <- ntypes * (ndummax + nX)
       maxscratch <- ntypes * maxscratch
       if(!random) {
-        z <- .C("ClineMquad",
+        z <- .C(SL_ClineMquad,
                 ns    = as.integer(nseg),
                 from  = as.integer(L$from-1L),
                 to    = as.integer(L$to-1L), 
@@ -137,7 +137,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 maxscratch = as.integer(maxscratch),
                 PACKAGE="spatstat.linnet")
       } else {
-        z <- .C("ClineRMquad",
+        z <- .C(SL_ClineRMquad,
                 ns    = as.integer(nseg),
                 from  = as.integer(L$from-1L),
                 to    = as.integer(L$to-1L), 

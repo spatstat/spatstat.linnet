@@ -1,27 +1,26 @@
 # spatstat.linnet NAMESPACE file
 
+## ................  Import packages ..................
+
 import(stats,graphics,grDevices,methods,utils)
 
 import(spatstat.utils)
 import(spatstat.data,spatstat.geom,spatstat.core)
+
 import(Matrix)
 
-# ....  load dynamic library .....
-#      (native routines are now registered in init.c)
-useDynLib(spatstat.linnet, .registration=TRUE)
+## ................ Load dynamic library ..............
+##      (native routines are registered in init.c)
+##      (entry points are symbols with prefix "SL_")
 
-# Do not edit the following.
-# It is generated automatically.
+useDynLib(spatstat.linnet, .registration=TRUE, .fixes="SL_")
+
+## //////////  DO NOT EDIT THE FOLLOWING  ///////////////
+## ////////  it is generated automatically  /////////////
 
 
 
 
-# .................................................. 
-#  load dynamic library
-#      (native routines are now registered in init.c)
-# .................................................. 
-
-useDynLib(spatstat.linnet, .registration=TRUE)
 
 # .................................................. 
 # Automatically-generated list of documented objects 
