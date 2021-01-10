@@ -1,0 +1,30 @@
+
+        CHANGES IN spatstat.linnet VERSION 1.65-1
+
+OVERVIEW
+
+    o Added NEWS file.
+
+
+        CHANGES IN spatstat.linnet VERSION 1.65-0
+
+OVERVIEW
+
+    o Package initialised at version 1.65-0
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o spatstat.linnet
+    The package 'spatstat.linnet' has been created from a subset
+    of the code in the original 'spatstat' package version 1.65-0.
+    It contains the functionality for statistical analysis of
+    spatial data on a linear network.
+    For an overview, see help("spatstat.linnet-package")
+
+    o Execution
+    The 'spatstat.linnet' package is slightly faster than the corresponding
+    code in the 'spatstat' package, because the procedure for calling
+    internal C functions has been streamlined.
+
+
+
