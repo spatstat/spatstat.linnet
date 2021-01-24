@@ -29,7 +29,10 @@ local({
 })
 ## tests/cdf.test.R
 
+
 local({
+  NSIM <- 9
+  op <- spatstat.options(ndummy.min=16, npixel=32)
   if(ALWAYS) {
     ## (3) linear networks
     set.seed(42)
@@ -40,10 +43,10 @@ local({
       cdf.test(X %mark% runif(20), "x")
     }
     fit <- lppm(X ~1)
-    cdf.test(fit, "y", "cvm")
+    cdf.test(fit, "y", "cvm", nsim=NSIM)
     if(FULLTEST) {
-      cdf.test(fit, "y")
-      cdf.test(fit, "y", "ad")
+      cdf.test(fit, "y", nsim=NSIM)
+      cdf.test(fit, "y", "ad", nsim=NSIM)
     }
     if(FULLTEST) {
       ## marked
@@ -51,7 +54,10 @@ local({
       cdf.test(subset(chicago, marks != "assault"), "y")
     }
   }
+  reset.spatstat.options()
 })
+
+
 #'
 #'   tests/cluck.R
 #'
