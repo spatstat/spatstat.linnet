@@ -141,4 +141,8 @@ LinimListOp(e1, e2, op)
   directly by the user. Their names and capabilities may change
   without warning from one version of \pkg{spatstat.linnet} to the next.
 }
+\value{
+  Not documented. The return value of each undocumented function may change
+  without warning from one version of \pkg{spatstat.linnet} to the next.
+}
 \keyword{internal}
