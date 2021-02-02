@@ -137,12 +137,12 @@ LinimListOp(e1, e2, op)
 
 }
 \details{
-  These internal \pkg{spatstat.linnet} functions are not usually called
+  These internal \pkg{spatstat.linnet} functions should not be called
   directly by the user. Their names and capabilities may change
   without warning from one version of \pkg{spatstat.linnet} to the next.
 }
 \value{
-  Not documented. The return value of each undocumented function may change
-  without warning from one version of \pkg{spatstat.linnet} to the next.
+The return values of these functions are not documented,
+and may change without warning.
 }
 \keyword{internal}
