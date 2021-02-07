@@ -93,7 +93,7 @@
   }
   \item{\dots}{
     Additional arguments passed to \code{\link{density.default}}
-    or \code{\link[locfit]{locfit}}.
+    or \code{locfit::\link[locfit]{locfit}}.
   }
   \item{covname}{
     Optional. Character string to use as the name of the covariate.
@@ -228,7 +228,7 @@
     \item
     If \code{smoother="local"}, the smoothing procedure
     is based on local likelihood density estimation, performed by
-    \code{\link[locfit]{locfit}}.
+    \code{locfit::\link[locfit]{locfit}}.
   }
   The argument \code{method} determines how the density estimates will be
   combined to obtain an estimate of \eqn{\rho(z)}{rho(z)}:

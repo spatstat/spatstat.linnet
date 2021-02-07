@@ -215,8 +215,8 @@
   \code{\link[spatstat.core]{quadrat.test}},
   \code{\link[spatstat.core]{berman.test}},
   \code{\link[stats]{ks.test}},
-  \code{\link[goftest]{cvm.test}},
-  \code{\link[goftest]{ad.test}},
+  \code{goftest::\link[goftest]{cvm.test}},
+  \code{goftest::\link[goftest]{ad.test}},
   \code{\link{lppm}}
 }
 \references{
