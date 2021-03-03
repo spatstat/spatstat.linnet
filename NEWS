@@ -1,4 +1,23 @@
 
+        CHANGES IN spatstat.linnet VERSION 1.65-8
+
+OVERVIEW
+
+    o Function renamed.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o densityHeat
+    'densityHeat' has been renamed 'densityHeat.lpp'.
+
+
+        CHANGES IN spatstat.linnet VERSION 1.65-7
+
+OVERVIEW
+
+    o Tweaks to satisfy CRAN.
+
+
         CHANGES IN spatstat.linnet VERSION 1.65-1
 
 OVERVIEW

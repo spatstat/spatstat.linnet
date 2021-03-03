@@ -1,5 +1,5 @@
-\name{densityHeat}
-\alias{densityHeat}
+\name{densityHeat.lpp}
+\alias{densityHeat.lpp}
 \title{
   Kernel Density on a Network using Heat Equation
 }
@@ -8,7 +8,7 @@
   using the heat equation.
 }
 \usage{
-  densityHeat(x, sigma, \dots,
+  densityHeat.lpp(x, sigma, \dots,
               at=c("pixels", "points"), leaveoneout=TRUE,
               weights = NULL,
               dx = NULL, dt = NULL, iterMax = 1e+06,
@@ -154,10 +154,10 @@
 }
 \examples{
   X <- runiflpp(3, simplenet)
-  D <- densityHeat(X, 0.2)
+  D <- densityHeat.lpp(X, 0.2)
   plot(D, style="w", main="", adjust=2)
-  densityHeat(X, 0.2, at="points")
-  Dw <- densityHeat(X, 0.2, weights=c(1,2,-1))
+  densityHeat.lpp(X, 0.2, at="points")
+  Dw <- densityHeat.lpp(X, 0.2, weights=c(1,2,-1))
 }
 \keyword{spatial}
 \keyword{methods}
