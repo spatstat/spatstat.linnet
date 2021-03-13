@@ -4,8 +4,9 @@
   Kernel Density on a Network using Heat Equation
 }
 \description{
-  Computes a kernel density estimate on a linear network
-  using the heat equation.
+  Given a point pattern on a linear network,
+  compute a kernel estimate of intensity,
+  by solving the heat equation.
 }
 \usage{
   densityHeat.lpp(x, sigma, \dots,
