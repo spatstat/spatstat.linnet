@@ -9,7 +9,7 @@
   by solving the heat equation.
 }
 \usage{
-  densityHeat.lpp(x, sigma, \dots,
+  \method{densityHeat}{lpp}(x, sigma, \dots,
               at=c("pixels", "points"), leaveoneout=TRUE,
               weights = NULL,
               dx = NULL, dt = NULL, iterMax = 1e+06,
@@ -62,6 +62,10 @@
   }
 }
 \details{
+  The function \code{\link[spatstat.core]{densityHeat}} is generic.
+  This is the method for the class \code{"lpp"} of points on a linear
+  network.
+  
   Kernel smoothing is applied to the points of \code{x}
   using a kernel based on path distances in the network.
   If \code{at="pixels"} (the default),
@@ -70,7 +74,7 @@
   If \code{at="points"} the result is a numeric vector giving the
   density estimates at the data points of \code{x}. 
 
-  Smoothing is performed using the
+  The smoothing operation is equivalent to the
   \dQuote{equal-split continuous} rule described in
   Section 9.2.3 of Okabe and Sugihara (2012).
   However, the actual computation is performed rapidly, by solving the classical
