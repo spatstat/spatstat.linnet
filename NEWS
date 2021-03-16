@@ -1,4 +1,19 @@
 
+        CHANGES IN spatstat.linnet VERSION 2.0-0
+
+OVERVIEW
+
+    o We thank Andrea Gilardi for contributions.
+
+    o Bug fix in density.lpp
+
+BUG FIXES
+
+    o density.lpp
+    Crashed if 'weights' were given and 'x' contained duplicated points.
+    [Spotted by Andrea Gilardi]
+    Fixed.
+
         CHANGES IN spatstat.linnet VERSION 1.65-9
 
 OVERVIEW

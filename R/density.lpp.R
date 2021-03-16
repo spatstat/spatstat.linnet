@@ -22,8 +22,11 @@ density.lpp <- function(x, sigma=NULL, ...,
   uniek <- (um == ii)
   if(!all(uniek)) {
     x <- x[uniek]
-    m <- as.numeric(table(um))
-    weights <- if(is.null(weights)) m else m * weights
+    weights <- if(is.null(weights)) {
+                 as.numeric(table(um))
+               } else {
+                 tapplysum(weights, list(factor(um)))
+               }
   }
     
   if(distance == "euclidean") {
