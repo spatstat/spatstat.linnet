@@ -157,7 +157,7 @@
   X <- runiflpp(3, simplenet)
   D <- densityHeatlpp(X, 0.2)
   plot(D, style="w", main="", adjust=2)
-  densityHeat.lpp(X, 0.2, at="points")
+  densityHeatlpp(X, 0.2, at="points")
   Dw <- densityHeatlpp(X, 0.2, weights=c(1,2,-1))
 }
 \keyword{spatial}
