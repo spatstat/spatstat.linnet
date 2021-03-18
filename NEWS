@@ -5,7 +5,15 @@ OVERVIEW
 
     o We thank Andrea Gilardi for contributions.
 
+    o Function renamed.
+    
     o Bug fix in density.lpp
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o densityHeat
+    'densityHeat' has been temporarily renamed 'densityHeatlpp',
+    to prevent errors in the package checking process.
 
 BUG FIXES
 

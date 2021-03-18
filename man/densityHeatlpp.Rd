@@ -1,5 +1,5 @@
-\name{densityHeat.lpp}
-\alias{densityHeat.lpp}
+\name{densityHeatlpp}
+\alias{densityHeatlpp}
 \title{
   Kernel Density on a Network using Heat Equation
 }
@@ -9,7 +9,7 @@
   by solving the heat equation.
 }
 \usage{
-  \method{densityHeat}{lpp}(x, sigma, \dots,
+  densityHeatlpp(x, sigma, \dots,
               at=c("pixels", "points"), leaveoneout=TRUE,
               weights = NULL,
               dx = NULL, dt = NULL, iterMax = 1e+06,
@@ -62,10 +62,6 @@
   }
 }
 \details{
-  The function \code{\link[spatstat.core]{densityHeat}} is generic.
-  This is the method for the class \code{"lpp"} of points on a linear
-  network.
-  
   Kernel smoothing is applied to the points of \code{x}
   using a kernel based on path distances in the network.
   If \code{at="pixels"} (the default),
@@ -159,10 +155,10 @@
 }
 \examples{
   X <- runiflpp(3, simplenet)
-  D <- densityHeat.lpp(X, 0.2)
+  D <- densityHeatlpp(X, 0.2)
   plot(D, style="w", main="", adjust=2)
   densityHeat.lpp(X, 0.2, at="points")
-  Dw <- densityHeat.lpp(X, 0.2, weights=c(1,2,-1))
+  Dw <- densityHeatlpp(X, 0.2, weights=c(1,2,-1))
 }
 \keyword{spatial}
 \keyword{methods}
