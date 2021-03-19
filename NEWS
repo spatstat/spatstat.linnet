@@ -8,6 +8,13 @@ OVERVIEW
     o Bug fix in density.lpp
 
     o Improvement to densityEqualSplit
+
+    o New function for jittering point patterns on a network.
+
+NEW FUNCTIONS
+
+    o rjitterlpp
+    Apply random displacements to the points on a linear network.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
