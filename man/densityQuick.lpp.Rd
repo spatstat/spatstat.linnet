@@ -41,7 +41,8 @@ densityQuick.lpp(X, sigma=NULL, \dots,
   \item{at}{
     String (partially matched)
     specifying whether to compute the intensity values
-    at a grid of pixel locations (\code{at="pixels"}) or
+    at a fine grid of locations on the network
+    (\code{at="pixels"}, the default) or
     only at the points of \code{x} (\code{at="points"}).
   }
   \item{what}{
@@ -92,7 +93,11 @@ densityQuick.lpp(X, sigma=NULL, \dots,
   is applied separately to each connected component of the network).
 }
 \value{
-  Image on a linear network (object of class \code{"linim"}).
+  If \code{at="pixels"} (the default),
+  a pixel image on the linear network (object of class \code{"linim"}).
+
+  If \code{at="points"}, a numeric vector with one entry for each point
+  of \code{x}.
 }
 \references{
   Rakshit, S., Davies, T., Moradi, M., 

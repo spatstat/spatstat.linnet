@@ -112,7 +112,8 @@
   is applied separately to each connected component of the network).
 }
 \value{
-  A pixel image on the linear network (object of class \code{"linim"}).
+  A pixel image on the linear network (object of class \code{"linim"}),
+  or in some cases, a numeric vector of length equal to \code{npoints(x)}.
 }
 \references{
 McSwiggan, G., Baddeley, A. and Nair, G. (2016)

@@ -1,4 +1,27 @@
 
+        CHANGES IN spatstat.linnet VERSION 2.1-0
+
+OVERVIEW
+
+    o We thank Andrea Gilardi for contributions.
+
+    o Bug fix in density.lpp
+
+    o Improvement to densityEqualSplit
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o densityEqualSplit
+    New arguments 'at' and 'leaveoneout' for consistency with other functions.
+
+BUG FIXES
+
+    o density.lpp
+    The result had the wrong length if 'x' contained duplicated points
+    when 'weights' were given and 'at="points"'.
+    [Spotted by Andrea Gilardi]
+    Fixed.
+
         CHANGES IN spatstat.linnet VERSION 2.0-0
 
 OVERVIEW

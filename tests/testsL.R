@@ -17,7 +17,7 @@ cat(paste("--------- Executing",
 #
 # Tests for lpp code
 #
-#  $Revision: 1.68 $  $Date: 2020/06/12 00:24:57 $
+#  $Revision: 1.69 $  $Date: 2021/03/19 03:13:19 $
 
 
 local({
@@ -466,6 +466,16 @@ local({
     D <- density(X, Inf, distance="e")
     D <- density(Y, 0.05, distance="e", weights=runif(5)) 
     D <- density(Y, Inf, distance="e")
+    ## example from Andrea Gilardi
+    ## with duplicated points, and points at a vertex
+    A <- runiflpp(5, simplenet)
+    V <- lpp(vertices(simplenet)[2:4], simplenet)
+    B <- superimpose(A, A[3], V)
+    D <- density(B, sigma=0.2, distance="e", at="points")
+    if(length(as.numeric(D)) != npoints(B))
+      stop("density.lpp(at='points') returns wrong number of values")
+    G <- superimpose(U=runiflpp(4, simplenet), B=B)
+    b <- bw.relrisklpp(G, distance="e", nh=2)
   }
   if(FULLTEST) {
     #' densityVoronoi.lpp and related code

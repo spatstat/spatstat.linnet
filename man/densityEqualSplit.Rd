@@ -8,7 +8,10 @@
   using the Okabe-Sugihara equal-split algorithms.
 }
 \usage{
- densityEqualSplit(x, sigma = NULL, \dots, weights = NULL,
+ densityEqualSplit(x, sigma = NULL, \dots,
+                   at = c("pixels", "points"),
+                   leaveoneout=TRUE,
+                   weights = NULL,
                    kernel = "epanechnikov", continuous = TRUE,
                    epsilon = 1e-06, verbose = TRUE, debug = FALSE, savehistory = TRUE)
 }
@@ -24,6 +27,17 @@
   \item{\dots}{
     Arguments passed to \code{\link{as.mask}} determining the
     resolution of the result.
+  }
+  \item{at}{
+    String (partially matched)
+    specifying whether to compute the intensity values
+    at a fine grid of locations on the network
+    (\code{at="pixels"}, the default) or
+    only at the points of \code{x} (\code{at="points"}).
+  }
+  \item{leaveoneout}{
+    Logical value indicating whether to compute a leave-one-out
+    estimator. Applicable only when \code{at="points"}.
   }
   \item{weights}{
     Optional. Numeric vector of weights associated with the
@@ -93,7 +107,11 @@
   is applied separately to each connected component of the network).
 }
 \value{
-  A pixel image on the linear network (object of class \code{"linim"}).
+  If \code{at="pixels"} (the default),
+  a pixel image on the linear network (object of class \code{"linim"}).
+
+  If \code{at="points"}, a numeric vector with one entry for each point
+  of \code{x}.
 }
 \references{
   Okabe, A. and Sugihara, K. (2012)

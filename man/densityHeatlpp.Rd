@@ -30,8 +30,9 @@
   }
   \item{at}{
     String specifying whether to compute the intensity values
-    at a grid of pixel locations (\code{at="pixels"}) or
-    only at the points of \code{x} (\code{at="points"}).
+    at a fine grid of pixel locations on the network
+    (\code{at="pixels"}, the default) or
+    only at the data points of \code{x} (\code{at="points"}).
   }
   \item{leaveoneout}{
     Logical value indicating whether to compute a leave-one-out
@@ -132,7 +133,11 @@
   }
 }
 \value{
-  A pixel image on the linear network (object of class \code{"linim"}).
+  If \code{at="pixels"} (the default),
+  a pixel image on the linear network (object of class \code{"linim"}).
+
+  If \code{at="points"}, a numeric vector with one entry for each point
+  of \code{x}.
 }
 \references{
   McSwiggan, G., Baddeley, A. and Nair, G. (2016)

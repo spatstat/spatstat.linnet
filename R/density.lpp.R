@@ -7,7 +7,7 @@
 #'
 
 density.lpp <- function(x, sigma=NULL, ...,
-                        weights=NULL,
+                        weights=NULL, 
                         distance=c("path", "euclidean"),
                         continuous=TRUE,
                         kernel="gaussian") {
@@ -16,33 +16,23 @@ density.lpp <- function(x, sigma=NULL, ...,
 
   weights <- pointweights(x, weights=weights, parent=parent.frame())
 
-  #' collapse duplicates efficiently
-  um <- uniquemap(x)
-  ii <- seq_len(npoints(x))
-  uniek <- (um == ii)
-  if(!all(uniek)) {
-    x <- x[uniek]
-    weights <- if(is.null(weights)) {
-                 as.numeric(table(um))
-               } else {
-                 tapplysum(weights, list(factor(um)))
-               }
-  }
-    
   if(distance == "euclidean") {
     #' Euclidean 2D kernel
-    return(densityQuick.lpp(x, sigma, ..., kernel=kernel, weights=weights))
+    ans <- densityQuick.lpp(x, sigma, ..., 
+                            kernel=kernel, weights=weights)
+  } else {
+    #' kernel is 1-D
+    kernel <- match.kernel(kernel)
+    if(continuous && (kernel == "gaussian")) {
+      #' equal-split continuous with Gaussian kernel: use heat equation
+      ans <- densityHeatlpp(x, sigma, ..., weights=weights)
+    } else {
+      ##' Okabe-Sugihara equal-split method
+      ans <- densityEqualSplit(x, sigma, ..., 
+                               kernel=kernel, weights=weights)
+    }
   }
-
-  #' kernel is 1-D
-  kernel <- match.kernel(kernel)
-  if(continuous && (kernel == "gaussian")) {
-    #' equal-split continuous with Gaussian kernel: use heat equation
-    return(densityHeatlpp(x, sigma, ..., weights=weights))
-  }
-
-  ##' Okabe-Sugihara equal-split method
-  return(densityEqualSplit(x, sigma, ..., kernel=kernel, weights=weights))
+  return(ans)
 }
 
 density.splitppx <- function(x, sigma=NULL, ...) {
@@ -52,6 +42,8 @@ density.splitppx <- function(x, sigma=NULL, ...) {
 }
 
 densityEqualSplit <- function(x, sigma=NULL, ...,
+                              at=c("pixels", "points"),
+                              leaveoneout=TRUE,
                               weights=NULL,
                               kernel="epanechnikov",
                               continuous=TRUE,
@@ -59,12 +51,9 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
                               verbose=TRUE, debug=FALSE, savehistory=TRUE) {
   ## Based on original code by Adrian Baddeley and Greg McSwiggan 2014-2016
   check.1.real(sigma)
-  if(bandwidth.is.infinite(sigma)) {
-    out <- as.linim(flatdensityfunlpp(x, weights=weights))
-    attr(out, "sigma") <- sigma
-    return(out)
-  }
+  at <- match.arg(at)
   L <- as.linnet(x)
+  leaveoneout <- leaveoneout && (at == "points")
   # weights
   np <- npoints(x)
   if(is.null(weights)) {
@@ -72,37 +61,74 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
   } else {
     stopifnot(is.numeric(weights))
     check.nvector(weights, np, oneok=TRUE)
-    if(length(weights) == 1L) weights <- rep(weights, np) 
+    if(length(weights) == 1L) weights <- rep(weights, np)
   }
-  # pixellate linear network
-  Llines <- as.psp(L)
-  linemask <- as.mask.psp(Llines, ...)
-  lineimage <- as.im(linemask, value=0)
-  # extract pixel centres
-  xx <- raster.x(linemask)
-  yy <- raster.y(linemask)
-  mm <- linemask$m
-  xx <- as.vector(xx[mm])
-  yy <- as.vector(yy[mm])
-  pixelcentres <- ppp(xx, yy, window=as.rectangle(linemask), check=FALSE)
-  pixdf <- data.frame(xc=xx, yc=yy)
-  # project pixel centres onto lines
-  p2s <- project2segment(pixelcentres, Llines)
-  projloc <- as.data.frame(p2s$Xproj)
-  projmap <- as.data.frame(p2s[c("mapXY", "tp")])
-  projdata <- cbind(pixdf, projloc, projmap)
-  # initialise pixel values
-  values <- rep(0, nrow(pixdf))
-  # Extract local coordinates of data
+  ## infinite bandwidth
+  if(bandwidth.is.infinite(sigma)) {
+    out <- switch(at,
+                  pixels = as.linim(flatdensityfunlpp(x, weights=weights)),
+                  points = flatdensityatpointslpp(x, weights=weights,
+                                                  leaveoneout=leaveoneout))
+    attr(out, "sigma") <- sigma
+    return(out)
+  }
+  #' collapse duplicates efficiently
+  if(leaveoneout) {
+    collapsed <- FALSE
+  } else {
+    umap <- uniquemap(x)
+    ii <- seq_len(npoints(x))
+    uniek <- (umap == ii)
+    if(collapsed <- !all(uniek)) {
+      x <- x[uniek]
+      weights <- if(is.null(weights)) {
+                   as.numeric(table(umap))
+                 } else {
+                   tapplysum(weights, list(factor(umap)))
+                 }
+    }
+  }
+  ## Extract local coordinates of data
   n <- npoints(x)
   coo <- coords(x)
   seg <- coo$seg
   tp  <- coo$tp
   # lengths of network segments
+  Llines <- as.psp(L)
   Llengths <- lengths_psp(Llines)
+  ## set up query locations
+  switch(at,
+         pixels = {
+           ## pixellate linear network
+           linemask <- as.mask.psp(Llines, ...)
+           lineimage <- as.im(linemask, value=0)
+           ## extract pixel centres
+           xx <- raster.x(linemask)
+           yy <- raster.y(linemask)
+           mm <- linemask$m
+           xx <- as.vector(xx[mm])
+           yy <- as.vector(yy[mm])
+           pixelcentres <- ppp(xx, yy,
+                               window=as.rectangle(linemask), check=FALSE)
+           pixdf <- data.frame(xc=xx, yc=yy)
+           nquery <- nrow(pixdf)
+           ## project pixel centres onto lines
+           p2s <- project2segment(pixelcentres, Llines)
+           projloc <- as.data.frame(p2s$Xproj)
+           projmap <- as.data.frame(p2s[c("mapXY", "tp")])
+           projdata <- cbind(pixdf, projloc, projmap)
+         },
+         points = {
+           projmap <- data.frame(mapXY=seg, tp=tp)
+           nquery <- n
+         })
+  
+  # initialise density values at query locations
+  values <- rep(0, nquery)
   # initialise stack
   stack <- data.frame(seg=integer(0), from=logical(0), 
                       distance=numeric(0), weight=numeric(0),
+                      origin=integer(0),
                       generation=integer(0))
   # process each data point
   for(i in seq_len(n)) {
@@ -111,6 +137,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
     len <- Llengths[segi]
     # evaluate kernel on segment containing x[i]
     relevant <- (projmap$mapXY == segi)
+    if(leaveoneout) relevant[i] <- FALSE
     values[relevant] <- values[relevant] +
       dkernel(len * (projmap$tp[relevant] - tpi),
               kernel=kernel, sd=sigma)
@@ -119,6 +146,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
                               from  = c(TRUE, FALSE), 
                               distance = len * c(tpi, 1-tpi),
                               weight = rep(weights[i], 2L),
+                              origin = rep(i, 2L),
                               generation = rep(1L, 2)),
                    stack)
   }
@@ -174,6 +202,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
     Hvert <- if(H$from) Lfrom[Hseg] else Lto[Hseg]
     Hdist <- H$distance
     Hgen <- H$generation
+    Horigin <- H$origin
     ## finished processing?
     if(Hgen > lastgen)
       break;
@@ -195,6 +224,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
       }
       # increment density on segment
       relevant <- (projmap$mapXY == J)
+      if(leaveoneout) relevant[Horigin] <- FALSE
       tp.rel <- projmap$tp[relevant]
       d.rel <- lenJ * (if(H.is.from) tp.rel else (1 - tp.rel))
       values[relevant] <- values[relevant] +
@@ -204,6 +234,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
                                 from  = !(H.is.from),
                                 distance = lenJ + Hdist,
                                 weight = Jweight,
+                                origin = Horigin,
                                 generation = Hgen + 1L),
                      stack)
       if(sortgen)
@@ -212,12 +243,25 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
         print(stack)
     }
   }
-  # attach values to nearest pixels
-  Z <- lineimage
-  Z[pixelcentres] <- values
-  # attach exact line position data
-  df <- cbind(projdata, values)
-  out <- linim(L, Z, df=df)
+  switch(at,
+         points = {
+           if(!collapsed) {
+             out <- values
+           } else {
+             ## reinstate full sequence
+             out <- numeric(n)
+             out[uniek] <- values
+             out <- out[umap]
+           }
+         },
+         pixels = {
+           ## attach values to nearest pixels
+           Z <- lineimage
+           Z[pixelcentres] <- values
+           ## attach exact line position data
+           df <- cbind(projdata, values)
+           out <- linim(L, Z, df=df)
+         })
   attr(out, "sigma") <- sigma
   if(savehistory)
     attr(out, "history") <- history
@@ -256,6 +300,18 @@ densityHeatlpp <- function(x, sigma, ...,
                             verbose=verbose)
     attr(out, "sigma") <- sigma
     return(out)
+  }
+  #' collapse duplicates efficiently
+  umap <- uniquemap(x)
+  ii <- seq_len(npoints(x))
+  uniek <- (umap == ii)
+  if(all(uniek)) {
+    x <- x[uniek]
+    weights <- if(is.null(weights)) {
+                 as.numeric(table(umap))
+               } else {
+                 tapplysum(weights, list(factor(umap)))
+               }
   }
   ## 
   ## determine algorithm parameters
