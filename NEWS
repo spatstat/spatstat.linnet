@@ -11,6 +11,8 @@ OVERVIEW
 
     o New function for jittering point patterns on a network.
 
+    o Function renamed.
+
 NEW FUNCTIONS
 
     o rjitterlpp
@@ -20,6 +22,11 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o densityEqualSplit
     New arguments 'at' and 'leaveoneout' for consistency with other functions.
+
+    o densityHeat
+    The function formerly known as 'densityHeat' or 'densityHeatlpp'
+    is now renamed 'densityHeat.lpp' and is a method for the generic
+    'densityHeat'.
 
 BUG FIXES
 

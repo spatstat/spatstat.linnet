@@ -25,7 +25,7 @@ density.lpp <- function(x, sigma=NULL, ...,
     kernel <- match.kernel(kernel)
     if(continuous && (kernel == "gaussian")) {
       #' equal-split continuous with Gaussian kernel: use heat equation
-      ans <- densityHeatlpp(x, sigma, ..., weights=weights)
+      ans <- densityHeat.lpp(x, sigma, ..., weights=weights)
     } else {
       ##' Okabe-Sugihara equal-split method
       ans <- densityEqualSplit(x, sigma, ..., 
@@ -268,7 +268,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
   return(out)
 }
 
-densityHeatlpp <- function(x, sigma, ...,
+densityHeat.lpp <- function(x, sigma, ...,
                             at=c("pixels", "points"),
                             leaveoneout=TRUE, weights=NULL, 
                             dx=NULL, dt=NULL, iterMax=1e6,

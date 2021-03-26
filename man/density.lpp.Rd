@@ -31,7 +31,7 @@
     Additional arguments controlling the algorithm
     and the spatial resolution of the result.
     These arguments are passed either to
-    \code{\link{densityQuick.lpp}}, \code{\link{densityHeatlpp}}
+    \code{\link{densityQuick.lpp}}, \code{\link{densityHeat.lpp}}
     or \code{\link{densityEqualSplit}} depending on the algorithm chosen.
   }
   \item{weights}{
@@ -83,7 +83,7 @@
       \code{continuous=TRUE} and \code{kernel="gaussian"},
       computation is performed rapidly by solving the classical heat equation
       on the network, as described in McSwiggan et al (2016).
-      The arguments are passed to \code{\link{densityHeatlpp}} which performs
+      The arguments are passed to \code{\link{densityHeat.lpp}} which performs
       the computation.
       Computational time is short, but increases quadratically
       with \code{sigma}.
@@ -130,7 +130,9 @@ Okabe, A. and Sugihara, K. (2012)
 \seealso{
   \code{\link{lpp}},
   \code{\link{linim}},
-  \code{\link{densityQuick.lpp}}
+  \code{\link{densityQuick.lpp}},
+  \code{\link{densityHeat.lpp}},
+  \code{\link{densityVoronoi.lpp}}
 }
 \examples{
   X <- runiflpp(3, simplenet)
