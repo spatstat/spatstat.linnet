@@ -1,4 +1,18 @@
 
+        CHANGES IN spatstat.linnet VERSION 2.1-1.002
+
+OVERVIEW
+
+    o Internal bug fixes.
+
+
+        CHANGES IN spatstat.linnet VERSION 2.1-1
+
+OVERVIEW
+
+    o Tweak to satisfy the package checker.
+
+
         CHANGES IN spatstat.linnet VERSION 2.1-0
 
 OVERVIEW

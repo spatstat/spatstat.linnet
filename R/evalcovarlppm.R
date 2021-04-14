@@ -3,7 +3,7 @@
 #'
 #'   evalCovar method for class lppm
 #'
-#'   $Revision: 1.1 $ $Date: 2020/06/14 10:37:08 $
+#'   $Revision: 1.2 $ $Date: 2021/04/08 03:42:31 $
 
 
 evalCovar.lppm <- local({
@@ -11,7 +11,8 @@ evalCovar.lppm <- local({
   evalCovar.lppm <- function(model, covariate, ...,
                              lambdatype=c("cif", "trend", "intensity"),
                              eps=NULL, nd=1000,
-                             interpolate=TRUE, jitter=TRUE, 
+                             interpolate=TRUE,
+                             jitter=TRUE, jitterfactor=1, 
                              modelname=NULL, covname=NULL,
                              dataname=NULL, subset=NULL) {
     lambdatype <- match.arg(lambdatype)
@@ -180,10 +181,8 @@ evalCovar.lppm <- local({
 
     #' apply jittering to avoid ties
     if(jitter) {
-      nX <- length(ZX)
-      dZ <- 0.3 * quantile(diff(sortunique(c(ZX, Zvalues))), 1/min(20, nX))
-      ZX <- ZX + rnorm(nX, sd=dZ)
-      Zvalues <- Zvalues + rnorm(length(Zvalues), sd=dZ)
+      ZX <- jitter(ZX, factor=jitterfactor)
+      Zvalues <- jitter(Zvalues, factor=jitterfactor)
     }
 
     lambdaname <- if(is.poisson(model)) "intensity" else lambdatype

@@ -589,7 +589,9 @@ as.linnet.linim <- function(X, ...) {
   pos <- cbind(pos$row, pos$col)
   yvalue <- y$v[pos]
   xvalue <- x$v[pos]
-  changed <- (is.na(yvalue) != is.na(xvalue)) | (yvalue != xvalue)
+  okx <- !is.na(xvalue)
+  oky <- !is.na(yvalue)
+  changed <- (okx != oky) | (okx & oky & yvalue != xvalue)
   df$values[changed] <- yvalue[changed]
   #' restrict main pixel image to network
   m <- as.mask.psp(L, as.mask(y))$m
