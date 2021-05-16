@@ -5,6 +5,7 @@
 ### Part of the `spatstat` family
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/spatstat.linnet)](http://cran.r-project.org/web/packages/spatstat.linnet) 
+![GitHub R package version](https://img.shields.io/github/r-package/v/spatstat/spatstat.linnet)
 
 The original `spatstat` package has been split into several sub-packages.
 
