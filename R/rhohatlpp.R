@@ -13,11 +13,13 @@ rhohat.lpp <- rhohat.lppm <-
            weights=NULL,
            method=c("ratio", "reweight", "transform"),
            horvitz=FALSE,
-           smoother=c("kernel", "local", "decreasing", "increasing"),
+           smoother=c("kernel", "local",
+                      "decreasing", "increasing",
+                      "piecewise"),
            subset=NULL,
            nd=1000, eps=NULL, random=TRUE, 
            n=512, bw="nrd0", adjust=1, from=NULL, to=NULL, 
-           bwref=bw, covname, confidence=0.95, positiveCI) {
+           bwref=bw, covname, confidence=0.95, positiveCI, breaks=NULL) {
   callstring <- short.deparse(sys.call())
   smoother <- match.arg(smoother)
   method <- match.arg(method)
@@ -74,6 +76,7 @@ rhohat.lpp <- rhohat.lppm <-
                n=n, bw=bw, adjust=adjust, from=from, to=to,
                bwref=bwref, covname=covname, covunits=covunits,
                confidence=confidence, positiveCI=positiveCI,
+               breaks=breaks,
                modelcall=modelcall, callstring=callstring)
 }
 
