@@ -14,6 +14,7 @@
 \alias{valid.lppm}
 \alias{vcov.lppm}
 \alias{as.linnet.lppm}
+\alias{response.lppm}
 \title{
   Methods for Fitted Point Process Models on a Linear Network
 }
@@ -49,6 +50,8 @@
   \method{vcov}{lppm}(object, ...)
 
   \method{as.linnet}{lppm}(X, ...)
+
+  \method{response}{lppm}(object)
 }
 \arguments{
   \item{object,fit,x,X}{
@@ -61,9 +64,8 @@
   }
 }
 \details{
-  These are methods for the generic commands
+  These are methods for the \R generic commands
   \code{\link[stats]{coef}},
-  \code{\link{emend}}, 
   \code{\link[stats]{extractAIC}},
   \code{\link[stats]{formula}},
   \code{\link[stats]{logLik}},
@@ -72,23 +74,26 @@
   \code{\link[base]{print}}, 
   \code{\link[base]{summary}}, 
   \code{\link[stats]{terms}},
-  \code{\link[stats]{update}},
-  \code{\link{valid}}
-  and
-  \code{\link[stats]{vcov}}
+  \code{\link[stats]{update}} and
+  \code{\link[stats]{vcov}},
+  and the \pkg{spatstat} generic commands
+  \code{\link{as.linnet}},
+  \code{\link[spatstat.core]{emend}},
+  \code{\link[spatstat.core]{response}} and 
+  \code{\link[spatstat.core]{valid}},
   for the class \code{"lppm"}. 
 }
 \value{
-  See the default methods.
+  For \code{as.linnet.lppm} a linear network (object of class \code{"linnet"}).
+  For \code{emend.lppm} another fitted model of the same class \code{"lppm"}.
+  For \code{response.lppm} a spatial point pattern on a linear network
+  (object of class \code{"lpp"}).
+  For \code{valid.lppm} a logical value.
+
+  For the other methods, see the help for the default methods.
 }
 \author{
-  \adrian
-  
-  
-  \rolf
-  
-  and \ege
-  
+  \spatstatAuthors.
 }
 \seealso{
   \code{\link{lppm}},
@@ -108,6 +113,7 @@
   update(fit, ~1)
   valid(fit)
   vcov(fit)
+  response(fit)
 }
 \keyword{spatial}
 \keyword{models}

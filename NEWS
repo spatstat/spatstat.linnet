@@ -1,4 +1,15 @@
 
+        CHANGES IN spatstat.linnet VERSION 2.2-1.001
+
+OVERVIEW
+
+    o Minor additions
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o response.lppm
+    Method for 'response' for fitted point process models on a network.
+    
         CHANGES IN spatstat.linnet VERSION 2.2-1
 
 OVERVIEW

@@ -366,3 +366,4 @@ emend.lppm <- function(object, ...) {
   return(object)
 }
 
+response.lppm <- function(object) { data.lppm(object) }
