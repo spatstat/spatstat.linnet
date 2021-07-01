@@ -11,7 +11,7 @@ env:
   USE_BSPM: "true"
   _R_CHECK_FORCE_SUGGESTS_: "false"
   SPATSTAT_TEST: "true"
-  R_REMOTES_UPGRADE: "never"
+  R_REMOTES_UPGRADE: "false"
 
 jobs:
   ci:
@@ -34,7 +34,7 @@ jobs:
           ./run.sh bootstrap
 
       - name: Dependencies Binary
-        run: ./run.sh install_r spatstat.data spatstat.geom spatstat.core
+        run: ./run.sh install_r spatstat
 
       - name: Dependencies
         run: ./run.sh install_all
