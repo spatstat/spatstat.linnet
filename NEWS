@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.2-1.002
+        CHANGES IN spatstat.linnet VERSION 2.2-1.003
 
 OVERVIEW
 
@@ -22,7 +22,10 @@ BUG FIXES
     instead of a pixel image on a network (class 'linim').
     [Spotted by Marc Schneble.]
     Fixed.
-    
+
+    o bw.voronoi
+    Printed output stated that the cross-validation criterion was minimised
+    instead of maximised.
 
         CHANGES IN spatstat.linnet VERSION 2.2-1
 
