@@ -1,7 +1,7 @@
 ##
 ##   Math.linim.R
 ##
-##   $Revision: 1.9 $ $Date: 2020/10/31 08:47:06 $
+##   $Revision: 1.10 $ $Date: 2021/07/01 01:56:18 $
 ##
 
 Math.linim <- function(x, ...){
@@ -58,7 +58,11 @@ LinimOp <- function(e1, e2=NULL, op) {
     netted <- is.linim(e1)
   } else {
     expr <- parse(text = paste("e1", op, "e2"))
-    netted <- is.linim(e1) && is.linim(e2)
+    net1 <- is.linim(e1)
+    net2 <- is.linim(e2)
+    no.force.im1 <- net1 || is.null(dim(e1))
+    no.force.im2 <- net2 || is.null(dim(e2))
+    netted <- (net1 || net2) && no.force.im1 && no.force.im2
   }
   result <- if(netted) {
               do.call(eval.linim, list(expr=expr))

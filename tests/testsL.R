@@ -17,7 +17,7 @@ cat(paste("--------- Executing",
 #
 # Tests for lpp code
 #
-#  $Revision: 1.69 $  $Date: 2021/03/19 03:13:19 $
+#  $Revision: 1.70 $  $Date: 2021/07/01 02:16:16 $
 
 
 local({
@@ -278,6 +278,13 @@ local({
     xcoord <- linfun(function(x,y,seg,tp) { x }, domain(Xchic))
     xcoord <- as.linim(xcoord, dimyx=32)
     integral(xcoord)
+
+    ## Math.linim
+    range(xcoord)
+    stopifnot(is.linim(sqrt(xcoord)))
+    stopifnot(is.linim(-xcoord))
+    stopifnot(is.linim(xcoord + xcoord))
+    stopifnot(is.linim(xcoord/3))
 
     ## options to plot.linim
     plot(xcoord, legend=FALSE)

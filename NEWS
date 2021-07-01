@@ -1,15 +1,29 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.2-1.001
+        CHANGES IN spatstat.linnet VERSION 2.2-1.002
 
 OVERVIEW
 
-    o Minor additions
+    o We thank Marc Schneble for contributions.
+    
+    o Minor additions.
+
+    o Bug fix to Math.linim
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o response.lppm
     Method for 'response' for fitted point process models on a network.
+
+BUG FIXES
+
+    o Math.linim
+    If 'Z' was a pixel image on a network (class 'linim')
+    and 'v' was a single number, then 'Z/v' was a pixel image (class 'im')
+    instead of a pixel image on a network (class 'linim').
+    [Spotted by Marc Schneble.]
+    Fixed.
     
+
         CHANGES IN spatstat.linnet VERSION 2.2-1
 
 OVERVIEW

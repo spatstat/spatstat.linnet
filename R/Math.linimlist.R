@@ -25,7 +25,9 @@ Summary.linimlist <- function(..., na.rm=TRUE){
 #'   if we want to handle combinations of linimlist and im.
 #'   (See 'Math.linim.R' for the definition of 'LinimOp')
 
-Ops.linimlist <- Ops.linim <- function(e1,e2=NULL){ LinimListOp(e1, e2, .Generic) }
+Ops.linimlist <- Ops.linim <- function(e1,e2=NULL){
+  LinimListOp(e1, e2, .Generic)
+}
 
 LinimListOp <- function(e1, e2=NULL, op) {
   if(is.null(e2)) {
