@@ -31,6 +31,7 @@ jobs:
           curl -OLs https://eddelbuettel.github.io/r-ci/run.sh
           chmod 0755 run.sh
           ./run.sh bootstrap
+
       - name: Dependencies
         run: ./run.sh install_all
 
@@ -42,6 +43,7 @@ jobs:
         run: |
           sudo apt-get -y --no-install-recommends --allow-unauthenticated install r-cran-covr
           Rscript -e "covr::codecov(type = 'all')"
+
       - name: Dump logs
         if: failure()
         run: ./run.sh dump_logs
