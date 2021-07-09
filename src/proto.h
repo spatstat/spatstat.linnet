@@ -43,3 +43,4 @@ void linpairdist(int *, double *, double *, int *, double *, double *, double *,
              Functions invoked by .Call
 
 */
+SEXP depthrel(SEXP, SEXP, SEXP, SEXP, SEXP);
