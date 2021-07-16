@@ -1,14 +1,30 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.2-1.003
+        CHANGES IN spatstat.linnet VERSION 2.3-0
 
 OVERVIEW
 
-    o We thank Marc Schneble for contributions.
-    
-    o Minor additions.
+    o We thank Suman Rakshit, Greg McSwiggan and Marc Schneble
+    for contributions.
 
+    o Sufficient Dimension Reduction on a linear network.
+    
+    o Perspective-view plots of linfun and linim objects.
+    
     o Bug fix to Math.linim
 
+    o Minor additions.
+
+NEW FUNCTIONS
+
+    o sdr.lpp
+    Sufficient Dimension Reduction on a linear network.
+    [Contributed by Suman Rakshit.]
+    
+    o persp.linfun, persp.linim
+    Perspective-view plots of functions on a linear network (class linim)
+    and images on a linear network (class linfun).
+    [Written by Adrian Baddeley and Greg McSwiggan.]
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o response.lppm
