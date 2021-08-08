@@ -211,9 +211,9 @@
   This technique assumes that \code{covariate} has continuous values.
   It is not applicable to covariates with categorical (factor) values
   or discrete values such as small integers.
-  For a categorical covariate, use
-  \code{\link{intensity.quadratcount}} applied to the result of
-  \code{\link{quadratcount}(X, tess=covariate)}.
+%  For a categorical covariate, use
+%  \code{\link{intensity.quadratcount}} applied to the result of
+%  \code{\link{quadratcount}(X, tess=covariate)}.
 
   The argument \code{covariate} should be a pixel image, or a function,
   or one of the strings \code{"x"} or \code{"y"} signifying the
