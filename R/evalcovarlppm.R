@@ -3,14 +3,15 @@
 #'
 #'   evalCovar method for class lppm
 #'
-#'   $Revision: 1.2 $ $Date: 2021/04/08 03:42:31 $
+#'   $Revision: 1.6 $ $Date: 2021/08/25 08:31:48 $
 
 
 evalCovar.lppm <- local({
 
   evalCovar.lppm <- function(model, covariate, ...,
                              lambdatype=c("cif", "trend", "intensity"),
-                             eps=NULL, nd=1000,
+                             eps=NULL, dimyx=NULL, xy=NULL,
+                             delta=NULL, nd=NULL,
                              interpolate=TRUE,
                              jitter=TRUE, jitterfactor=1, 
                              modelname=NULL, covname=NULL,
@@ -19,6 +20,10 @@ evalCovar.lppm <- local({
     #' evaluate covariate values at data points and at pixels
     ispois <- is.poisson(model)
     csr <- ispois && is.stationary(model)
+    #' arguments controlling resolution
+    pixels.given <- !(is.null(eps) && is.null(dimyx) && is.null(xy))
+    sampling.given <- !(is.null(delta) && is.null(nd))
+    resolution.given <- pixels.given || sampling.given
 
     #' determine names
     if(is.null(modelname))
@@ -70,9 +75,14 @@ evalCovar.lppm <- local({
         if(is.linim(covariate)) {
           type <- "linim"
           Zimage <- covariate
+          if(resolution.given) Zimage <- as.linim(Zimage,
+                                                  eps=eps, dimyx=dimyx, xy=xy,
+                                                  delta=delta, nd=nd)
         } else {
           type <- "im"
-          Zimage <- as.linim(covariate, L)
+          Zimage <- as.linim(covariate, L,
+                             eps=eps, dimyx=dimyx, xy=xy,
+                             delta=delta, nd=nd)
         }
         if(!interpolate) {
           #' look up covariate values at quadrature points
@@ -88,7 +98,9 @@ evalCovar.lppm <- local({
         ZX <- Zvalues[isdat]
       } else if(is.function(covariate)) {
         type <- "function"
-        Zimage <- as.linim(covariate, L)
+        Zimage <- as.linim(covariate, L,
+                           eps=eps, dimyx=dimyx, xy=xy,
+                           delta=delta, nd=nd)
         #' evaluate exactly at quadrature points
         Zvalues <- covariate(U$x, U$y)
         if(!all(is.finite(Zvalues)))
@@ -109,7 +121,7 @@ evalCovar.lppm <- local({
     } else {
       #' ...................  marked .......................
       if(!is.multitype(model))
-      stop("Only implemented for multitype models (factor marks)")
+        stop("Only implemented for multitype models (factor marks)")
       marx <- marks(U, dfok=FALSE)
       possmarks <- levels(marx)
       #' single image: replicate 
@@ -126,7 +138,14 @@ evalCovar.lppm <- local({
         islinim <- sapply(covariate, is.linim)
         type <- if(all(islinim)) "linim" else "im"
         Zimage <- as.solist(covariate)
-        Zimage[!islinim] <- lapply(Zimage[!islinim], as.linim, L=L)
+        #' convert 2D pixel images to 'linim'
+        Zimage[!islinim] <- lapply(Zimage[!islinim], as.linim, L=L,
+                                   eps=eps, dimyx=dimyx, xy=xy,
+                                   delta=delta, nd=nd)
+        if(resolution.given) 
+          Zimage[islinim] <- lapply(Zimage[!islinim], as.linim,
+                                   eps=eps, dimyx=dimyx, xy=xy,
+                                   delta=delta, nd=nd)
         #' evaluate covariate at each data point by interpolation
         Zvalues <- numeric(npoints(U))
         for(k in seq_along(possmarks)) {
@@ -165,7 +184,9 @@ evalCovar.lppm <- local({
         Zimage <- list()
         for(k in seq_along(possmarks))
           Zimage[[k]] <- as.linim(functioncaller, L=L, m=possmarks[k],
-                                  f=covariate)
+                                  f=covariate,
+                                  eps=eps, dimyx=dimyx, xy=xy,
+                                  delta=delta, nd=nd)
         #' collapse function body to single string
         covname <- singlestring(covname)
       } else if(is.null(covariate)) {

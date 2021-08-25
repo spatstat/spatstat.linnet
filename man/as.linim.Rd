@@ -14,11 +14,11 @@
 
   \method{as.linim}{default}(X, L, \dots,
                              eps = NULL, dimyx = NULL, xy = NULL,
-                             delta=NULL)
+                             delta=NULL, nd=NULL)
 
   \method{as.linim}{linfun}(X, L=domain(X), \dots,
                             eps = NULL, dimyx = NULL, xy = NULL,
-                            delta=NULL)
+                            delta=NULL, nd=NULL)
 }
 \arguments{
   \item{X}{
@@ -38,6 +38,10 @@
     Optional. Numeric value giving the approximate distance
     (in coordinate units) between successive
     sample points along each segment of the network.
+  }
+  \item{nd}{
+    Optional. Integer giving the (approximate) number of 
+    sample points on the network. Ignored if \code{delta} is given.
   }
 }
 \details{

@@ -1,9 +1,19 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-0.001
+        CHANGES IN spatstat.linnet VERSION 2.3-0.002
 
 OVERVIEW
 
+    o More control over resolution of 'linim' objects
+    
     o Tweaks to help files.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o as.linim.default, as.linim.linfun
+    New argument 'nd'
+
+    o integral.linfun
+    New argument 'nd'
 
 
         CHANGES IN spatstat.linnet VERSION 2.3-0

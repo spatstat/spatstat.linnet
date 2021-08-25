@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.79 $   $Date: 2020/12/19 05:25:06 $
+#  $Revision: 1.80 $   $Date: 2021/08/25 08:19:56 $
 #
 #  Image/function on a linear network
 #
@@ -367,13 +367,14 @@ as.linim <- function(X, ...) {
 }
 
 as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
-                                        delta = NULL) {
+                                        delta = NULL, nd = NULL) {
   stopifnot(inherits(L, "linnet"))
   Y <- as.im(X, W=Frame(L), ..., eps=eps, dimyx=dimyx, xy=xy)
   M <- as.mask.psp(as.psp(L), as.owin(Y))
   Y[complement.owin(M)] <- NA
   df <- NULL
-  if(!is.null(delta)) {
+  if(!is.null(delta) || !is.null(nd)) {
+    if(is.null(delta)) delta <- volume(L)/nd
     df <- pointsAlongNetwork(L, delta)
     pix <- nearest.valid.pixel(df$x, df$y, Y)
     df$xc <- Y$xcol[pix$col]
@@ -388,34 +389,29 @@ as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
   return(out)
 }
 
-pointsAlongNetwork <- local({
-
-  pointsAlongNetwork <- function(L, delta) {
-    #' sample points evenly spaced along each segment
-    stopifnot(inherits(L, "linnet"))
-    S <- as.psp(L)
-    ns <- nsegments(S)
-    seglen <- lengths_psp(S)
-    ends <- as.data.frame(S)
-    nsample <- pmax(1, ceiling(seglen/delta))
-    df <- NULL
-    x0 <- ends$x0
-    y0 <- ends$y0
-    x1 <- ends$x1
-    y1 <- ends$y1
-    for(i in seq_len(ns)) {
-      nn <- nsample[i] + 1L
-      tcut <- seq(0, 1, length.out=nn)
-      tp <- (tcut[-1] + tcut[-nn])/2
-      x <- x0[i] * (1-tp) + x1[i] * tp
-      y <- y0[i] * (1-tp) + y1[i] * tp
-      df <- rbind(df, data.frame(x=x, y=y, seg=i, tp=tp))
-    }
-    return(df)          
+pointsAlongNetwork <- function(L, delta) {
+  #' sample points evenly spaced along each segment
+  stopifnot(inherits(L, "linnet"))
+  S <- as.psp(L)
+  ns <- nsegments(S)
+  seglen <- lengths_psp(S)
+  ends <- as.data.frame(S)
+  nsample <- pmax(1, ceiling(seglen/delta))
+  df <- NULL
+  x0 <- ends$x0
+  y0 <- ends$y0
+  x1 <- ends$x1
+  y1 <- ends$y1
+  for(i in seq_len(ns)) {
+    nn <- nsample[i] + 1L
+    tcut <- seq(0, 1, length.out=nn)
+    tp <- (tcut[-1] + tcut[-nn])/2
+    x <- x0[i] * (1-tp) + x1[i] * tp
+    y <- y0[i] * (1-tp) + y1[i] * tp
+    df <- rbind(df, data.frame(x=x, y=y, seg=i, tp=tp))
   }
-
-  pointsAlongNetwork
-})
+  return(df)          
+}
 
 as.linim.linim <- function(X, ...) {
   if(length(list(...)) == 0)

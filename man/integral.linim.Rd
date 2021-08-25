@@ -11,7 +11,7 @@
 \usage{
 \method{integral}{linim}(f, domain=NULL, ...)
 
-\method{integral}{linfun}(f, domain=NULL, ..., delta)
+\method{integral}{linfun}(f, domain=NULL, ..., delta, nd)
 }
 \arguments{
   \item{f}{
@@ -30,6 +30,10 @@
     The step length (in coordinate units)
     for computing the approximate integral.
     A single positive number.
+  }
+  \item{nd}{
+    Optional. 
+    Integer giving the approximate number of sample points on the network.
   }
 }
 \details{

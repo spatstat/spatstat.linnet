@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.14 $   $Date: 2019/07/30 07:12:50 $
+#   $Revision: 1.15 $   $Date: 2021/08/25 08:19:10 $
 #
 
 linfun <- function(f, L) {
@@ -53,7 +53,7 @@ summary.linfun <- function(object, ...) { print(object, ...) }
 
 as.linim.linfun <- function(X, L=domain(X),
                             ..., eps = NULL, dimyx = NULL, xy = NULL,
-                                       delta=NULL) {
+                                       delta=NULL, nd=NULL) {
   if(is.null(L))
     L <- domain(X)
   #' create template
@@ -61,7 +61,7 @@ as.linim.linfun <- function(X, L=domain(X),
   if(length(typical) != 1)
     stop(paste("The function must return a single value",
                "when applied to a single point"))
-  Y <- as.linim(typical, L, eps=eps, dimyx=dimyx, xy=xy, delta=delta)
+  Y <- as.linim(typical, L, eps=eps, dimyx=dimyx, xy=xy, delta=delta, nd=nd)
   # extract coordinates of sample points along network
   df <- attr(Y, "df")
   coo <- df[, c("x", "y", "mapXY", "tp")]
@@ -106,7 +106,7 @@ plot.linfun <- function(x, ..., L=NULL, main) {
   if(is.null(L)) L <- as.linnet(x)
   argh <- list(...)
   fargnames <- get("otherfargs", envir=environment(x))
-  resolution <- c("eps", "dimyx", "xy", "delta")
+  resolution <- c("eps", "dimyx", "xy", "delta", "nd")
   convert <- names(argh) %in% c(fargnames, resolution)
   Z <- do.call(as.linim, append(list(x, L=L), argh[convert]))
   rslt <- do.call(plot.linim, append(list(Z, main=main), argh[!convert]))
@@ -130,9 +130,10 @@ as.function.linfun <- function(x, ...) {
   return(x)
 }
 
-integral.linfun <- function(f, domain=NULL, ..., delta) {
+integral.linfun <- function(f, domain=NULL, ..., delta, nd) {
   if(missing(delta)) delta <- NULL
-  integral(as.linim(f, delta=delta), domain=domain, ...)
+  if(missing(nd)) nd <- NULL
+  integral(as.linim(f, delta=delta, nd=nd), domain=domain, ...)
 }
 
 as.linfun <- function(X, ...) {
