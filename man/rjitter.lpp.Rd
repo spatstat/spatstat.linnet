@@ -40,7 +40,8 @@
 }
 \value{
   A point pattern on a linear network
-  (object of class \code{"lpp"}).
+  (object of class \code{"lpp"})
+  or a list of such point patterns.
 }
 \author{
   \spatstatAuthors.
@@ -51,7 +52,7 @@
 \examples{
    X <- runiflpp(3, simplenet)
    plot(X, pch=16)
-   Y <- rjitterlpp(X, 0.1)
+   Y <- rjitter(X, 0.1)
    plot(Y, add=TRUE, cols=3)
 }
 \keyword{spatial}
