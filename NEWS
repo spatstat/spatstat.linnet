@@ -1,9 +1,9 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-0.003
+        CHANGES IN spatstat.linnet VERSION 2.3-0.004
 
 OVERVIEW
 
-    o More control over resolution of 'linim' objects
+    o More control over resolution of 'linim' objects.
     
     o Improved documentation.
 
@@ -15,6 +15,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o integral.linfun
     New argument 'nd'
 
+    o rjitterlpp, rjitter.lpp
+    The function 'rjitterlpp' has been renamed 'rjitter.lpp'
+    and is now a method for the generic 'rjitter'.
+    
 
         CHANGES IN spatstat.linnet VERSION 2.3-0
 

@@ -3,7 +3,7 @@
 #
 #  Random point pattern generators for a linear network
 #
-#  $Revision: 1.14 $   $Date: 2021/03/19 04:04:44 $
+#  $Revision: 1.15 $   $Date: 2021/09/10 05:08:10 $
 #
 
 rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
@@ -112,7 +112,7 @@ rlpp <- function(n, f, ..., nsim=1, drop=TRUE) {
   return(result)
 }
 
-rjitterlpp <- function(X, radius, ..., nsim=1, drop=TRUE) {
+rjitter.lpp <- function(X, radius, ..., nsim=1, drop=TRUE) {
   verifyclass(X, "lpp")
   check.1.integer(nsim)
   stopifnot(nsim >= 1)
