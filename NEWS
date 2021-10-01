@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-0.004
+        CHANGES IN spatstat.linnet VERSION 2.3-0.005
 
 OVERVIEW
 
@@ -7,6 +7,8 @@ OVERVIEW
     
     o Improved documentation.
 
+    o Minor improvements and bug fixes.
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o as.linim.default, as.linim.linfun
@@ -18,6 +20,13 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o rjitterlpp, rjitter.lpp
     The function 'rjitterlpp' has been renamed 'rjitter.lpp'
     and is now a method for the generic 'rjitter'.
+
+BUG FIXES
+
+    o rjitterlpp
+    The argument 'radius' was interpreted as a fraction of segment length
+    rather than an absolute distance.
+    Fixed.
     
 
         CHANGES IN spatstat.linnet VERSION 2.3-0
@@ -63,6 +72,7 @@ BUG FIXES
     o bw.voronoi
     Printed output stated that the cross-validation criterion was minimised
     instead of maximised.
+
 
         CHANGES IN spatstat.linnet VERSION 2.2-1
 
