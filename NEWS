@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-0.006
+        CHANGES IN spatstat.linnet VERSION 2.3-1
 
 OVERVIEW
 
@@ -20,6 +20,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o rjitterlpp, rjitter.lpp
     The function 'rjitterlpp' has been renamed 'rjitter.lpp'
     and is now a method for the generic 'rjitter'.
+
+    o rjitterlpp
+    This function still exists, but is now deprecated in favour of 'rjitter.lpp'.
 
 BUG FIXES
 

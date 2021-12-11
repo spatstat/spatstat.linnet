@@ -156,8 +156,8 @@
    set.seed(2020)
    X <- superimpose(A=runiflpp(20, simplenet),
                     B=runifpointOnLines(20, as.psp(simplenet)[1]))
-   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.3, method="McSwiggan"))
-   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.3, distance="euclidean"))
+   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.25, method="McSwiggan"))
+   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.3, nh=8, distance="euclidean"))
 }
 \keyword{spatial}
 \keyword{methods}

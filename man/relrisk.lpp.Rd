@@ -205,7 +205,7 @@
    plot(relrisk(X, 0.2, case="B"))
    head(relrisk(X, 0.2, at="points"))
    ## cross-validated bandwidth selection
-   plot(relrisk(X, bw.relrisklpp, hmax=0.3))
+   plot(relrisk(X, bw.relrisklpp, hmax=0.25))
 
    ## more than 2 types
    if(interactive()) {
