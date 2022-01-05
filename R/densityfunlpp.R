@@ -3,7 +3,7 @@
 ##
 ##    Copyright (c) Greg McSwiggan and Adrian Baddeley 2017-2020
 ##
-##    $Revision: 1.10 $  $Date: 2020/04/18 08:10:11 $
+##    $Revision: 1.11 $  $Date: 2022/01/04 05:30:06 $
 
 densityfun.lpp <- function(X, sigma, ...,
                            weights=NULL, nsigma=1, verbose=FALSE) {

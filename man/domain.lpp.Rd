@@ -30,7 +30,7 @@
   }
 }
 \details{
-  The function \code{\link[spatstat.core]{domain}} is generic,
+  The function \code{\link[spatstat.geom]{domain}} is generic,
   with methods for many classes.
 
   For a spatial object \code{X} 
@@ -53,7 +53,10 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{domain}},
+  \code{\link[spatstat.geom]{domain}},
+  \code{\link[spatstat.random]{domain.rmhmodel}},
+  \code{\link[spatstat.core]{domain.ppm}}.
+  
   \code{\link[spatstat.geom]{Window}},
   \code{\link[spatstat.geom]{Frame}}
 }

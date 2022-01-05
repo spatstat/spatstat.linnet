@@ -3,7 +3,7 @@
 #' 
 #'   Likelihood cross-validation for kernel smoother of point pattern on network
 #'
-#'   $Revision: 1.1 $ $Date: 2020/04/08 06:41:46 $
+#'   $Revision: 1.2 $ $Date: 2022/01/04 05:30:06 $
 #'
 
 bw.lppl <- function(X, ..., srange=NULL, ns=16, sigma=NULL,

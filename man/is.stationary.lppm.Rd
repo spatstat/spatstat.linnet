@@ -30,8 +30,8 @@
   \code{is.poisson(x)} returns \code{TRUE} if \code{x} represents
   a Poisson point process, and \code{FALSE} if not.
 
-  The functions \code{\link[spatstat.core]{is.stationary}}
-  and \code{\link[spatstat.core]{is.poisson}} are generic,
+  The functions \code{\link[spatstat.random]{is.stationary}}
+  and \code{\link[spatstat.random]{is.poisson}} are generic,
   with methods for many classes of models.
 }
 \value{
@@ -45,8 +45,8 @@
   to determine whether a model is a marked
   point process. 
   
-  \code{\link[spatstat.core]{is.stationary}}, 
-  \code{\link[spatstat.core]{is.poisson}} for generics.
+  \code{\link[spatstat.random]{is.stationary}}, 
+  \code{\link[spatstat.random]{is.poisson}} for generics.
 
   \code{\link{summary.lppm}} for detailed information.
 

@@ -1,7 +1,7 @@
 ##
 ##   Math.linimlist.R
 ##
-##   $Revision: 1.1 $ $Date: 2020/10/31 08:47:12 $
+##   $Revision: 1.2 $ $Date: 2022/01/04 05:30:06 $
 ##
 
 Math.linimlist <- function(x, ...){

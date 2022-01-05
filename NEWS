@@ -1,4 +1,15 @@
 
+        CHANGES IN spatstat.linnet VERSION 2.3-1.001
+
+OVERVIEW
+
+    o 'spatstat.linnet' now depends on 'spatstat.random'.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o package dependence
+    'spatstat.linnet' now depends on the new package 'spatstat.random'.
+
         CHANGES IN spatstat.linnet VERSION 2.3-1
 
 OVERVIEW

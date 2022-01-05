@@ -3,7 +3,7 @@
 #
 #  Random point pattern generators for a linear network
 #
-#  $Revision: 1.17 $   $Date: 2021/10/01 06:12:25 $
+#  $Revision: 1.18 $   $Date: 2022/01/04 05:30:06 $
 #
 
 rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {

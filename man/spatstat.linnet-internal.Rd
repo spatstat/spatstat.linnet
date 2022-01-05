@@ -1,6 +1,7 @@
 \name{spatstat.linnet-internal} 
 \title{Internal spatstat.linnet functions}
 
+
 %% Linear networks code is corralled here
 \alias{ApplyConnected}
 \alias{DoCountCrossEnds}
@@ -57,6 +58,7 @@
   Internal spatstat.linnet functions.
 }
 \usage{
+
 
 %% Linear networks code is corralled here
 ApplyConnected(X, Engine, r, \dots, rule, auxdata)
