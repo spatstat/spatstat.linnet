@@ -3,10 +3,14 @@
 #
 #  Random point pattern generators for a linear network
 #
-#  $Revision: 1.18 $   $Date: 2022/01/04 05:30:06 $
+#  $Revision: 1.19 $   $Date: 2022/04/06 02:08:52 $
 #
 
 rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
+  if(!missing(nsim)) {
+    check.1.integer(nsim)
+    stopifnot(nsim >= 0)
+  }
   if(missing(L) || is.null(L)) {
     if(inherits(lambda, c("linim", "linfun"))) {
       L <- as.linnet(lambda)
@@ -32,6 +36,10 @@ rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
 
 runiflpp <- function(n, L, nsim=1, drop=TRUE) {
   verifyclass(L, "linnet")
+  if(!missing(nsim)) {
+    check.1.integer(nsim)
+    stopifnot(nsim >= 0)
+  }
   result <- vector(mode="list", length=nsim)
   S <- as.psp(L)
   bugout <- (nsim == 1) && drop
@@ -46,6 +54,10 @@ runiflpp <- function(n, L, nsim=1, drop=TRUE) {
 }
 
 rlpp <- function(n, f, ..., nsim=1, drop=TRUE) {
+  if(!missing(nsim)) {
+    check.1.integer(nsim)
+    stopifnot(nsim >= 0)
+  }
   if(inherits(f, "linfun")) 
     f <- as.linim(f, ...)
   ismulti <- FALSE
@@ -76,7 +88,7 @@ rlpp <- function(n, f, ..., nsim=1, drop=TRUE) {
     return(rlpp(n, flist, nsim=nsim, drop=drop, ...))
   }
   check.1.integer(nsim)
-  if(nsim <= 0) return(list())
+  if(nsim == 0) return(list())
   #' extract data
   L <- as.linnet(f)
   df <- attr(f, "df")
@@ -101,7 +113,7 @@ rlpp <- function(n, f, ..., nsim=1, drop=TRUE) {
   probs <- probs/sum(probs)
   #' 
   result <- vector(mode="list", length=nsim)
-  for(isim in 1:nsim) {
+  for(isim in seq_len(nsim)) {
     #' sample intervals and place point uniformly in each interval
     ii <- sample.int(nr, size=n, replace=TRUE, prob=probs)
     seg <- df[ii, "mapXY"]
@@ -120,7 +132,7 @@ rjitterlpp <- function(X, ...) {
 rjitter.lpp <- function(X, radius, ..., nsim=1, drop=TRUE) {
   verifyclass(X, "lpp")
   check.1.integer(nsim)
-  stopifnot(nsim >= 1)
+  stopifnot(nsim >= 0)
   nX <- npoints(X)
   if (nX == 0) {
     result <- rep(list(X), nsim)
@@ -142,7 +154,7 @@ rjitter.lpp <- function(X, radius, ..., nsim=1, drop=TRUE) {
   ra <- hi - lo
   ##
   result <- vector(mode="list", length=nsim)
-  for(isim in 1:nsim) {
+  for(isim in seq_len(nsim)) {
     tnew <- lo + ra * runif(nX)
     tnew <- pmax(0, pmin(1, tnew))
     result[[isim]] <- as.lpp(seg=segX, tp=tnew, L=L, marks=mX)
