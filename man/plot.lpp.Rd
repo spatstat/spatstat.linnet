@@ -11,7 +11,7 @@
 \method{plot}{lpp}(x, \dots, main, add = FALSE,
                    use.marks=TRUE, which.marks=NULL,
                    show.all = !add, show.window=FALSE, show.network=TRUE, 
-                   do.plot = TRUE, multiplot=TRUE) 
+                   do.plot = TRUE, multiplot=TRUE, crossticks=FALSE) 
 }
 \arguments{
   \item{x}{
@@ -63,6 +63,10 @@
   }
   \item{multiplot}{
     Logical value giving permission to display multiple plots.
+  }
+  \item{crossticks}{
+    Logical value. If \code{TRUE}, points are drawn as short line
+    segments perpendicular to the network.
   }
 }
 \details{

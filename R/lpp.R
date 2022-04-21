@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.71 $   $Date: 2020/12/19 05:25:06 $
+#  $Revision: 1.73 $   $Date: 2022/04/21 06:03:04 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -101,7 +101,7 @@ plot.lpp <- function(x, ..., main, add=FALSE,
                      use.marks=TRUE, which.marks=NULL,
                      show.all=!add, show.window=FALSE,
                      show.network=TRUE,
-                     do.plot=TRUE, multiplot=TRUE) {
+                     do.plot=TRUE, multiplot=TRUE, crossticks=FALSE) {
   if(missing(main))
     main <- short.deparse(substitute(x))
   ## Handle multiple columns of marks as separate plots
@@ -153,14 +153,52 @@ plot.lpp <- function(x, ..., main, add=FALSE,
                     extrargs=c("lty", "lwd", "col"))
   }
   ## plot points, legend, title
-  ans <- do.call.matched(plot.ppp,
-                         c(list(x=P, add=TRUE, main=main,
-                                use.marks=use.marks, which.marks=which.marks,
-                                show.all=show.all, show.window=FALSE),
-                           list(...)),
-                         extrargs=c("shape", "size", "pch", "cex",
-                           "fg", "bg", "cols", "lty", "lwd", "etch",
-                           "cex.main", "col.main", "line", "outer", "sub"))
+  symapargs <- c("shape",
+                 "size", "cex",
+                 "pch", "chars",
+                 "fg", "bg", "col", "cols", "border", "fill",
+                 "lty", "lwd", 
+                 "direction", "arrowtype", "headlength", "headangle", 
+                 "etch")
+  syargs <- c(symapargs, "change")
+  if(!crossticks) {
+    ## plot points as symbols
+    ans <- do.call.matched(plot.ppp,
+                           c(list(x=P, add=TRUE, main=main,
+                                  use.marks=use.marks, which.marks=which.marks,
+                                  show.all=show.all, show.window=FALSE),
+                             list(...)),
+                           extrargs=syargs)
+  } else {
+    ## plot points as crossticks
+    argh <- list(...)
+    L <- as.linnet(x)
+    S <- as.psp(L)
+    ## default size
+    if(is.null(argh$size))
+      argh$size <- median(distmap(S))
+    ## compute direction of each crosstick
+    ang <- angles.psp(S)
+    segX <- coords(x)$seg
+    angX <- ang[segX]
+    angcross <- angX * 180/pi + 90
+    ## set direction of ticks in legend
+    leg.side <- argh$leg.side %orifnull% "left"
+    leg.side <- match.arg(leg.side, c("left", "bottom", "top", "right"))
+    legdir <- if(leg.side %in% c("left", "right")) 0 else 90
+    leg.args <- resolve.defaults(list(direction=legdir), argh$leg.args)
+    ## plot
+    ans <- do.call.matched(plot.ppp,
+                           resolve.defaults(list(x=P, add=TRUE, main=main,
+                                                 use.marks=use.marks, which.marks=which.marks,
+                                                 show.all=show.all, show.window=FALSE,
+                                                 leg.args=leg.args,
+                                                 shape="arrows",
+                                                 internal=list(change=list(direction=angcross))),
+                                            argh,
+                                            list(arrowtype=0)),
+                           extrargs=syargs)
+  }
   return(invisible(ans))
 }
 

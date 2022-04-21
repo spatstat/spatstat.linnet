@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.002
+        CHANGES IN spatstat.linnet VERSION 2.3-2.003
 
 OVERVIEW
 
@@ -7,6 +7,11 @@ OVERVIEW
 
     o Minor improvements and bug fixes.
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o plot.lpp
+    New argument 'crossticks' specifies whether to plot the points
+    as short line segments perpendicular to the network.
 
         CHANGES IN spatstat.linnet VERSION 2.3-2
 
