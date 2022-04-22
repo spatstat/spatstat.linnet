@@ -11,7 +11,7 @@
 \method{plot}{lpp}(x, \dots, main, add = FALSE,
                    use.marks=TRUE, which.marks=NULL,
                    show.all = !add, show.window=FALSE, show.network=TRUE, 
-                   do.plot = TRUE, multiplot=TRUE, crossticks=FALSE) 
+                   do.plot = TRUE, multiplot=TRUE) 
 }
 \arguments{
   \item{x}{
@@ -64,10 +64,6 @@
   \item{multiplot}{
     Logical value giving permission to display multiple plots.
   }
-  \item{crossticks}{
-    Logical value. If \code{TRUE}, points are drawn as short line
-    segments perpendicular to the network.
-  }
 }
 \details{
   The linear network is plotted by \code{\link{plot.linnet}},
@@ -82,7 +78,13 @@
     types of points
     \item \code{legend} and \code{leg.side} to control the graphics
     legend
+    \item \code{shape} to control the shape of the symbol
+    (this argument takes precedence over \code{chars}).
   }
+
+  Options for \code{shape} include \code{"circles"}, \code{"squares"}, \code{"arrows"}
+  and \code{"crossticks"}. If \code{shape="crossticks"}, the points are
+  drawn as short line segments perpendicular to the network.
 
   Note that the linear network will be plotted
   even when \code{add=TRUE}, unless \code{show.network=FALSE}.
@@ -101,6 +103,7 @@
 }
 \examples{
   plot(chicago, cols=1:6)
+  plot(chicago, shape="crossticks", cols=1:6)
 }
 \author{
   \spatstatAuthors.

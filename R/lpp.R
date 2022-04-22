@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.73 $   $Date: 2022/04/21 06:03:04 $
+#  $Revision: 1.76 $   $Date: 2022/04/22 06:18:26 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -101,7 +101,7 @@ plot.lpp <- function(x, ..., main, add=FALSE,
                      use.marks=TRUE, which.marks=NULL,
                      show.all=!add, show.window=FALSE,
                      show.network=TRUE,
-                     do.plot=TRUE, multiplot=TRUE, crossticks=FALSE) {
+                     do.plot=TRUE, multiplot=TRUE) {
   if(missing(main))
     main <- short.deparse(substitute(x))
   ## Handle multiple columns of marks as separate plots
@@ -129,76 +129,47 @@ plot.lpp <- function(x, ..., main, add=FALSE,
     }
   }
   ## single plot
-  ## determine space required, including legend
+  ## determine symbol map and plot area required, including legend
   P <- as.ppp(x)
-  a <- plot(P, ..., do.plot=FALSE,
-            use.marks=use.marks, which.marks=which.marks)
-  if(!do.plot) return(a)
+  ans <- plot(P, ..., do.plot=FALSE,
+                use.marks=use.marks, which.marks=which.marks)
+  if(!do.plot) return(ans)
+  
   ## initialise graphics space
   if(!add) {
     if(show.window) {
       plot(Window(P), main=main, invert=TRUE, ...)
     } else {
-      b <- attr(a, "bbox")
+      b <- attr(ans, "bbox")
       plot(b, type="n", main=main, ..., show.all=FALSE)
     }
   }
   ## plot linear network
-  if(show.network) {
-    L <- as.linnet(x)
-    dont.complain.about(L)
+  L <- as.linnet(x)
+  if(show.network) 
     do.call.matched(plot.linnet,
                     resolve.defaults(list(x=quote(L), add=TRUE),
                                      list(...)),
                     extrargs=c("lty", "lwd", "col"))
-  }
-  ## plot points, legend, title
-  symapargs <- c("shape",
-                 "size", "cex",
-                 "pch", "chars",
-                 "fg", "bg", "col", "cols", "border", "fill",
-                 "lty", "lwd", 
-                 "direction", "arrowtype", "headlength", "headangle", 
-                 "etch")
-  syargs <- c(symapargs, "change")
-  if(!crossticks) {
-    ## plot points as symbols
-    ans <- do.call.matched(plot.ppp,
-                           c(list(x=P, add=TRUE, main=main,
-                                  use.marks=use.marks, which.marks=which.marks,
-                                  show.all=show.all, show.window=FALSE),
-                             list(...)),
-                           extrargs=syargs)
-  } else {
-    ## plot points as crossticks
-    argh <- list(...)
-    L <- as.linnet(x)
-    S <- as.psp(L)
-    ## default size
-    if(is.null(argh$size))
-      argh$size <- median(distmap(S))
-    ## compute direction of each crosstick
-    ang <- angles.psp(S)
+  
+  ## assemble data required for symbol map
+  symap <- ans
+  if("shape" %in% symbolmapparnames(symap)) {
+    ## could be using crossticks
+    ## compute direction of network at each data point
+    ang <- angles.psp(as.psp(L))
     segX <- coords(x)$seg
     angX <- ang[segX]
-    angcross <- angX * 180/pi + 90
-    ## set direction of ticks in legend
-    leg.side <- argh$leg.side %orifnull% "left"
-    leg.side <- match.arg(leg.side, c("left", "bottom", "top", "right"))
-    legdir <- if(leg.side %in% c("left", "right")) 0 else 90
-    leg.args <- resolve.defaults(list(direction=legdir), argh$leg.args)
-    ## plot
-    ans <- do.call.matched(plot.ppp,
-                           resolve.defaults(list(x=P, add=TRUE, main=main,
-                                                 use.marks=use.marks, which.marks=which.marks,
-                                                 show.all=show.all, show.window=FALSE,
-                                                 leg.args=leg.args,
-                                                 shape="arrows",
-                                                 internal=list(change=list(direction=angcross))),
-                                            argh,
-                                            list(arrowtype=0)),
-                           extrargs=syargs)
-  }
+  } else angX <- NULL
+  if(use.marks) {
+    marx <- marks(P)
+    if(!is.null(dim(marx)))
+      marx <- marx[, which.marks]
+  } else marx <- NULL
+
+  ## plot points using predetermined symbol map
+  invoke.symbolmap(symap, marx, P, angleref=angX, add=TRUE)
+  
   return(invisible(ans))
 }
 
