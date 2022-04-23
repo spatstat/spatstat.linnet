@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.80 $   $Date: 2022/04/22 08:45:35 $
+#  $Revision: 1.81 $   $Date: 2022/04/23 09:57:24 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -170,7 +170,8 @@ plot.lpp <- function(x, ..., main, add=FALSE,
         marx <- marx[, which.marks]
     } else marx <- NULL
     ## compute required data
-    if("shape" %in% symbolmapparnames(symap)) {
+    pnames <- symbolmapparnames(symap)
+    if("shape" %in% pnames) {
       ## could be using crossticks
       ## compute direction of network at each data point
       ang <- angles.psp(as.psp(L))

@@ -128,7 +128,8 @@
 }
 \examples{
   plot(chicago, cols=1:7)
-  plot(dendrite, shape="crossticks", cols=2:4, size=8)
+  plot(dendrite, shape="crossticks", cols=2:4, size=8,
+                 leg.side="bottom", leg.args=list(lwd=3))
 }
 \author{
   \spatstatAuthors.
