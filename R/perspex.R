@@ -56,7 +56,6 @@ persp.linim <- local({
     }
     #' extract function data
     df <- attr(x, "df")
-    nseg <- nobjects(S)
     #' handle negative values separately if a grid is shown
     if(grid && zlim[1] < 0) {
       dfneg <- df

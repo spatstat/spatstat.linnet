@@ -1,11 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.006
+        CHANGES IN spatstat.linnet VERSION 2.3-2.007
 
 OVERVIEW
 
-    o Minor internal changes to package information.
-
+    o Points along a network can be drawn as cross-ticks.
+    
     o Minor improvements and bug fixes.
+
+    o Minor internal changes to package information.
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
