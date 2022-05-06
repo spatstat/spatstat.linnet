@@ -60,7 +60,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
     weights <- rep(1, np)
   } else {
     stopifnot(is.numeric(weights))
-    check.nvector(weights, np, oneok=TRUE)
+    check.nvector(weights, np, oneok=TRUE, vname="weights")
     if(length(weights) == 1L) weights <- rep(weights, np)
   }
   ## infinite bandwidth
@@ -277,7 +277,7 @@ densityHeat.lpp <- function(x, sigma, ...,
   check.1.real(sigma)
   at <- match.arg(at)
   if(!is.null(weights)) 
-    check.nvector(weights, npoints(x))
+    check.nvector(weights, npoints(x), vname="weights")
   ## internal arguments
   fun         <- resolve.1.default(list(fun=FALSE), list(...))
 
@@ -792,7 +792,7 @@ flatdensityfunlpp <- function(X, ..., disconnect=TRUE, weights=NULL,
   what <- match.arg(what)
   L <- domain(X)
   nX <- npoints(X)
-  if(is.null(weights)) { weights <- rep(1, nX) } else check.nvector(weights, nX)
+  if(is.null(weights)) { weights <- rep(1, nX) } else check.nvector(weights, nX, vname="weights")
   if(!disconnect) {
     #' constant intensity across entire network
     num <- sum(weights)
@@ -836,7 +836,7 @@ flatdensityatpointslpp <- function(X, ...,
   L <- domain(X)
   nX <- npoints(X)
   if(nX == 0) return(numeric(0))
-  if(is.null(weights)) { weights <- rep(1, nX) } else check.nvector(weights, nX)
+  if(is.null(weights)) { weights <- rep(1, nX) } else check.nvector(weights, nX, vname="weights")
   if(!disconnect) {
     #' constant intensity across entire network
     totlen <- volume(L)

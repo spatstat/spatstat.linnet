@@ -15,7 +15,7 @@ densityfun.lpp <- function(X, sigma, ...,
     return(flatdensityfunlpp(X, weights=weights, disconnect=TRUE))
   } else check.finite(sigma)
   if(!is.null(weights)) 
-    check.nvector(weights, npoints(X))
+    check.nvector(weights, npoints(X), vname="weights")
   #' 
   L <- as.linnet(X)
   p <- resolve.heat.steps(sigma, L=L, ..., nsave=nsigma, verbose=verbose)

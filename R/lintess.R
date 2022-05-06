@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.43 $   $Date: 2021/01/07 03:53:35 $
+#'   $Revision: 1.44 $   $Date: 2022/04/28 02:35:47 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -225,7 +225,7 @@ plot.lintess <- local({
            vector = {
              #' vector of values.
              #' validate length of vector
-             check.anyvector(values, ntiles, things="tiles")
+             check.anyvector(values, ntiles, things="tiles", vname="values")
            },
            dataframe = {
              #' data frame or matrix of values.

@@ -13,7 +13,7 @@ heatkernelapprox <- function(X, sigma, nmax=20, floored=TRUE) {
   stopifnot(is.lpp(X))
   nX <- npoints(X)
   if(nX == 0) return(numeric(0))
-  check.nvector(sigma, nX, oneok=TRUE)
+  check.nvector(sigma, nX, oneok=TRUE, vname="sigma")
   stopifnot(all(sigma > 0))
   if(length(sigma) == 1) sigma <- rep(sigma, nX)
   check.1.integer(nmax)

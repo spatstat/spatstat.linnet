@@ -397,7 +397,7 @@ addVertices <- function(L, X, join=NULL, joinmarks=NULL) {
   ## optionally join new vertices to existing network
   if(!is.null(join)) {
     if(is.numeric(join)) {
-      check.nvector(join, nX, things="points of X")
+      check.nvector(join, nX, things="points of X", vname="join")
       out <- joinVertices(out, inew, join, marks=joinmarks)
     } else if(is.character(join)) {
       join <- match.arg(join, c("vertices", "nearest"))
