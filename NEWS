@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.010
+        CHANGES IN spatstat.linnet VERSION 2.3-2.011
 
 OVERVIEW
 
@@ -20,7 +20,8 @@ BUG FIXES
     o rhohat.lpp, rhohat.lppm
     The argument 'subset' was not handled correctly in the internal data.
     The estimated function 'rho' was correct
-    but the results of 'predict.rhohat' may have been incorrect.
+    but the results of 'predict.rhohat' may have been incorrect
+    and were computed only on the 'subset'.
     Fixed.
 
         CHANGES IN spatstat.linnet VERSION 2.3-2

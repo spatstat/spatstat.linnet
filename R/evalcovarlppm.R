@@ -15,7 +15,7 @@ evalCovar.lppm <- local({
                              interpolate=TRUE,
                              jitter=TRUE, jitterfactor=1, 
                              modelname=NULL, covname=NULL,
-                             dataname=NULL, subset=NULL) {
+                             dataname=NULL, subset=NULL, clip.predict=TRUE) {
     lambdatype <- match.arg(lambdatype)
     #' evaluate covariate values at data points and at pixels
     ispois <- is.poisson(model)
@@ -218,7 +218,7 @@ evalCovar.lppm <- local({
     lambdaimage <- predict(model, type=lambdatype)
     
     #' restrict image to subset 
-    if(!is.null(subset)) {
+    if(clip.predict && !is.null(subset)) {
       Zimage      <- applySubset(Zimage, subset)
       lambdaimage <- applySubset(lambdaimage, subset)
     }

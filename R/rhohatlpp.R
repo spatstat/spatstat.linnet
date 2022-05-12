@@ -76,6 +76,7 @@ rhohat.lpp <- rhohat.lppm <-
                horvitz=horvitz,
                smoother=smoother,
                resolution=list(nd=nd, eps=eps, random=random),
+               evalCovarArgs=list(clip.predict=FALSE),
                n=n, bw=bw, adjust=adjust, from=from, to=to,
                bwref=bwref, covname=covname, covunits=covunits,
                confidence=confidence, positiveCI=positiveCI,

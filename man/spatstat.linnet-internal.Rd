@@ -85,7 +85,7 @@ densitypointsLPP(x, sigma, \dots,
                  dx, dt, iterMax, verbose, debug)
 \method{evalCovar}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, delta, nd, interpolate, jitter, jitterfactor,
-          modelname, covname, dataname, subset)
+          modelname, covname, dataname, subset, clip.predict)
 flatdensityfunlpp(X, \dots, disconnect, weights, what)
 flatdensityatpointslpp(X, \dots, leaveoneout, disconnect, weights, what)
 getlambda.lpp(lambda, X, subset, \dots,
