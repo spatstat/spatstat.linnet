@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.009
+        CHANGES IN spatstat.linnet VERSION 2.3-2.010
 
 OVERVIEW
 
@@ -14,6 +14,14 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o plot.lpp
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.
+
+BUG FIXES
+
+    o rhohat.lpp, rhohat.lppm
+    The argument 'subset' was not handled correctly in the internal data.
+    The estimated function 'rho' was correct
+    but the results of 'predict.rhohat' may have been incorrect.
+    Fixed.
 
         CHANGES IN spatstat.linnet VERSION 2.3-2
 

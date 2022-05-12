@@ -3,7 +3,7 @@
 #'
 #'   evalCovar method for class lppm
 #'
-#'   $Revision: 1.6 $ $Date: 2021/08/25 08:31:48 $
+#'   $Revision: 1.7 $ $Date: 2022/05/10 07:53:09 $
 
 
 evalCovar.lppm <- local({
@@ -232,7 +232,7 @@ evalCovar.lppm <- local({
                    weights     = wt,
                    ZX          = ZX,
                    type        = type)
-    return(list(values=values, info=info))
+    return(list(values=values, info=info, X=X))
   }
 
   xcoordfun <- function(x,y,m){x}

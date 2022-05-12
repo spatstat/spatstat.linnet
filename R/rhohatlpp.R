@@ -32,10 +32,13 @@ rhohat.lpp <- rhohat.lppm <-
   # validate model
   if(is.lpp(object)) {
     X <- object
-    model <- lppm(object, ~1, eps=eps, nd=nd, random=random)
+    model <- eval(substitute(
+      lppm(object, ~1, eps=eps, nd=nd, random=random, subset=SUBSET),
+      list(SUBSET=subset)))
     reference <- "Lebesgue"
     modelcall <- NULL
   } else if(inherits(object, "lppm")) {
+    if(!is.null(subset)) object <- update(object, subset=subset)
     model <- object
     X <- model$X
     reference <- "model"
