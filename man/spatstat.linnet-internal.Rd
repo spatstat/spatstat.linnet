@@ -22,7 +22,7 @@
 \alias{Window<-.linnet}
 \alias{Window<-.lpp}
 \alias{densitypointsLPP}
-\alias{evalCovar.lppm}
+\alias{spatialCovariateEvidence.lppm}
 \alias{flatdensityfunlpp}
 \alias{flatdensityatpointslpp}
 \alias{getlambda.lpp}
@@ -83,7 +83,7 @@ densitypointsLPP(x, sigma, \dots,
                  weights, nsigma, leaveoneout, fast,
                  fastmethod, floored,
                  dx, dt, iterMax, verbose, debug)
-\method{evalCovar}{lppm}(model, covariate, \dots, lambdatype, 
+\method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, delta, nd, interpolate, jitter, jitterfactor,
           modelname, covname, dataname, subset, clip.predict)
 flatdensityfunlpp(X, \dots, disconnect, weights, what)

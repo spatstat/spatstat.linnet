@@ -1,14 +1,14 @@
 #'
 #'   evalcovarlppm.R
 #'
-#'   evalCovar method for class lppm
+#'   spatialCovariateEvidence method for class lppm
 #'
-#'   $Revision: 1.7 $ $Date: 2022/05/10 07:53:09 $
+#'   $Revision: 1.8 $ $Date: 2022/05/20 07:37:35 $
 
 
-evalCovar.lppm <- local({
+spatialCovariateEvidence.lppm <- local({
 
-  evalCovar.lppm <- function(model, covariate, ...,
+  spatialCovariateEvidence.lppm <- function(model, covariate, ...,
                              lambdatype=c("cif", "trend", "intensity"),
                              eps=NULL, dimyx=NULL, xy=NULL,
                              delta=NULL, nd=NULL,
@@ -250,6 +250,6 @@ evalCovar.lppm <- local({
     if(is.imlist(X)) return(solapply(X, "[", i=subset, drop=FALSE))
     return(NULL)
   }
-  evalCovar.lppm
+  spatialCovariateEvidence.lppm
 })
 
