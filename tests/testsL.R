@@ -763,20 +763,20 @@ local({
   }
 
   #' fundamental utilities:
-  #' evalCovar
+  #' spatialCovariateEvidence (was: evalCovar)
   ycoord <- function(x,y) { y }
   if(ALWAYS) YS <- as.linim(ycoord, L=domain(spiders))
   if(FULLTEST) YC <- as.linim(ycoord, L=domain(chicago))
 
-  if(ALWAYS) aT <- evalCovar(fit1, YS, interpolate=TRUE)
+  if(ALWAYS) aT <- spatialCovariateEvidence(fit1, YS, interpolate=TRUE)
   if(FULLTEST) {
-    aF <- evalCovar(fit1, YS, interpolate=FALSE)
-    dT <- evalCovar(fit1, ycoord, interpolate=TRUE)
-    dF <- evalCovar(fit1, ycoord, interpolate=FALSE)
-    bT <- evalCovar(fit2, YC, interpolate=TRUE)
-    bF <- evalCovar(fit2, YC, interpolate=FALSE)
-    cT <- evalCovar(fit2, ycoord, interpolate=TRUE)
-    cF <- evalCovar(fit2, ycoord, interpolate=FALSE)
+    aF <- spatialCovariateEvidence(fit1, YS, interpolate=FALSE)
+    dT <- spatialCovariateEvidence(fit1, ycoord, interpolate=TRUE)
+    dF <- spatialCovariateEvidence(fit1, ycoord, interpolate=FALSE)
+    bT <- spatialCovariateEvidence(fit2, YC, interpolate=TRUE)
+    bF <- spatialCovariateEvidence(fit2, YC, interpolate=FALSE)
+    cT <- spatialCovariateEvidence(fit2, ycoord, interpolate=TRUE)
+    cF <- spatialCovariateEvidence(fit2, ycoord, interpolate=FALSE)
   }
   
 })
