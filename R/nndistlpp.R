@@ -1,7 +1,7 @@
 #
 # nndistlpp.R
 #
-#  $Revision: 1.28 $ $Date: 2021/01/07 03:53:21 $
+#  $Revision: 1.29 $ $Date: 2022/05/21 09:52:11 $
 #
 # Methods for nndist, nnwhich, nncross for linear networks
 #

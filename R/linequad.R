@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.16 $ $Date: 2021/01/07 03:53:56 $
+#  $Revision: 1.17 $ $Date: 2022/05/21 09:52:11 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 

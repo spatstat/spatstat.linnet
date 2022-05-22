@@ -2,7 +2,7 @@
 #'
 #'  Nearest data point to each vertex of a network
 #'
-#'  $Revision: 1.4 $  $Date: 2021/01/07 03:53:14 $
+#'  $Revision: 1.5 $  $Date: 2022/05/21 09:52:11 $
 #'
 
 nnfromvertex <- function(X, what=c("dist", "which"), k=1) {

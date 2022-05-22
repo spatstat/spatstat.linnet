@@ -2,7 +2,7 @@
 #
 #   disc.R
 #
-#   $Revision: 1.34 $ $Date: 2021/01/07 03:54:12 $
+#   $Revision: 1.35 $ $Date: 2022/05/21 09:52:11 $
 #
 #   Compute the disc of radius r in a linear network
 #
