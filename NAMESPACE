@@ -4,10 +4,9 @@
 
 import(stats,graphics,grDevices,methods,utils)
 
-import(spatstat.utils)
-import(spatstat.data,spatstat.geom,spatstat.random,spatstat.core)
-
-import(Matrix,spatstat.sparse)
+import(spatstat.utils,Matrix,spatstat.sparse)
+import(spatstat.data,spatstat.geom,spatstat.random)
+import(spatstat.explore,spatstat.model)
 
 ## ................ Load dynamic library ..............
 ##      (native routines are registered in init.c)

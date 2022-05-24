@@ -51,7 +51,7 @@
   \code{\link[utils]{unstack}}
 
   \code{\link[spatstat.geom]{unstack.ppp}},
-  \code{\link[spatstat.core]{unstack.msr}}.
+  \code{\link[spatstat.model]{unstack.msr}}.
 
   See also methods for the generic \code{\link[base]{split}} such as
   \code{\link[spatstat.geom]{split.ppx}} which applies to \code{"lpp"} objects.

@@ -1,8 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.015
+        CHANGES IN spatstat.linnet VERSION 2.3-2.017
 
 OVERVIEW
 
+    o spatstat.linnet now depends on the new packages 'spatstat.explore'
+    and 'spatstat.model' rather than the old 'spatstat.core'.
+    
     o Points along a network can be drawn as cross-ticks.
     
     o Minor improvements and bug fixes.
@@ -13,6 +16,10 @@ OVERVIEW
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o Package dependence
+    'spatstat.linnet' now depends on the new packages 'spatstat.explore'
+    and 'spatstat.model' rather than the old 'spatstat.core'.
+    
     o plot.lpp
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.

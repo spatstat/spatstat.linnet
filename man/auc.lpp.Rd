@@ -38,9 +38,9 @@
   This command computes the AUC, the area under the Receiver Operating
   Characteristic curve. The ROC itself is computed by \code{\link{roc}}.
 
-  The function \code{\link[spatstat.core]{auc}} is generic,
+  The function \code{\link[spatstat.explore]{auc}} is generic,
   with methods for \code{"ppp"} and \code{"ppm"} described in the help file
-  for \code{\link[spatstat.core]{auc}}.
+  for \code{\link[spatstat.explore]{auc}}.
 
   This help file describes the methods for classes \code{"lpp"} and
   \code{"lppm"}.
@@ -99,8 +99,8 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{auc}},
-  \code{\link[spatstat.core]{roc}},
+  \code{\link[spatstat.explore]{auc}},
+  \code{\link[spatstat.explore]{roc}},
   \code{\link{roc.lpp}}
 }
 \examples{

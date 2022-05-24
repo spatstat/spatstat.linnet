@@ -78,9 +78,9 @@
   \code{\link[stats]{vcov}},
   and the \pkg{spatstat} generic commands
   \code{\link{as.linnet}},
-  \code{\link[spatstat.core]{emend}},
-  \code{\link[spatstat.core]{response}} and 
-  \code{\link[spatstat.core]{valid}},
+  \code{\link[spatstat.model]{emend}},
+  \code{\link[spatstat.model]{response}} and 
+  \code{\link[spatstat.model]{valid}},
   for the class \code{"lppm"}. 
 }
 \value{

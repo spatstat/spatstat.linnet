@@ -63,7 +63,7 @@
   }
 }
 \details{
-  The function \code{\link[spatstat.core]{densityHeat}} is generic.
+  The function \code{\link[spatstat.explore]{densityHeat}} is generic.
   This is the method for the class \code{"lpp"} of points on a linear
   network.
   

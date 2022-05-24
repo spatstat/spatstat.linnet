@@ -390,9 +390,9 @@
   Nonparametric maximum likelihood algorithm by \adrian.
 }
 \seealso{
-  \code{\link[spatstat.core]{rho2hat}},
-  \code{\link[spatstat.core]{methods.rhohat}},
-  \code{\link[spatstat.core]{parres}}.
+  \code{\link[spatstat.explore]{rho2hat}},
+  \code{\link[spatstat.explore]{methods.rhohat}},
+  \code{\link[spatstat.model]{parres}}.
 
   See \code{\link{lppm}} for a parametric method for the same problem.
 }

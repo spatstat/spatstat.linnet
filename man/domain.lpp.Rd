@@ -55,7 +55,7 @@
 \seealso{
   \code{\link[spatstat.geom]{domain}},
   \code{\link[spatstat.random]{domain.rmhmodel}},
-  \code{\link[spatstat.core]{domain.ppm}}.
+  \code{\link[spatstat.model]{domain.ppm}}.
   
   \code{\link[spatstat.geom]{Window}},
   \code{\link[spatstat.geom]{Frame}}

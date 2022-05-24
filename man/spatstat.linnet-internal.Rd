@@ -60,6 +60,8 @@
 \usage{
 
 
+
+
 %% Linear networks code is corralled here
 ApplyConnected(X, Engine, r, \dots, rule, auxdata)
 DoCountEnds(X, D, toler)

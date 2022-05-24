@@ -39,11 +39,11 @@
   The command \code{roc}
   computes the Receiver Operating
   Characteristic curve.
-  The area under the ROC is computed by \code{\link[spatstat.core]{auc}}.
+  The area under the ROC is computed by \code{\link[spatstat.explore]{auc}}.
 
-  The function \code{\link[spatstat.core]{roc}} is generic,
+  The function \code{\link[spatstat.explore]{roc}} is generic,
   with methods for \code{"ppp"} and \code{"ppm"} described in the help file
-  for \code{\link[spatstat.core]{roc}}.
+  for \code{\link[spatstat.explore]{roc}}.
 
   This help file describes the methods for classes \code{"lpp"} and
   \code{"lppm"}.

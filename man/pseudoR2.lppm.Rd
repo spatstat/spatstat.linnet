@@ -26,7 +26,7 @@
   }
 }
 \details{
-  The function \code{\link[spatstat.core]{pseudoR2}} is generic, with methods
+  The function \code{\link[spatstat.model]{pseudoR2}} is generic, with methods
   for fitted point process models
   of class \code{"ppm"} and \code{"lppm"}.
 
@@ -55,7 +55,7 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{pseudoR2}},
+  \code{\link[spatstat.model]{pseudoR2}},
   \code{\link{deviance.lppm}}.
 }
 \examples{

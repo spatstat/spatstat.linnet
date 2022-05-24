@@ -50,12 +50,12 @@
   The \eqn{Z_1}{Z[1]} test is also known as the
   Lawson-Waller test.
 
-  The function \code{\link[spatstat.core]{berman.test}}
+  The function \code{\link[spatstat.explore]{berman.test}}
   is generic, with methods for
   point patterns (\code{"ppp"} or \code{"lpp"})
   and point process models (\code{"ppm"} or \code{"lppm"}).
 
-  See the help file for \code{\link[spatstat.core]{berman.test}}
+  See the help file for \code{\link[spatstat.explore]{berman.test}}
   for information on the generic function and the methods for data in
   two-dimensional space, classes \code{"ppp"} and \code{"ppm"}.
 
@@ -147,9 +147,9 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{cdf.test}},
-  \code{\link[spatstat.core]{quadrat.test}},
-  \code{\link[spatstat.core]{ppm}}
+  \code{\link[spatstat.explore]{cdf.test}},
+  \code{\link[spatstat.explore]{quadrat.test}},
+  \code{\link[spatstat.model]{ppm}}
   \code{\link{lppm}}
 }
 \references{

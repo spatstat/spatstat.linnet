@@ -13,7 +13,7 @@
     Linear network (object of class \code{"linnet"})
   }
   \item{\dots}{
-    Arguments passed to \code{\link[spatstat.core]{density.psp}}
+    Arguments passed to \code{\link[spatstat.explore]{density.psp}}
     to control the amount of smoothing and the spatial resolution
     of the result.
   }
@@ -28,7 +28,7 @@
 
   The network \code{x} is first converted to a line segment pattern
   (object of class \code{"psp"}). Then the method
-  \code{\link[spatstat.core]{density.psp}} is applied to the
+  \code{\link[spatstat.explore]{density.psp}} is applied to the
   segment pattern.
 
   A kernel estimate of the intensity of the line segment pattern
@@ -43,11 +43,11 @@
   means that there are 3 metres of segment length per square metre of
   spatial domain.
   
-  See \code{\link[spatstat.core]{density.psp}}
+  See \code{\link[spatstat.explore]{density.psp}}
   for more details.
 }
 \seealso{
-  \code{\link[spatstat.core]{density.psp}},
+  \code{\link[spatstat.explore]{density.psp}},
   \code{\link[spatstat.geom]{im.object}},
   \code{\link[stats]{density}}.
 }

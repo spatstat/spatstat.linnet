@@ -77,13 +77,13 @@
   or the Anderson-Darling test. For Gibbs models, a Monte Carlo test is
   performed using these test statistics.
 
-  The function \code{\link[spatstat.core]{cdf.test}}
+  The function \code{\link[spatstat.explore]{cdf.test}}
   is generic, with methods for
   point patterns (\code{"ppp"} or \code{"lpp"}),
   point process models (\code{"ppm"} or \code{"lppm"})
   and spatial logistic regression models (\code{"slrm"}).
 
-  See the help file for \code{\link[spatstat.core]{cdf.test}}
+  See the help file for \code{\link[spatstat.explore]{cdf.test}}
   for information on the generic function and the methods
   for data in two-dimensional space, classes \code{"ppp"}, \code{"ppm"}
   and \code{"slrm"}.
@@ -211,9 +211,9 @@
   and \rolf
 }
 \seealso{
-  \code{\link[spatstat.core]{plot.cdftest}},
-  \code{\link[spatstat.core]{quadrat.test}},
-  \code{\link[spatstat.core]{berman.test}},
+  \code{\link[spatstat.explore]{plot.cdftest}},
+  \code{\link[spatstat.explore]{quadrat.test}},
+  \code{\link[spatstat.explore]{berman.test}},
   \code{\link[stats]{ks.test}},
   \code{goftest::\link[goftest]{cvm.test}},
   \code{goftest::\link[goftest]{ad.test}},

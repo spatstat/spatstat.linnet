@@ -50,7 +50,7 @@ Extract the Variables in a Point Process Model on a Network
 \seealso{
   \code{\link{lppm}},
   \code{\link[stats]{model.frame}},
-  \code{\link[spatstat.core]{model.matrix.ppm}}
+  \code{\link[spatstat.model]{model.matrix.ppm}}
 }
 \examples{
   fit <- lppm(spiders ~ x)

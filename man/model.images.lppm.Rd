@@ -81,7 +81,7 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link[spatstat.core]{model.matrix.ppm}},
+  \code{\link[spatstat.model]{model.matrix.ppm}},
   \code{\link[stats]{model.matrix}},
   \code{\link{lppm}}.
 }
