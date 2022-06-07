@@ -1,7 +1,7 @@
 #
 #  envelopelpp.R
 #
-#  $Revision: 1.26 $   $Date: 2019/10/14 04:53:06 $
+#  $Revision: 1.27 $   $Date: 2022/06/07 05:25:17 $
 #
 #  Envelopes for 'lpp' objects
 #
@@ -155,7 +155,7 @@ envelope.lppm <-
 
   if("clipdata" %in% names(list(...)))
     stop(paste("The argument", sQuote("clipdata"),
-               "is not available for envelope.pp3"))
+               "is not available for envelope.lppm"))
 
   envir.user <- if(!is.null(envir.simul)) envir.simul else parent.frame()
   envir.here <- sys.frame(sys.nframe())

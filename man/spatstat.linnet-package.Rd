@@ -34,8 +34,10 @@
     \item \pkg{spatstat.data} containing datasets
     \item \pkg{spatstat.geom} containing geometrical objects
     and geometrical operations
-    \item \pkg{spatstat.core} containing the main functionality
-    for statistical analysis and modelling of spatial data
+    \item \pkg{spatstat.explore} containing the main functionality
+    for exploratory and non-parametric analysis of spatial data
+    \item \pkg{spatstat.model} containing the main functionality
+    for statistical modelling and inference for spatial data
     \item \pkg{spatstat.linnet} containing functions for
     spatial data on a linear network
     \item \pkg{spatstat}, which simply loads the other sub-packages

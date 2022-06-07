@@ -41,7 +41,7 @@
   \item{\dots}{Extra arguments are ignored.}
 }
 \details{
-  This is the method for \code{\link[spatstat.core]{sdr}}
+  This is the method for \code{\link[spatstat.explore]{sdr}}
   for the class \code{"lpp"} of point patterns on a linear network.
   
   Given a point pattern \eqn{X} and predictor variables
@@ -71,7 +71,7 @@
   predictor as a linear combination of the original predictors.
 
   If \code{predict=TRUE}, the new predictors are also evaluated.
-  They can also be evaluated using \code{\link[spatstat.core]{sdrPredict}}.
+  They can also be evaluated using \code{\link[spatstat.explore]{sdrPredict}}.
 }
 \value{
   A list with components \code{B, M}
@@ -93,12 +93,12 @@
    sdr(X, list(x=xim, y=yim))
 }
 \seealso{
-  \code{\link[spatstat.core]{sdrPredict}} to compute the new predictors from the
+  \code{\link[spatstat.explore]{sdrPredict}} to compute the new predictors from the
   coefficient matrix.
   
-  \code{\link[spatstat.core]{dimhat}} to estimate the subspace dimension.
+  \code{\link[spatstat.explore]{dimhat}} to estimate the subspace dimension.
 
-  \code{\link[spatstat.core]{subspaceDistance}}
+  \code{\link[spatstat.explore]{subspaceDistance}}
 }
 \references{
   Guan, Y. and Wang, H. (2010)
