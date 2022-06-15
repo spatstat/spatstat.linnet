@@ -1,19 +1,26 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.018
+        CHANGES IN spatstat.linnet VERSION 2.3-2.020
 
 OVERVIEW
 
     o spatstat.linnet now depends on the new packages 'spatstat.explore'
     and 'spatstat.model' rather than the old 'spatstat.core'.
     
-    o Points along a network can be drawn as cross-ticks.
+    o K function and pair correlation function based on Euclidean distance.
     
+    o Points along a network can be drawn as cross-ticks.
+
     o Minor improvements and bug fixes.
 
     o Improvements to internal code.
 
     o Minor internal changes to package information.
 
+NEW FUNCTIONS
+
+    o linearKEuclid, linearpcfEuclid, linearKEuclidInhom, linearpcfEuclidInhom
+    K function and pair correlation function based on Euclidean distances.
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o Package dependence
@@ -23,6 +30,11 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o plot.lpp
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.
+
+    o densityQuick.lpp
+    If 'sigma' is a function for selecting a bandwidth,
+    additional arguments '...' of densityQuick.lpp will be passed to 'sigma',
+    provided they match the name of a formal argument of 'sigma'.
 
 BUG FIXES
 

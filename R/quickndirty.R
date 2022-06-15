@@ -17,7 +17,8 @@ densityQuick.lpp <- function(X, sigma=NULL, ...,
   #' kernel density estimation
   stopifnot(is.lpp(X))
   what <- match.arg(what)
-  if(is.function(sigma)) sigma <- sigma(X)
+  if(is.function(sigma))
+    sigma <- do.call.matched(sigma, list(X, ...), matchfirst=TRUE)
   qkdeEngine(X=X, sigma=sigma, kernel=kernel,
              at=at, what=what, leaveoneout=leaveoneout,
              diggle=diggle, edge2D=edge2D,

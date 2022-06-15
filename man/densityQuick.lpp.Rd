@@ -27,11 +27,12 @@ densityQuick.lpp(X, sigma=NULL, \dots,
     in the same units as the coordinates of \code{X}.
     Alternatively \code{sigma} may be a function which selects a
     bandwidth when applied to \code{X},
-    for example, \code{\link{bw.scott.iso}}.
+    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
   }
   \item{\dots}{
     Additional arguments passed to \code{\link{as.mask}}
-    to determine the pixel resolution.
+    to determine the pixel resolution, or arguments passed to
+    \code{sigma} if it is a function.
   }
   \item{kernel}{
     String (partially matched) specifying the smoothing kernel.
@@ -114,7 +115,8 @@ densityQuick.lpp(X, sigma=NULL, \dots,
   \code{\link{density.lpp}}, the main function for density estimation
   on a network.
 
-  \code{\link{bw.scott}}, \code{\link{bw.scott.iso}} for bandwidth selection.
+  \code{\link{bw.scott}}, \code{\link{bw.scott.iso}},
+  \code{\link{bw.lppl}}for bandwidth selection.
 }
 \examples{
    X <- unmark(chicago)

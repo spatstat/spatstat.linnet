@@ -70,7 +70,6 @@ linearK(X, r=NULL, ..., correction="Ang", ratio=FALSE)
   \code{\link{lpp}}
 }
 \examples{
-  data(simplenet)
   X <- rpoislpp(5, simplenet)
   linearK(X)
   linearK(X, correction="none")

@@ -31,6 +31,7 @@
 \alias{validate.lpp.coords}
 \alias{as.ppm.lppm}
 \alias{pointsAlongNetwork}
+\alias{linearEuclidEngine}
 \alias{linearKengine}
 \alias{linearKmulti}
 \alias{linearKmulti.inhom}
@@ -96,6 +97,7 @@ looVoronoiLPP(X)
 validate.lpp.coords(X, fatal, context)
 \method{as.ppm}{lppm}(object)
 pointsAlongNetwork(L, delta)
+linearEuclidEngine(X, fun, \dots, r, reweight, denom, showworking, correction)
 linearKengine(X, \dots, r, reweight, denom, correction,
               ratio, showworking)
 linearKmulti(X, I, J, r, \dots, correction)
