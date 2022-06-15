@@ -253,8 +253,7 @@
   as described in \code{\link{envelope}}.
 }
 \author{
-   Ang Qi Wei \email{aqw07398@hotmail.com} and
-  \adrian
+  \wei and \adrian
 }
 \seealso{
    \code{\link{envelope}},

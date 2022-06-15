@@ -77,12 +77,9 @@ linearKcross(X, i, j, r=NULL, \dots, correction="Ang")
  \code{\link{linearK}}.
 }
 \examples{
-   data(chicago)
    K <- linearKcross(chicago, "assault", "robbery")
 }
 \author{\adrian
-  
-  
 }
 \keyword{spatial}
 \keyword{nonparametric}

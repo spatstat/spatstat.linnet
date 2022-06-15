@@ -55,7 +55,7 @@
   (\code{Inf}).
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian.
 }
 \seealso{

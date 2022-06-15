@@ -39,7 +39,7 @@ runiflpp(n, L, nsim=1, drop=TRUE)
   Otherwise, a list of such point patterns.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and 
   \adrian 
 }
 \seealso{
@@ -50,7 +50,6 @@ runiflpp(n, L, nsim=1, drop=TRUE)
  \code{\link{linnet}}
 }
 \examples{
-   data(simplenet)
    X <- runiflpp(10, simplenet)
    plot(X)
   # marked

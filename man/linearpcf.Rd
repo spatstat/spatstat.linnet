@@ -70,7 +70,7 @@ linearpcf(X, r=NULL, ..., correction="Ang", ratio=FALSE)
   estimate of \eqn{g(r)}. 
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian.
 }
 \references{
@@ -93,7 +93,6 @@ linearpcf(X, r=NULL, ..., correction="Ang", ratio=FALSE)
   \code{\link{lpp}}
 }
 \examples{
-  data(simplenet)
   X <- rpoislpp(5, simplenet)
   linearpcf(X)
   linearpcf(X, correction="none")

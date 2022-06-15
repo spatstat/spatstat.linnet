@@ -69,7 +69,7 @@ lpp(X, L, \dots)
   Also inherits the class \code{"ppx"}.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian 
   
 }

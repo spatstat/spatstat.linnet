@@ -44,9 +44,8 @@
   giving the bounding box of the network.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian 
-  
 }
 \seealso{
    \code{\link{linnet}}

@@ -110,7 +110,7 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   estimate of \eqn{g(r)}. 
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian.
 }
 \references{
@@ -134,7 +134,6 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   \code{\link{lpp}}
 }
 \examples{
-  data(simplenet)
   X <- rpoislpp(5, simplenet)
   fit <- lppm(X ~x)
   K <- linearpcfinhom(X, lambda=fit)

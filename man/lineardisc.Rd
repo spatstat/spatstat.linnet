@@ -87,7 +87,7 @@
   points in the relative boundary.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian
 }
 \seealso{

@@ -136,7 +136,7 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   Function value table (object of class \code{"fv"}).
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian
 }
 \references{
@@ -153,7 +153,6 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   \code{\link{lpp}}
 }
 \examples{
-  data(simplenet)
   X <- rpoislpp(5, simplenet)
   fit <- lppm(X ~x)
   K <- linearKinhom(X, lambda=fit)

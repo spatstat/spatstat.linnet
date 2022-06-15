@@ -77,12 +77,9 @@ linearpcfdot(X, i, r=NULL, \dots, correction="Ang")
  \code{\link{pcfcross}}.
 }
 \examples{
-   data(chicago)
    g <- linearpcfdot(chicago, "assault")
 }
 \author{\adrian
-  
-  
 }
 \keyword{spatial}
 \keyword{nonparametric}

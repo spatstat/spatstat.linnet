@@ -74,12 +74,9 @@ linearKdot(X, i, r=NULL, \dots, correction="Ang")
  \code{\link{linearK}}.
 }
 \examples{
-   data(chicago)
    K <- linearKdot(chicago, "assault")
 }
 \author{\adrian
-  
-  
 }
 \keyword{spatial}
 \keyword{nonparametric}

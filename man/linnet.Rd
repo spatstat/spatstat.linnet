@@ -63,7 +63,7 @@ linnet(vertices, m, edges, sparse=FALSE, warn=TRUE)
   Object of class \code{"linnet"} representing the linear network.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and
   \adrian 
 }
 \seealso{

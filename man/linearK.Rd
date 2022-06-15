@@ -47,8 +47,7 @@ linearK(X, r=NULL, ..., correction="Ang", ratio=FALSE)
   Function value table (object of class \code{"fv"}).
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
-  \adrian.
+  \wei and \adrian.
 }
 \references{
   Ang, Q.W. (2010) Statistical methodology for spatial point patterns

@@ -48,7 +48,7 @@ rpoislpp(lambda, L, \dots, nsim=1, drop=TRUE)
   Otherwise, a list of such point patterns.
 }
 \author{
-  Ang Qi Wei \email{aqw07398@hotmail.com} and
+  \wei and 
   \adrian 
 }
 \seealso{
