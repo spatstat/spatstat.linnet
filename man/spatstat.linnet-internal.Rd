@@ -16,6 +16,7 @@
 \alias{print.summary.linnet}
 \alias{print.summary.lintess}
 \alias{resolve.heat.steps}
+\alias{rmaxEuclidean}
 \alias{summary.lintess}
 \alias{nobjects.lintess}
 \alias{Window.lintess}
@@ -126,6 +127,7 @@ resolve.heat.steps(sigma, \dots, dx, dt,
                    W, eps, dimyx, xy, 
                    allow.adjust, warn.adjust,
                    verbose, stepnames)
+rmaxEuclidean(L, verbose, show)
 qkdeEngine(X, sigma, \dots, at, what,
            leaveoneout, diggle, raw, edge2D, edge,
            weights, varcov, positive, shortcut,

@@ -1,12 +1,18 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.021
+        CHANGES IN spatstat.linnet VERSION 2.3-2.022
 
 OVERVIEW
 
+    o We thank Mehdi Moradi and Gopalan Nair for contributions.
+    
     o spatstat.linnet now depends on the new packages 'spatstat.explore'
     and 'spatstat.model' rather than the old 'spatstat.core'.
     
     o K function and pair correlation function based on Euclidean distance.
+
+    o Inhomogeneous J function on a network.
+
+    o Terminal vertices of a network.
     
     o Points along a network can be drawn as cross-ticks.
 
@@ -20,6 +26,12 @@ NEW FUNCTIONS
 
     o linearKEuclid, linearpcfEuclid, linearKEuclidInhom, linearpcfEuclidInhom
     K function and pair correlation function based on Euclidean distances.
+
+    o linearJinhom
+    Inhomogeneous J function on a linear network.
+
+    o terminalvertices
+    Extract the terminal vertices of a linear network.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 

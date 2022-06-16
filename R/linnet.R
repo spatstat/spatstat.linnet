@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.81 $    $Date: 2022/05/21 09:52:11 $
+#    $Revision: 1.82 $    $Date: 2022/06/16 05:45:41 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -626,3 +626,33 @@ crossing.linnet <- function(X, Y) {
 density.linnet <- function(x, ...) {
   density.psp(as.psp(x), ...)
 }
+
+terminalvertices <- function(L) {
+  ## identify terminal vertices and return them as an lpp object
+  verifyclass(L, "linnet")
+  ind <- which(vertexdegree(L) == 1)
+  nV <- length(ind)
+  if(nV == 0) {
+    ## return empty pattern
+    return(lpp(L=L))
+  }
+  V <- vertices(L)[ind]
+  ## construct network coordinates
+  seg <- rep(NA_integer_, nV)
+  tp  <- rep(NA_real_,    nV)
+  ## look for vertices mentioned as the start of a segment
+  left <- match(ind, L$from)
+  found <- !is.na(left)
+  seg[found] <- left[found]
+  tp[found] <- 0
+  ## look for vertices mentioned as the end of a segment
+  right <- match(ind, L$to)
+  found <- !is.na(right)
+  seg[found] <- right[found]
+  tp[found] <- 1
+  ## pack up
+  df <- cbind(coords(V), data.frame(seg=seg, tp=tp))
+  B <- lpp(df, L)
+  return(B)
+}
+  

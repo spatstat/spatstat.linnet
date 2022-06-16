@@ -1,11 +1,11 @@
 #'
 #'    linearKeuclid.R
 #'
-#'    Copyright (C) Suman Rakshit, Gopalan Nair and Adrian Baddeley 2017
+#'    Copyright (C) Suman Rakshit, Gopalan Nair and Adrian Baddeley 2017-2022
 #'
 #'    GNU Public Licence 2.0
 #'
-#'    $Revision: 1.3 $ $Date: 2022/06/15 04:17:05 $
+#'    $Revision: 1.7 $ $Date: 2022/06/16 05:44:23 $
 
 linearKEuclid <- function(X, r=NULL, ...) {
   stopifnot(inherits(X, "lpp"))
@@ -107,31 +107,29 @@ linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
   return(g)
 }
 
-linearEuclidEngine <- local({
-  
 linearEuclidEngine <- function(X, fun=c("K", "g"), ...,
 		               r=NULL, reweight=NULL, denom=1,
                                showworking=FALSE,
                                correction=NULL) {
   #                           'correction' is ignored
-  # compute either K-function or pair correlation function
+  ## compute either K-function or pair correlation function
   fun <- match.arg(fun)
-  # extract info about pattern
+  ## extract info about pattern
   np <- npoints(X)
-  # extract linear network
+  ## extract linear network
   L <- domain(X)
   W <- Window(L)
   # determine r values
-  rmaxdefault <- 0.98 * rmaxeuc(L, verbose=FALSE)
+  rmaxdefault <- 0.98 * rmaxEuclidean(L, verbose=FALSE, show=FALSE)
   breaks <- handle.r.b.args(r, NULL, W, rmaxdefault=rmaxdefault)
   r <- breaks$r
   rmax <- breaks$max
-  #
+  ##
   fname <- c(fun, "euclid")
   ylab <- substitute(funky[euclid](r), list(funky=as.name(fun)))
-  #
+  ##
   if(np < 2) {
-    # no pairs to count: return zero function
+    ## no pairs to count: return zero function
     zeroes <- numeric(length(r))
     df <- data.frame(r = r, est = zeroes)
     result <- fv(df, "r", ylab,
@@ -154,7 +152,7 @@ linearEuclidEngine <- function(X, fun=c("K", "g"), ...,
   jj <- factor(stuff$k, levels=seqX) # stet 
   edgewt <- tapply(stuff$sinalpha, list(ii, jj), harmonicsum)
   edgewt[is.na(edgewt)] <- 0
-  # compute K or g
+  ## compute K or g
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
   switch(fun,
          K = {
@@ -168,39 +166,25 @@ linearEuclidEngine <- function(X, fun=c("K", "g"), ...,
 	   bw <- attr(result, "bw")			
            theo <- rep.int(1, length(r))
 	 })
-  # tack on theoretical value
+  ## tack on theoretical value
   result <- bind.fv(result, data.frame(theo=theo),
                     makefvlabel(NULL, NULL, fname, "theo"),
                    "theoretical Poisson %s")
   result <- rebadge.fv(result, ylab, fname)
   unitname(result) <- unitname(X)
   fvnames(result, ".") <- rev(fvnames(result, "."))
-  # tack on bandwidth again
+  ## tack on bandwidth again
   if(fun == "g") attr(result, "bw") <- bw
-  # show working
+  ## show working
   if(showworking)
     attr(result, "working") <- list(D=D, wt=wt)
   return(result)
 }
 
-## harmonicmean <- function(x) {
-##   # harmonic mean, robust against zeroes and small values 
-##   mx <- min(abs(x))
-##   if(mx == 0) return(mx)
-##   return(mx/mean(mx/x))
-## }
-
-harmonicsum <- function(x) {
-  # computes 1/sum(1/x) robustly
-  mx <- min(abs(x))
-  if(mx == 0) return(mx)
-  return(mx/sum(mx/x))
-}
-
 #' calculate rmax for Euclidean distance on linear network
 #'
 
-rmaxeuc <- function(L, verbose=TRUE, show=FALSE) {
+rmaxEuclidean <- function(L, verbose=TRUE, show=FALSE) {
   L <- as.linnet(L)
   V <- vertices(L)
   # pick out the convex null
@@ -249,8 +233,4 @@ rmaxeuc <- function(L, verbose=TRUE, show=FALSE) {
   }
   return(rmax)
 }
-
-linearEuclidEngine
-
-})
 

@@ -60,10 +60,10 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
   Moradi, M., Cronie, 0., Rubak, E., Lachieze-Rey, R.,
   Mateu, J. and Baddeley, A. (2019)
   Resample-smoothing of Voronoi intensity estimators.
-  \emph{Statistics and Computing}, in press.
+  \emph{Statistics and Computing} \bold{29} (5) 995--1010.
 }
 \author{
-  \spatstatAuthors and Mehdi Moradi.
+  \spatstatAuthors and \mehdi.
 }
 \seealso{
   \code{\link{densityVoronoi.lpp}}
