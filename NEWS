@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.3-2.023
+        CHANGES IN spatstat.linnet VERSION 2.3-2.025
 
 OVERVIEW
 
@@ -32,6 +32,10 @@ NEW FUNCTIONS
 
     o terminalvertices
     Extract the terminal vertices of a linear network.
+
+    o bw.relrisk.lpp
+    This function replaces 'bw.relrisklpp'
+    and is a method for the generic 'bw.relrisk'.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
@@ -47,6 +51,16 @@ SIGNIFICANT USER-VISIBLE CHANGES
     If 'sigma' is a function for selecting a bandwidth,
     additional arguments '...' of densityQuick.lpp will be passed to 'sigma',
     provided they match the name of a formal argument of 'sigma'.
+
+    o bw.relrisklpp
+    This function is now deprecated, and is replaced by 'bw.relrisk.lpp',
+    a method for the generic 'bw.relrisk'.
+
+    o bw.relrisk.lpp
+    When 'method="likelihood"', the cross-validation criterion
+    is now defined as the *negative* likelihood. This is consistent with
+    'bw.relrisk', and ensures that the optimum bandwidth is always
+    found by minimising the cross-validation criterion.
 
 BUG FIXES
 

@@ -146,7 +146,7 @@
   Alternatively, \code{sigma} may be a function that can be applied
   to the point pattern \code{X} to select a bandwidth; the function
   must return a single numerical value; examples include the
-  functions \code{\link{bw.relrisklpp}} and \code{\link{bw.scott.iso}}.
+  functions \code{\link{bw.relrisk.lpp}} and \code{\link[spatstat.explore]{bw.scott.iso}}.
 
   Accuracy depends on the spatial resolution of the density
   computations. If the arguments \code{dx} and \code{dt} are present,
@@ -205,7 +205,7 @@
    plot(relrisk(X, 0.2, case="B"))
    head(relrisk(X, 0.2, at="points"))
    ## cross-validated bandwidth selection
-   plot(relrisk(X, bw.relrisklpp, hmax=0.25))
+   plot(relrisk(X, bw.relrisk.lpp, hmax=0.25))
 
    ## more than 2 types
    if(interactive()) {

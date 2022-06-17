@@ -1,5 +1,5 @@
-\name{bw.relrisklpp}
-\alias{bw.relrisklpp}
+\name{bw.relrisk.lpp}
+\alias{bw.relrisk.lpp}
 \title{
   Cross Validated Bandwidth Selection for Relative Risk Estimation
   on a Network
@@ -9,7 +9,7 @@
   for the estimation of relative risk on a linear network.
 }
 \usage{
-  bw.relrisklpp(X, \dots,
+  \method{bw.relrisk}{lpp}(X, \dots,
     method = c("likelihood", "leastsquares", "KelsallDiggle", "McSwiggan"),
     distance=c("path", "euclidean"),
     hmin = NULL, hmax = NULL, nh = NULL,
@@ -62,7 +62,7 @@
     \code{reference="sigma"} means the maximum bandwidth considered,
     which is given by the argument \code{sigma}.
     \code{reference="thumb"} means the bandwidths selected by
-    Scott's rule of thumb \code{\link{bw.scott.iso}}.
+    Scott's rule of thumb \code{\link[spatstat.explore]{bw.scott.iso}}.
     \code{reference="uniform"} means infinite bandwidth corresponding to
     uniform intensity.
   }
@@ -93,14 +93,15 @@
   }
 }
 \details{
-  This function computes an optimal value of smoothing bandwidth
+  This function is a method for the generic \code{\link[spatstat.explore]{bw.relrisk}}.
+  It computes an optimal value of smoothing bandwidth
   for the nonparametric estimation of relative risk on a linear network
   using \code{\link{relrisk.lpp}}.
-  The optimal value is found by optimising a cross-validation criterion.
+  The optimal value is found by minimising a cross-validation criterion.
 
   The cross-validation criterion is selected by the argument \code{method}:
   \tabular{ll}{
-    \code{method="likelihood"} \tab likelihood cross-validation \cr
+    \code{method="likelihood"} \tab (negative) likelihood cross-validation \cr
     \code{method="leastsquares"} \tab least squares cross-validation \cr
     \code{method="KelsallDiggle"} \tab Kelsall and Diggle (1995) density
   ratio cross-validation \cr
@@ -112,12 +113,14 @@
   The result is a numerical value giving the selected bandwidth \code{sigma}.
   The result also belongs to the class \code{"bw.optim"}
   allowing it to be printed and plotted. The plot shows the cross-validation
-  criterion as a function of bandwidth.  
+  criterion as a function of bandwidth.
+  The \sQuote{optimal} bandwidth is the value of bandwidth
+  which minimises the cross-validation criterion. 
 
   The range of values for the smoothing bandwidth \code{sigma}
   is set by the arguments \code{hmin, hmax}. There is a sensible default,
   based on the linear network version of Scott's rule
-  \code{\link{bw.scott.iso}}.
+  \code{\link[spatstat.explore]{bw.scott.iso}}.
   
   If the optimal bandwidth is achieved at an endpoint of the
   interval \code{[hmin, hmax]}, the algorithm will issue a warning
@@ -150,14 +153,14 @@
   Greg McSwiggan and \adrian.
 }
 \seealso{
-  \code{\link{relrisk.lpp}}
+  \code{\link{relrisk.lpp}}, \code{\link[spatstat.explore]{bw.relrisk}}
 }
 \examples{
    set.seed(2020)
    X <- superimpose(A=runiflpp(20, simplenet),
                     B=runifpointOnLines(20, as.psp(simplenet)[1]))
-   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.25, method="McSwiggan"))
-   plot(bw.relrisklpp(X, hmin=0.1, hmax=0.3, nh=8, distance="euclidean"))
+   plot(bw.relrisk(X, hmin=0.13, hmax=0.22, method="McSwiggan"))
+   plot(bw.relrisk(X, hmin=0.1, hmax=0.2, nh=8, distance="euclidean"))
 }
 \keyword{spatial}
 \keyword{methods}

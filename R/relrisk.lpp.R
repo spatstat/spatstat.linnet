@@ -3,7 +3,7 @@
 #
 #   Estimation of relative risk on network
 #
-#  $Revision: 1.6 $  $Date: 2020/04/27 03:08:26 $
+#  $Revision: 1.8 $  $Date: 2022/06/17 03:23:02 $
 #
 
 relrisk.lpp <- local({
@@ -229,12 +229,16 @@ relrisk.lpp <- local({
   relrisk.lpp
 })
 
+bw.relrisklpp <- function(X, ...) {
+  .Deprecated("bw.relrisk.lpp")
+  bw.relrisk.lpp(X, ...)
+}
 
-bw.relrisklpp <- local({
+bw.relrisk.lpp <- local({
 
 hargnames <- c("hmin", "hmax")
 
-bw.relrisklpp <- function(X, ..., 
+bw.relrisk.lpp <- function(X, ..., 
                           method=c("likelihood",
                                    "leastsquares",
                                    "KelsallDiggle",
@@ -297,15 +301,16 @@ bw.relrisklpp <- function(X, ...,
       p <- relrisk(X, si, at="points", distance="euclidean", casecontrol=FALSE)
       pobs <- p[witch]
       cv[i] <- switch(method,
-                      likelihood=log(prod(pobs)),
+                      likelihood=-log(prod(pobs)),
                       leastsquares=sum((1-pobs)^2))
       if(verbose) pstate <- progressreport(i, nh, state=pstate)
     }
     result <- switch(method,
-                     likelihood = bw.optim(cv, sigmavalues, optimum="max", 
-                              hname="sigma", cvname="logL",  
-                              criterion="likelihood cross-validation",
+                     likelihood = bw.optim(cv, sigmavalues, 
+                              hname="sigma", cvname="minusLogL",  
+                              criterion="negative likelihood cross-validation",
                               hargnames=hargnames,
+                              yexp=quote(-log(L(sigma))),
                               unitname=unitname(X)),
                      leastsquares = bw.optim(cv, sigmavalues, 
                               hname="sigma", cvname="psq", 
@@ -558,10 +563,11 @@ bw.relrisklpp <- function(X, ...,
            loglikout <- c(loglik[use], loglikInf)
            tauout    <- c(tau[use], Inf)
            # as.numeric(loglikInf)
-           result <- bw.optim(loglikout, tauout, optimum="max", 
-                              hname="sigma", cvname="logL",  
-                              criterion="likelihood cross-validation",
+           result <- bw.optim(-loglikout, tauout, 
+                              hname="sigma", cvname="minusLogL",  
+                              criterion="negative likelihood cross-validation",
                               hargnames=hargnames,
+                              yexp=quote(-log(L(sigma))),
                               unitname=unitname(X))
          },
          leastsquares = {
@@ -600,7 +606,7 @@ xvalterm4 <- function(x, y, w) { as.numeric(log(x/y) %*% w) }
 xvalterm5 <- function(x, y) { rowSums(log(x/(x+y))) }
 xvalterm6 <- function(x, y) { rowSums((1 - x/(x+y))^2) }
 
-bw.relrisklpp
+bw.relrisk.lpp
 
 
 })
