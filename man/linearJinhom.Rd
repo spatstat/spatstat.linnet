@@ -117,7 +117,12 @@ linearJinhom(X, lambda = NULL, lmin=NULL,
   Function value table (object of class \code{"fv"}).
 }
 \examples{
-  plot(linearJinhom(spiders))
+  if(interactive()) {
+    plot(linearJinhom(spiders))
+  } else {
+    bottomhalf <- owin(c(0, 1125), c(0, 500))
+    plot(linearJinhom(spiders[bottomhalf]))
+  }
 }
 \references{
 Cronie, O., Moradi, M., and Mateu, J. (2020) Inhomogeneous higher-order

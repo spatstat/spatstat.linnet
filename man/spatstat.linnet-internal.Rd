@@ -25,7 +25,6 @@
 \alias{densitypointsLPP}
 \alias{flatdensityfunlpp}
 \alias{flatdensityatpointslpp}
-\alias{getlambda.lpp}
 \alias{local2lpp}
 \alias{looHeatLPP}
 \alias{looVoronoiLPP}
@@ -42,6 +41,7 @@
 \alias{linearpcfmulti.inhom}
 \alias{linearPCFmultiEngine}
 \alias{resampleNetworkDataFrame}
+\alias{resolve.lambda.lpp}
 \alias{sortalongsegment}
 \alias{spatialCovariateEvidence.lppm}
 \alias{vnnFind}
@@ -89,8 +89,6 @@ densitypointsLPP(x, sigma, \dots,
                  dx, dt, iterMax, verbose, debug)
 flatdensityfunlpp(X, \dots, disconnect, weights, what)
 flatdensityatpointslpp(X, \dots, leaveoneout, disconnect, weights, what)
-getlambda.lpp(lambda, X, subset, \dots,
-              update, leaveoneout, loo.given, lambdaname)
 local2lpp(L, seg, tp, X, df.only)
 looHeatLPP(U0, Amatrix, npts, niter, nsave,
            lixelweight, lixelmap, verbose) 
@@ -113,6 +111,8 @@ linearKmultiEngine(X, I, J, \dots,
 linearPCFmultiEngine(X, I, J, \dots,
                    r, reweight, denom, correction, showworking)
 resampleNetworkDataFrame(df, template)
+\method{resolve.lambda}{lpp}(X, lambda, subset, \dots,
+              update, leaveoneout, everywhere, loo.given, lambdaname)
 sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, delta, nd, interpolate, jitter, jitterfactor,

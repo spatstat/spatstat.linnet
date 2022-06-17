@@ -165,8 +165,8 @@ linearKmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
   if(!any(I)) stop("no points satisfy I")
 
   # validate lambda vectors
-  lambdaI <- getlambda.lpp(lambdaI, X, subset=I, ...)
-  lambdaJ <- getlambda.lpp(lambdaJ, X, subset=J, ...)
+  lambdaI <- resolve.lambda.lpp(X, lambdaI, subset=I, ...)
+  lambdaJ <- resolve.lambda.lpp(X, lambdaJ, subset=J, ...)
 
   # compute K
   weightsIJ <- outer(1/lambdaI, 1/lambdaJ, "*")

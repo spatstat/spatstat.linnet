@@ -59,7 +59,7 @@ linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
   # extract info about pattern
   lengthL <- volume(domain(X))
   #
-  lambdaX <- getlambda.lpp(lambda, X, ...,
+  lambdaX <- resolve.lambda.lpp(X, lambda, ...,
                            update=update, leaveoneout=leaveoneout,
                            loo.given=loo.given,
                            lambdaname="lambda")

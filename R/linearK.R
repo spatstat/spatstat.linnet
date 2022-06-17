@@ -51,10 +51,10 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
     check.1.real(normpower)
     stopifnot(normpower >= 1)
   }
-  lambdaX <- getlambda.lpp(lambda, X, ...,
-                           update=update, leaveoneout=leaveoneout,
-                           loo.given=loo.given,
-                           lambdaname="lambda")
+  lambdaX <- resolve.lambda.lpp(X, lambda, ...,
+                                update=update, leaveoneout=leaveoneout,
+                                loo.given=loo.given,
+                                lambdaname="lambda")
   invlam <- 1/lambdaX
   invlam2 <- outer(invlam, invlam, "*")
   lengthL <- volume(domain(X))
@@ -87,39 +87,34 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
 }
 
 
-getlambda.lpp <- function(lambda, X, subset=NULL, ...,
-                          update=TRUE, leaveoneout=TRUE,
-                          loo.given=TRUE,
-			  lambdaname) {
-  missup <- missing(update)
+resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
+                               update=TRUE, leaveoneout=TRUE,
+                               everywhere=FALSE,
+                               loo.given=TRUE,
+                               lambdaname) {
   if(missing(lambdaname)) lambdaname <- deparse(substitute(lambda))
   Y <- if(is.null(subset)) X else X[subset]
   danger <- TRUE
   if(is.ppm(lambda) || is.lppm(lambda)) {
     ## fitted model
+    model <- lambda
     if(update) {
       ## refit the model to the full dataset X
-      lambda <- if(is.lppm(lambda)) update(lambda, X) else
-                update(lambda, as.ppp(X))
-      ## now evaluate
-      lambdaX <- fitted(lambda, dataonly=TRUE, leaveoneout=leaveoneout)
-      ## restrict if required
+      model <- if(is.lppm(model)) update(model, X) else update(model, as.ppp(X))
+      danger <- FALSE
+      ## Now evaluate at data points
+      lambdaX <- fitted(model, dataonly=TRUE, leaveoneout=leaveoneout)
+      ## Restrict if required
       lambdaY <- if(is.null(subset)) lambdaX else lambdaX[subset]
       ## 
-      danger <- FALSE
-      if(missup)
-        warn.once("lin.inhom.update",
-                  "The behaviour of linearKinhom and similar functions",
-                  "when lambda is an lppm object",
-                  "has changed in spatstat 1.41-0,",
-		  "and again in spatstat 1.52-0.",
-                  "See help(linearKinhom)")
     } else {
       if(loo.given && leaveoneout)
         stop("leave-one-out calculation for fitted models is only available when update=TRUE",
              call.=FALSE)
-      lambdaY <- predict(lambda, locations=as.data.frame(as.ppp(Y)))
+      lambdaY <- predict(model, locations=as.data.frame(as.ppp(Y)))
     }
+    ## Also predict everywhere if desired
+    if(everywhere) everylambda <- predict(model)
   } else {
     ## lambda is some other kind of object
     lambdaY <-
@@ -132,6 +127,14 @@ getlambda.lpp <- function(lambda, X, subset=NULL, ...,
       } else if(is.im(lambda)) safelookup(lambda, as.ppp(Y)) else 
       stop(paste(lambdaname, "should be",
                  "a numeric vector, function, pixel image, or fitted model"))
+    if(everywhere) {
+      L <- domain(X)
+      everylambda <-
+        if(inherits(lambda, "linim")) lambda else
+        if(inherits(lambda, "linfun")) as.linim(lambda, L, ...) else
+        if(is.function(lambda)) as.linim(lambda, L, ...) else
+        if(is.im(lambda)) as.linim(lambda, L, ...) else NULL
+    }
   }
   if(!is.numeric(lambdaY))
     stop(paste("Values of", lambdaname, "are not numeric"))
@@ -144,6 +147,7 @@ getlambda.lpp <- function(lambda, X, subset=NULL, ...,
     stop(paste("Zero values of", lambdaname, "obtained"))
   if(danger)
     attr(lambdaY, "dangerous") <- lambdaname
+  if(everywhere) return(list(lambdaX=lambdaY, lambdaImage=everylambda))
   return(lambdaY)
 }
 

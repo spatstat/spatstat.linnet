@@ -7,7 +7,7 @@
 #' Copyright (c) Mehdi Moradi and Adrian Baddeley 2020-2022
 #' GNU Public Licence >= 2.0
 #' 
-#' $Revision: 1.14 $ $Date: 2022/06/16 06:12:10 $
+#' $Revision: 1.17 $ $Date: 2022/06/17 01:30:58 $
 #'
 
 linearJinhom <- function(X, lambda=NULL, lmin=NULL,
@@ -43,27 +43,30 @@ linearJinhom <- function(X, lambda=NULL, lmin=NULL,
            Voronoi = {
              lambda <- densityVoronoi.lpp(X,f=f,nrep = nrep,...)
            })
-    ## Evaluate intensity at data/grid points
-    lambdaX <- lambda[X, drop=FALSE]  # intensity at data points
+    ## Evaluate intensity at data points
+    lambdaX <- lambda[X, drop=FALSE]
+    ## Validate
     if(anyNA(lambdaX)) {
       bad <- is.na(lambdaX)
       lambdaX[bad] <- safelookup(as.im(lambda), as.ppp(X[bad]))
     }
   } else {
-    ## Validate intensity and evaluate at data points
-    lambdaX <- getlambda.lpp(lambda, X, ...,
-                             update=TRUE, leaveoneout=TRUE,
-                             loo.given=FALSE, lambdaname="lambda")
+    ## intensity given; evaluate at data points, and everywhere if possible
+    v <- resolve.lambda.lpp(X, lambda, ..., everywhere=TRUE,
+                            update=TRUE, leaveoneout=TRUE,
+                            loo.given=FALSE, lambdaname="lambda")
+    lambdaX <- v$lambdaX 
+    lambda  <- v$lambdaImage # can be null
   }
 
   ## lower bound on lambda
+  minlambda <- min(lambda %orifnull% lambdaX)
   if(missing(lmin)) {
-    ## lmin <- min(min(lambdaG), min(lambdaX))
-    lmin <- min(lambdaX)
+    lmin <- minlambda
   } else {
     check.1.real(lmin)
-    if(lmin > min(lambdaX)) 
-      stop("lmin exceeds the minimum value of lambda")
+    if(lmin > minlambda)
+      stop("Argument 'lmin' exceeds the minimum value of lambda")
   }
   ## measure distances
   switch(distance,
