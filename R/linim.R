@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.80 $   $Date: 2021/08/25 08:19:56 $
+#  $Revision: 1.81 $   $Date: 2022/06/19 00:53:04 $
 #
 #  Image/function on a linear network
 #
@@ -600,21 +600,30 @@ as.linnet.linim <- function(X, ...) {
   return(y)
 }
 
-integral.linim <- function(f, domain=NULL, ...){
+integral.linim <- function(f, domain=NULL, weight=NULL, ...){
   verifyclass(f, "linim")
+  if(!is.null(weight))
+    weight <- as.linim(weight, domain(f))
   if(is.tess(domain)) {
     result <- sapply(tiles(domain), integral.linim, f = f)
     if(length(dim(result)) > 1) result <- t(result)
     return(result)
   }
-  if(!is.null(domain)) 
+  if(!is.null(domain)) {
     f <- f[domain]
+    if(!is.null(weight)) weight <- weight[domain]
+  }
   #' extract data
   L <- as.linnet(f)
   ns <- nsegments(L)
   df <- attr(f, "df")
   vals <- df$values
   seg <- factor(df$mapXY, levels=1:ns)
+  #' weight
+  if(!is.null(weight)) {
+    samplepoints <- ppp(df$xc, df$yc, window=Frame(L), check=FALSE)
+    vals <- vals * safelookup(weight, samplepoints)
+  }
   #' ensure each segment has at least one sample point
   nper <- table(seg)
   if(any(missed <- (nper == 0))) {
@@ -622,6 +631,8 @@ integral.linim <- function(f, domain=NULL, ...){
     mp <- midpoints.psp(as.psp(L)[missed])
     #' nearest pixel value
     valmid <- safelookup(f, mp)
+    if(!is.null(weight))
+      valmid <- valmid * safelookup(weight, mp)
     #' concatenate factors
     seg <- unlist(list(seg, factor(missed, levels=1:ns)))
     vals <- c(vals, valmid)

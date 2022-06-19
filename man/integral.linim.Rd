@@ -9,9 +9,9 @@
   over a linear network.
 }
 \usage{
-\method{integral}{linim}(f, domain=NULL, ...)
+\method{integral}{linim}(f, domain=NULL, weight=NULL, ...)
 
-\method{integral}{linfun}(f, domain=NULL, ..., delta, nd)
+\method{integral}{linfun}(f, domain=NULL, weight=NULL, ..., delta, nd)
 }
 \arguments{
   \item{f}{
@@ -21,6 +21,12 @@
   \item{domain}{
     Optional window specifying the domain of integration.
     Alternatively a tessellation.
+  }
+  \item{weight}{
+    Optional numerical weight function for the integration.
+    A pixel image (object of class \code{"linim"} or \code{"im"}),
+    a function (object of class \code{"linfun"}, \code{"funxy"} or a
+    a \code{function(x,y)}) or anything acceptable to \code{\link{as.linim}}.
   }
   \item{\dots}{
     Ignored.
@@ -43,6 +49,9 @@
   will be restricted to this window. If \code{domain} is a tessellation
   (class \code{"tess"}) then the integral of \code{f} in each
   tile of \code{domain} will be computed.
+
+  If \code{weight} is given, effectively the integral of \code{weight * f}
+  is computed.
 }
 \value{
   A single numeric or complex value

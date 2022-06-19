@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.001
+        CHANGES IN spatstat.linnet VERSION 2.999-999.002
 
 OVERVIEW
 
@@ -59,9 +59,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o bw.relrisk.lpp
     When 'method="likelihood"', the cross-validation criterion
     is now defined as the *negative* likelihood. This is consistent with
-    'bw.relrisk', and ensures that the optimum bandwidth is always
+    'bw.relrisk.ppp', and ensures that the optimum bandwidth is always
     found by minimising the cross-validation criterion.
 
+    o integral.linim, integral.linfun
+    New argument 'weight' specifies a weight function for the integration.
+    
 BUG FIXES
 
     o rhohat.lpp, rhohat.lppm
