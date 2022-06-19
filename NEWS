@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.002
+        CHANGES IN spatstat.linnet VERSION 2.999-999.003
 
 OVERVIEW
 
@@ -7,6 +7,8 @@ OVERVIEW
     
     o spatstat.linnet now depends on the new packages 'spatstat.explore'
     and 'spatstat.model' rather than the old 'spatstat.core'.
+
+    o Kernel smoothing on a linear network.
     
     o K function and pair correlation function based on Euclidean distance.
 
@@ -24,6 +26,9 @@ OVERVIEW
 
 NEW FUNCTIONS
 
+    o Smooth.lpp
+    Kernel smoothing (Nadaraya-Watson) on a linear network.
+    
     o linearKEuclid, linearpcfEuclid, linearKEuclidInhom, linearpcfEuclidInhom
     K function and pair correlation function based on Euclidean distances.
 
@@ -67,6 +72,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     
 BUG FIXES
 
+    o density.lpp
+    If 'weights' were given, the results were completely incorrect
+    if leaveoneout=TRUE (the default) and at="points".
+    
     o rhohat.lpp, rhohat.lppm
     The argument 'subset' was not handled correctly in the internal data.
     The estimated function 'rho' was correct

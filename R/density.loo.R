@@ -61,7 +61,12 @@ densitypointsLPP <- function(x, sigma, ...,
            })
     if(floored)
       ker0[] <- pmax(ker0[], 1/volume(domain(x)))
-    result[] <- pmax(0, y - ker0)
+    #' now adjust result
+    if(is.null(weights)) {
+      result[] <- pmax(0, y - ker0)
+    } else {
+      result[] <- pmax(0, y - weights * ker0)
+    }
     if(ncol(result) == 1) result <- as.numeric(result)
     attr(result, "sigma") <- tau
     return(result)
