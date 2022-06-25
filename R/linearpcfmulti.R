@@ -1,7 +1,7 @@
 #
 # linearpcfmulti.R
 #
-# $Revision: 1.15 $ $Date: 2020/01/11 04:36:59 $
+# $Revision: 1.16 $ $Date: 2022/06/25 04:14:04 $
 #
 # pair correlation functions for multitype point pattern on linear network
 #
@@ -231,16 +231,19 @@ linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   has.clash <- any(clash)
   ## compute pairwise distances
   DIJ <- crossdist(X[I], X[J], check=FALSE)
+  samplesize <- length(DIJ)
   if(has.clash) {
     ## exclude pairs of identical points from consideration
     Iclash <- which(clash[I])
     Jclash <- which(clash[J])
     DIJ[cbind(Iclash,Jclash)] <- Inf
+    samplesize <- samplesize - length(Iclash)
   }
   #---  compile into pair correlation function ---
   if(correction == "none" && is.null(reweight)) {
     # no weights (Okabe-Yamada)
-    g <- compilepcf(DIJ, r, denom=denom, check=FALSE, fname=fname)
+    g <- compilepcf(DIJ, r, denom=denom, check=FALSE,
+                    fname=fname, samplesize=samplesize)
     g <- rebadge.as.crossfun(g, "g", "net", "I", "J")    
     unitname(g) <- unitname(X)
     attr(g, "correction") <- correction
@@ -259,7 +262,7 @@ linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   # compute pcf
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
   g <- compilepcf(DIJ, r, weights=wt, denom=denom, check=FALSE, ...,
-                  fname=fname)
+                  fname=fname, samplesize=samplesize)
   ## rebadge and tweak
   g <- rebadge.as.crossfun(g, "g", "L", "I", "J")
   fname <- attr(g, "fname")

@@ -1,7 +1,7 @@
 #
 # linearKmulti
 #
-# $Revision: 1.18 $ $Date: 2020/01/11 04:35:04 $
+# $Revision: 1.19 $ $Date: 2022/06/25 04:14:21 $
 #
 # K functions for multitype point pattern on linear network
 #
@@ -231,16 +231,19 @@ linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   has.clash <- any(clash)
   ## compute pairwise distances
   DIJ <- crossdist(X[I], X[J], check=FALSE)
+  samplesize <- length(DIJ)
   if(has.clash) {
     ## exclude pairs of identical points from consideration
     Iclash <- which(clash[I])
     Jclash <- which(clash[J])
     DIJ[cbind(Iclash,Jclash)] <- Inf
+    samplesize <- samplesize - length(Iclash)
   }
   #---  compile into K function ---
   if(correction == "none" && is.null(reweight)) {
     # no weights (Okabe-Yamada)
-    K <- compileK(DIJ, r, denom=denom, check=FALSE, fname=fname)
+    K <- compileK(DIJ, r, denom=denom, check=FALSE,
+                  fname=fname, samplesize=samplesize)
     K <- rebadge.as.crossfun(K, "K", "net", "I", "J")
     unitname(K) <- unitname(X)
     attr(K, "correction") <- correction
@@ -258,7 +261,8 @@ linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   }
   # compute K
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
-  K <- compileK(DIJ, r, weights=wt, denom=denom, check=FALSE, fname=fname)
+  K <- compileK(DIJ, r, weights=wt, denom=denom, check=FALSE,
+                fname=fname, samplesize=samplesize)
   ## rebadge and tweak
   K <- rebadge.as.crossfun(K, "K", "L", "I", "J")
   fname <- attr(K, "fname")

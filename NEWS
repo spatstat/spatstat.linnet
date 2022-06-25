@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.003
+        CHANGES IN spatstat.linnet VERSION 2.999-999.004
 
 OVERVIEW
 
@@ -18,6 +18,9 @@ OVERVIEW
     
     o Points along a network can be drawn as cross-ticks.
 
+    o Important change to K function and pair correlation function
+    when 'ratio=TRUE'.
+    
     o Minor improvements and bug fixes.
 
     o Improvements to internal code.
@@ -52,6 +55,18 @@ SIGNIFICANT USER-VISIBLE CHANGES
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.
 
+    o linearK, linearKinhom, linearpcf, linearpcfinhom
+    When 'ratio=TRUE', the denominator is now equal to n(n-1) where n is
+    the number of data points. This does not affect the summary function
+    but it changes the calculation of pooled estimates.
+
+    o linearKdot, linearKcross, linearpcfcross, linearpcfdot,
+    linearKcross.inhom, linearKdot.inhom, linearpcfcross.inhom,
+    linearpcfdot.inhom
+    When 'ratio=TRUE', the denominator is now equal to the number of
+    ordered pairs of data points considered. This does not affect the
+    summary function, but it changes the calculation of pooled estimates.
+    
     o densityQuick.lpp
     If 'sigma' is a function for selecting a bandwidth,
     additional arguments '...' of densityQuick.lpp will be passed to 'sigma',
