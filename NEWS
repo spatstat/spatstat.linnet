@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.004
+        CHANGES IN spatstat.linnet VERSION 2.999-999.005
 
 OVERVIEW
 
@@ -55,14 +55,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.
 
-    o linearK, linearKinhom, linearpcf, linearpcfinhom
+    o linearK, linearpcf
     When 'ratio=TRUE', the denominator is now equal to n(n-1) where n is
     the number of data points. This does not affect the summary function
     but it changes the calculation of pooled estimates.
 
     o linearKdot, linearKcross, linearpcfcross, linearpcfdot,
-    linearKcross.inhom, linearKdot.inhom, linearpcfcross.inhom,
-    linearpcfdot.inhom
     When 'ratio=TRUE', the denominator is now equal to the number of
     ordered pairs of data points considered. This does not affect the
     summary function, but it changes the calculation of pooled estimates.

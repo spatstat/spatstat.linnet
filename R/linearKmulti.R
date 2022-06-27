@@ -1,7 +1,7 @@
 #
 # linearKmulti
 #
-# $Revision: 1.19 $ $Date: 2022/06/25 04:14:21 $
+# $Revision: 1.20 $ $Date: 2022/06/27 02:17:34 $
 #
 # K functions for multitype point pattern on linear network
 #
@@ -75,9 +75,10 @@ linearKmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
 #  lambdaI <- nI/lengthL
 #  lambdaJ <- nJ/lengthL
   # compute K
-  denom <- (nI * nJ - nIandJ)/lengthL
+  samplesize <- npairs <- (nI * nJ - nIandJ)
+  denom <- npairs/lengthL
   K <- linearKmultiEngine(X, I, J, r=r, denom=denom,
-                          correction=correction, ...)
+                          correction=correction, ..., samplesize=samplesize)
   # set appropriate y axis label
   correction <- attr(K, "correction")
   type <- if(correction == "Ang") "L" else "net"
@@ -187,8 +188,9 @@ linearKmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
 
 # .............. internal ...............................
 
-linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
-                          correction="Ang", showworking=FALSE) {
+linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL,
+                               denom=1, samplesize=NULL, 
+                               correction="Ang", showworking=FALSE) {
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern
@@ -231,13 +233,11 @@ linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   has.clash <- any(clash)
   ## compute pairwise distances
   DIJ <- crossdist(X[I], X[J], check=FALSE)
-  samplesize <- length(DIJ)
   if(has.clash) {
     ## exclude pairs of identical points from consideration
     Iclash <- which(clash[I])
     Jclash <- which(clash[J])
     DIJ[cbind(Iclash,Jclash)] <- Inf
-    samplesize <- samplesize - length(Iclash)
   }
   #---  compile into K function ---
   if(correction == "none" && is.null(reweight)) {

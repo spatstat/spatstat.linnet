@@ -96,20 +96,21 @@ looVoronoiLPP(X)
 validate.lpp.coords(X, fatal, context)
 \method{as.ppm}{lppm}(object)
 pointsAlongNetwork(L, delta)
-linearEuclidEngine(X, fun, \dots, r, reweight, denom, showworking, correction)
-linearKengine(X, \dots, r, reweight, denom, correction,
-              ratio, showworking)
+linearEuclidEngine(X, fun, \dots, r, reweight, denom,
+                   samplesize, showworking, correction)
+linearKengine(X, \dots, r, reweight, denom, samplesize,
+              correction, ratio, showworking)
 linearKmulti(X, I, J, r, \dots, correction)
 linearKmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots, correction,
              normalise)
-linearpcfengine(X, \dots, r, reweight, denom, correction, ratio)
+linearpcfengine(X, \dots, r, reweight, denom, samplesize, correction, ratio)
 linearpcfmulti(X, I, J, r, \dots, correction)
 linearpcfmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots,
                      correction, normalise)
 linearKmultiEngine(X, I, J, \dots,
-                   r, reweight, denom, correction, showworking)
+                   r, reweight, denom, samplesize, correction, showworking)
 linearPCFmultiEngine(X, I, J, \dots,
-                   r, reweight, denom, correction, showworking)
+                   r, reweight, denom, samplesize, correction, showworking)
 resampleNetworkDataFrame(df, template)
 \method{resolve.lambda}{lpp}(X, lambda, subset, \dots,
               update, leaveoneout, everywhere, loo.given, lambdaname)

@@ -1,7 +1,7 @@
 #
 # linearpcf.R
 #
-# $Revision: 1.29 $ $Date: 2020/01/11 04:23:16 $
+# $Revision: 1.31 $ $Date: 2022/06/27 02:17:03 $
 #
 # pair correlation function for point pattern on linear network
 #
@@ -17,9 +17,11 @@ linearpcf <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
   np <- npoints(X)
   lengthL <- volume(domain(X))
   # compute
-  denom <- np * (np - 1)/lengthL
+  samplesize <- npairs <- np * (np - 1)
+  denom <- npairs/lengthL
   g <- linearpcfengine(X, r=r, ...,
-                       denom=denom, correction=correction, ratio=ratio)
+                       denom=denom, correction=correction, ratio=ratio,
+                       samplesize=samplesize)
   # extract bandwidth
   bw <- attr(g, "bw")
   correction <- attr(g, "correction") 
@@ -95,7 +97,8 @@ linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
 
 
 linearpcfengine <- function(X, ..., r=NULL,
-                            reweight=NULL, denom=1,
+                            reweight=NULL,
+                            denom=1, samplesize=NULL,
 			    correction="Ang", ratio=FALSE) {
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
@@ -142,7 +145,8 @@ linearpcfengine <- function(X, ..., r=NULL,
   #---  compile into pcf ---
   if(correction == "none" && is.null(reweight)) {
     # no weights (Okabe-Yamada)
-    g <- compilepcf(D, r, denom=denom, fname=fname, ratio=ratio)
+    g <- compilepcf(D, r, denom=denom, fname=fname, ratio=ratio,
+                    samplesize=samplesize)
     unitname(g) <- unitname(X)
     attr(g, "correction") <- correction
     return(g)
@@ -159,13 +163,14 @@ linearpcfengine <- function(X, ..., r=NULL,
   }
   # compute pcf
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
-  g <- compilepcf(D, r, weights=wt, denom=denom, ..., fname=fname, ratio=ratio)
+  g <- compilepcf(D, r, weights=wt, denom=denom, ..., fname=fname, ratio=ratio,
+                  samplesize=samplesize)
   # extract bandwidth
   bw <- attr(g, "bw")
   # tack on theoretical value
   g <- bind.ratfv(g,
                   quotient = data.frame(theo=rep.int(1,length(r))),
-		  denominator = denom,
+		  denominator = samplesize %orifnull% denom,
                   labl = makefvlabel(NULL, NULL, fname, "pois"),
                   desc = "theoretical Poisson %s",
 		  ratio = ratio)

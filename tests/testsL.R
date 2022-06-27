@@ -17,7 +17,7 @@ cat(paste("--------- Executing",
 #
 # Tests for lpp code
 #
-#  $Revision: 1.70 $  $Date: 2021/07/01 02:16:16 $
+#  $Revision: 1.71 $  $Date: 2022/06/27 02:43:58 $
 
 
 local({
@@ -52,13 +52,13 @@ local({
 
     #' check 'normalise' option in linearKinhom
     fit <- lppm(Xsimple ~x)
-    K <- linearKinhom(Xsimple, lambda=fit, normalise=FALSE)
+    K <- linearKinhom(Xsimple, lambda=fit, normalise=FALSE, leaveoneout=FALSE)
     plot(K)
-    g <- linearpcfinhom(Xsimple, lambda=fit, normalise=FALSE)
+    g <- linearpcfinhom(Xsimple, lambda=fit, normalise=FALSE, leaveoneout=FALSE)
     plot(g)
-    K <- linearKinhom(Xsimple, lambda=fit, normalise=TRUE)
+    K <- linearKinhom(Xsimple, lambda=fit, normalise=TRUE, leaveoneout=FALSE)
     plot(K)
-    g <- linearpcfinhom(Xsimple, lambda=fit, normalise=TRUE)
+    g <- linearpcfinhom(Xsimple, lambda=fit, normalise=TRUE, leaveoneout=FALSE)
     plot(g)
     ## other code blocks
     K <- linearKinhom(Xsimple, lambda=fit, correction="none", ratio=TRUE)

@@ -1,7 +1,7 @@
 #
 # linearpcfmulti.R
 #
-# $Revision: 1.16 $ $Date: 2022/06/25 04:14:04 $
+# $Revision: 1.17 $ $Date: 2022/06/27 02:19:57 $
 #
 # pair correlation functions for multitype point pattern on linear network
 #
@@ -77,8 +77,11 @@ linearpcfmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
 #  lambdaI <- nI/lengthL
 #  lambdaJ <- nJ/lengthL
   # compute pcf
-  denom <- (nI * nJ - nIandJ)/lengthL
-  g <- linearPCFmultiEngine(X, I, J, r=r, denom=denom, correction=correction, ...)
+  samplesize <- npairs <- nI * nJ - nIandJ
+  denom <- npairs/lengthL
+  g <- linearPCFmultiEngine(X, I, J, r=r,
+                            denom=denom, samplesize=samplesize,
+                            correction=correction, ...)
   # set appropriate y axis label
   correction <- attr(g, "correction")
   type <- if(correction == "Ang") "L" else "net"
@@ -186,8 +189,9 @@ linearpcfmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
 
 # .............. internal ...............................
 
-linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
-                          correction="Ang", showworking=FALSE) {
+linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL,
+                                 denom=1, samplesize=NULL, 
+                                 correction="Ang", showworking=FALSE) {
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern
@@ -231,13 +235,11 @@ linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL, denom=1,
   has.clash <- any(clash)
   ## compute pairwise distances
   DIJ <- crossdist(X[I], X[J], check=FALSE)
-  samplesize <- length(DIJ)
   if(has.clash) {
     ## exclude pairs of identical points from consideration
     Iclash <- which(clash[I])
     Jclash <- which(clash[J])
     DIJ[cbind(Iclash,Jclash)] <- Inf
-    samplesize <- samplesize - length(Iclash)
   }
   #---  compile into pair correlation function ---
   if(correction == "none" && is.null(reweight)) {

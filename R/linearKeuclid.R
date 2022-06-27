@@ -5,7 +5,7 @@
 #'
 #'    GNU Public Licence 2.0
 #'
-#'    $Revision: 1.7 $ $Date: 2022/06/16 05:44:23 $
+#'    $Revision: 1.8 $ $Date: 2022/06/27 02:16:56 $
 
 linearKEuclid <- function(X, r=NULL, ...) {
   stopifnot(inherits(X, "lpp"))
@@ -13,8 +13,9 @@ linearKEuclid <- function(X, r=NULL, ...) {
   np <- as.double(npoints(X))
   lengthL <- volume(domain(X))
   # compute K
-  denom <- np * (np - 1)/lengthL
-  K <- linearEuclidEngine(X, "K", r=r, denom=denom, ...)
+  samplesize <- npairs <- np * (np - 1)
+  denom <- npairs/lengthL
+  K <- linearEuclidEngine(X, "K", r=r, denom=denom, ..., samplesize=samplesize)
   # set appropriate y axis label
   ylab <- quote(K[euclid](r))
   fname <- c("K", "euclid")
@@ -28,8 +29,9 @@ linearpcfEuclid <- function(X, r=NULL, ...) {
   np <- as.double(npoints(X))
   lengthL <- volume(domain(X))
   # compute g
-  denom <- np * (np - 1)/lengthL
-  g <- linearEuclidEngine(X, "g", r=r, denom=denom, ...)
+  samplesize <- npairs <- np * (np - 1)
+  denom <- npairs/lengthL
+  g <- linearEuclidEngine(X, "g", r=r, denom=denom, ..., samplesize=samplesize)
   # extract bandwidth
   bw <- attr(g, "bw")
   # set appropriate y axis label
@@ -108,7 +110,8 @@ linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
 }
 
 linearEuclidEngine <- function(X, fun=c("K", "g"), ...,
-		               r=NULL, reweight=NULL, denom=1,
+		               r=NULL, reweight=NULL,
+                               denom=1, samplesize=NULL,
                                showworking=FALSE,
                                correction=NULL) {
   #                           'correction' is ignored
@@ -156,13 +159,14 @@ linearEuclidEngine <- function(X, fun=c("K", "g"), ...,
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
   switch(fun,
          K = {
-	   result <- compileK(D, r, weights=wt, denom=denom, fname=fname)
+	   result <- compileK(D, r, weights=wt, denom=denom, fname=fname,
+                              samplesize=samplesize)
 	   bw <- NA
 	   theo <- r
 	 },
 	 g = {
 	   result <- compilepcf(D, r, weights=wt, denom=denom, fname=fname,
-	                        ...)
+	                        ..., samplesize=samplesize)
 	   bw <- attr(result, "bw")			
            theo <- rep.int(1, length(r))
 	 })

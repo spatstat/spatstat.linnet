@@ -1,7 +1,7 @@
 #
 # linearK
 #
-# $Revision: 1.56 $ $Date: 2020/01/11 04:23:26 $
+# $Revision: 1.59 $ $Date: 2022/06/27 02:20:51 $
 #
 # K function for point pattern on linear network
 #
@@ -15,9 +15,11 @@ linearK <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
                            multi=FALSE)
   np <- npoints(X)
   lengthL <- volume(domain(X))
-  denom <- np * (np - 1)/lengthL
+  samplesize <- npairs <- np * (np - 1)
+  denom <- npairs/lengthL
   K <- linearKengine(X, r=r, ..., 
- 		     denom=denom, correction=correction, ratio=ratio)
+ 		     denom=denom, samplesize=samplesize,
+                     correction=correction, ratio=ratio)
   correction <- attr(K, "correction")
   # set appropriate y axis label
   switch(correction,
@@ -66,7 +68,7 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
                      reweight=invlam2, denom=denom, 
   	             r=r, correction=correction, 
 	 	     ratio=ratio, ...)
-
+  
   # set appropriate y axis label
   correction <- attr(K, "correction")
   switch(correction,
@@ -151,7 +153,8 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
   return(lambdaY)
 }
 
-linearKengine <- function(X, ..., r=NULL, reweight=NULL, denom=1,
+linearKengine <- function(X, ..., r=NULL, reweight=NULL,
+                          denom=1, samplesize=NULL,
                           correction="Ang", ratio=FALSE, showworking=FALSE) {
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
@@ -199,7 +202,8 @@ linearKengine <- function(X, ..., r=NULL, reweight=NULL, denom=1,
   #---  compile into K function ---
   if(correction == "none" && is.null(reweight)) {
     # no weights (Okabe-Yamada)
-    K <- compileK(D, r, denom=denom, fname=fname, ratio=ratio)
+    K <- compileK(D, r, denom=denom, fname=fname, ratio=ratio,
+                  samplesize=samplesize)
     K <- rebadge.fv(K, ylab, fname)
     unitname(K) <- unitname(X)
     attr(K, "correction") <- correction
@@ -217,12 +221,13 @@ linearKengine <- function(X, ..., r=NULL, reweight=NULL, denom=1,
   }
   # compute K
   wt <- if(!is.null(reweight)) edgewt * reweight else edgewt
-  K <- compileK(D, r, weights=wt, denom=denom, fname=fname, ratio=ratio)
+  K <- compileK(D, r, weights=wt, denom=denom, fname=fname, ratio=ratio,
+                samplesize=samplesize)
   # tack on theoretical value
   if(ratio) {
     K <- bind.ratfv(K,
 		    quotient = data.frame(theo = r),
-		    denominator = denom,
+		    denominator = samplesize %orifnull% denom,
                     labl = makefvlabel(NULL, NULL, fname, "theo"),
                     desc = "theoretical Poisson %s")
   } else {
