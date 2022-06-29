@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.005
+        CHANGES IN spatstat.linnet VERSION 2.999-999.006
 
 OVERVIEW
 
@@ -31,6 +31,9 @@ NEW FUNCTIONS
 
     o Smooth.lpp
     Kernel smoothing (Nadaraya-Watson) on a linear network.
+
+    o distmap.lpp
+    Distance map for a point pattern on a network.
     
     o linearKEuclid, linearpcfEuclid, linearKEuclidInhom, linearpcfEuclidInhom
     K function and pair correlation function based on Euclidean distances.
@@ -55,12 +58,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
     If 'shape="crossticks"', the points will be drawn as
     short line segments perpendicular to the network.
 
-    o linearK, linearpcf
-    When 'ratio=TRUE', the denominator is now equal to n(n-1) where n is
-    the number of data points. This does not affect the summary function
-    but it changes the calculation of pooled estimates.
-
-    o linearKdot, linearKcross, linearpcfcross, linearpcfdot,
+    o linearK, linearpcf, linearKdot, linearKcross, linearpcfcross, linearpcfdot
     When 'ratio=TRUE', the denominator is now equal to the number of
     ordered pairs of data points considered. This does not affect the
     summary function, but it changes the calculation of pooled estimates.

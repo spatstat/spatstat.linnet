@@ -1,10 +1,14 @@
 #
 # distfunlpp.R
 #
-#   method for 'distfun' for class 'lpp'
+#   method for 'distfun' and 'distmap' for class 'lpp'
 #
-#   $Revision: 1.3 $ $Date: 2018/04/23 04:52:17 $
+#   $Revision: 1.4 $ $Date: 2022/06/29 02:52:15 $
 #
+
+distmap.lpp <- function(X, ..., k=1) {
+  as.linim(distfun(X, k=k), ...)
+}
 
 distfun.lpp <- local({
   
@@ -40,7 +44,5 @@ distfun.lpp <- local({
 
   distfun.lpp
 })
-
-
 
 
