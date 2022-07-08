@@ -15,6 +15,7 @@ rhohat.lpp <- rhohat.lppm <-
            horvitz=FALSE,
            smoother=c("kernel", "local",
                       "decreasing", "increasing",
+                      "mountain", "valley",
                       "piecewise"),
            subset=NULL,
            nd=1000, eps=NULL, random=TRUE, 

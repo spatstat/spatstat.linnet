@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.006
+        CHANGES IN spatstat.linnet VERSION 2.999-999.007
 
 OVERVIEW
 
@@ -20,6 +20,8 @@ OVERVIEW
 
     o Important change to K function and pair correlation function
     when 'ratio=TRUE'.
+
+    o U-shaped curves in 'rhohat'.
     
     o Minor improvements and bug fixes.
 
@@ -81,6 +83,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o integral.linim, integral.linfun
     New argument 'weight' specifies a weight function for the integration.
     
+    o rhohat.lpp, rhohat.lppm
+    New options 'smoother="mountain"' and 'smoother="valley"'
+    for estimating a unimodal function (U-shaped curve).
+
 BUG FIXES
 
     o density.lpp
