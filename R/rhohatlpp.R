@@ -62,6 +62,8 @@ rhohat.lpp <- rhohat.lppm <-
            stop("Unrecognised covariate name")
          )
     covunits <- unitname(X)
+  } else if(inherits(covariate, "distfunlpp")) {
+    covunits <- unitname(covariate)
   } else {
     covunits <- NULL
   }

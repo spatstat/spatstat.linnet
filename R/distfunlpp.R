@@ -3,7 +3,7 @@
 #
 #   method for 'distfun' and 'distmap' for class 'lpp'
 #
-#   $Revision: 1.4 $ $Date: 2022/06/29 02:52:15 $
+#   $Revision: 1.5 $ $Date: 2022/07/10 10:15:23 $
 #
 
 distmap.lpp <- function(X, ..., k=1) {
@@ -29,6 +29,7 @@ distfun.lpp <- local({
     assign("X", X, envir=environment(f))
     attr(f, "explain") <- uitleggen
     attr(f, "extrargs") <- list(k=k)
+    class(f) <- c("distfunlpp", class(f))    
     return(f)
   }
 

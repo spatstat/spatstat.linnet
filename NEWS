@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.008
+        CHANGES IN spatstat.linnet VERSION 2.999-999.009
 
 OVERVIEW
 
@@ -87,6 +87,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     New options 'smoother="mountain"' and 'smoother="valley"'
     for estimating a unimodal function (U-shaped curve).
 
+    o rhohat.lpp, rhohat.lppm
+    If the covariate is a 'distfun' on a network, the unit of length
+    will be saved, and will be displayed on the plot.
+    
 BUG FIXES
 
     o density.lpp
