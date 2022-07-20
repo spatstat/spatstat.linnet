@@ -3,7 +3,7 @@
 #'
 #' Surgery on linear networks and related objects
 #'
-#' $Revision: 1.33 $  $Date: 2022/07/20 07:28:18 $
+#' $Revision: 1.34 $  $Date: 2022/07/20 08:13:54 $
 #'
 
 insertVertices <- function(L, ...) {
@@ -116,8 +116,8 @@ insertVertices <- function(L, ...) {
                length(comefrom), "!=", nsegments(S), "= number of segments"),
          call.=FALSE)
   #' copy marks
-  if(!is.null(marx <- marks(L$lines))) 
-    marks(S) <- as.data.frame(marx)[comefrom, , drop=FALSE]
+  if(!is.null(marx <- marks(L$lines)))
+    marks(S) <- marksubset(marx, comefrom)
   Lnew$lines <- S
   #' save information identifying the new vertices in the new network
   newid <- integer(nadd)
