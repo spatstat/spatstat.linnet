@@ -3,7 +3,7 @@
 #'
 #' Surgery on linear networks and related objects
 #'
-#' $Revision: 1.32 $  $Date: 2022/05/23 02:33:06 $
+#' $Revision: 1.33 $  $Date: 2022/07/20 07:28:18 $
 #'
 
 insertVertices <- function(L, ...) {
@@ -21,6 +21,7 @@ insertVertices <- function(L, ...) {
   V <- as.lpp(..., L=L)
   if(!identical(as.linnet(L, sparse=TRUE), as.linnet(V, sparse=TRUE)))
     stop("New vertices must lie on exactly the same network as L")
+  ## trivial case
   if(npoints(V) == 0) {
     attr(L, "id") <- integer(0)
     if(!haspoints) {
@@ -263,6 +264,7 @@ thinNetwork <- function(X, retainvertices, retainedges) {
   to   <- L$to
   V <- L$vertices
   sparse <- identical(L$sparse, TRUE)
+  edgemarks <- marks(L$lines) # vertex marks are handled automatically
   #' determine which edges/vertices are to be retained
   edgesFALSE <- logical(nsegments(L))
   verticesFALSE <- logical(npoints(V))
@@ -302,6 +304,9 @@ thinNetwork <- function(X, retainvertices, retainedges) {
   reverse <- reverse[nontrivial]
   ## extract relevant subset of network
   Lsub <- linnet(Vsub, edges=edgepairs, sparse=sparse, warn=FALSE)
+  ## reattach marks to edges
+  if(!is.null(edgemarks))
+    marks(Lsub$lines) <- marksubset(edgemarks, retainedges)
   ## tack on information about subset
   attr(Lsub, "retainvertices") <- retainvertices
   attr(Lsub, "retainedges") <- retainedges

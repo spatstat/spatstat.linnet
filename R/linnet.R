@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.82 $    $Date: 2022/06/16 05:45:41 $
+#    $Revision: 1.83 $    $Date: 2022/07/20 07:28:31 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -534,6 +534,13 @@ rescale.linnet <- function(X, s, unitname) {
   from <- x$from
   to   <- x$to
   if(snip) {
+    if(!is.null(marks(vertices(x)))) {
+      warning(paste("Marks attached to the network vertices were removed,",
+                    "because no mark information is available",
+                    "for the new vertices created by [.linnet when snip=TRUE"),
+              call.=FALSE)
+      marks(x$vertices) <- NULL
+    }
     ## For efficiency, first restrict network to relevant segments.
     ## Find segments EITHER OF whose endpoints lie in 'w' ...
     okedge <- vertinside[from] | vertinside[to]

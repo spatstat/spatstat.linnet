@@ -1,9 +1,9 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.009
+        CHANGES IN spatstat.linnet VERSION 2.999-999.010
 
 OVERVIEW
 
-    o We thank Mehdi Moradi and Gopalan Nair for contributions.
+    o We thank Mehdi Moradi, Gopalan Nair and James Pope for contributions.
     
     o spatstat.linnet now depends on the new packages 'spatstat.explore'
     and 'spatstat.model' rather than the old 'spatstat.core'.
@@ -103,6 +103,15 @@ BUG FIXES
     but the results of 'predict.rhohat' may have been incorrect
     and were computed only on the 'subset'.
     Fixed.
+
+    o "[.lpp", "[.linnet"
+    Crashed if the network vertices had marks, when 'snip=TRUE'.
+    Fixed.
+
+    o "[.lpp", "[.linnet"
+    Ignored marks attached to the network segments.
+    Fixed.
+
 
         CHANGES IN spatstat.linnet VERSION 2.3-2
 
