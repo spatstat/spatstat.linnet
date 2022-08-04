@@ -287,9 +287,11 @@ intensity.lpp <- function(X, ...) {
   if(is.multitype(X)) table(marks(X))/len else npoints(X)/len
 }
 
-is.lpp <- function(x) {
-  inherits(x, "lpp")
-}
+## Moved to spatstat.geom
+##
+## is.lpp <- function(x) {
+##   inherits(x, "lpp")
+## }
 
 is.multitype.lpp <- function(X, na.action="warn", ...) {
   marx <- marks(X)
