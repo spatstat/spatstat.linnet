@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.012
+        CHANGES IN spatstat.linnet VERSION 2.999-999.013
 
 OVERVIEW
 
@@ -19,6 +19,8 @@ OVERVIEW
     
     o Points along a network can be drawn as cross-ticks.
 
+    o Marks attached to vertices and segments of a network.
+    
     o Important change to K function and pair correlation function
     when 'ratio=TRUE'.
 
@@ -32,6 +34,9 @@ OVERVIEW
 
 NEW FUNCTIONS
 
+    o marks.linnet, marks<-.linnet
+    Marks attached to the vertices and segments of a linear network.
+    
     o Smooth.lpp
     Kernel smoothing (Nadaraya-Watson) on a linear network.
 

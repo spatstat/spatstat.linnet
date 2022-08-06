@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.83 $    $Date: 2022/07/20 07:28:31 $
+#    $Revision: 1.86 $    $Date: 2022/08/06 07:09:28 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -118,6 +118,26 @@ linnet <- function(vertices, m, edges, sparse=FALSE, warn=TRUE) {
   return(out)  
 }
 
+marks.linnet <- function(x, of=c("segments", "vertices"), ...) {
+  of <- match.arg(of)
+  m <- switch(of,
+              vertices = marks(x$vertices, ...),
+              segments = marks(x$lines, ...))
+  return(m)
+}
+
+"marks<-.linnet" <- function(x, of=c("segments", "vertices"), ..., value) {
+  of <- match.arg(of)
+  switch(of,
+         vertices = {
+           marks(x$vertices, ...) <- value
+         },
+         segments = {
+           marks(x$lines, ...) <- value
+         })
+  return(x)
+}
+
 print.linnet <- function(x, ...) {
   nv <- x$vertices$n
   nl <- x$lines$n
@@ -127,6 +147,8 @@ print.linnet <- function(x, ...) {
         nl, ngettext(nl, "line", "lines"))
   if(!is.null(br <- x$boundingradius) && is.infinite(br))
      splat("[Network is not connected]")
+  if(!is.null(x$vertices$marks)) splat("Vertices are marked")
+  if(!is.null(x$lines$marks))    splat("Line segments are marked")
   print(as.owin(x), prefix="Enclosing window: ")
   return(invisible(NULL))
 }
@@ -137,6 +159,8 @@ summary.linnet <- function(object, ...) {
   result <- list(nvert = object$vertices$n,
                  nline = object$lines$n,
                  nedge = sum(deg)/2,
+                 vertmarks = !is.null(object$vertices$marks),
+                 segmarks  = !is.null(object$lines$marks),
                  unitinfo = summary(unitname(object)),
                  totlength = sum(lengths_psp(object$lines)),
                  maxdegree = max(deg),
@@ -159,6 +183,8 @@ print.summary.linnet <- function(x, ...) {
           nvert, ngettext(nvert, "vertex", "vertices"), 
           "and",
           nline, ngettext(nline, "line", "lines"))
+    if(vertmarks) splat("Vertices are marked")
+    if(segmarks) splat("Line segments are marked")
     splat("Total length", signif(totlength, dig), 
           unitinfo$plural, unitinfo$explain)
     splat("Maximum vertex degree:", maxdegree)
@@ -182,7 +208,8 @@ print.summary.linnet <- function(x, ...) {
 
 plot.linnet <- function(x, ..., main=NULL, add=FALSE,
                         vertices=FALSE, window=FALSE,
-                        do.plot=TRUE) {
+                        do.plot=TRUE,
+                        args.vertices=list(), args.segments=list()) {
   if(is.null(main))
     main <- short.deparse(substitute(x))
   stopifnot(inherits(x, "linnet"))
@@ -202,9 +229,18 @@ plot.linnet <- function(x, ..., main=NULL, add=FALSE,
           resolve.defaults(list(x=quote(lines),
                                 show.all=FALSE, add=TRUE,
                                 main=main),
-                           list(...)))
-  if(vertices)
-    plot(x$vertices, add=TRUE)
+                           args.segments,
+                           list(...),
+                           list(style="none", legend=FALSE)))
+  if(vertices) {
+    v <- x$vertices
+    do.call(plot,
+            resolve.defaults(list(x=quote(v),
+                                  add=TRUE),
+                             args.vertices,
+                             list(...),
+                             list(use.marks=FALSE, legend=FALSE)))
+  }
   return(invisible(bb))
 }
 
