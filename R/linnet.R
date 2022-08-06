@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.86 $    $Date: 2022/08/06 07:09:28 $
+#    $Revision: 1.87 $    $Date: 2022/08/06 10:54:00 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -207,41 +207,65 @@ print.summary.linnet <- function(x, ...) {
 }
 
 plot.linnet <- function(x, ..., main=NULL, add=FALSE,
-                        vertices=FALSE, window=FALSE,
                         do.plot=TRUE,
+                        show.vertices=FALSE, show.window=FALSE,
                         args.vertices=list(), args.segments=list()) {
   if(is.null(main))
     main <- short.deparse(substitute(x))
   stopifnot(inherits(x, "linnet"))
-  bb <- Frame(x)
-  if(!do.plot) return(invisible(bb))
   lines <- as.psp(x)
-  if(!add) {
-    # initialise new plot
-    w <- as.owin(lines)
-    if(window)
-      plot(w, ..., main=main)
-    else
-      plot(w, ..., main=main, type="n")
+  if(show.vertices) vert <- vertices(x)
+  #' plan layout and save symbolmaps
+  RS <- do.call(plot,
+               resolve.defaults(list(x=quote(lines),
+                                     do.plot=FALSE,
+                                     show.window=show.window,
+                                     main=main,
+                                     multiplot=FALSE),
+                                args.segments,
+                                list(...),
+                                list(use.marks=FALSE, legend=FALSE)))
+  B <- as.owin(RS)
+  if(show.vertices) {
+    RV <- do.call(plot,
+                  resolve.defaults(list(x=quote(vert),
+                                        do.plot=FALSE),
+                                   args.vertices,
+                                   list(...),
+                                   list(use.marks=FALSE, legend=FALSE)))
+    BV <- as.owin(RV)
+    B <- boundingbox(B, BV)
+  } else {
+    RV <- NULL
   }
-  # plot segments and (optionally) vertices
+  ## initialise plot
+  if(!add) 
+    plot(B, type="n", main=main)
+  ## plot segments and (optionally) vertices
   do.call(plot,
           resolve.defaults(list(x=quote(lines),
-                                show.all=FALSE, add=TRUE,
-                                main=main),
+                                add=TRUE,
+                                show.window=show.window,
+                                show.all=TRUE, 
+                                main="",
+                                multiplot=FALSE),
                            args.segments,
                            list(...),
-                           list(style="none", legend=FALSE)))
-  if(vertices) {
-    v <- x$vertices
+                           list(use.marks=FALSE, legend=FALSE)))
+  if(show.vertices) {
     do.call(plot,
-            resolve.defaults(list(x=quote(v),
-                                  add=TRUE),
+            resolve.defaults(list(x=quote(vert),
+                                  add=TRUE,
+                                  show.window=FALSE,
+                                  show.all=TRUE,
+                                  main=""),
                              args.vertices,
                              list(...),
                              list(use.marks=FALSE, legend=FALSE)))
   }
-  return(invisible(bb))
+  result <- list(segments=RS, vertices=RV)
+  attr(result, "bbox") <- B
+  return(invisible(result))
 }
 
 as.psp.linnet <- function(x, ..., fatal=TRUE) {

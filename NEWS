@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.013
+        CHANGES IN spatstat.linnet VERSION 2.999-999.014
 
 OVERVIEW
 
@@ -99,6 +99,13 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o rhohat.lpp, rhohat.lppm
     If the covariate is a 'distfun' on a network, the unit of length
     will be saved, and will be displayed on the plot.
+
+    o plot.linnet
+    Optionally displays the marks of the segments or marks of the vertices.
+    Changed argument list.
+    
+    o print.linnet, summary.linnet
+    These functions print information about marks of the segments or vertices.
     
 BUG FIXES
 

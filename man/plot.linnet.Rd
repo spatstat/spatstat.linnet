@@ -8,8 +8,8 @@
 }
 \usage{
  \method{plot}{linnet}(x, ..., main=NULL, add=FALSE, 
-                               vertices=FALSE, window=FALSE,
                                do.plot=TRUE,
+                               show.vertices=FALSE, show.window=FALSE,
                                args.vertices=list(), args.segments=list())
 }
 \arguments{
@@ -27,14 +27,15 @@
     Logical. If code{TRUE}, superimpose the graphics
     over the current plot. If \code{FALSE}, generate a new plot.
   }
-  \item{vertices}{
-    Logical. Whether to plot the vertices as well.
-  }
-  \item{window}{
-    Logical. Whether to plot the window containing the linear network.
-  }
   \item{do.plot}{
-    Logical. Whether to actually perform the plot.
+    Logical value specifying whether to actually perform the plot.
+  }
+  \item{show.vertices}{
+    Logical value specifying whether to plot the vertices as well.
+  }
+  \item{show.window}{
+    Logical value specifying whether to plot the window containing the
+    linear network. 
   }
   \item{args.segments}{
     Optional list of arguments passed to \code{\link[spatstat.geom]{plot.psp}}
@@ -52,18 +53,30 @@
 
   The line segments of the network \code{x} are plotted
   using \code{\link[spatstat.geom]{plot.psp}}. 
-  If \code{vertices=TRUE}, the vertices of the network will also be
+  If \code{show.vertices=TRUE}, the vertices of the network will also be
   plotted, using \code{\link[spatstat.geom]{plot.ppp}}.
-  If \code{window=TRUE}, the window surrounding the network will also
+  If \code{show.window=TRUE}, the window surrounding the network will also
   be plotted.
 
-  By default, marks attached to the vertices or the line segments
-  are not displayed. Use \code{args.segments} or \code{args.vertices}
-  to change the default.  
+  If the vertices or line segments of \code{x} are marked,
+  the marks are not displayed by default. To plot the marks,
+  set \code{use.marks=TRUE}. To plot the marks and plot the associated legends,
+  set \code{use.marks=TRUE, legend=TRUE}. To plot only the marks of the
+  segments and not the marks of the vertices, set
+  \code{args.segments=list(use.marks=TRUE)} and so on.
 }
 \value{
-  An (invisible) object of class \code{"owin"}
-  giving the bounding box of the network.
+  An (invisible) list with two elements, \code{segments} and
+  \code{vertices} describing the representation of the marks.
+  The element \code{segments} contains
+  the result of \code{\link[spatstat.geom]{plot.psp}}
+  (either a \code{colourmap}, a numeric value or an \code{owin}).
+  The element \code{vertices} contains the result
+  of \code{\link[spatstat.geom]{plot.ppp}} (a \code{symbolmap})
+  or \code{NULL}.
+
+  The result also has attribute \code{"bbox"}
+  giving the bounding box for the plot.
 }
 \author{
   \wei and
@@ -74,5 +87,10 @@
 }
 \examples{
    plot(simplenet)
+
+   L <- simplenet
+   marks(L, "vertices") <- letters[1:nvertices(L)]
+   marks(L, "segments") <- runif(nsegments(L))
+   plot(L, show.vertices=TRUE, use.marks=TRUE, legend=TRUE)
 }
 \keyword{spatial}
