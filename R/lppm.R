@@ -234,6 +234,10 @@ update.lppm <- function(object, ...) {
   return(out)
 }
 
+updateData.lppm <- function(model, X, ...) {
+  update(model, Q=X)
+}
+
 terms.lppm <- function(x, ...) {
   terms(x$fit, ...)
 }

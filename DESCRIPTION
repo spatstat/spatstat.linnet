@@ -1,5 +1,5 @@
 Package: spatstat.linnet
-Version: 2.999-999.015
+Version: 2.999-999.016
 Date: 2022-08-09
 Title: Linear Networks Functionality of the 'spatstat' Family
 Authors@R: c(person("Adrian", "Baddeley", 
@@ -23,7 +23,7 @@ Authors@R: c(person("Adrian", "Baddeley",
 	     person("Suman", "Rakshit",
 	            role = "ctb"))
 Maintainer: Adrian Baddeley <Adrian.Baddeley@curtin.edu.au>
-Depends: R (>= 3.5.0), spatstat.data (>= 2.999-999), spatstat.geom (>= 2.999-999.003), spatstat.random (>= 2.999-999), spatstat.explore (>= 2.999-999.023), spatstat.model (>= 2.999-999.016), stats, graphics, grDevices, methods, utils
+Depends: R (>= 3.5.0), spatstat.data (>= 2.999-999), spatstat.geom (>= 2.999-999.003), spatstat.random (>= 2.999-999), spatstat.explore (>= 2.999-999.024), spatstat.model (>= 2.999-999.022), stats, graphics, grDevices, methods, utils
 Imports: spatstat.utils (>= 2.999-999), Matrix, spatstat.sparse (>= 2.999-999)
 Suggests: goftest, locfit, spatstat (>= 2.999-999)
 Additional_repositories: https://spatstat.r-universe.dev

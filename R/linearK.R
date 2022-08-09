@@ -102,7 +102,7 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
     model <- lambda
     if(update) {
       ## refit the model to the full dataset X
-      model <- if(is.lppm(model)) update(model, X) else update(model, as.ppp(X))
+      model <- if(is.lppm(model)) updateData(model, X) else updateData(model, as.ppp(X))
       danger <- FALSE
       ## Now evaluate at data points
       lambdaX <- fitted(model, dataonly=TRUE, leaveoneout=leaveoneout)

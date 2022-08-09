@@ -47,6 +47,7 @@
 \alias{vnnFind}
 \alias{ldtEngine}
 \alias{qkdeEngine}
+\alias{updateData.lppm}
 \alias{Math.linimlist}
 \alias{Ops.linimlist}
 \alias{Summary.linimlist}
@@ -133,6 +134,7 @@ qkdeEngine(X, sigma, \dots, at, what,
            leaveoneout, diggle, raw, edge2D, edge,
            weights, varcov, positive, shortcut,
            precomputed, savecomputed)
+\method{updateData}{lppm}(model, X, \dots)
 \special{Math(x, \dots)}
 \special{Ops(e1, e2)}
 \special{Complex(z)}
