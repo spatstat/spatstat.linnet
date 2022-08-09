@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.014
+        CHANGES IN spatstat.linnet VERSION 2.999-999.015
 
 OVERVIEW
 
@@ -99,6 +99,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o rhohat.lpp, rhohat.lppm
     If the covariate is a 'distfun' on a network, the unit of length
     will be saved, and will be displayed on the plot.
+
+    o rhohat.lpp, rhohat.lppm
+    New arguments 'jitter', 'jitterfactor', 'interpolate' allow greater
+    control over the calculation.
 
     o plot.linnet
     Optionally displays the marks of the segments or marks of the vertices.

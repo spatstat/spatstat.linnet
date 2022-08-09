@@ -19,6 +19,7 @@
        smoother=c("kernel", "local", "decreasing", "increasing",
                    "mountain", "valley", "piecewise"),
        subset=NULL, 
+       jitter=TRUE, jitterfactor=1, interpolate=TRUE,    
        nd=1000, eps=NULL, random=TRUE, 
        n = 512, bw = "nrd0", adjust=1, from = NULL, to = NULL,
        bwref=bw,
@@ -31,6 +32,7 @@
        smoother=c("kernel", "local", "decreasing", "increasing",
                   "mountain", "valley", "piecewise"),
        subset=NULL, 
+       jitter=TRUE, jitterfactor=1, interpolate=TRUE,    
        nd=1000, eps=NULL, random=TRUE, 
        n = 512, bw = "nrd0", adjust=1, from = NULL, to = NULL,
        bwref=bw,
@@ -70,6 +72,29 @@
     Optional. A spatial window (object of class \code{"owin"})
     specifying a subset of the data, from which the estimate should
     be calculated.
+  }
+  \item{jitter}{
+    Logical value. If \code{jitter=TRUE} (the default),
+    the values of the covariate at the
+    data points will be jittered (randomly perturbed by adding a small
+    amount of noise) using the function \code{\link[base]{jitter}}.
+    If \code{jitter=FALSE}, the covariate values at the data points will
+    not be altered. See the section on \emph{Randomisation and discretisation}.
+  }
+  \item{jitterfactor}{
+    Numeric value controlling the scale of jittering.
+    Passed to \code{\link[base]{jitter}} as the argument \code{factor}.
+  }
+  \item{interpolate}{
+    Logical value specifying whether to use spatial interpolation
+    to obtain the values of the covariate at the data points,
+    when the covariate is a pixel image
+    (object of class \code{"im"} or \code{"linim"}).
+    If \code{interpolate=FALSE}, the covariate value for each data point
+    is simply the value of the covariate image at the pixel centre that
+    is nearest to the data point. If \code{interpolate=TRUE}, the
+    covariate value for each data point is obtained by interpolating the
+    nearest pixel values using \code{\link[spatstat.geom]{interp.im}}.
   }
   \item{eps,nd,random}{
     Arguments controlling the pixel
@@ -404,6 +429,27 @@
   \eqn{z_0}{z0} using the same technique \emph{mutatis mutandis}.
 
   Confidence intervals are not available for the unimodal estimators.
+}
+\section{Randomisation}{
+  By default, \code{rhohat} adds a small amount of random noise to the
+  data. This is designed to suppress the effects of
+  discretisation in pixel images.
+
+  This strategy means that \code{rhohat}
+  does not produce exactly the same result when the computation is
+  repeated. If you need the results to be exactly reproducible, set
+  \code{jitter=FALSE} and \code{random=FALSE}.
+
+  The values of the covariate \emph{at the data points}
+  are randomly perturbed by adding a small amount
+  of noise using the function \code{\link[base]{jitter}}. To reduce this
+  effect, set \code{jitterfactor} to a number smaller than 1. To
+  suppress this effect entirely, set \code{jitter=FALSE}.
+
+  The values of the covariate \emph{along the network}
+  are sampled at a regularly-spaced grid on the network.
+  The grid starts from a random position on each segment of
+  the network. To suppress this behaviour, set \code{random=FALSE}.
 }
 \value{
   A function value table (object of class \code{"fv"})
