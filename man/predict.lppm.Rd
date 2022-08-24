@@ -18,7 +18,7 @@
   }
   \item{type}{
     Type of values to be computed. Either \code{"trend"},
-    \code{"cif"} or \code{"se"}.
+    \code{"cif"} or \code{"lambda"}.
   }
   \item{locations}{
     Optional. Locations at which predictions should be computed.
@@ -38,9 +38,7 @@
   }
 }
 \details{
-  This function computes the fitted poin process intensity,
-  fitted conditional intensity, or standard error of the fitted
-  intensity, for a point process model on a linear network.
+  This function computes the fitted point process intensity or the fitted conditional intensity for a point process model on a linear network.
   It is a method for the generic \code{\link[stats]{predict}}
   for the class \code{"lppm"}.
 
@@ -101,9 +99,8 @@
   ecology and criminology.
   \emph{Scandinavian Journal of Statistics} \bold{39}, 591--617.
 
-  McSwiggan, G., Nair, M.G. and Baddeley, A. (2012)
-  Fitting Poisson point process models to events 
-  on a linear network. Manuscript in preparation.
+  Baddeley, A., Nair, G., Rakshit, S., McSwiggan, G. and Davies, T.M. (2021) Analysing point patterns on networks — A review. 
+\emph{Spatial Statistics} \bold{42}, 100435.
 }
 \keyword{spatial}
 \keyword{models}
