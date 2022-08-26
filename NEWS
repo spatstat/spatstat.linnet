@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.017
+        CHANGES IN spatstat.linnet VERSION 2.999-999.018
 
 OVERVIEW
 
@@ -112,7 +112,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     These functions print information about marks of the segments or vertices.
 
     o predict.lppm
-    New formal argument 'covariates'.
+    Can now compute standard errors.
+
+    o predict.lppm
+    New formal arguments 'covariates' and 'se'.
     
 BUG FIXES
 
@@ -120,7 +123,7 @@ BUG FIXES
     If 'weights' were given, the results were completely incorrect
     when leaveoneout=TRUE (the default) and at="points".
 
-    o effectfun
+    o spatstat.model::effectfun
     Results were sometimes incorrect for 'lppm' objects.
     [Spotted by Fernando A. Milesi]
     Fixed.

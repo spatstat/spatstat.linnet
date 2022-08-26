@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.48 $   $Date: 2022/08/26 01:36:31 $
+#  $Revision: 1.50 $   $Date: 2022/08/26 03:14:35 $
 #
 
 lppm <- function(X, ...) {
@@ -83,70 +83,104 @@ fitted.lppm <- function(object, ..., dataonly=FALSE, new.coef=NULL,
   return(v)
 }
   
-predict.lppm <- function(object, ..., 
-                         type="trend", locations=NULL, covariates=NULL,
-                         new.coef=NULL) {
-  type <- pickoption("type", type,
-                     c(trend="trend", cif="cif", lambda="cif"))
-  X <- object$X
-  fit <- object$fit
-  L <- as.linnet(X)
-
-  if(!is.null(locations)) {
-    #' locations given; return a vector/matrix of predicted values
-    if(is.lpp(locations)) locations <- as.ppp(locations)
-    values <- predict(fit, locations=locations, covariates=covariates,
-                      type=type, new.coef=new.coef)
-    return(values)
-  }
+predict.lppm <- local({
   
-  # locations not given; want a pixel image
-  # pixellate the lines
-  Llines <- as.psp(L)
-  linemask <- as.mask.psp(Llines, ...)
-  lineimage <- as.im(linemask)
-  # extract pixel centres
-  xx <- rasterx.mask(linemask)
-  yy <- rastery.mask(linemask)
-  mm <- linemask$m
-  xx <- as.vector(xx[mm])
-  yy <- as.vector(yy[mm])
-  pixelcentres <- ppp(xx, yy, window=as.rectangle(linemask), check=FALSE)
-  pixdf <- data.frame(xc=xx, yc=yy)
-  # project pixel centres onto lines
-  p2s <- project2segment(pixelcentres, Llines)
-  projloc <- as.data.frame(p2s$Xproj)
-  projmap <- as.data.frame(p2s[c("mapXY", "tp")])
-  projdata <- cbind(pixdf, projloc, projmap)
-  # predict at the projected points
-  if(!is.multitype(fit)) {
-    values <- predict(fit, locations=projloc, covariates=covariates,
-                      type=type, new.coef=new.coef)
-    # map to nearest pixels
+  predict.lppm <- function(object, ..., 
+                           type="trend", locations=NULL, covariates=NULL,
+                           se=FALSE,
+                           new.coef=NULL) {
+    type <- pickoption("type", type,
+                       c(trend="trend", cif="cif", lambda="cif"))
+    X <- object$X
+    fit <- object$fit
+    L <- as.linnet(X)
+    
+    if(!is.null(locations)) {
+      #' locations given; return a vector/matrix of predicted values
+      if(is.lpp(locations)) locations <- as.ppp(locations)
+      values <- predict(fit, locations=locations, covariates=covariates,
+                        type=type, se=se, new.coef=new.coef)
+      return(values)
+    }
+  
+    #' locations not given; want a pixel image
+    #' pixellate the lines
+    Llines <- as.psp(L)
+    linemask <- as.mask.psp(Llines, ...)
+    lineimage <- as.im(linemask)
+    #' extract pixel centres
+    xx <- rasterx.mask(linemask)
+    yy <- rastery.mask(linemask)
+    mm <- linemask$m
+    xx <- as.vector(xx[mm])
+    yy <- as.vector(yy[mm])
+    pixelcentres <- ppp(xx, yy, window=as.rectangle(linemask), check=FALSE)
+    pixdf <- data.frame(xc=xx, yc=yy)
+    #' project pixel centres onto lines
+    p2s <- project2segment(pixelcentres, Llines)
+    projloc <- as.data.frame(p2s$Xproj)
+    projmap <- as.data.frame(p2s[c("mapXY", "tp")])
+    projdata <- cbind(pixdf, projloc, projmap)
+    #' predict at the projected points
+    if(!is.multitype(fit)) {
+      #' unmarked
+      values <- predict(fit, locations=projloc, covariates=covariates,
+                        type=type, se=se, new.coef=new.coef)
+      if(!se) {
+        out <- putvalues(values, lineimage, pixelcentres, projdata, L)
+      } else {
+        outfit <- putvalues(values[[1L]], lineimage, pixelcentres, projdata, L)
+        outse  <- putvalues(values[[2L]], lineimage, pixelcentres, projdata, L)
+        out <- solist(outfit, outse)
+        names(out) <- c(type, "se")
+      }
+    } else {
+      #' multitype 
+      #' predict for each type
+      lev <- levels(marks(data.ppm(fit)))
+      out <- outfit <- outse <- list()
+      for(k in seq(length(lev))) {
+        markk <- factor(lev[k], levels=lev)
+        locnk <- cbind(projloc, data.frame(marks=markk))
+        values <- predict(fit, locations=locnk, covariates=covariates,
+                          type=type, se=se, new.coef=new.coef)
+        if(!se) {
+          out[[k]] <- putvalues(values, lineimage, pixelcentres, projdata, L)
+        } else {
+          outfit[[k]] <-
+            putvalues(values[[1L]], lineimage, pixelcentres, projdata, L)
+          outse[[k]]  <-
+            putvalues(values[[2L]], lineimage, pixelcentres, projdata, L)
+        }
+      }
+      if(!se) {
+        out <- as.solist(out)
+        names(out) <- as.character(lev)
+      } else {
+        outfit <- as.solist(outfit)
+        outse <- as.solist(outse)
+        names(outfit) <- names(outse) <- as.character(lev)
+        out <- list(outfit, outse)
+        names(out) <- c(type, "se")
+      }
+    }
+    return(out)
+  }
+
+  putvalues <- function(values, lineimage, pixelcentres, projdata, L) {
+    ## insert numerical 'values' in the right places in a linim
+    ## (1) image component: map to nearest pixels
     Z <- lineimage
     Z[pixelcentres] <- values
-    # attach exact line position data
+    ## (2) data frame: attach exact line position data
     df <- cbind(projdata, values)
     out <- linim(L, Z, df=df, restrict=FALSE)
-  } else {
-    # predict for each type
-    lev <- levels(marks(data.ppm(fit)))
-    out <- list()
-    for(k in seq(length(lev))) {
-      markk <- factor(lev[k], levels=lev)
-      locnk <- cbind(projloc, data.frame(marks=markk))
-      values <- predict(fit, locations=locnk, covariates=covariates,
-                        type=type, new.coef=new.coef)
-      Z <- lineimage
-      Z[pixelcentres] <- values
-      df <- cbind(projdata, values)
-      out[[k]] <- linim(L, Z, df=df, restrict=FALSE)
-    }
-    out <- as.solist(out)
-    names(out) <- as.character(lev)
+    return(out)
   }
-  return(out)
-}
+
+  predict.lppm
+})
+
 
 coef.lppm <- function(object, ...) {
   coef(object$fit)
