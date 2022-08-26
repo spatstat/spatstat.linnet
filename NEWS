@@ -1,10 +1,10 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.016
+        CHANGES IN spatstat.linnet VERSION 2.999-999.017
 
 OVERVIEW
 
-    o We thank Greg McSwiggan, Mehdi Moradi, Gopalan Nair and James Pope
-    for contributions.
+    o We thank Greg McSwiggan, Fernando Milesi, Mehdi Moradi, Gopalan Nair
+    and James Pope for contributions.
     
     o spatstat.linnet now depends on the new packages 'spatstat.explore'
     and 'spatstat.model' rather than the old 'spatstat.core'.
@@ -110,12 +110,24 @@ SIGNIFICANT USER-VISIBLE CHANGES
     
     o print.linnet, summary.linnet
     These functions print information about marks of the segments or vertices.
+
+    o predict.lppm
+    New formal argument 'covariates'.
     
 BUG FIXES
 
     o density.lpp
     If 'weights' were given, the results were completely incorrect
-    if leaveoneout=TRUE (the default) and at="points".
+    when leaveoneout=TRUE (the default) and at="points".
+
+    o effectfun
+    Results were sometimes incorrect for 'lppm' objects.
+    [Spotted by Fernando A. Milesi]
+    Fixed.
+    
+    o predict.lppm
+    Ignored argument 'covariates'.
+    Fixed.
     
     o rhohat.lpp, rhohat.lppm
     The argument 'subset' was not handled correctly in the internal data.

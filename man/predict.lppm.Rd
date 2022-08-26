@@ -8,8 +8,9 @@
   compute the fitted intensity or conditional intensity of the model.
 }
 \usage{
-\method{predict}{lppm}(object, ...,
-                       type = "trend", locations = NULL, new.coef=NULL)
+\method{predict}{lppm}(object, ..., type = "trend",
+                       locations = NULL, covariates = NULL,
+                       new.coef=NULL)
 }
 \arguments{
   \item{object}{
@@ -24,6 +25,10 @@
     Optional. Locations at which predictions should be computed.
     Either a data frame with two columns of coordinates,
     or a binary image mask.
+  }
+  \item{covariates}{
+    Values of external covariates required by the model.
+    Either a data frame, or a list of images and/or functions.
   }
   \item{new.coef}{
     Optional. Numeric vector of model coefficients,

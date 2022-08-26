@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.47 $   $Date: 2022/01/04 05:30:06 $
+#  $Revision: 1.48 $   $Date: 2022/08/26 01:36:31 $
 #
 
 lppm <- function(X, ...) {
@@ -84,7 +84,7 @@ fitted.lppm <- function(object, ..., dataonly=FALSE, new.coef=NULL,
 }
   
 predict.lppm <- function(object, ..., 
-                         type="trend", locations=NULL,
+                         type="trend", locations=NULL, covariates=NULL,
                          new.coef=NULL) {
   type <- pickoption("type", type,
                      c(trend="trend", cif="cif", lambda="cif"))
@@ -95,7 +95,8 @@ predict.lppm <- function(object, ...,
   if(!is.null(locations)) {
     #' locations given; return a vector/matrix of predicted values
     if(is.lpp(locations)) locations <- as.ppp(locations)
-    values <- predict(fit, locations=locations, type=type, new.coef=new.coef)
+    values <- predict(fit, locations=locations, covariates=covariates,
+                      type=type, new.coef=new.coef)
     return(values)
   }
   
@@ -119,7 +120,8 @@ predict.lppm <- function(object, ...,
   projdata <- cbind(pixdf, projloc, projmap)
   # predict at the projected points
   if(!is.multitype(fit)) {
-    values <- predict(fit, locations=projloc, type=type, new.coef=new.coef)
+    values <- predict(fit, locations=projloc, covariates=covariates,
+                      type=type, new.coef=new.coef)
     # map to nearest pixels
     Z <- lineimage
     Z[pixelcentres] <- values
@@ -133,7 +135,8 @@ predict.lppm <- function(object, ...,
     for(k in seq(length(lev))) {
       markk <- factor(lev[k], levels=lev)
       locnk <- cbind(projloc, data.frame(marks=markk))
-      values <- predict(fit, locations=locnk, type=type, new.coef=new.coef)
+      values <- predict(fit, locations=locnk, covariates=covariates,
+                        type=type, new.coef=new.coef)
       Z <- lineimage
       Z[pixelcentres] <- values
       df <- cbind(projdata, values)
