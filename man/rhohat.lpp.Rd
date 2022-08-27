@@ -18,7 +18,8 @@
        horvitz=FALSE,
        smoother=c("kernel", "local", "decreasing", "increasing",
                    "mountain", "valley", "piecewise"),
-       subset=NULL, 
+       subset=NULL,
+       do.CI=TRUE, 
        jitter=TRUE, jitterfactor=1, interpolate=TRUE,    
        nd=1000, eps=NULL, random=TRUE, 
        n = 512, bw = "nrd0", adjust=1, from = NULL, to = NULL,
@@ -32,6 +33,7 @@
        smoother=c("kernel", "local", "decreasing", "increasing",
                   "mountain", "valley", "piecewise"),
        subset=NULL, 
+       do.CI=TRUE, 
        jitter=TRUE, jitterfactor=1, interpolate=TRUE,    
        nd=1000, eps=NULL, random=TRUE, 
        n = 512, bw = "nrd0", adjust=1, from = NULL, to = NULL,
@@ -72,6 +74,10 @@
     Optional. A spatial window (object of class \code{"owin"})
     specifying a subset of the data, from which the estimate should
     be calculated.
+  }
+  \item{do.CI}{
+    Logical value specifying whether to calculate standard errors
+    and confidence bands.
   }
   \item{jitter}{
     Logical value. If \code{jitter=TRUE} (the default),
@@ -200,7 +206,8 @@
     of \eqn{\rho(z)}{rho(z)} (Guan, 2008; Baddeley et al, 2012).
     The estimated function \eqn{\rho(z)}{rho(z)} will be
     a smooth function of \eqn{z} which takes nonnegative values.
-    Confidence bands are also computed, assuming a Poisson point process.
+    If \code{do.CI=TRUE} (the default),
+    confidence bands are also computed, assuming a Poisson point process.
     See the section on \emph{Smooth estimates}.
     \item
     If \code{smoother="local"}, 
@@ -209,7 +216,8 @@
     local likelihood.
     The estimated function \eqn{\rho(z)}{rho(z)} will be
     a smooth function of \eqn{z}.
-    Confidence bands are also computed, assuming a Poisson point process.
+    If \code{do.CI=TRUE} (the default),
+    confidence bands are also computed, assuming a Poisson point process.
     See the section on \emph{Smooth estimates}.
     \item
     If \code{smoother="increasing"}, we assume that
@@ -263,6 +271,8 @@
     values is simply the average intensity
     (number of points per unit length) in the relevant sub-region
     of the network.
+    If \code{do.CI=TRUE} (the default),
+    confidence bands are also computed, assuming a Poisson point process.
   }
   See Baddeley (2018) for a comparison of these estimation techniques
   for two-dimensional point patterns.
@@ -351,8 +361,9 @@
   each data point is weighted by the reciprocal of the
   baseline value or fitted intensity value at that data point;
   and a corresponding adjustment is made to the denominator.
-  
-  Pointwise confidence intervals for the true value of \eqn{\rho(z)}
+
+  If \code{do.CI=TRUE} (the default),
+  pointwise confidence intervals for the true value of \eqn{\rho(z)}
   are also calculated for each \eqn{z},
   and will be plotted as grey shading.
   The confidence intervals are derived using the central limit theorem,

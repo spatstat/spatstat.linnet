@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.018
+        CHANGES IN spatstat.linnet VERSION 2.999-999.019
 
 OVERVIEW
 
@@ -116,6 +116,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o predict.lppm
     New formal arguments 'covariates' and 'se'.
+
+    o rhohat.lpp, rhohat.lppm
+    New argument 'do.CI' specifies whether to calculate confidence bands.
     
 BUG FIXES
 

@@ -18,6 +18,7 @@ rhohat.lpp <- rhohat.lppm <-
                       "mountain", "valley",
                       "piecewise"),
            subset=NULL,
+           do.CI=TRUE,
            jitter=TRUE, jitterfactor=1, interpolate=TRUE,
            nd=1000, eps=NULL, random=TRUE, 
            n=512, bw="nrd0", adjust=1, from=NULL, to=NULL, 
@@ -74,6 +75,7 @@ rhohat.lpp <- rhohat.lppm <-
   totlen <- sum(lengths_psp(S))
   
   rhohatEngine(model, covariate, reference, totlen, ...,
+               do.CI=do.CI,
                subset=subset,
                weights=weights,
                method=method,
