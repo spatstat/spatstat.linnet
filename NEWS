@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 2.999-999.019
+        CHANGES IN spatstat.linnet VERSION 2.999-999.020
 
 OVERVIEW
 
@@ -142,6 +142,10 @@ BUG FIXES
     and were computed only on the 'subset'.
     Fixed.
 
+    o plot.lpp
+    Did not display the main title in some cases.
+    Fixed.
+    
     o "[.lpp", "[.linnet"
     Crashed if the network vertices had marks, when 'snip=TRUE'.
     Fixed.

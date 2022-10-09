@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.81 $   $Date: 2022/04/23 09:57:24 $
+#  $Revision: 1.82 $   $Date: 2022/10/09 11:00:03 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -150,7 +150,7 @@ plot.lpp <- function(x, ..., main, add=FALSE,
       plot(Window(P), main=main, invert=TRUE, ...)
     } else {
       b <- attr(symap, "bbox")
-      plot(b, type="n", main=main, ..., show.all=FALSE)
+      plot(b, type="n", main=main, ..., show.all=show.all)
     }
   }
   ## plot linear network
