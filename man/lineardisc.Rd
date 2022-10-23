@@ -1,5 +1,6 @@
 \name{lineardisc}
 \alias{lineardisc}
+\alias{lineardisclength}
 \alias{countends}
 \title{
   Compute Disc of Given Radius in Linear Network
@@ -11,6 +12,8 @@
 \usage{
   lineardisc(L, x = locator(1), r, plotit = TRUE,
              cols=c("blue", "red","green"), add=TRUE)
+
+  lineardisclength(L, x = locator(1), r)
 
   countends(L, x = locator(1), r, toler=NULL, internal=list())
 }
@@ -61,13 +64,15 @@
   The function \code{lineardisc} computes the
   disc of radius \eqn{r} and its relative boundary,
   optionally plots them, and returns them.
-  The faster function \code{countends} simply counts the number of
-  points in the relative boundary.
+  The faster function \code{lineardisclength} computes only the total
+  length of the disc, and \code{countends} computes only the number of
+  endpoints of the disc.
 
   Note that \code{countends} requires the linear network \code{L}
   to be given in the non-sparse matrix format (see the argument
   \code{sparse} in \code{\link{linnet}} or \code{\link{as.linnet}})
-  while \code{lineardisc} accepts both sparse and non-sparse formats.
+  while \code{lineardisc} and \code{lineardisclength} accept
+  both sparse and non-sparse formats.
 
   The optional threshold \code{toler} is used to suppress numerical
   errors in \code{countends}.
@@ -82,6 +87,9 @@
   \item{endpoints}{Point pattern (object of class \code{"ppp"})
     representing the relative boundary of the disc.
   }
+
+  The value of \code{lineardisclength} is a single number
+  giving the total length of the disc.
   
   The value of \code{countends} is an integer giving the number of
   points in the relative boundary.
@@ -113,11 +121,17 @@ ecology and criminology.
     letterA <- linnet(v, edges=edg)
     plot(letterA)
 
-   lineardisc(letterA, c(0,3), 1.6)
-   # count the endpoints
+   di <- lineardisc(letterA, c(0,3), 1.6)
+   di
+
+   # count the endpoints more efficiently
    countends(letterA, c(0,3), 1.6)
-   # cross-check (slower)
-   en <- lineardisc(letterA, c(0,3), 1.6, plotit=FALSE)$endpoints
-   npoints(en)
+   # cross-check 
+   npoints(di$endpoints)
+
+   # measure the length more efficiently
+   lineardisclength(letterA, c(0,3), 1.6)
+   # cross-check
+   sum(lengths_psp(di$lines))
 }
 \keyword{spatial}

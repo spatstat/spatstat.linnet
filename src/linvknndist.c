@@ -11,7 +11,7 @@
 
   Needs only the sparse representation of the network
 
-  $Revision: 1.6 $  $Date: 2018/12/18 02:43:11 $
+  $Revision: 1.8 $  $Date: 2022/10/22 09:53:55 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -33,32 +33,33 @@
 		EPS)
 
 
-void linvknndist(kmax,         /* number of neighbours required */
-		 nq, sq, tq,   /* target data points (ordered by sq) */
-		 nv,           /* number of network vertices */
-		 ns, from, to, /* segments (pairs of vertices) */
-		 seglen,       /* segment lengths */
-		 huge,         /* value taken as infinity */
-		 tol,          /* tolerance for updating distances */
-		 /* OUTPUT */
-		 dist,         /* distance from each vertex to
-				  the nearest, ..., kth nearest data points */
-		 which         /* identifies which data points */
+void linvknndist(
+  int *kmax,         /* number of neighbours required */
+  /* target data points in local coordinates (ordered by sq) */
+  int *nq,
+  int *sq,
+  double *tq,
+  /* network */
+  int *nv,           /* number of network vertices */
+  int *ns,
+  int *from,
+  int *to,           /* segments (pairs of vertices) */
+  double *seglen,       /* segment lengths */
+  double *huge,         /* value taken as infinity */
+  double *tol,          /* tolerance for updating distances */
+  /* OUTPUT */
+  double *dist,         /* distance from each vertex to
+			   the nearest, ..., kth nearest data points */
+  int *which         /* identifies which data points */
 ) 
-  int *kmax;
-  int *nq, *nv, *ns;  /* number of points, vertices, segments */
-  int *sq, *from, *to; /* integer vectors (mappings) */
-  double *tq; /* fractional location coordinates */
-  double *huge, *tol;
-  double *seglen;
-  double *dist;
-  int *which;
 {
   int Nq, Nv, Ns, Kmax, Nout, i, j, k, m;
   int segQj, ivleft, ivright, changed;
   double hugevalue, eps, slen, d, tqj;
   char converged;
-  int UpdateKnnList();
+
+  int UpdateKnnList(double d, int j,
+		    double *dist, int *which, int Kmax, double eps);
 
   Kmax = *kmax;
   Nq = *nq;
@@ -169,14 +170,14 @@ void linvknndist(kmax,         /* number of neighbours required */
 
 /* update a list of nearest, second nearest, ..., k-th nearest neighbours */
 
-int UpdateKnnList(d, j, dist, which, Kmax, eps)
-     double d;  /* candidate distance */
-     int j;     /* corresponding candidate target point */
-     int Kmax;  
-     double *dist;  /* pointer to start of vector of length Kmax */
-     int *which;   /* pointer to start of vector of length Kmax */
-     double eps;   /* numerical tolerance, to prevent infinite loops */
-{
+int UpdateKnnList(
+  double d,      /* candidate distance */
+  int j,         /* corresponding candidate target point */
+  double *dist,  /* pointer to start of vector of length Kmax */
+  int *which,    /* pointer to start of vector of length Kmax */
+  int Kmax,  
+  double eps     /* numerical tolerance, to prevent infinite loops */
+) {
   char matched, unsorted, changed;
   int k, Klast, itmp;
   double dtmp, dPlusEps;

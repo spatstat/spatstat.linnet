@@ -7,7 +7,7 @@
 
    Shortest-path distances between pairs of points in linear network
 
-   $Revision: 1.4 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.5 $  $Date: 2022/10/21 10:43:01 $
 
    lincrossdist
 
@@ -21,21 +21,20 @@
 #define EUCLID(X,Y,U,V) sqrt(pow((X)-(U),2)+pow((Y)-(V),2))
 
 void 
-lincrossdist(np, xp, yp,   /* data points from which distances are measured */
-	     nq, xq, yq,   /* data points to which distances are measured */
-	     nv, xv, yv,   /* network vertices */
-	     ns, from, to,  /* segments */
-	     dpath,  /* shortest path distances between vertices */
-	     psegmap, /* map from data points to segments */
-	     qsegmap, /* map from data points to segments */
-	     /* OUTPUT */
-	     answer  /* shortest path distances between points */
-)
-  int *np, *nq, *nv, *ns;
-  int *from, *to, *psegmap, *qsegmap; /* integer vectors (mappings) */
-  double *xp, *yp, *xq, *yq, *xv, *yv; /* vectors of coordinates */
-  double *dpath, *answer; /* matrices */
-{
+lincrossdist(
+  /* data points from which distances are measured */
+  int *np, double *xp, double *yp,
+  /* data points to which distances are measured */
+  int *nq, double *xq, double *yq,
+  /* network vertices */
+  int *nv, double *xv, double *yv,
+  /* segments of network */
+  int *ns, int *from, int *to,
+  double *dpath,  /* path distances between vertices */
+  int *psegmap, /* map from data points 'p' to segments */
+  int *qsegmap, /* map from data points 'q' to segments */
+  double *answer /* matrix of path distances from 'p' to 'q' */
+) {
   int Np, Nq, Nv, i, j, maxchunk;
   int Psegi, Qsegj, nbi1, nbi2, nbj1, nbj2; 
   double xpi, ypi, xqj, yqj;

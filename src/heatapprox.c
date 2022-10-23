@@ -3,24 +3,24 @@
 
    Copyright (c) Greg McSwiggan and Adrian Baddeley 2017-2020
 
-   $Revision: 1.1 $ $Date: 2020/04/05 03:38:35 $
+   $Revision: 1.2 $ $Date: 2022/10/21 10:43:01 $
 
 */
 
 #include <R.h>
 #include <Rmath.h>
 
-void heatApprox(n, a, x, y, s, degl, degr, m, z)
-     int    *n; /* number of calculations (length of each vector) */
-     double *a; /* rod length */
-     double *x; /* source position */
-     double *y; /* query position */
-     double *s; /* bandwidth */
-     int    *degl; /* vertex degree of left endpoint */
-     int    *degr; /* vertex degree of right endpoint */
-     int    *m; /* number of terms in sum */
-     double *z; /* result */
-{
+void heatApprox(
+     int    *n,    /* number of calculations (length of each vector) */
+     double *a,    /* rod length */
+     double *x,    /* source position */
+     double *y,    /* query position */
+     double *s,    /* bandwidth */
+     int    *degl, /* vertex degree of left endpoint */
+     int    *degr, /* vertex degree of right endpoint */
+     int    *m,    /* number of terms in sum */
+     double *z     /* result */
+) {
   register int i, k, N, M, dL, dR;
   register double Z, A, twoA, Bk, X, Y, sigma, fL, fR, fLfR, cc;
 

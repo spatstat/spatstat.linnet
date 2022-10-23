@@ -5,7 +5,7 @@
 
    Sparse representation of network
 
-   $Revision: 1.5 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.6 $  $Date: 2022/10/21 10:43:01 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -19,30 +19,31 @@
 */
 
 void 
-FNAME(np, sp, tp,  /* data points 'from' (ordered by sp) */
-      nq, sq, tq, /* data points 'to'   (ordered by sq) */
-      nv, /* number of network vertices */
-      ns, from, to,  /* segments */
-      seglen,  /* segment lengths */
-      huge, /* value taken as infinity */
-      tol, /* tolerance for updating distances */
+FNAME(
+ /* data points 'from' (ordered by sp) */
+ int *np,
+ int *sp,
+ double *tp,
+ /* data points 'to'   (ordered by sq) */
+ int *nq,
+ int *sq,
+ double *tq,
+ /* network */
+ int *nv, /* number of network vertices */
+ int *ns, /* segments */
+ int *from,
+ int *to,  
+ double *seglen,  /* segment lengths */
+ double *huge, /* value taken as infinity */
+ double *tol, /* tolerance for updating distances */
       /* OUTPUT */
 #ifdef WHICH
-      nndist,  /* nearest neighbour distance for each point */
-      nnwhich  /* identifies nearest neighbour */
+ double *nndist,  /* nearest neighbour distance for each point */
+ int *nnwhich  /* identifies nearest neighbour */
 #else 
-      nndist  /* nearest neighbour distance for each point */
+ double *nndist  /* nearest neighbour distance for each point */
 #endif
 )
-  int *np, *nq, *nv, *ns;
-  int *from, *to, *sp, *sq; /* integer vectors (mappings) */
-  double *tp, *tq; /* fractional location coordinates */
-  double *huge, *tol;
-  double *seglen; 
-  double *nndist; /* nearest neighbour distance for each point */
-#ifdef WHICH
-  int *nnwhich; /* identifies nearest neighbour */
-#endif
 {
   int Np, Nq, Nv, i, j, ivleft, ivright, jfirst, jlast, k;
   double d, hugevalue, slen, tpi;

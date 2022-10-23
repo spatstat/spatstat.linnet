@@ -11,7 +11,7 @@
    
    Ccountends     count the number of endpoints
 
-   $Revision: 1.14 $  $Date: 2019/11/28 20:53:23 $
+   $Revision: 1.15 $  $Date: 2022/10/21 10:43:01 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -26,24 +26,25 @@
 
 #ifdef DEBUG
 void 
-Clineardisc(f, seg, /* centre of disc (local coords, f = tp) */
-	    r,      /* radius of disc */
-	    nv, xv, yv,   /* network vertices */
-	    ns, from, to,  /* segments */
-	    dpath,  /* shortest path distances between vertices */
-	    lengths, /* segment lengths */
-	    allinside, boundary, dxv, nendpoints)
-     int *nv, *ns;
-     int *from, *to; /* integer vectors (mappings) */
-     double *f, *r; 
-     int *seg;
-     double *xv, *yv; /* vectors of coordinates of vertices */
-     double *dpath; /* matrix of shortest path distances between vertices */
-     double *lengths; /* vector of segment lengths */
-     /* OUTPUTS */
-     int *allinside, *boundary; /* vectors of status for each segment */
-     double *dxv; /* vector of distances for each vertex */
-     int *nendpoints;
+Clineardisc(
+  /* local coordinates of centre of disc */
+  double *f,  /* fractional distance along segment ('tp') */
+  int *seg,
+  /* radius of disc */
+  double *r,
+  /* network vertices */
+  int *nv, double *xv, double *yv,
+  /* segments of network */
+  int *ns, int *from, int *to,       
+  /* matrix of shortest path distances between vertices */
+  double *dpath,
+  /* segment lengths */  
+  double *lengths, 
+  /* outputs */
+  int *allinside,     /* whether each segment is entirely inside disc */
+  int *boundary,      /* whether each segment crosses the perimeter */
+  double *dxv,        /* distance from centre of disc to each vertex */
+  int *nendpoints)
 {
   int Nv, Ns;
   double f0, rad;
@@ -138,26 +139,22 @@ Clineardisc(f, seg, /* centre of disc (local coords, f = tp) */
 /* ------------------------------------------------- */
 
 void 
-Ccountends(np, f, seg, /* centres of discs (local coords) */
-	  r,                /* radii of discs */
-	  nv, xv, yv,   /* network vertices */
-	  ns, from, to,  /* network segments */
-	  dpath,  /* shortest path distances between vertices */
-	  lengths, /* segment lengths */
-	  toler, /* tolerance */
-	  nendpoints /* output counts of endpoints */
-	  )
-     int *np, *nv, *ns;
-     int *from, *to; /* integer vectors (mappings) */
-     double *f, *r; 
-     int *seg;
-     double *xv, *yv; /* vectors of coordinates of vertices */
-     double *dpath; /* matrix of shortest path distances between vertices */
-     double *lengths; /* vector of segment lengths */
-     double *toler; /* tolerance for merging endpoints and vertices */
-     /* OUTPUT */
-     int *nendpoints;
-{
+Ccountends(
+  /* centres of discs (local coords) */
+  int *np,
+  double *f,
+  int *seg,
+  /* radii of discs */
+  double *r,
+  /* network vertices */
+  int *nv, double *xv, double *yv,
+  /* network segments */
+  int *ns, int *from, int *to,
+  double *dpath,   /* shortest path distances between vertices */
+  double *lengths,   /* segment lengths */
+  double *toler, /* tolerance */
+  int *nendpoints /* output counts of endpoints */
+) {
   int Np, Nv, Ns;
   double f0, rad;
   int seg0;

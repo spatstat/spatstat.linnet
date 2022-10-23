@@ -14,7 +14,7 @@
   CROSS   #defined for X-to-Y, undefined for X-to-X
   HUH     debugging flag
 
-  $Revision: 1.3 $  $Date: 2018/12/18 02:43:11 $
+  $Revision: 1.5 $  $Date: 2022/10/22 10:09:51 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -36,39 +36,45 @@
 
 /* ................. */
 
-void FNAME(kmax,         /* number of neighbours required */
-	   np, sp, tp,   /* source data points (ordered by sp) */
+void FNAME(
+  /* number of neighbours required */	   
+  int *kmax, 
+  /* source data points (ordered by sp) */
+  int *np,
+  int *sp,
+  double *tp,    /* fractional location coordinates */
 #ifdef CROSS
-	   nq, sq, tq,   /* target data points (ordered by sq) */
+  /* target data points (ordered by sq) */
+  int *nq,
+  int *sq,
+  double *tq, 
 #endif
-	   nv,           /* number of network vertices */
-	   ns, from, to, /* segments (pairs of vertices) */
-	   seglen,       /* segment lengths */
-	   huge,         /* value taken as infinity */
-	   tol,          /* tolerance for updating distances */
-	   /* OUTPUT */
-	   nndist,         /* distance from each source point to
+  /* number of network vertices */
+  int *nv,           
+  /* segments (pairs of vertices) */  
+  int *ns,
+  int *from,
+  int *to,      
+  double *seglen,       /* segment lengths */
+  double *huge,         /* value taken as infinity */
+  double *tol,          /* tolerance for updating distances */
+  /* OUTPUT */
+  double *nndist,         /* distance from each source point to
 			      the nearest, ..., kth nearest target points */
-	   nnwhich         /* identifies which target points */
-	   )
-  int *kmax;
-  int *np, *nv, *ns;  /* number of points, vertices, segments */
-  int *sp, *from, *to; /* integer vectors (mappings) */
-  double *tp; /* fractional location coordinates */
-#ifdef CROSS
-  int *nq, *sq;
-  double *tq;
-#endif
-  double *huge, *tol;
-  double *seglen;
-  double *nndist;
-  int *nnwhich;
-{
+  int *nnwhich         /* identifies which target points */
+) {
   int Np, Nv, Kmax, Nout, i, j, ivleft, ivright, jfirst, jlast, k, m;
   double d, hugevalue, slen, tpi, deltad;
   double *dminvert;  /* min dist from each vertex */
   int *whichvert;   /* which min from each vertex */
-  int linvknndist(), UpdateKnnList();
+
+  void linvknndist(int *kmax, int *nq, int *sq, double *tq,
+		   int *nv, int *ns, int *from, int *to,
+		   double *seglen, double *huge,
+		   double *tol, double *dist, int *which);
+
+  int UpdateKnnList(double d, int j,
+		    double *dist, int *which, int Kmax, double eps);
 
 #ifdef CROSS
   int Nq;

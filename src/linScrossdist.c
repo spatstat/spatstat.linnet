@@ -11,7 +11,7 @@
 
    'Sparse version' 
 
-   $Revision: 1.5 $  $Date: 2020/05/12 03:36:01 $
+   $Revision: 1.7 $  $Date: 2022/10/22 10:09:51 $
 
    Works with sparse representation
    Requires point data to be ordered by segment index.
@@ -28,25 +28,33 @@
 
 #undef VERBOSE
 
-void Clinvdist();  /* function from linvdist.c */
+void Clinvdist(int *np, int *sp, double *tp,
+	       int *nv, int *ns, int *from, int *to,
+	       double *seglen, double *huge, double *tol,
+	       double *dist);  /* function from linvdist.c */
 
 void 
-linScrossdist(np, sp, tp,  /* data points 'from' (ordered by sp) */
-	      nq, sq, tq, /* data points 'to'   (ordered by sq) */
-	      nv, /* number of network vertices */
-	      ns, from, to,  /* segments */
-	      seglen,  /* segment lengths */
-	      huge, /* value taken as infinity */
-	      tol, /* tolerance for updating distances */
-	      /* OUTPUT */
-	      dist  /* matrix of distances from i to j */
+linScrossdist(
+  /* data points 'from' in local coordinates (ordered by sp) */
+  int *np,
+  int *sp,
+  double *tp,
+  /* data points 'to' in local coordinates (ordered by sq) */
+  int *nq,
+  int *sq,
+  double *tq,
+  /* network */
+  int *nv, /* number of network vertices */
+  int *ns,   /* network segments */
+  int *from,
+  int *to,  
+  double *seglen,  /* segment lengths */
+  /* parameters */
+  double *huge, /* value taken as infinity */
+  double *tol, /* tolerance for updating distances */
+  /* OUTPUT */
+  double *dist  /* matrix of distances from i to j */
 )
-  int *np, *nq, *nv, *ns;
-  int *from, *to, *sp, *sq; /* integer vectors (mappings) */
-  double *tp, *tq; /* fractional location coordinates */
-  double *huge, *tol;
-  double *seglen; 
-  double *dist; 
 {
   int Np, Nq, Nv, i, j, ivleft, ivright, spi, sqj;
   double dleft, dright, dij, slen, tpi, tqj;

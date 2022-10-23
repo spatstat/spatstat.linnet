@@ -11,7 +11,7 @@
 
    'Sparse version' 
 
-   $Revision: 1.2 $  $Date: 2020/03/27 01:22:59 $
+   $Revision: 1.3 $  $Date: 2022/10/22 10:09:51 $
 
    Works with sparse representation
    Requires point data to be ordered by segment index.
@@ -33,7 +33,10 @@
 #undef VERBOSE
 #undef SYMMETRIC
 
-void Clinvdist();  /* function from linvdist.c */
+void Clinvdist(int *np, int *sp, double *tp,
+	       int *nv, int *ns, int *from, int *to,
+	       double *seglen, double *huge, double *tol,
+	       double *dist);  /* function from linvdist.c */
 
 /* This version computes d[i,j] and d[j,i] separately as a check on validity */
 

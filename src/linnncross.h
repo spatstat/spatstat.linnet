@@ -3,7 +3,7 @@
 
    Function body definitions with macros
 
-   $Revision: 1.3 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.4 $  $Date: 2022/10/21 10:43:01 $
 
    Macros used:
    FNAME   name of function
@@ -16,38 +16,36 @@
 */
 
 void 
-FNAME(np, xp, yp,   /* data points 'from' */
-      nq, xq, yq,   /* data points 'to' */
-      nv, xv, yv,   /* network vertices */
-      ns, from, to,  /* segments */
-      dpath,  /* shortest path distances between vertices */
-      psegmap, /* map from data points to segments */
-      qsegmap, /* map from data points to segments */
+FNAME(
+  /* data points 'from' */
+  int *np,
+  double *xp,
+  double *yp,
+  /* data points 'to' */
+  int *nq,
+  double *xq,
+  double *yq,
+   /* network vertices */
+  int *nv,
+  double *xv,
+  double *yv,
+  /* network segments */
+  int *ns, int *from, int *to,  
+  double *dpath,  /* shortest path distances between vertices */
+  int *psegmap, /* map from data points to segments */
+  int *qsegmap, /* map from data points to segments */
 #ifdef EXCLU
-      idP, idQ, /* serial numbers for patterns p and q */
+  int *idP, int *idQ, /* serial numbers for patterns p and q */
 #endif
-      huge, /* value taken as infinity */
+  double *huge, /* value taken as infinity */
       /* OUTPUT */
 #ifdef WHICH
-      nndist,  /* nearest neighbour distance for each point */
-      nnwhich  /* identifies nearest neighbour */
+  double *nndist,  /* nearest neighbour distance for each point */
+  int *nnwhich  /* identifies nearest neighbour */
 #else 
-      nndist  /* nearest neighbour distance for each point */
+  double *nndist  /* nearest neighbour distance for each point */
 #endif
-)
-  int *np, *nq, *nv, *ns;
-int *from, *to, *psegmap, *qsegmap; /* integer vectors (mappings) */
-#ifdef EXCLU
-  int *idP, *idQ;
-#endif
-  double *xp, *yp, *xq, *yq, *xv, *yv; /* vectors of coordinates */
-  double *huge;
-  double *dpath; /* matrix */
-  double *nndist; /* nearest neighbour distance for each point */
-#ifdef WHICH
-  int *nnwhich; /* identifies nearest neighbour */
-#endif
-{
+) {
   int Np, Nq, Nv, i, j;
   int segPi, segQj, nbi1, nbi2, nbj1, nbj2; 
   double d, xpi, ypi, xqj, yqj, dXi1, dXi2, d1Xj, d2Xj, d11, d12, d21, d22; 

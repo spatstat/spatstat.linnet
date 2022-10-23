@@ -11,12 +11,7 @@
 
  */
 
-void Clixellate(ns, fromcoarse, tocoarse, 
-		fromfine, tofine, 
-		nv, xv, yv, svcoarse, tvcoarse, 
-		nsplit, 
-		np, spcoarse, tpcoarse, 
-		spfine, tpfine)
+void Clixellate(
      /* 
 	A linear network with *ns segments and *nv vertices
 	is specified by the vectors from, to, xv, yv.
@@ -36,18 +31,23 @@ void Clixellate(ns, fromcoarse, tocoarse,
 	'fromfine', 'tofine' must have length = sum(nsplit).
 
       */
-     int *ns; /* number of segments (input & output) */
-     int *fromcoarse, *tocoarse; /* endpoints of each segment (input) */
-     int *fromfine, *tofine;  /* endpoints of each segment (output) */
-     int *nv; /* number of vertices (input & output) */
-     double *xv, *yv; /* cartesian coords of vertices (input & output) */
-     int *svcoarse; /* segment id of new vertex in COARSE network */
-     double *tvcoarse; /* location coordinate of new vertex on COARSE network */
-     int *nsplit; /* number of pieces into which each segment should be split */
-     int *np; /* number of data points */
-     double *tpcoarse, *tpfine; /* location coordinate */
-     int *spcoarse, *spfine; /* segment id coordinate */
-{
+  int *ns,          /* number of segments (input & output) */
+  int *fromcoarse,
+  int *tocoarse,    /* endpoints of each segment (input) */
+  int *fromfine,
+  int *tofine,      /* endpoints of each segment (output) */
+  int *nv,          /* number of vertices (input & output) */
+  double *xv,
+  double *yv,       /* cartesian coords of vertices (input & output) */
+  int *svcoarse,    /* segment id of new vertex in COARSE network */
+  double *tvcoarse, /* location coordinate of new vertex on COARSE network */
+  int *nsplit,      /* numbers of pieces into which each segment should split */
+  int *np,          /* number of data points */
+  int *spcoarse,    /* segment id coordinate in coarse network*/
+  double *tpcoarse, /* location coordinate in coarse network */
+  int *spfine,      /* segment id coordinate */
+  double *tpfine    /* location coordinate */
+) {
   int Np, oldNs, oldNv, i, j, k, ll;
   int oldfromi, oldtoi, newlines, newNv, newNs, SegmentForData;
   double xstart, xend, ystart, yend, xincr, yincr, tn, tpk;

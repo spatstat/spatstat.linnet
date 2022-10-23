@@ -50,7 +50,7 @@ if(FULLTEST) {
 ##
 ##  Check validity of update.ppm
 ##
-##  $Revision: 1.7 $ $Date: 2020/11/02 07:07:42 $
+##  $Revision: 1.8 $ $Date: 2022/10/23 01:19:19 $
 
 local({
   
@@ -72,7 +72,7 @@ local({
 ##
 ##    Test weird problems and boundary cases for line segment code
 ##
-##    $Version$ $Date: 2020/11/02 07:11:48 $ 
+##    $Version$ $Date: 2022/10/23 01:21:09 $ 
 ##
 
 

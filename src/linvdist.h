@@ -9,7 +9,7 @@
 
   Sparse representation of network
 
-  $Revision: 1.4 $  $Date: 2018/12/18 02:43:11 $
+  $Revision: 1.5 $  $Date: 2022/10/21 10:43:01 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -23,29 +23,27 @@
 
 */
 
-void FNAME(np, sp, tp,   /* target data points (ordered by sp) */
-	   nv,           /* number of network vertices */
-	   ns, from, to, /* segments */
-	   seglen,       /* segment lengths */
-	   huge,         /* value taken as infinity */
-	   tol,          /* tolerance for updating distances */
-	   /* OUTPUT */
+void FNAME(
+   /* target data points in local coordinates (ordered by sp) */	   
+   int *np,
+   int *sp,
+   double *tp,
+   /* network */
+   int *nv,           /* number of network vertices */
+   int *ns,           /* segments */
+   int *from,
+   int *to,
+   double *seglen,       /* segment lengths */
+   double *huge,         /* value taken as infinity */
+   double *tol,          /* tolerance for updating distances */
+   /* OUTPUT */
 #ifdef WHICH
-	   dist,         /* distance from each vertex to nearest data point */
-	   which         /* identifies nearest data point */
+   double *dist,         /* distance from each vertex to nearest data point */
+   int *which         /* identifies nearest data point */
 #else 
-	   dist          /* distance from each vertex to nearest data point */
+   double *dist          /* distance from each vertex to nearest data point */
 #endif	   
 ) 
-  int *np, *nv, *ns;  /* number of points, vertices, segments */
-  int *sp, *from, *to; /* integer vectors (mappings) */
-  double *tp; /* fractional location coordinates */
-  double *huge, *tol;
-  double *seglen;
-  double *dist;
-#ifdef WHICH
-  int *which;
-#endif
 {
   int Np, Nv, Ns, i, j, k, segPj, ivleft, ivright;
   double hugevalue, eps, dleft, dright, slen, d, tpj;

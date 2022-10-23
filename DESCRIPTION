@@ -1,26 +1,28 @@
 Package: spatstat.linnet
-Version: 2.999-999.020
-Date: 2022-10-09
+Version: 2.999-999.021
+Date: 2022-10-23
 Title: Linear Networks Functionality of the 'spatstat' Family
 Authors@R: c(person("Adrian", "Baddeley", 
-                    role = c("aut", "cre"),
+                    role = c("aut", "cre", "cph"),
        	            email = "Adrian.Baddeley@curtin.edu.au",
 		    comment = c(ORCID="0000-0001-9499-8382")),
 	     person("Rolf", "Turner", 
-                    role = "aut",
+                    role = c("aut", "cph"),
  	            email="r.turner@auckland.ac.nz",
 		    comment=c(ORCID="0000-0001-5521-5218")),
 	     person("Ege",   "Rubak", 
-                    role = "aut",
+                    role = c("aut", "cph"),
 		    email = "rubak@math.aau.dk",
 		    comment=c(ORCID="0000-0002-6675-533X")),
-	     person("Ottmar", "Cronie",
-	            role = "ctb"),
-	     person("Tilman", "Davies",
-	            role = "ctb"),
 	     person("Greg", "McSwiggan",
-	            role = "ctb"),
+	            role = c("aut", "cph")),
+	     person("Tilman", "Davies",
+	            role = c("ctb", "cph")),
+	     person("Mehdi", "Moradi",
+	            role = c("ctb", "cph")),
 	     person("Suman", "Rakshit",
+	            role = c("ctb", "cph")),
+	     person("Ottmar", "Cronie",
 	            role = "ctb"))
 Maintainer: Adrian Baddeley <Adrian.Baddeley@curtin.edu.au>
 Depends: R (>= 3.5.0), spatstat.data (>= 2.999-999), spatstat.geom (>= 2.999-999.003), spatstat.random (>= 2.999-999), spatstat.explore (>= 2.999-999.029), spatstat.model (>= 2.999-999.022), stats, graphics, grDevices, methods, utils

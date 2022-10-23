@@ -8,7 +8,7 @@
 
    Sparse representation of network
 
-   $Revision: 1.4 $  $Date: 2020/05/12 03:37:23 $
+   $Revision: 1.5 $  $Date: 2022/10/21 10:43:01 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -25,21 +25,22 @@
 */
 
 void 
-FNAME(np, sp, tp,  /* data points (ordered by sp) */
-      nv, /* number of network vertices */
-      ns, from, to,  /* segments */
-      seglen,  /* segment lengths */
-      huge, /* value taken as infinity */
-      tol, /* tolerance for updating distances */
-      /* OUTPUT */
-      dist  /* matrix of distances from i to j , INITIALISED TO ZERO */
+FNAME(
+  /* data points in local coordinates (ordered by sp) */
+  int *np,
+  int *sp,
+  double *tp,
+  /* network */
+  int *nv, /* number of network vertices */
+  int *ns,  /* segments */
+  int *from,
+  int *to, 
+  double *seglen,  /* segment lengths */
+  double *huge, /* value taken as infinity */
+  double *tol, /* tolerance for updating distances */
+  /* OUTPUT */
+  double *dist  /* matrix of distances from i to j , INITIALISED TO ZERO */
 )
-  int *np, *nv, *ns;
-  int *from, *to, *sp; /* integer vectors (mappings) */
-  double *tp; /* fractional location coordinates */
-  double *huge, *tol;
-  double *seglen; 
-  double *dist; 
 {
   int Np, Nv, i, j, ivleft, ivright, spi, spj;
   double dleft, dright, dij, slen, tpi, tpj;

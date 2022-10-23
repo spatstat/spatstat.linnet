@@ -7,7 +7,7 @@
    Shortest-path distances between nearest neighbours in linear network
    One pattern to another pattern
 
-   $Revision: 1.4 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.5 $  $Date: 2022/10/22 10:09:51 $
 
    'Sparse version' 
 
@@ -23,7 +23,15 @@
 
 */
 
-void Clinvdist(), Clinvwhichdist();  /* functions from linvdist.c */
+/* functions from linvdist.c */
+void Clinvdist(int *np, int *sp, double *tp,
+	       int *nv, int *ns, int *from, int *to,
+	       double *seglen, double *huge, double *tol,
+	       double *dist); 
+void Clinvwhichdist(int *np, int *sp, double *tp,
+		    int *nv, int *ns, int *from, int *to,
+		    double *seglen, double *huge, double *tol,
+		    double *dist, int  *which); 
 
 #undef HUH
 

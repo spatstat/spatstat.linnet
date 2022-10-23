@@ -7,7 +7,7 @@
 
    Shortest-path distances between each pair of points in linear network
 
-   $Revision: 1.6 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.7 $  $Date: 2022/10/21 10:43:01 $
 
    linpairdist
 
@@ -21,18 +21,21 @@
 #define EUCLID(X,Y,U,V) sqrt(pow((X)-(U),2)+pow((Y)-(V),2))
 
 void 
-linpairdist(np, xp, yp,   /* data points */
-	    nv, xv, yv,   /* network vertices */
-	    ns, from, to,  /* segments */
-	    dpath,  /* shortest path distances between vertices */
-	    segmap, /* map from data points to segments */
-	    /* OUTPUT */
-	    answer  /* shortest path distances between points */
+linpairdist(
+  int *np,
+  double *xp,
+  double *yp,   /* data points */
+  int *nv,
+  double *xv,
+  double *yv,   /* network vertices */
+  int *ns,
+  int *from,
+  int *to,  /* segments */
+  double *dpath,  /* shortest path distances between vertices */
+  int *segmap, /* map from data points to segments */
+  /* OUTPUT */
+  double *answer  /* shortest path distances between points */
 )
-  int *np, *nv, *ns;
-  int *from, *to, *segmap; /* integer vectors (mappings) */
-  double *xp, *yp, *xv, *yv; /* vectors of coordinates */
-  double *dpath, *answer; /* matrices */
 {
   int Np, Nv, i, j, Np1, maxchunk;
   int segi, segj, nbi1, nbi2, nbj1, nbj2; 

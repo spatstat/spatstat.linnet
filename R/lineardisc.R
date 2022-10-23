@@ -1,19 +1,43 @@
 #
 #
-#   disc.R
+#   lineardisc.R
 #
-#   $Revision: 1.35 $ $Date: 2022/05/21 09:52:11 $
+#   $Revision: 1.37 $ $Date: 2022/10/23 02:50:11 $
 #
 #   Compute the disc of radius r in a linear network
 #
 #   
-lineardisc <- function(L, x=locator(1), r, plotit=TRUE, 
+lineardisc <- function(L, x=locator(1), r,
+                       plotit=TRUE, 
                        cols=c("blue", "red", "green"),
                        add=TRUE) {
+  #' L is the linear network (object of class "linnet")
+  #' x is the centre point of the disc
+  #' r is the radius of the disc
+  if(missing(x)) x <- NULL
+  d <- lineardiscEngine(L, x, r, want="disc")
+  if(plotit) {
+    if(!add || dev.cur() == 1) 
+      plot(L, main="")
+    plot(d$lines,           add=TRUE, col=cols[2L], lwd=2)
+    plot(d$endpoints,       add=TRUE, col=cols[3L], pch=16)
+    points(d$x[c("x","y")], col=cols[1L], pch=16)
+  }
+  d <- d[c("lines", "endpoints")]
+  return(d)
+}
+
+lineardisclength <- function(L, x=locator(1), r) {
+  if(missing(x)) x <- NULL
+  d <- lineardiscEngine(L, x, r, want="length")
+  return(d)
+}
+
+lineardiscEngine <- function(L, x=NULL, r,
+                             want = c("disc", "length")) {
   # L is the linear network (object of class "linnet")
   # x is the centre point of the disc
   # r is the radius of the disc
-  #
   stopifnot(inherits(L, "linnet"))
   check.1.real(r)
   if(L$sparse) {
@@ -23,11 +47,11 @@ lineardisc <- function(L, x=locator(1), r, plotit=TRUE,
   }
   lines <- L$lines
   vertices <- L$vertices
-  lengths <- lengths_psp(lines)
+  lenths <- lengths_psp(lines)
   win <- L$window
   marx <- marks(lines)
   ##
-  if(missing(x) || is.null(x)) 
+  if(is.null(x)) 
     x <- clickppp(1, win, add=TRUE)
   if(is.lpp(x) && identical(L, domain(x))) {
     ## extract local coordinates
@@ -49,9 +73,10 @@ lineardisc <- function(L, x=locator(1), r, plotit=TRUE,
   ## vertices at each end of this segment
   A <- L$from[startsegment]
   B <- L$to[startsegment]
-  # distances from x to  A and B
-  dxA <- startfraction * lengths[startsegment]
-  dxB <- (1-startfraction) * lengths[startsegment]
+  ## distances from x to  A and B
+  startlength <- lenths[startsegment]
+  dxA <- startfraction * startlength
+  dxB <- (1-startfraction) * startlength
   # is r large enough to reach both A and B?
   startfilled <- (max(dxA, dxB) <= r)
   # compute vector of shortest path distances from x to each vertex j,
@@ -74,69 +99,102 @@ lineardisc <- function(L, x=locator(1), r, plotit=TRUE,
   # ( a line segment is inside the disc if the shortest distance
   #   from x to one of its endpoints, plus the length of the segment,
   #   is less than r ....
-  allinside <- (dxv[from] + lengths <= r) | (dxv[to] + lengths <= r)
+  allinside <- (dxv[from] + lenths <= r) | (dxv[to] + lenths <= r)
   #   ... or alternatively, if the sum of the
   #   two residual distances exceeds the length of the segment )
   residfrom <- pmax.int(0, r - dxv[from])
   residto   <- pmax.int(0, r - dxv[to])
-  allinside <- allinside | (residfrom + residto >= lengths)
+  allinside <- allinside | (residfrom + residto >= lenths)
   # start segment is special
   allinside[startsegment] <- startfilled
-  # Thus allinside[k] is TRUE if the k-th segment is inside the disc
-  
-  # Collect all these segments
-  disclines <- lines[allinside]
+  # Thus allinside[k] is TRUE if the k-th segment is completely inside the disc
+
+  switch(want,
+         length = {
+           #' Start computing length of disc
+           #' Compute sum of segments that lie entirely inside the disc
+           disclength <- sum(lenths[allinside])
+         },
+         disc = {
+           #' Start assembling disc
+           #' Collect all these segments
+           disclines <- lines[allinside]
+         })
   #
   # Determine which line segments cross the boundary of the disc
   boundary <- (covered[from] | covered[to]) & !allinside
   # For each of these, calculate the remaining distance at each end
   resid.from <- ifelseXB(boundary, pmax.int(r - dxv[from], 0), 0)
   resid.to   <- ifelseXB(boundary, pmax.int(r - dxv[to],   0), 0)
-  # Where the remaining distance is nonzero, create segment and endpoint
-  okfrom <- (resid.from > 0)
-  okfrom[startsegment] <- FALSE
-  if(any(okfrom)) {
-    v0 <- vertices[from[okfrom]]
-    v1 <- vertices[to[okfrom]]
-    tp <- (resid.from/lengths)[okfrom]
-    vfrom <- ppp((1-tp)*v0$x + tp*v1$x,
-                 (1-tp)*v0$y + tp*v1$y,
-                 window=win)
-    extralinesfrom <- as.psp(from=v0, to=vfrom)
-    if(!is.null(marx)) marks(extralinesfrom) <- marx %msub% okfrom
-  } else vfrom <- extralinesfrom <- NULL
+
+  switch(want,
+         length = {
+           #' add these residual lengths to the total disc length
+           disclength <- disclength + sum(resid.from) + sum(resid.to)
+         },
+         disc = {
+           #' Where the remaining distance is nonzero,
+           #' create fragmentary segments and endpoints
+           okfrom <- (resid.from > 0)
+           okfrom[startsegment] <- FALSE
+           if(any(okfrom)) {
+             v0 <- vertices[from[okfrom]]
+             v1 <- vertices[to[okfrom]]
+             tp <- (resid.from/lenths)[okfrom]
+             vfrom <- ppp((1-tp)*v0$x + tp*v1$x,
+             (1-tp)*v0$y + tp*v1$y,
+             window=win)
+             extralinesfrom <- as.psp(from=v0, to=vfrom)
+             if(!is.null(marx)) marks(extralinesfrom) <- marx %msub% okfrom
+           } else vfrom <- extralinesfrom <- NULL
+           #'
+           okto <- (resid.to > 0)
+           okto[startsegment] <- FALSE
+           if(any(okto)) {
+             v0 <- vertices[to[okto]]
+             v1 <- vertices[from[okto]]
+             tp <- (resid.to/lenths)[okto]
+             vto <- ppp((1-tp)*v0$x + tp*v1$x,
+             (1-tp)*v0$y + tp*v1$y,
+             window=win)
+             extralinesto <- as.psp(from=v0, to=vto)
+             if(!is.null(marx)) marks(extralinesto) <- marx %msub% okto
+           } else vto <- extralinesto <- NULL
+         }
+         )
+           
   #
-  okto <- (resid.to > 0)
-  okto[startsegment] <- FALSE
-  if(any(okto)) {
-    v0 <- vertices[to[okto]]
-    v1 <- vertices[from[okto]]
-    tp <- (resid.to/lengths)[okto]
-    vto <- ppp((1-tp)*v0$x + tp*v1$x,
-               (1-tp)*v0$y + tp*v1$y,
-               window=win)
-    extralinesto <- as.psp(from=v0, to=vto)
-    if(!is.null(marx)) marks(extralinesto) <- marx %msub% okto
-  } else vto <- extralinesto <- NULL
-  #
-  # deal with special case where start segment is not fully covered
-  if(!startfilled) {
-    vA <- vertices[A]
-    vB <- vertices[B]
-    rfrac <- r/lengths[startsegment]
-    tleft <- pmax.int(startfraction-rfrac, 0)
-    tright <- pmin.int(startfraction+rfrac, 1)
-    vleft <- ppp((1-tleft) * vA$x + tleft * vB$x,
-                 (1-tleft) * vA$y + tleft * vB$y,
-                 window=win)
-    vright <- ppp((1-tright) * vA$x + tright * vB$x,
-                  (1-tright) * vA$y + tright * vB$y,
-                  window=win)
-    startline <- as.psp(from=vleft, to=vright)
-    if(!is.null(marx)) marks(startline) <- marx %msub% startsegment
-    startends <- superimpose(if(!covered[A]) vleft else NULL,
-                             if(!covered[B]) vright else NULL)
-  } else startline <- startends <- NULL
+  if(startfilled) {
+    startline <- startends <- NULL
+  } else {
+    ## deal with special case where start segment is not fully covered
+    switch(want,
+           length = {
+             ## add length of disc inside start segment
+             disclength <- disclength + min(r, dxA) + min(r, dxB)
+           },
+           disc = {
+             ## construct the part of disc that is inside the start segment
+             rfrac <- r/lenths[startsegment]
+             tleft <- pmax.int(startfraction-rfrac, 0)
+             tright <- pmin.int(startfraction+rfrac, 1)
+             vA <- vertices[A]
+             vB <- vertices[B]
+             vleft <- ppp((1-tleft) * vA$x + tleft * vB$x,
+                          (1-tleft) * vA$y + tleft * vB$y,
+                          window=win)
+             vright <- ppp((1-tright) * vA$x + tright * vB$x,
+                           (1-tright) * vA$y + tright * vB$y,
+                           window=win)
+             startline <- as.psp(from=vleft, to=vright)
+             if(!is.null(marx)) marks(startline) <- marx %msub% startsegment
+             startends <- superimpose(if(!covered[A]) vleft else NULL,
+                                      if(!covered[B]) vright else NULL)
+           })
+  }
+
+  ## return disc length
+  if(want == "length") return(disclength)
   #
   # combine all lines
   disclines <- superimpose(disclines,
@@ -146,14 +204,7 @@ lineardisc <- function(L, x=locator(1), r, plotit=TRUE,
   discends <- superimpose(vfrom, vto, vertices[dxv == r], startends,
                           W=win, check=FALSE)
   #
-  if(plotit) {
-    if(!add || dev.cur() == 1) 
-      plot(L, main="")
-    plot(as.ppp(x), add=TRUE, cols=cols[1L], pch=16)
-    plot(disclines, add=TRUE, col=cols[2L], lwd=2)
-    plot(discends, add=TRUE, col=cols[3L], pch=16)
-  }
-  return(list(lines=disclines, endpoints=discends))
+  return(list(x=coords(x), lines=disclines, endpoints=discends))
 }
 
 countends <- function(L, x=locator(1), r, toler=NULL, internal=list()) {
@@ -198,7 +249,7 @@ countends <- function(L, x=locator(1), r, toler=NULL, internal=list()) {
   }
   lines <- L$lines
   vertices <- L$vertices
-  lengths <- lengths_psp(lines)
+  lenths <- lengths_psp(lines)
   dpath <- L$dpath
   nv <- vertices$n
   ns <- lines$n
@@ -239,7 +290,7 @@ countends <- function(L, x=locator(1), r, toler=NULL, internal=list()) {
            from = as.integer(from0),
            to = as.integer(to0), 
            dpath = as.double(dpath),
-           lengths = as.double(lengths),
+           lengths = as.double(lenths),
            toler=as.double(toler),
            nendpoints = as.integer(integer(np)),
            PACKAGE="spatstat.linnet")

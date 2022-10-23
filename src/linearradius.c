@@ -7,7 +7,7 @@
 
    Bounding radius in linear network
 
-   $Revision: 1.2 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.4 $  $Date: 2022/10/23 02:53:55 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -21,18 +21,16 @@
 #undef DEBUG
 
 void 
-linearradius(ns, from, to,  /* network segments */
-	     lengths, /* segment lengths */
-	     nv, dpath,  /* shortest path distances between vertices */
-	     huge, 
-	     result)
-     int *nv, *ns;
-     int *from, *to; /* integer vectors (mappings) */
-     double *dpath; /* matrix of shortest path distances between vertices */
-     double *lengths; /* vector of segment lengths */
-     double *huge; /* very large value */
-     double *result; 
-{
+linearradius(
+  int *ns,
+  int *from,
+  int *to,            /* network segments */
+  double *lengths,    /* segment lengths */
+  int *nv,            /* number of network vertices */
+  double *dpath,      /* matrix of shortest path distances between vertices */
+  double *huge,       /* very large value */
+  double *result 
+) {
   int Nv, Ns;
   int i, j, A, B, C, D;
   double AB, AC, AD, BC, BD, CD;

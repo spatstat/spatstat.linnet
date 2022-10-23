@@ -65,7 +65,7 @@ local({
 #'   Tests of "click*" functions
 #'   using queueing feature of spatstatLocator
 #'
-#'   $Revision: 1.7 $ $Date: 2020/11/02 06:53:30 $
+#'   $Revision: 1.8 $ $Date: 2022/10/23 00:45:36 $
 
 local({
   Y <- coords(runiflpp(6, simplenet))
@@ -199,7 +199,7 @@ if(FULLTEST) {
 #
 #  tests/func.R
 #
-#   $Revision: 1.8 $   $Date: 2020/12/03 03:28:44 $
+#   $Revision: 1.9 $   $Date: 2022/10/23 00:48:40 $
 #
 #  Tests of 'funxy' infrastructure etc
 
@@ -230,8 +230,9 @@ local({
 #
 #  tests/imageops.R
 #
-#   $Revision: 1.35 $   $Date: 2022/04/14 00:49:39 $
+#   $Revision: 1.40 $   $Date: 2022/10/23 01:57:03 $
 #
+
 
 
 if(FULLTEST) {

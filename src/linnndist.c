@@ -5,7 +5,7 @@
 
    Shortest-path distances between nearest neighbours in linear network
 
-   $Revision: 1.2 $  $Date: 2018/12/18 02:43:11 $
+   $Revision: 1.3 $  $Date: 2022/10/21 10:43:01 $
 
    linnndist
    linnnwhich
@@ -20,21 +20,22 @@
 #define EUCLID(X,Y,U,V) sqrt(pow((X)-(U),2)+pow((Y)-(V),2))
 
 void 
-linnndist(np, xp, yp,   /* data points */
-	  nv, xv, yv,   /* network vertices */
-	  ns, from, to,  /* segments */
-	  dpath,  /* shortest path distances between vertices */
-	  segmap, /* map from data points to segments */
-	  huge, /* value taken as infinity */
-	  /* OUTPUT */
-	  answer  /* nearest neighbour distance for each point */
+linnndist(
+ int *np,
+ double *xp,
+ double *yp,   /* data points */
+ int *nv,
+ double *xv,
+ double *yv,   /* network vertices */
+ int *ns,
+ int *from,
+ int *to,  /* segments */
+ double *dpath,  /* shortest path distances between vertices */
+ int *segmap, /* map from data points to segments */
+ double *huge, /* value taken as infinity */
+ /* OUTPUT */
+ double *answer  /* nearest neighbour distance for each point */
 )
-  int *np, *nv, *ns;
-  int *from, *to, *segmap; /* integer vectors (mappings) */
-  double *xp, *yp, *xv, *yv; /* vectors of coordinates */
-  double *huge;
-  double *dpath; /* matrix */
-  double *answer; /* vector of output values */
 {
   int Np, Nv, i, j, Np1;
   int segi, segj, nbi1, nbi2, nbj1, nbj2; 
@@ -99,23 +100,23 @@ linnndist(np, xp, yp,   /* data points */
 
 
 void 
-linnnwhich(np, xp, yp,   /* data points */
-	   nv, xv, yv,   /* network vertices */
-	   ns, from, to,  /* segments */
-	   dpath,  /* shortest path distances between vertices */
-	   segmap, /* map from data points to segments */
-	   huge, /* value taken as infinity */
-	   /* OUTPUT */
-	   nndist,  /* nearest neighbour distance for each point */
-	   nnwhich  /* identifies nearest neighbour */
+linnnwhich(
+  int *np,
+  double *xp,
+  double *yp,   /* data points */
+  int *nv,
+  double *xv,
+  double *yv,   /* network vertices */
+  int *ns,
+  int *from,
+  int *to,  /* segments */
+  double *dpath,  /* shortest path distances between vertices */
+  int *segmap, /* map from data points to segments */
+  double *huge, /* value taken as infinity */
+  /* OUTPUT */
+  double *nndist,  /* nearest neighbour distance for each point */
+  int * nnwhich  /* identifies nearest neighbour */
 )
-  int *np, *nv, *ns;
-  int *from, *to, *segmap; /* integer vectors (mappings) */
-  double *xp, *yp, *xv, *yv; /* vectors of coordinates */
-  double *huge;
-  double *dpath; /* matrix */
-  double *nndist; /* vector of output values */
-  int *nnwhich; /* vector of output values */
 {
   int Np, Nv, i, j, Np1;
   int segi, segj, nbi1, nbi2, nbj1, nbj2; 

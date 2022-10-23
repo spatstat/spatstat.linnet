@@ -10,7 +10,7 @@
 
   NOTE: data are assumed to be sorted by segment
 
-  $Revision: 1.2 $ $Date: 2019/02/06 08:36:02 $
+  $Revision: 1.5 $ $Date: 2022/10/23 02:55:44 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -18,21 +18,20 @@
  */
 
 void
-lintileindex(n, seg, tp,  /* query points, sorted by segment */
-	     dfn, dfseg, dft0, dft1, dftile, /* tessellation data, sorted */
-	     answer)
+lintileindex(
   /* query points */
-  int *n;               /* number of query points */
-  int *seg;             /* which segment contains this query point*/
-  double *tp;           /* position along segment */
+  int *n,               /* number of query points */
+  int *seg,             /* which segment contains this query point*/
+  double *tp,           /* position along segment */
   /* tessellation pieces */
-  int *dfn;             /* number of pieces */
-  int *dfseg;           /* which segment contains this piece */
-  double *dft0, *dft1;  /* positions of endpoints of this piece */
-  int *dftile;          /* which tile the piece belongs to */
+  int *dfn,             /* number of pieces */
+  int *dfseg,           /* which segment contains this piece */
+  double *dft0,
+  double *dft1,         /* positions of endpoints of this piece */
+  int *dftile,          /* which tile the piece belongs to */
   /* output */
-  int *answer;          /* which tile the query point belongs to */
-{
+  int *answer          /* which tile the query point belongs to */
+){
   int N, M, i, start, finish, j, segi, currentseg, maxchunk;
   double tpi;
   
