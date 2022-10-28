@@ -152,11 +152,15 @@ BUG FIXES
     Fixed.
     
     o "[.lpp", "[.linnet"
-    Crashed if the network vertices had marks, when 'snip=TRUE'.
+    Ignored marks attached to the network segments.
     Fixed.
 
     o "[.lpp", "[.linnet"
-    Ignored marks attached to the network segments.
+    Crashed if the network vertices had marks, when 'snip=TRUE'.
+    Fixed.
+
+    o densityQuick.lpp
+    Crashed sometimes with a message about unequal lengths of vectors.
     Fixed.
 
 

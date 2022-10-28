@@ -3,7 +3,7 @@
 #'
 #'   Copyright (C) 2019 Adrian Baddeley, Suman Rakshit and Tilman Davies
 #'
-#'   $Revision: 1.5 $ $Date: 2020/04/04 02:55:54 $
+#'   $Revision: 1.6 $ $Date: 2022/10/28 06:21:09 $
 
 densityQuick.lpp <- function(X, sigma=NULL, ...,
                              kernel="gaussian",
@@ -76,7 +76,7 @@ qkdeEngine <- function(X, sigma=NULL, ...,
              KS <- density(S, sigma, ..., edge=edge2D, varcov=varcov)
            }
            if(diggle && !raw) 
-             weights <- (weights %orifnull% 1) / KS[XX]
+             weights <- (weights %orifnull% 1) / safelookup(KS, XX)
            KX <- density(XX, sigma, ..., weights=weights,
                          at=at, leaveoneout=leaveoneout,
                          edge=edge2D, diggle=FALSE, positive=FALSE,
@@ -101,7 +101,7 @@ qkdeEngine <- function(X, sigma=NULL, ...,
              KS <- density(S, sigma, ..., edge=edge2D, varcov=varcov)^2
            }
            if(diggle && !raw) 
-             weights <- (weights %orifnull% 1) / KS[XX]
+             weights <- (weights %orifnull% 1) / safelookup(KS, XX)
            KX <- varconst * density(XX, sigma=tau, ..., weights=weights,
                                  at=at, leaveoneout=leaveoneout,
                                  edge=edge2D, diggle=FALSE, positive=FALSE,
@@ -109,7 +109,7 @@ qkdeEngine <- function(X, sigma=NULL, ...,
          })
   switch(at,
          points = {
-           result <- if(diggle || raw) KX else (KX/(KS[XX]))
+           result <- if(diggle || raw) KX else (KX/safelookup(KS, XX))
            if(positive)
              result <- pmax(result, .Machine$double.xmin)
            if(savecomputed) {
