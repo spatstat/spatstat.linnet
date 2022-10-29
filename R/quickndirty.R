@@ -3,7 +3,7 @@
 #'
 #'   Copyright (C) 2019 Adrian Baddeley, Suman Rakshit and Tilman Davies
 #'
-#'   $Revision: 1.6 $ $Date: 2022/10/28 06:21:09 $
+#'   $Revision: 1.7 $ $Date: 2022/10/29 09:29:52 $
 
 densityQuick.lpp <- function(X, sigma=NULL, ...,
                              kernel="gaussian",
@@ -64,19 +64,32 @@ qkdeEngine <- function(X, sigma=NULL, ...,
     attr(result, "varcov") <- varcov
     return(result)
   }
-                     
+
+  #' compute required quantities
+  need.point.masses <- (at == "points") || (diggle && !raw)
+
+  #' density of network
+  if(shortcut) {
+    PS <- precomputed$PS %orifnull% pixellate(S, ...,
+                                              DivideByPixelArea=TRUE)
+    KS <- blur(PS, sigma, normalise=edge2D, bleed=FALSE,
+               ..., varcov=varcov)
+    if(need.point.masses)
+      KS <- safelookup(KS, XX)
+  } else if(need.point.masses) {
+    ## KS is a numeric vector
+    KS <- density(S, sigma, ..., at=XX, method="C",
+                  edge=edge2D, varcov=varcov)
+  } else {
+    ## KS is a pixel image
+    KS <- density(S, sigma, ..., edge=edge2D, varcov=varcov)
+  }
+
+  #' density of points in 2D
   switch(what,
          estimate = {
-           if(shortcut) {
-             PS <- precomputed$PS %orifnull% pixellate(S, ...,
-                                                       DivideByPixelArea=TRUE)
-             KS <- blur(PS, sigma, normalise=edge2D, bleed=FALSE,
-                        ..., varcov=varcov)
-           } else {
-             KS <- density(S, sigma, ..., edge=edge2D, varcov=varcov)
-           }
            if(diggle && !raw) 
-             weights <- (weights %orifnull% 1) / safelookup(KS, XX)
+             weights <- (weights %orifnull% 1) / KS
            KX <- density(XX, sigma, ..., weights=weights,
                          at=at, leaveoneout=leaveoneout,
                          edge=edge2D, diggle=FALSE, positive=FALSE,
@@ -92,24 +105,19 @@ qkdeEngine <- function(X, sigma=NULL, ...,
              varconst <- 1/(4 * pi * sqrt(det(varcov)))
              taumat <- varcov/2
            }
-           if(shortcut) {
-             PS <- precomputed$PS %orifnull% pixellate(S, ...,
-                                                       DivideByPixelArea=TRUE)
-             KS <- blur(PS, sigma,
-                        normalise=edge2D, bleed=FALSE, varcov=varcov)^2
-           } else {
-             KS <- density(S, sigma, ..., edge=edge2D, varcov=varcov)^2
-           }
+           KS <- KS^2
            if(diggle && !raw) 
-             weights <- (weights %orifnull% 1) / safelookup(KS, XX)
+             weights <- (weights %orifnull% 1) / KS
            KX <- varconst * density(XX, sigma=tau, ..., weights=weights,
                                  at=at, leaveoneout=leaveoneout,
                                  edge=edge2D, diggle=FALSE, positive=FALSE,
                                  varcov=taumat)
          })
+
+  #' estimate
   switch(at,
          points = {
-           result <- if(diggle || raw) KX else (KX/safelookup(KS, XX))
+           result <- if(diggle || raw) KX else (KX/KS)
            if(positive)
              result <- pmax(result, .Machine$double.xmin)
            if(savecomputed) {
