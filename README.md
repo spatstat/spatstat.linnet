@@ -64,7 +64,7 @@ that deals with data on linear networks.
 - inhomogeneous F, G and J functions
 - simulation envelopes of summary functions
 
-### Parametric modelling and inference on a network
+#### Parametric modelling and inference on a network
 
 - fit point process model on a network
 - fitted/predicted intensity
