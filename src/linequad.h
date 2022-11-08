@@ -11,7 +11,7 @@
   HUH        #defined if debugging is on
   SWAP       swap macro
 
-  $Revision: 1.4 $ $Date: 2022/10/21 10:43:01 $
+  $Revision: 1.5 $ $Date: 2022/11/08 00:44:41 $
 
   Copyright (C) Adrian Baddeley, Ege Rubak and Rolf Turner 2001-2018
   Licence: GNU Public Licence >= 2
@@ -276,13 +276,36 @@ void FUNNAME(     /*
 
 }
 
-void FMKNAME(ns, from, to, 
-	     nv, xv, yv, 
-	     eps,
-	     ntypes, 
-	     ndat, xdat, ydat, mdat, sdat, tdat, wdat,
-	     ndum, xdum, ydum, mdum, sdum, tdum, wdum,
-	     maxscratch)
+void FMKNAME(
+  /* NETWORK */	     
+  int *ns,       /* number of segments */	     
+  int *from,
+  int *to,       /* endpoints of each segment */
+  int *nv,       /* number of vertices */
+  double *xv,
+  double *yv,    /* cartesian coords of vertices */
+  /* PARAMETERS */
+  double *eps,   /* desired spacing of dummy points */
+  /* DATA POINTS */
+  int *ntypes,   /* number of types (INPUT) */
+  int *ndat,     /* number of data points (INPUT)  */
+  double *xdat,
+  double *ydat,  /* spatial coordinates of data points (INPUT) */
+  int *mdat,     /* mark values of data points (INPUT) */
+  int *sdat,     /* segment id (local coordinate) of data points (INPUT) */
+  double *tdat,  /* location (local coordinate) of data points (INPUT) */
+  double *wdat,  /* quadrature weights of data points (>>OUTPUT<<)  */
+  /* DUMMY POINTS */
+  int *ndum,     /* number of dummy points (OUTPUT) */
+  double *xdum,
+  double *ydum,  /* spatial coordinates of dummy points (OUTPUT) */
+  int *mdum,     /* mark values of dummy points (OUTPUT) */
+  int *sdum,     /* segment id (local coordinate) of dummy points (OUTPUT) */
+  double *tdum,  /* location (local coordinate) of dummy points (OUTPUT) */
+  double *wdum,  /* quadrature weights of dummy points (OUTPUT) */
+  /* SCRATCH SPACE */
+  int *maxscratch
+){
      /* 
 	A linear network with *ns segments and *nv vertices
 	is specified by the vectors from, to, xv, yv.
@@ -312,21 +335,6 @@ void FMKNAME(ns, from, to,
 	 
         
       */
-     int *ns; /* number of segments */
-     int *from, *to; /* endpoints of each segment */
-     int *nv; /* number of vertices */
-     double *xv, *yv; /* cartesian coords of vertices */
-     double *eps; /* desired spacing of dummy points */
-     int *ndat, *ndum; /* number of data & dummy points */
-     int *ntypes; /* number of types */
-     double *xdat, *ydat; /* spatial coordinates of data points */
-     double *xdum, *ydum; /* spatial coordinates of dummy points */
-     int *mdat, *mdum; /* mark values */
-     int *sdat, *sdum; /* segment id (local coordinate) */
-     double *tdat, *tdum; /* location (local coordinate) */
-     double *wdat, *wdum; /* quadrature weights */
-     int *maxscratch;
-{
   int Nseg, Ndat, Ndum, Ntypes, Lmax, i, k, ll, m, fromi, toi;
 #ifdef HUH
   int Nvert;
