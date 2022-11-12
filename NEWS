@@ -1,4 +1,19 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.0-3
+
+OVERVIEW
+
+    o We thank Brian Ripley for contributions.
+
+    o Internal bug fix.
+
+BUG FIXES
+
+    o pairdist.lpp
+    Results could have been completely incorrect, due to an internal bug,
+    if the linear network data was in the non-sparse representation.
+    
+
         CHANGES IN spatstat.linnet VERSION 3.0-2
 
 OVERVIEW
