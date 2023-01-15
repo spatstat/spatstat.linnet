@@ -1,4 +1,16 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.0-3.001
+
+OVERVIEW
+
+    o Minor enhancements.
+
+NEW FUNCTIONS
+
+    o quantilefun.linim
+    Quantile function, returned as a function.
+    Method for 'quantilefun' for images on a network.
+
         CHANGES IN spatstat.linnet VERSION 3.0-3
 
 OVERVIEW

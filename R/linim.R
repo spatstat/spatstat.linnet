@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.81 $   $Date: 2022/06/19 00:53:04 $
+#  $Revision: 1.83 $   $Date: 2023/01/15 10:31:26 $
 #
 #  Image/function on a linear network
 #
@@ -669,12 +669,31 @@ quantile.linim <- function(x, probs = seq(0,1,0.25), ...) {
   vals <- df$values
   #' count sample points on each segment
   seg <- factor(df$mapXY, levels=1:nsegments(L))
-  nvals <- table(seg)
+  nvals <- as.integer(table(seg))
   #' calculate weights
   len <- lengths_psp(as.psp(L))
   iseg <- as.integer(seg)
   wts <- len[iseg]/nvals[iseg]
   return(weighted.quantile(vals, wts, probs))
+}
+
+quantilefun.linim <- function(x, ..., type=1) {
+  verifyclass(x, "linim")
+  #' extract data
+  df <- attr(x, "df")
+  L <- as.linnet(x)
+  vals <- df$values
+  #' count sample points on each segment
+  seg <- factor(df$mapXY, levels=1:nsegments(L))
+  nvals <- as.integer(table(seg))
+  #' calculate weights
+  len <- lengths_psp(as.psp(L))
+  iseg <- as.integer(seg)
+  wts <- len[iseg]/nvals[iseg]
+  #' form weighted CDF
+  FZ <- ewcdf(vals, wts)
+  #' quantile function
+  return(quantilefun(FZ, type=type))
 }
 
 median.linim <- function(x, ...) {
