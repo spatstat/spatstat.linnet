@@ -3,7 +3,7 @@
 #
 #   Estimation of relative risk on network
 #
-#  $Revision: 1.8 $  $Date: 2022/06/17 03:23:02 $
+#  $Revision: 1.9 $  $Date: 2023/01/27 04:32:26 $
 #
 
 relrisk.lpp <- local({
@@ -503,7 +503,8 @@ bw.relrisk.lpp <- function(X, ...,
   #' Compute terms in cross-validation score
   if(verbose) splat("Computing basic cross-validation terms ...")
   Term1 <- deltax * xvalterm1(logK1,logK2)
-  Term1Inf <- deltax * xvalterm1(logK1Inf,logK2Inf)
+  if(allow.infinite)
+    Term1Inf <- deltax * xvalterm1(logK1Inf,logK2Inf)
 
   switch(method,
          KelsallDiggle = {
@@ -511,16 +512,18 @@ bw.relrisk.lpp <- function(X, ...,
            if(verbose) splat("Computing Kelsall-Diggle criterion ...")
            Term2 <- (-2) * xvalterm2(fminusi, ghat) 
            Term3 <- (-2) * xvalterm2(gminusj, fhat)
-           ## Term3 <- t(Term3)
            CKD <- -Term1 + Term2 + Term3
-           #' repeat for sigma=Inf
-           Term2Inf <- (-2) * xvalterm2(fminusiInf, ghatInf) 
-           Term3Inf <- (-2) * xvalterm2(gminusjInf, fhatInf)
-           ## Term3Inf <- t(Term3Inf)
-           Cinf <- -Term1Inf + Term2Inf + Term3Inf
-           ##
-           CKDout <- c(CKD[use], Cinf)
-           tauout <- c(tau[use], Inf)
+           CKDout <- CKD[use]
+           tauout <- tau[use]
+           if(allow.infinite) {
+             #' repeat for sigma=Inf
+             Term2Inf <- (-2) * xvalterm2(fminusiInf, ghatInf) 
+             Term3Inf <- (-2) * xvalterm2(gminusjInf, fhatInf)
+             Cinf <- -Term1Inf + Term2Inf + Term3Inf
+             #' add to result
+             CKDout <- c(CKDout, Cinf)
+             tauout <- c(tauout, Inf)
+           }
            result <- bw.optim(CKDout, tauout,
                               hname="sigma", cvname="C",
                               criterion="Kelsall-Diggle cross-validation",
@@ -535,14 +538,19 @@ bw.relrisk.lpp <- function(X, ...,
            Term4 <- -2 * deltax * xvalterm4(t(K1), t(K2), log(fbar/gbar))
            Term4[!is.finite(Term4)] <- Inf
            modC <- Term1 + ModTerm2 + ModTerm3 + Term4
-           ## again for sigma=Inf
-           ModTerm2Inf <- -2 * xvalterm4(fminusiInf, ghatInf, 1/fbarminusi)
-           ModTerm3Inf <- -2 * xvalterm4(gminusjInf, fhatInf, 1/gbarminusj)
-           Term4Inf <- -2 * deltax * xvalterm4(K1Inf, K2Inf, log(fbar/gbar))
-           Term4Inf[!is.finite(Term4Inf)] <- Inf
-           Cinf <- Term1Inf + ModTerm2Inf + ModTerm3Inf + Term4Inf
-           modCout <- c(modC[use], Cinf)
-           tauout <- c(tau[use], Inf)
+           modCout <- modC[use]
+           tauout  <- tau[use]
+           if(allow.infinite) {
+             ## again for sigma=Inf
+             ModTerm2Inf <- -2 * xvalterm4(fminusiInf, ghatInf, 1/fbarminusi)
+             ModTerm3Inf <- -2 * xvalterm4(gminusjInf, fhatInf, 1/gbarminusj)
+             Term4Inf <- -2 * deltax * xvalterm4(K1Inf, K2Inf, log(fbar/gbar))
+             Term4Inf[!is.finite(Term4Inf)] <- Inf
+             Cinf <- Term1Inf + ModTerm2Inf + ModTerm3Inf + Term4Inf
+             #' add to result
+             modCout <- c(modCout, Cinf)
+             tauout  <- c(tauout,  Inf)
+           }
            result <- bw.optim(modCout, tauout,
                               hname="sigma", cvname="Cmod",
                 criterion="McSwiggan modified Kelsall-Diggle cross-validation",
@@ -556,13 +564,18 @@ bw.relrisk.lpp <- function(X, ...,
            TermB <- xvalterm5(gminusj, fhat)
            loglik <- TermA + TermB
            ##
-           TermAInf <- xvalterm5(fminusiInf, ghatInf)
-           TermBInf <- xvalterm5(gminusjInf, fhatInf)
-           loglikInf <- TermAInf + TermBInf
+           loglikout <- loglik[use]
+           tauout    <- tau[use]
            ##
-           loglikout <- c(loglik[use], loglikInf)
-           tauout    <- c(tau[use], Inf)
-           # as.numeric(loglikInf)
+           if(allow.infinite) {
+             #' again for sigma=Inf
+             TermAInf <- xvalterm5(fminusiInf, ghatInf)
+             TermBInf <- xvalterm5(gminusjInf, fhatInf)
+             loglikInf <- TermAInf + TermBInf
+             #' add to result
+             loglikout <- c(loglikout, loglikInf)
+             tauout    <- c(tauout,    Inf)
+           }
            result <- bw.optim(-loglikout, tauout, 
                               hname="sigma", cvname="minusLogL",  
                               criterion="negative likelihood cross-validation",
@@ -577,12 +590,18 @@ bw.relrisk.lpp <- function(X, ...,
            Term6B <- xvalterm6(gminusj, fhat)
            sqprob <- Term6A + Term6B
            #' 
-           Term6AInf <- xvalterm6(fminusiInf, ghatInf)
-           Term6BInf <- xvalterm6(gminusjInf, fhatInf)
-           sqprobInf <- Term6AInf + Term6BInf
-           ##
-           sqprobout <- c(sqprob[use], sqprobInf)
-           tauout    <- c(tau[use], Inf)
+           sqprobout <- sqprob[use]
+           tauout    <- tau[use]
+           #'
+           if(allow.infinite) {
+             #' again for sigma=Inf
+             Term6AInf <- xvalterm6(fminusiInf, ghatInf)
+             Term6BInf <- xvalterm6(gminusjInf, fhatInf)
+             sqprobInf <- Term6AInf + Term6BInf
+             #' add to result
+             sqprobout <- c(sqprobout, sqprobInf)
+             tauout    <- c(tauout,    Inf)
+           }
            result <- bw.optim(sqprobout, tauout, 
                               hname="sigma", cvname="psq", 
                               criterion="least squares cross-validation",

@@ -199,13 +199,13 @@
    ## case-control data: 2 types of points
    set.seed(2020)
    X <- superimpose(A=runiflpp(20, simplenet),
-                    B=runifpointOnLines(20, as.psp(simplenet)[1]))
+                    B=runifpointOnLines(20, as.psp(simplenet)[5]))
    plot(X)
-   plot(relrisk(X, 0.2))
-   plot(relrisk(X, 0.2, case="B"))
-   head(relrisk(X, 0.2, at="points"))
+   plot(relrisk(X, 0.15))
+   plot(relrisk(X, 0.15, case="B"))
+   head(relrisk(X, 0.15, at="points"))
    ## cross-validated bandwidth selection
-   plot(relrisk(X, bw.relrisk.lpp, hmax=0.25))
+   plot(relrisk(X, bw.relrisk.lpp, hmax=0.3, allow.infinite=FALSE))
 
    ## more than 2 types
    if(interactive()) {
@@ -214,7 +214,7 @@
    } else {
      U <- do.call(superimpose,
                   split(chicago)[c("theft", "cartheft", "burglary")])
-     sig <- 50
+     sig <- 40
    }
    plot(relrisk(U, sig))
    head(relrisk(U, sig, at="points"))

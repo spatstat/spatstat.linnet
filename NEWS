@@ -1,9 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-3.001
+        CHANGES IN spatstat.linnet VERSION 3.0-4
 
 OVERVIEW
 
-    o Minor enhancements.
+    o quantile function on a network.
+    
+    o Minor enhancements and bug fixes.
 
 NEW FUNCTIONS
 
@@ -11,6 +13,12 @@ NEW FUNCTIONS
     Quantile function, returned as a function.
     Method for 'quantilefun' for images on a network.
 
+BUG FIXES
+
+    o relrisk.lpp
+    Crashed if allow.infinite=FALSE.
+    Fixed.
+    
         CHANGES IN spatstat.linnet VERSION 3.0-3
 
 OVERVIEW
