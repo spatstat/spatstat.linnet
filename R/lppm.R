@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.50 $   $Date: 2022/08/26 03:14:35 $
+#  $Revision: 1.51 $   $Date: 2023/02/01 08:51:22 $
 #
 
 lppm <- function(X, ...) {
@@ -245,6 +245,7 @@ update.lppm <- function(object, ...) {
       stop(paste("Arguments not understood:", npp, "lpp objects given"))
     X <- aargh[[ii]]
     aargh[[ii]] <- linequad(X)
+    Xname <- "X"
   }
   isfmla <- sapply(aargh, inherits, what="formula")
   if(any(isfmla)) {
