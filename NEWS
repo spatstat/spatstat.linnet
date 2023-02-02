@@ -1,9 +1,14 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-4.001
+        CHANGES IN spatstat.linnet VERSION 3.0-4.002
 
 OVERVIEW
 
-    o Internal tweaks.
+    o Minor improvements and bug fixes.
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o print.lppm, summary.lppm
+    Improved output.
     
         CHANGES IN spatstat.linnet VERSION 3.0-4
 

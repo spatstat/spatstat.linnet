@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.51 $   $Date: 2023/02/01 08:51:22 $
+#  $Revision: 1.54 $   $Date: 2023/02/02 03:23:06 $
 #
 
 lppm <- function(X, ...) {
@@ -61,8 +61,14 @@ lppm.lpp <- function(X, ..., eps=NULL, nd=1000, random=FALSE) {
                   commasep(sQuote(resv[clash])),
                   "must not be used"))
   stopifnot(inherits(X, "lpp"))
-  Q <- linequad(X, eps=eps, nd=nd, random=random)
-  fit <- ppm(Q, ..., method="mpl", forcefit=TRUE)
+  quadarg <- substitute(linequad(X, eps=eps, nd=nd, random=random),
+                        list(X=substitute(X),
+                             eps=substitute(eps),
+                             nd=substitute(nd),
+                             random=substitute(random)))
+  fit <- do.call(ppm,
+                 list(quadarg, ..., method="mpl", forcefit=TRUE),
+                 envir=parent.frame())
   if(!is.poisson.ppm(fit))
     warning("Non-Poisson models currently use Euclidean distance")
   out <- list(X=X, fit=fit, Xname=Xname, call=cl, callstring=callstring)
@@ -187,24 +193,35 @@ coef.lppm <- function(object, ...) {
 }
 
 print.lppm <- function(x, ...) {
-  splat("Point process model on linear network")
-  print(x$fit)
   terselevel <- spatstat.options('terse')
-  if(waxlyrical('extras', terselevel))
-    splat("Original data:", x$Xname)
-  if(waxlyrical('gory', terselevel))
+  splat("Point process model on linear network")
+  if(waxlyrical('extras', terselevel)) {
+    splat("\tFitted to point pattern dataset", sQuote(x$Xname))
+    parbreak(terselevel)
+  }
+  print(x$fit, showname=FALSE)
+  parbreak(terselevel)
+  if(waxlyrical('gory', terselevel)) {
+    cat("Domain: ")
     print(as.linnet(x))
+  }
   return(invisible(NULL))
 }
 
 summary.lppm <- function(object, ...) {
   splat("Point process model on linear network")
+  splat("Fitted to point pattern dataset", sQuote(object$Xname))
+  cat("Internal fit: ")
   print(summary(object$fit))
   terselevel <- spatstat.options('terse')
-  if(waxlyrical('extras', terselevel))
+  if(waxlyrical('extras', terselevel)) {
+    parbreak(terselevel)
     splat("Original data:", object$Xname)
-  if(waxlyrical('gory', terselevel))
-    print(summary(as.linnet(object)))
+    if(waxlyrical('gory', terselevel)) {
+      cat("Domain: ")
+      print(summary(as.linnet(object)))
+    }
+  }
   return(invisible(NULL))
 }
 
