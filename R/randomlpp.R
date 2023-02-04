@@ -3,15 +3,21 @@
 #
 #  Random point pattern generators for a linear network
 #
-#  $Revision: 1.19 $   $Date: 2022/04/06 02:08:52 $
+#  $Revision: 1.20 $   $Date: 2023/02/04 06:51:25 $
 #
 
-rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
+rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE, ex=NULL) {
   if(!missing(nsim)) {
     check.1.integer(nsim)
     stopifnot(nsim >= 0)
   }
-  if(missing(L) || is.null(L)) {
+  if(missing(lambda))
+    lambda <- NULL
+  if(missing(L))
+    L <- NULL
+  
+  if(is.null(L) && !is.null(lambda)) {
+    ## extract L from lambda if it is an image
     if(inherits(lambda, c("linim", "linfun"))) {
       L <- as.linnet(lambda)
     } else if(all(sapply(lambda, inherits, what=c("linim", "linfun")))) {
@@ -19,8 +25,21 @@ rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
       if(length(L) > 1)
         stop("All entries of lambda must be defined on the same network")
       L <- L[[1L]]
-    } else stop("L is missing", call.=FALSE)
-  } else verifyclass(L, "linnet")
+    } 
+  } 
+  
+  if(!is.null(ex)) {
+    ## set defaults using existing pattern
+    stopifnot(is.lpp(ex))
+    if(is.null(lambda))
+      lambda <- intensity(ex)
+    if(is.null(L))
+      L <- domain(ex)
+  }
+
+  if(is.null(L)) stop("L is missing", call.=FALSE)
+  if(is.null(lambda)) stop("lambda is missing", call.=FALSE)
+
   result <- vector(mode="list", length=nsim)
   S <- as.psp(L)
   bugout <- (nsim == 1) && drop
@@ -34,7 +53,15 @@ rpoislpp <- function(lambda, L, ..., nsim=1, drop=TRUE) {
   return(result)
 }
 
-runiflpp <- function(n, L, nsim=1, drop=TRUE) {
+runiflpp <- function(n, L, nsim=1, drop=TRUE, ex=NULL) {
+  if(!is.null(ex)) {
+    ## use existing pattern
+    stopifnot(is.lpp(ex))
+    if(missing(n) || is.null(n))
+      n <- if(is.multitype(ex)) table(marks(ex)) else npoints(ex)
+    if(missing(L) || is.null(L))
+      L <- domain(ex)
+  }
   verifyclass(L, "linnet")
   if(!missing(nsim)) {
     check.1.integer(nsim)

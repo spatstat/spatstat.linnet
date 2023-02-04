@@ -1,12 +1,18 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-4.003
+        CHANGES IN spatstat.linnet VERSION 3.0-4.004
 
 OVERVIEW
 
     o Minor improvements and bug fixes in 'lppm' class.
+
+    o Minor extension to random generators
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o runiflpp, rpoislpp
+    The simulation parameters can be determined from an example
+    point pattern, given as the argument 'ex'.
+    
     o print.lppm, summary.lppm
     The name of the original point pattern dataset (to which the
     model was fitted) is now printed.

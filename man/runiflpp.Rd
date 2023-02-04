@@ -8,7 +8,7 @@
   uniformly distributed, on a linear network.
 }
 \usage{
-runiflpp(n, L, nsim=1, drop=TRUE)
+runiflpp(n, L, nsim=1, drop=TRUE, ex=NULL)
 }
 \arguments{
   \item{n}{
@@ -27,15 +27,33 @@ runiflpp(n, L, nsim=1, drop=TRUE)
     If \code{drop=FALSE}, the result is a list with one entry which is a
     point pattern.
   }
+  \item{ex}{
+    Optional. A point pattern on a network
+    (object of class \code{"lpp"}) which serves as an example
+    to determine the default values of \code{n} and \code{L}.
+    See Details.
+  }
 }
 \details{
-  This function uses \code{\link{runifpointOnLines}}
-  to generate the random points.
+  The specified number \code{n} of random points is
+  generated with uniform distribution on the network \code{L}.
+  The random points are generated using \code{\link{runifpointOnLines}}.
+
+  If \code{n} is an integer vector, then a multitype point pattern is
+  generated, with \code{n[i]} random points of type \code{i}.
+  
+  If \code{ex} is given, then it serves as an example for determining
+  \code{n} and \code{L}. The default value of \code{n}
+  will be the number of points in \code{ex}
+  (or the number of points of each type in \code{ex} if it is
+  multitype).
+  The default value of \code{L} will be 
+  the network on which \code{ex} is defined. 
 }
 \value{
   If \code{nsim = 1} and \code{drop=TRUE},
-  a point pattern on the linear network,
-  i.e.\ an object of class \code{"lpp"}.
+  a point pattern on a linear network
+  (object of class \code{"lpp"}).
   Otherwise, a list of such point patterns.
 }
 \author{
@@ -54,6 +72,8 @@ runiflpp(n, L, nsim=1, drop=TRUE)
    plot(X)
   # marked
    Z <- runiflpp(c(a=10, b=3), simplenet)
+  # using 'ex' 
+   U <- runiflpp(ex=Z)
 }
 \keyword{spatial}
 \keyword{datagen}
