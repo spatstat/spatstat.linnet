@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.54 $   $Date: 2023/02/02 03:23:06 $
+#  $Revision: 1.55 $   $Date: 2023/02/04 03:22:09 $
 #
 
 lppm <- function(X, ...) {
@@ -44,6 +44,8 @@ lppm.formula <- function(X, interaction=NULL, ..., data=NULL) {
   callenv <- list2env(as.list(data), parent=parent.frame())
   result <- eval(thecall, envir=callenv)
 
+  result$Xname <- short.deparse(Yexpr)
+  
   result$call <- cl
   result$callstring <- callstring
 
@@ -262,7 +264,8 @@ update.lppm <- function(object, ...) {
       stop(paste("Arguments not understood:", npp, "lpp objects given"))
     X <- aargh[[ii]]
     aargh[[ii]] <- linequad(X)
-    Xname <- "X"
+    Xexpr <- sys.call()[[ii+2L]] %orifnull% expression(X)
+    Xname <- short.deparse(Xexpr)
   }
   isfmla <- sapply(aargh, inherits, what="formula")
   if(any(isfmla)) {
@@ -276,6 +279,7 @@ update.lppm <- function(object, ...) {
       X <- eval(lhs, envir=list2env(list("."=X), parent=callframe))
       Qpos <- if(any(islpp)) ii else (length(aargh) + 1L)
       aargh[[Qpos]] <- linequad(X)
+      Xname <- short.deparse(lhs)
     }
     aargh[[jj]] <- rhs.of.formula(fmla)
   }

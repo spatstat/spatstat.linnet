@@ -1,14 +1,21 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-4.002
+        CHANGES IN spatstat.linnet VERSION 3.0-4.003
 
 OVERVIEW
 
-    o Minor improvements and bug fixes.
+    o Minor improvements and bug fixes in 'lppm' class.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o print.lppm, summary.lppm
+    The name of the original point pattern dataset (to which the
+    model was fitted) is now printed.
+
+    o print.lppm, summary.lppm
     Improved output.
+
+    o update.lppm
+    Internal improvements.
     
         CHANGES IN spatstat.linnet VERSION 3.0-4
 
