@@ -1,7 +1,7 @@
 #
 # linearK
 #
-# $Revision: 1.60 $ $Date: 2022/11/03 11:08:33 $
+# $Revision: 1.63 $ $Date: 2023/02/20 03:41:27 $
 #
 # K function for point pattern on linear network
 #
@@ -102,7 +102,7 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
     model <- lambda
     if(update) {
       ## refit the model to the full dataset X
-      model <- if(is.lppm(model)) updateData(model, X) else updateData(model, as.ppp(X))
+      model <- if(is.lppm(model)) update(model, X) else update(model, as.ppp(X))
       danger <- FALSE
       ## Now evaluate at data points
       lambdaX <- fitted(model, dataonly=TRUE, leaveoneout=leaveoneout)
