@@ -1,11 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-4.004
+        CHANGES IN spatstat.linnet VERSION 3.0-5
 
 OVERVIEW
 
-    o Minor improvements and bug fixes in 'lppm' class.
+    o Improvements and bug fixes in 'lppm' class.
 
-    o Minor extension to random generators
+    o Minor extension to random generators.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
