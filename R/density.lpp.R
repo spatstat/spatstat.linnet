@@ -50,6 +50,14 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
                               epsilon=1e-6,
                               verbose=TRUE, debug=FALSE, savehistory=TRUE) {
   ## Based on original code by Adrian Baddeley and Greg McSwiggan 2014-2016
+  if(is.null(sigma)) {
+    ## use 2D default
+    sigma <- resolve.2D.kernel(x=as.ppp(x), ...)$sigma
+  } else if(is.function(sigma)) {
+    ## bandwidth selection rule
+    sigma <- do.call.matched(sigma, list(x, ...), matchfirst=TRUE)
+    sigma <- as.numeric(sigma) ## remove class 'bw.optim'
+  }
   check.1.real(sigma)
   at <- match.arg(at)
   L <- as.linnet(x)
@@ -268,12 +276,20 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
   return(out)
 }
 
-densityHeat.lpp <- function(x, sigma, ...,
+densityHeat.lpp <- function(x, sigma=NULL, ...,
                             at=c("pixels", "points"),
                             leaveoneout=TRUE, weights=NULL, 
                             dx=NULL, dt=NULL, iterMax=1e6,
                             finespacing=TRUE, verbose=FALSE) {
   stopifnot(is.lpp(x))
+  if(is.null(sigma)) {
+    ## use 2D default
+    sigma <- resolve.2D.kernel(x=as.ppp(x), ...)$sigma
+  } else if(is.function(sigma)) {
+    ## bandwidth selection rule
+    sigma <- do.call.matched(sigma, list(x, ...), matchfirst=TRUE)
+    sigma <- as.numeric(sigma) ## remove class 'bw.optim'
+  }
   check.1.real(sigma)
   at <- match.arg(at)
   if(!is.null(weights)) 
@@ -499,7 +515,7 @@ resolve.heat.steps <-
 {
   ## Based on original code by Greg McSwiggan 2015-2016
 
-  check.1.real(sigma)  # infinite sigma is allowed
+  check.1.real(sigma)
   check.1.real(nsave)  # infinite 'nsave' is allowed (will be reset to niter)
   if(is.finite(nsave)) check.1.integer(nsave)
   stopifnot(nsave >= 1)
@@ -512,7 +528,13 @@ resolve.heat.steps <-
   
   one <- 1 + .Machine$double.eps # tolerance for comparisons
 
+  if(is.infinite(sigma))
+    stop("internal error: resolve.heat.steps cannot handle infinite sigma",
+         call.=FALSE)
+  sigma <- as.numeric(sigma) ## remove 'bw.optim' class, etc
+
   if(verbose) {
+    splat("sigma =", sigma)
     if(dx.given) splat("Given: dx =", dx)
     if(dt.given) splat("Given: dt =", dx)
     if(niter.given) splat("Given: niter =", niter)

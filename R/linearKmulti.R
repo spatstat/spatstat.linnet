@@ -1,7 +1,7 @@
 #
 # linearKmulti
 #
-# $Revision: 1.20 $ $Date: 2022/06/27 02:17:34 $
+# $Revision: 1.22 $ $Date: 2023/02/25 03:39:27 $
 #
 # K functions for multitype point pattern on linear network
 #
@@ -89,8 +89,9 @@ linearKmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
 
 # ................ inhomogeneous ............................
 
-linearKdot.inhom <- function(X, i, lambdaI, lambdadot,
-                             r=NULL, ..., correction="Ang", normalise=TRUE) {
+linearKdot.inhom <- function(X, i, lambdaI=NULL, lambdadot=NULL,
+                             r=NULL, ..., correction="Ang", normalise=TRUE,
+                             sigma=NULL) {
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -102,6 +103,7 @@ linearKdot.inhom <- function(X, i, lambdaI, lambdadot,
   # compute
   result <- linearKmulti.inhom(X, I, J, lambdaI, lambdadot, 
                                r=r, correction=correction, normalise=normalise,
+                               sigma=sigma,
                                ...)
   ## relabel
   correction <- attr(result, "correction")
@@ -111,9 +113,10 @@ linearKdot.inhom <- function(X, i, lambdaI, lambdadot,
   return(result)
 }
 
-linearKcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
+linearKcross.inhom <- function(X, i, j, lambdaI=NULL, lambdaJ=NULL,
                                r=NULL, ...,
-                               correction="Ang", normalise=TRUE) {
+                               correction="Ang", normalise=TRUE,
+                               sigma=NULL) {
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -126,13 +129,14 @@ linearKcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
   if(i == j) {
     I <- (marx == i)
     result <- linearKinhom(X[I], lambda=lambdaI, r=r,
-                           correction=correction, normalise=normalise, ...)
+                           correction=correction, normalise=normalise,
+                           sigma=sigma, ...)
   } else {
     I <- (marx == i)
     J <- (marx == j)
     result <- linearKmulti.inhom(X, I, J, lambdaI, lambdaJ,
                                  r=r, correction=correction,
-                                 normalise=normalise, ...)
+                                 normalise=normalise, sigma=sigma, ...)
   }
   # rebrand
   correction <- attr(result, "correction")
@@ -142,9 +146,9 @@ linearKcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
   return(result)
 }
 
-linearKmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
+linearKmulti.inhom <- function(X, I, J, lambdaI=NULL, lambdaJ=NULL,
                                r=NULL, ...,
-                               correction="Ang", normalise=TRUE) {
+                               correction="Ang", normalise=TRUE, sigma=NULL) {
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -166,8 +170,8 @@ linearKmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
   if(!any(I)) stop("no points satisfy I")
 
   # validate lambda vectors
-  lambdaI <- resolve.lambda.lpp(X, lambdaI, subset=I, ...)
-  lambdaJ <- resolve.lambda.lpp(X, lambdaJ, subset=J, ...)
+  lambdaI <- resolve.lambda.lpp(X, lambdaI, subset=I, ..., sigma=sigma)
+  lambdaJ <- resolve.lambda.lpp(X, lambdaJ, subset=J, ..., sigma=sigma)
 
   # compute K
   weightsIJ <- outer(1/lambdaI, 1/lambdaJ, "*")

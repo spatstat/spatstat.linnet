@@ -10,8 +10,9 @@
   within a given distance of a point of type \eqn{i}.
 }
 \usage{
-linearKcross.inhom(X, i, j, lambdaI, lambdaJ,
-                   r=NULL, \dots, correction="Ang", normalise=TRUE)
+linearKcross.inhom(X, i, j, lambdaI=NULL, lambdaJ=NULL,
+                   r=NULL, \dots, correction="Ang", normalise=TRUE,
+                   sigma=NULL)
 }
 \arguments{
   \item{X}{The observed point pattern, 
@@ -34,14 +35,14 @@ linearKcross.inhom(X, i, j, lambdaI, lambdaJ,
     a \code{function}, a pixel image
     (object of class \code{"im"} or \code{"linim"}) or
     a fitted point process model (object of class \code{"ppm"}
-    or \code{"lppm"}).
+    or \code{"lppm"}) or \code{NULL}.
   }
   \item{lambdaJ}{
     Intensity values for the points of type \code{j}. Either a numeric vector,
     a \code{function}, a pixel image
     (object of class \code{"im"} or \code{"linim"}) or
     a fitted point process model (object of class \code{"ppm"}
-    or \code{"lppm"}).
+    or \code{"lppm"}) or \code{NULL}.
   }
   \item{r}{numeric vector. The values of the argument \eqn{r}
     at which the \eqn{K}-function
@@ -64,6 +65,11 @@ linearKcross.inhom(X, i, j, lambdaI, lambdaJ,
     the points of type \code{i}), which reduces the sampling variability.
     If \code{FALSE}, the denominator is the length of the network.
   }
+  \item{sigma}{
+    Smoothing bandwidth passed to \code{\link{density.lpp}}
+    for estimation of intensities when either \code{lambdaI} or
+    \code{lambdaJ} is \code{NULL}.
+  }
 }
 \value{
   An object of class \code{"fv"} (see \code{\link{fv.object}}).
@@ -82,6 +88,9 @@ linearKcross.inhom(X, i, j, lambdaI, lambdaJ,
   The values of \eqn{r} must be increasing nonnegative numbers
   and the maximum \eqn{r} value must not exceed the radius of the
   largest disc contained in the window.
+
+  If \code{lambdaI} or \code{lambdaJ} is missing or \code{NULL}, it will
+  be estimated by kernel smoothing using \code{\link{density.lpp}}.
 
   If \code{lambdaI} or \code{lambdaJ} is a fitted point process model,
   the default behaviour is to update the model by re-fitting it to

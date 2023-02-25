@@ -44,7 +44,8 @@ linearpcf <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
 
 linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
                            correction="Ang", normalise=TRUE, normpower=1,
-			   update=TRUE, leaveoneout=TRUE, ratio=FALSE) {
+			   update=TRUE, leaveoneout=TRUE,
+                           sigma=NULL, ratio=FALSE) {
   stopifnot(inherits(X, "lpp"))
   loo.given <- !missing(leaveoneout)
   correction <- pickoption("correction", correction,
@@ -52,8 +53,13 @@ linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
                              Ang="Ang",
                              best="Ang"),
                            multi=FALSE)
-  if(is.null(lambda))
-    linearpcf(X, r=r, ..., correction=correction, ratio=ratio)
+  if(is.null(lambda)) 
+    warn.once("linearpcfinhomNULL",
+              "In linearpcfinhom the interpretation of 'lambda=NULL'",
+              "has changed (in spatstat.linnet 3.1 and later);",
+              "the function linearpcf is no longer invoked;",
+              "instead the intensity lambda is estimated by kernel smoothing")
+
   if(normalise) {
     check.1.real(normpower)
     stopifnot(normpower >= 1)
@@ -64,6 +70,7 @@ linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
   lambdaX <- resolve.lambda.lpp(X, lambda, ...,
                            update=update, leaveoneout=leaveoneout,
                            loo.given=loo.given,
+                           sigma=sigma,
                            lambdaname="lambda")
   #
   invlam <- 1/lambdaX

@@ -8,7 +8,7 @@
   using a two-dimensional smoothing kernel.
 }
 \usage{
-densityQuick.lpp(X, sigma=NULL, \dots,
+densityQuick.lpp(x, sigma=NULL, \dots,
          kernel="gaussian",
          at = c("pixels", "points"),
          what = c("estimate", "se", "var"),
@@ -19,15 +19,16 @@ densityQuick.lpp(X, sigma=NULL, \dots,
          positive = FALSE)
 }
 \arguments{
-  \item{X}{
+  \item{x}{
     Point pattern on a linear network (object of class \code{"lpp"}).
   }
   \item{sigma}{
     Smoothing bandwidth. A single numeric value,
-    in the same units as the coordinates of \code{X}.
+    in the same units as the coordinates of \code{x}.
     Alternatively \code{sigma} may be a function which selects a
-    bandwidth when applied to \code{X},
+    bandwidth when applied to \code{x},
     for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    There is a sensible default.
   }
   \item{\dots}{
     Additional arguments passed to \code{\link{as.mask}}
@@ -85,6 +86,14 @@ densityQuick.lpp(X, sigma=NULL, \dots,
   insensitivity to changes in the network geometry. The main
   disadvantage is that it ignores the connectivity of the network.
   See Rakshit et al (2019) for further explanation.
+
+  The argument \code{sigma} specifies the smoothing bandwidth.
+  If \code{sigma} is missing or \code{NULL},
+  the default is one-eighth of the length of the shortest side
+  of the bounding box of \code{x}.
+  If \code{sigma} is a function in the \R language, it is assumed
+  to be a bandwidth selection rule, and it will be applied to \code{x}
+  to compute the bandwidth value.
 }
 \section{Infinite bandwidth}{
   If \code{sigma=Inf}, the resulting density estimate is 

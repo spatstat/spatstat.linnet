@@ -10,7 +10,7 @@
 \usage{
 linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
              normalise=TRUE, normpower=1,
-	     update=TRUE, leaveoneout=TRUE, ratio=FALSE)
+	     update=TRUE, leaveoneout=TRUE, sigma=NULL, ratio=FALSE)
 }
 \arguments{
   \item{X}{
@@ -21,11 +21,12 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     a \code{function}, a pixel image
     (object of class \code{"im"} or \code{"linim"}) or
     a fitted point process model (object of class \code{"ppm"}
-    or \code{"lppm"}).
+    or \code{"lppm"}) or \code{NULL}.
   }
   \item{r}{
     Optional. Numeric vector of values of the function argument \eqn{r}.
-    There is a sensible default.
+    There is a sensible default. Users are advised not to specify
+    \code{r} in normal usage.
   }
   \item{\dots}{
     Ignored.
@@ -55,11 +56,14 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     model will be computed without re-fitting it to \code{X}.
   }
   \item{leaveoneout}{
-    Logical value (passed to \code{\link{fitted.lppm}} or
-    \code{\link{fitted.ppm}}) specifying whether to use a
-    leave-one-out rule when calculating the intensity,
-    when \code{lambda} is a fitted model.
-    Supported only when \code{update=TRUE}.
+    Logical value specifying whether to use a
+    leave-one-out rule when calculating the intensity.
+    See Details.
+  }
+  \item{sigma}{
+    Smoothing bandwidth (passed to \code{\link{density.lpp}})
+    for kernel density estimation of the intensity when
+    \code{lambda=NULL}.
   }
   \item{ratio}{
     Logical. 
@@ -72,11 +76,16 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   This command computes the inhomogeneous version of the 
   linear \eqn{K} function from point pattern data on a linear network.
 
-  If \code{lambda = NULL} the result is equivalent to the
-  homogeneous \eqn{K} function \code{\link{linearK}}.
-  If \code{lambda} is given, then it is expected to provide estimated values
-  of the intensity of the point process at each point of \code{X}. 
-  The argument \code{lambda} may be a numeric vector (of length equal to
+  The argument \code{lambda} should provide estimated values
+  of the intensity of the point process at each point of \code{X}.
+
+  If \code{lambda=NULL}, the intensity will be estimated by kernel
+  smoothing by calling \code{\link{density.lpp}} with the smoothing
+  bandwidth \code{sigma}, and with any other relevant arguments
+  that might be present in \code{\dots}. A leave-one-out kernel estimate
+  will be computed if \code{leaveoneout=TRUE}.
+
+  If \code{lambda} is given, it may be a numeric vector (of length equal to
   the number of points in \code{X}), or a \code{function(x,y)} that will be
   evaluated at the points of \code{X} to yield numeric values, 
   or a pixel image (object of class \code{"im"}) or a fitted point 
@@ -86,7 +95,11 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   the default behaviour is to update the model by re-fitting it to
   the data, before computing the fitted intensity.
   This can be disabled by setting \code{update=FALSE}.
-  
+  The intensity at data points will be computed
+  by \code{\link{fitted.lppm}} or \code{\link{fitted.ppm}}.
+  A leave-one-out estimate will be computed if \code{leaveoneout=TRUE}
+  and \code{update=TRUE}.
+
   If \code{correction="none"}, the calculations do not include
   any correction for the geometry of the linear network.
   If \code{correction="Ang"}, the pair counts are weighted using
@@ -132,6 +145,12 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     sum[i] (1/lambda(x[i])) = area(W).
   }
 }
+\section{Warning}{
+  Older versions of \code{\link{linearKinhom}} interpreted
+  \code{lambda=NULL} to mean that the homogeneous function
+  \code{\link{linearK}} should be computed. This was changed to the
+  current behaviour in version \code{3.1-0} of \pkg{spatstat.linnet}.
+}
 \value{
   Function value table (object of class \code{"fv"}).
 }
@@ -157,6 +176,8 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   fit <- lppm(X ~x)
   K <- linearKinhom(X, lambda=fit)
   plot(K)
+  Ke <- linearKinhom(X, sigma=bw.lppl)
+  plot(Ke)
 }
 \keyword{spatial}
 \keyword{nonparametric}

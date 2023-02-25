@@ -1,4 +1,41 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.0-999.001
+
+OVERVIEW
+
+    o Inhomogeneous K and pcf using automatic estimation of intensity.
+
+    o density.lpp accepts bandwidth selection rules.
+
+    o density.lpp accepts sigma=NULL and has a simple default.
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o linearKinhom, linearpcfinhom, linearKEuclidInhom, linearpcfEuclidInhom
+    Argument 'lambda=NULL' is now interpreted to mean that the intensity
+    should be estimated by kernel smoothing. A warning is issued that this
+    is different from the previous behaviour.
+
+    o linearKdot.inhom, linearpcfdot.inhom
+    Argument 'lambdaI=NULL' or 'lambdadot=NULL' is now interpreted to mean
+    that the intensity should be estimated by kernel smoothing.
+
+    o linearKcross.inhom, linearpcfcross.inhom
+    Argument 'lambdaI=NULL' or 'lambdaJ=NULL' is now interpreted to mean
+    that the intensity should be estimated by kernel smoothing.
+
+    o density.lpp
+    Argument 'sigma' can now be a function in the R language,
+    assumed to provide a bandwidth selection rule. This function
+    will be applied to the point pattern x to compute the bandwidth.
+
+    o density.lpp
+    Argument 'sigma=NULL' is now accepted. The default value is one-eighth
+    of the length of the shortest side of the bounding box of x.
+
+    o densityQuick.lpp
+    Argument 'X' changed to 'x' for consistency.
+
         CHANGES IN spatstat.linnet VERSION 3.0-6
 
 OVERVIEW

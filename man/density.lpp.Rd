@@ -26,6 +26,10 @@
     Smoothing bandwidth (standard deviation of the kernel).
     A single numerical value
     in the same units as the spatial coordinates of \code{x}.
+    Alternatively \code{sigma} may be a function which selects a
+    bandwidth when applied to \code{X},
+    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    There is a sensible default.
   }
   \item{\dots}{
     Additional arguments controlling the algorithm
@@ -103,6 +107,14 @@
   }
   There is also a method for split point patterns on a linear network
   (class \code{"splitppx"}) which will return a list of pixel images.
+
+  The argument \code{sigma} specifies the smoothing bandwidth.
+  If \code{sigma} is missing or \code{NULL},
+  the default is one-eighth of the length of the shortest side
+  of the bounding box of \code{x}.
+  If \code{sigma} is a function in the \R language, it is assumed
+  to be a bandwidth selection rule, and it will be applied to \code{x}
+  to compute the bandwidth value.
 }
 \section{Infinite bandwidth}{
   If \code{sigma=Inf}, the resulting density estimate is 

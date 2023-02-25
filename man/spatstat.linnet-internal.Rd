@@ -105,18 +105,18 @@ linearKengine(X, \dots, r, reweight, denom, samplesize,
               correction, ratio, showworking)
 linearKmulti(X, I, J, r, \dots, correction)
 linearKmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots, correction,
-             normalise)
+             normalise, sigma)
 linearpcfengine(X, \dots, r, reweight, denom, samplesize, correction, ratio)
 linearpcfmulti(X, I, J, r, \dots, correction)
 linearpcfmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots,
-                     correction, normalise)
+                     correction, normalise, sigma)
 linearKmultiEngine(X, I, J, \dots,
                    r, reweight, denom, samplesize, correction, showworking)
 linearPCFmultiEngine(X, I, J, \dots,
                    r, reweight, denom, samplesize, correction, showworking)
 resampleNetworkDataFrame(df, template)
 \method{resolve.lambda}{lpp}(X, lambda, subset, \dots,
-              update, leaveoneout, everywhere, loo.given, lambdaname)
+       update, leaveoneout, everywhere, loo.given, sigma, lambdaname)
 sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, delta, nd, interpolate, jitter, jitterfactor,
@@ -132,7 +132,7 @@ resolve.heat.steps(sigma, \dots, dx, dt,
                    allow.adjust, warn.adjust,
                    verbose, stepnames)
 rmaxEuclidean(L, verbose, show)
-qkdeEngine(X, sigma, \dots, at, what,
+qkdeEngine(x, sigma, \dots, at, what,
            leaveoneout, diggle, raw, edge2D, edge,
            weights, varcov, positive, shortcut,
            precomputed, savecomputed)

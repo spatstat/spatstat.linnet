@@ -3,9 +3,9 @@
 #'
 #'   Copyright (C) 2019 Adrian Baddeley, Suman Rakshit and Tilman Davies
 #'
-#'   $Revision: 1.7 $ $Date: 2022/10/29 09:29:52 $
+#'   $Revision: 1.12 $ $Date: 2023/02/25 04:13:20 $
 
-densityQuick.lpp <- function(X, sigma=NULL, ...,
+densityQuick.lpp <- function(x, sigma=NULL, ...,
                              kernel="gaussian",
                              at=c("pixels", "points"),
                              what=c("estimate", "se", "var"),
@@ -15,18 +15,24 @@ densityQuick.lpp <- function(X, sigma=NULL, ...,
                              weights=NULL,
                              positive=FALSE) {
   #' kernel density estimation
-  stopifnot(is.lpp(X))
+  stopifnot(is.lpp(x))
   what <- match.arg(what)
-  if(is.function(sigma))
-    sigma <- do.call.matched(sigma, list(X, ...), matchfirst=TRUE)
-  qkdeEngine(X=X, sigma=sigma, kernel=kernel,
+  if(is.null(sigma)) {
+    ## use 2D default
+    sigma <- resolve.2D.kernel(x=as.ppp(x), ...)$sigma
+  } else if(is.function(sigma)) {
+    ## bandwidth selection rule
+    sigma <- do.call.matched(sigma, list(x, ...), matchfirst=TRUE)
+    sigma <- as.numeric(sigma) ## remove class 'bw.optim' etc
+  }
+  qkdeEngine(x=x, sigma=sigma, kernel=kernel,
              at=at, what=what, leaveoneout=leaveoneout,
              diggle=diggle, edge2D=edge2D,
              weights=weights, positive=positive,
              ...)
 }
 
-qkdeEngine <- function(X, sigma=NULL, ...,
+qkdeEngine <- function(x, sigma=NULL, ...,
                        at=c("pixels", "points"),
                        what=c("estimate", "se", "var"),
                        leaveoneout=TRUE,
@@ -40,12 +46,12 @@ qkdeEngine <- function(X, sigma=NULL, ...,
                        shortcut=TRUE,
                        precomputed=NULL,
                        savecomputed=FALSE) {
-  stopifnot(is.lpp(X))
+  stopifnot(is.lpp(x))
   at <- match.arg(at)
   what <- match.arg(what)
-  L <- domain(X)
+  L <- domain(x)
   S <- as.psp(L)
-  XX <- as.ppp(X)
+  XX <- as.ppp(x)
   stuff <- resolve.2D.kernel(x=XX, sigma=sigma, varcov=varcov, ...)
   sigma <- stuff$sigma
   varcov <- stuff$varcov
@@ -55,10 +61,10 @@ qkdeEngine <- function(X, sigma=NULL, ...,
     result <-
       switch(at,
              pixels = {
-               as.linim(flatdensityfunlpp(X, weights=weights, what=what))
+               as.linim(flatdensityfunlpp(x, weights=weights, what=what))
              },
              points = {
-               flatdensityatpointslpp(X, weights=weights, what=what)
+               flatdensityatpointslpp(x, weights=weights, what=what)
              })
     attr(result, "sigma") <- sigma
     attr(result, "varcov") <- varcov

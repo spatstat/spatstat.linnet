@@ -10,7 +10,7 @@
 \usage{
 linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
                normalise=TRUE, normpower=1,
-	       update = TRUE, leaveoneout = TRUE,
+	       update = TRUE, leaveoneout = TRUE, sigma=NULL, 
 	       ratio = FALSE)
 }
 \arguments{
@@ -56,11 +56,14 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     model will be computed without re-fitting it to \code{X}.
   }
   \item{leaveoneout}{
-    Logical value (passed to \code{\link{fitted.lppm}} or
-    \code{\link{fitted.ppm}}) specifying whether to use a
-    leave-one-out rule when calculating the intensity,
-    when \code{lambda} is a fitted model.
-    Supported only when \code{update=TRUE}.
+    Logical value specifying whether to use a
+    leave-one-out rule when calculating the intensity.
+    See Details.
+  }
+  \item{sigma}{
+    Smoothing bandwidth (passed to \code{\link{density.lpp}})
+    for kernel density estimation of the intensity when
+    \code{lambda=NULL}.
   }
   \item{ratio}{
     Logical. 
@@ -73,11 +76,17 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   This command computes the inhomogeneous version of the 
   linear pair correlation function from point pattern data on a linear network.
 
-  If \code{lambda = NULL} the result is equivalent to the
-  homogeneous pair correlation function \code{\link{linearpcf}}.
-  If \code{lambda} is given, then it is expected to provide estimated values
-  of the intensity of the point process at each point of \code{X}. 
-  The argument \code{lambda} may be a numeric vector (of length equal to
+  The argument \code{lambda} should provide estimated values
+  of the intensity of the point process at each point of \code{X}.
+
+  If \code{lambda=NULL}, the intensity will be estimated by kernel
+  smoothing by calling \code{\link{density.lpp}} with the smoothing
+  bandwidth \code{sigma}, and with any other relevant arguments
+  that might be present in \code{\dots}.  A leave-one-out kernel estimate
+  will be computed if \code{leaveoneout=TRUE}.
+
+  If \code{lambda} is given, 
+  it may be a numeric vector (of length equal to
   the number of points in \code{X}), or a \code{function(x,y)} that will be
   evaluated at the points of \code{X} to yield numeric values, 
   or a pixel image (object of class \code{"im"}) or a fitted point 
@@ -87,6 +96,10 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   the default behaviour is to update the model by re-fitting it to
   the data, before computing the fitted intensity.
   This can be disabled by setting \code{update=FALSE}.
+  The intensity at data points will be computed
+  by \code{\link{fitted.lppm}} or \code{\link{fitted.ppm}}.
+  A leave-one-out estimate will be computed if \code{leaveoneout=TRUE}
+  and \code{update=TRUE}.
   
   If \code{correction="none"}, the calculations do not include
   any correction for the geometry of the linear network.
@@ -99,6 +112,12 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   \code{bw} and \code{adjust}. The default is
   to choose the bandwidth by Silverman's rule of thumb 
   \code{bw="nrd0"} explained in \code{\link{density.default}}.
+}
+\section{Warning}{
+  Older versions of \code{\link{linearpcfinhom}} interpreted
+  \code{lambda=NULL} to mean that the homogeneous function
+  \code{\link{linearpcf}} should be computed. This was changed to the
+  current behaviour in version \code{3.1-0} of \pkg{spatstat.linnet}.
 }
 \value{
   Function value table (object of class \code{"fv"}).
@@ -136,8 +155,9 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
 \examples{
   X <- rpoislpp(5, simplenet)
   fit <- lppm(X ~x)
-  K <- linearpcfinhom(X, lambda=fit)
-  plot(K)
+  g <- linearpcfinhom(X, lambda=fit, update=FALSE)
+  plot(g)
+  ge <- linearpcfinhom(X, sigma=bw.lppl)
 }
 \keyword{spatial}
 \keyword{nonparametric}

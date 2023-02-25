@@ -21,8 +21,12 @@
     to be smoothed.
   }
   \item{sigma}{
-    Smoothing bandwidth (standard deviation of the kernel)
-    in the same units as the spatial coordinates of \code{x}.
+    Smoothing bandwidth (standard deviation of the kernel).
+    A numeric value in the same units as the spatial coordinates of \code{x}.
+    Alternatively \code{sigma} may be a function which selects a
+    bandwidth when applied to \code{X},
+    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    There is a sensible default.
   }
   \item{\dots}{
     Arguments passed to \code{\link{as.mask}} determining the
@@ -98,6 +102,14 @@
   increases exponentially with \code{sigma}.
 
   Faster algorithms are available through \code{\link{density.lpp}}.
+
+  The argument \code{sigma} specifies the smoothing bandwidth.
+  If \code{sigma} is missing or \code{NULL},
+  the default is one-eighth of the length of the shortest side
+  of the bounding box of \code{x}.
+  If \code{sigma} is a function in the \R language, it is assumed
+  to be a bandwidth selection rule, and it will be applied to \code{x}
+  to compute the bandwidth value.
 }
 \section{Infinite bandwidth}{
   If \code{sigma=Inf}, the resulting density estimate is 

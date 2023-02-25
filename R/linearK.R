@@ -1,7 +1,7 @@
 #
 # linearK
 #
-# $Revision: 1.63 $ $Date: 2023/02/20 03:41:27 $
+# $Revision: 1.64 $ $Date: 2023/02/25 03:23:12 $
 #
 # K function for point pattern on linear network
 #
@@ -38,7 +38,7 @@ linearK <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
 
 linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
                          correction="Ang", normalise=TRUE, normpower=1,
-			 update=TRUE, leaveoneout=TRUE,
+			 update=TRUE, leaveoneout=TRUE, sigma=NULL,
 			 ratio=FALSE) {
   stopifnot(inherits(X, "lpp"))
   loo.given <- !missing(leaveoneout)
@@ -47,8 +47,13 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
                              Ang="Ang",
                              best="Ang"),
                            multi=FALSE)
-  if(is.null(lambda))
-    linearK(X, r=r, ..., ratio=ratio, correction=correction)
+  if(is.null(lambda)) 
+    warn.once("linearKinhomNULL",
+              "In linearKinhom the interpretation of 'lambda=NULL'",
+              "has changed (in spatstat.linnet 3.1 and later);",
+              "the function linearK is no longer invoked;",
+              "instead the intensity lambda is estimated by kernel smoothing")
+
   if(normalise) {
     check.1.real(normpower)
     stopifnot(normpower >= 1)
@@ -56,6 +61,7 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
   lambdaX <- resolve.lambda.lpp(X, lambda, ...,
                                 update=update, leaveoneout=leaveoneout,
                                 loo.given=loo.given,
+                                sigma=sigma,
                                 lambdaname="lambda")
   invlam <- 1/lambdaX
   invlam2 <- outer(invlam, invlam, "*")
@@ -93,11 +99,23 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
                                update=TRUE, leaveoneout=TRUE,
                                everywhere=FALSE,
                                loo.given=TRUE,
+                               sigma=NULL,
                                lambdaname) {
   if(missing(lambdaname)) lambdaname <- deparse(substitute(lambda))
   Y <- if(is.null(subset)) X else X[subset]
   danger <- TRUE
-  if(is.ppm(lambda) || is.lppm(lambda)) {
+  if(is.null(lambda)) {
+    ## compute a kernel density estimate at X
+    lambdaX <- density(X, sigma=sigma, ..., at="points",
+                       leaveoneout=leaveoneout)
+    ## ensure it is positive
+    lambdaX <- pmax(lambdaX, .Machine$double.eps)
+    ## Restrict if required
+    lambdaY <- if(is.null(subset)) lambdaX else lambdaX[subset]
+    ## Compute at all locations if required
+    if(everywhere)
+      everylambda <- density(X, sigma=sigma, ..., at="pixels") 
+  } else if(is.ppm(lambda) || is.lppm(lambda)) {
     ## fitted model
     model <- lambda
     if(update) {

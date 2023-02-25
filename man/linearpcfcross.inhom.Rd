@@ -11,7 +11,7 @@
 }
 \usage{
 linearpcfcross.inhom(X, i, j, lambdaI, lambdaJ, r=NULL, \dots,
-                     correction="Ang", normalise=TRUE)
+                     correction="Ang", normalise=TRUE, sigma=NULL)
 }
 \arguments{
   \item{X}{The observed point pattern, 
@@ -64,6 +64,11 @@ linearpcfcross.inhom(X, i, j, lambdaI, lambdaJ, r=NULL, \dots,
     the points of type \code{i}), which reduces the sampling variability.
     If \code{FALSE}, the denominator is the length of the network.
   }
+  \item{sigma}{
+    Smoothing bandwidth passed to \code{\link{density.lpp}}
+    for estimation of intensities when either \code{lambdaI} or
+    \code{lambdaJ} is \code{NULL}.
+  }
 }
 \value{
   An object of class \code{"fv"} (see \code{\link{fv.object}}).
@@ -83,6 +88,9 @@ linearpcfcross.inhom(X, i, j, lambdaI, lambdaJ, r=NULL, \dots,
   The values of \eqn{r} must be increasing nonnegative numbers
   and the maximum \eqn{r} value must not exceed the radius of the
   largest disc contained in the window.
+
+  If \code{lambdaI} or \code{lambdaJ} is missing or \code{NULL}, it will
+  be estimated by kernel smoothing using \code{\link{density.lpp}}.
 
   If \code{lambdaI} or \code{lambdaJ} is a fitted point process model,
   the default behaviour is to update the model by re-fitting it to
