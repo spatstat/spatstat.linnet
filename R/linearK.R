@@ -1,7 +1,7 @@
 #
 # linearK
 #
-# $Revision: 1.64 $ $Date: 2023/02/25 03:23:12 $
+# $Revision: 1.65 $ $Date: 2023/02/28 01:55:41 $
 #
 # K function for point pattern on linear network
 #
@@ -101,7 +101,7 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
                                loo.given=TRUE,
                                sigma=NULL,
                                lambdaname) {
-  if(missing(lambdaname)) lambdaname <- deparse(substitute(lambda))
+  if(missing(lambdaname)) lambdaname <- short.deparse(substitute(lambda))
   Y <- if(is.null(subset)) X else X[subset]
   danger <- TRUE
   if(is.null(lambda)) {
