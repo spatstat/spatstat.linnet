@@ -94,7 +94,7 @@ linearpcfdot.inhom(X, i, lambdaI, lambdadot, r=NULL, \dots,
   This can be disabled by setting \code{update=FALSE}.
 }
 \references{
-  Baddeley, A, Jammalamadaka, A. and Nair, G. (to appear)
+  Baddeley, A, Jammalamadaka, A. and Nair, G. (2014)
   Multitype point process analysis of spines on the
   dendrite network of a neuron.
   \emph{Applied Statistics} (Journal of the Royal Statistical

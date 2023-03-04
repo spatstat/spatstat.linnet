@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-999.002
+        CHANGES IN spatstat.linnet VERSION 3.0-999.003
 
 OVERVIEW
 
@@ -8,6 +8,8 @@ OVERVIEW
     o density.lpp accepts bandwidth selection rules.
 
     o density.lpp accepts sigma=NULL and has a simple default.
+
+    o Updated package documentation.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
