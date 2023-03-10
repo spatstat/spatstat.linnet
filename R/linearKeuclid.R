@@ -5,7 +5,7 @@
 #'
 #'    GNU Public Licence 2.0
 #'
-#'    $Revision: 1.9 $ $Date: 2023/02/25 03:22:43 $
+#'    $Revision: 1.10 $ $Date: 2023/03/10 03:44:50 $
 
 linearKEuclid <- function(X, r=NULL, ...) {
   stopifnot(inherits(X, "lpp"))
@@ -82,7 +82,9 @@ linearKEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
 
 linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
                           normalise=TRUE, normpower=2,
-			  update=TRUE, leaveoneout=TRUE, sigma=NULL) {
+			  update=TRUE, leaveoneout=TRUE,
+                          sigma=NULL, adjust.sigma=1,
+                          bw="nrd0", adjust.bw=1) {
   stopifnot(inherits(X, "lpp"))
 
   if(is.null(lambda)) 
@@ -100,7 +102,8 @@ linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
   lengthL <- volume(domain(X))
   #
   lambdaX <- resolve.lambda.lpp(X, lambda, ...,
-               update=update, leaveoneout=leaveoneout, sigma=sigma)
+                                update=update, leaveoneout=leaveoneout,
+                                sigma=sigma, adjust=adjust.sigma)
   #
   invlam <- 1/lambdaX
   invlam2 <- outer(invlam, invlam, "*")
@@ -108,7 +111,8 @@ linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
            if(normpower == 1) sum(invlam) else
            lengthL * (sum(invlam)/lengthL)^normpower
   g <- linearEuclidEngine(X, "g", ...,
-                          r=r, reweight=invlam2, denom=denom)
+                          r=r, reweight=invlam2, denom=denom,
+                          bw=bw, adjust=adjust.bw)
   # extract bandwidth
   bw <- attr(g, "bw")
   # set appropriate y axis label

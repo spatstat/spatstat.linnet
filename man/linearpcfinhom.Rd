@@ -10,7 +10,9 @@
 \usage{
 linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
                normalise=TRUE, normpower=1,
-	       update = TRUE, leaveoneout = TRUE, sigma=NULL, 
+	       update = TRUE, leaveoneout = TRUE,
+               sigma=NULL, adjust.sigma=1,
+               bw="nrd0", adjust.bw=1,
 	       ratio = FALSE)
 }
 \arguments{
@@ -29,7 +31,7 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   }
   \item{\dots}{
     Arguments passed to \code{\link{density.default}}
-    to control the smoothing.
+    to control the smoothing of the estimates of pair correlation.
   }
   \item{correction}{
     Geometry correction.
@@ -64,6 +66,18 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     Smoothing bandwidth (passed to \code{\link{density.lpp}})
     for kernel density estimation of the intensity when
     \code{lambda=NULL}.
+  }
+  \item{adjust.sigma}{
+    Numeric value. \code{sigma} will be multiplied by this value.
+  }
+  \item{bw}{
+    Smoothing bandwidth (passed to \code{\link[stats]{density.default}})
+    for one-dimensional kernel smoothing of the pair correlation function.
+    Either a numeric value, or a character string recognised
+    by \code{\link[stats]{density.default}}.
+  }
+  \item{adjust.bw}{
+    Numeric value. \code{bw} will be multiplied by this value.
   }
   \item{ratio}{
     Logical. 

@@ -11,7 +11,9 @@
 }
 \usage{
 linearpcfdot.inhom(X, i, lambdaI, lambdadot, r=NULL, \dots,
-                   correction="Ang", normalise=TRUE, sigma=NULL)
+                   correction="Ang", normalise=TRUE,
+                   sigma=NULL, adjust.sigma=1,
+                   bw="nrd0", adjust.bw=1)
 }
 \arguments{
   \item{X}{The observed point pattern, 
@@ -64,6 +66,18 @@ linearpcfdot.inhom(X, i, lambdaI, lambdadot, r=NULL, \dots,
     Smoothing bandwidth passed to \code{\link{density.lpp}}
     for estimation of intensities when either \code{lambdaI} or
     \code{lambdadot} is \code{NULL}.
+  }
+  \item{adjust.sigma}{
+    Numeric value. \code{sigma} will be multiplied by this value.
+  }
+  \item{bw}{
+    Smoothing bandwidth (passed to \code{\link[stats]{density.default}})
+    for one-dimensional kernel smoothing of the pair correlation function.
+    Either a numeric value, or a character string recognised
+    by \code{\link[stats]{density.default}}.
+  }
+  \item{adjust.bw}{
+    Numeric value. \code{bw} will be multiplied by this value.
   }
 }
 \value{
@@ -122,10 +136,7 @@ linearpcfdot.inhom(X, i, lambdaI, lambdadot, r=NULL, \dots,
    # fit <- lppm(chicago, ~marks + x)
    # linearpcfdot.inhom(chicago, "assault", fit, fit)
 }
-\author{\adrian
-  
-  
-}
+\author{\adrian}
 \keyword{spatial}
 \keyword{nonparametric}
 

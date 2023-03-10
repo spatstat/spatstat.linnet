@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.0-999.003
+        CHANGES IN spatstat.linnet VERSION 3.0-999.004
 
 OVERVIEW
 
@@ -37,6 +37,15 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o densityQuick.lpp
     Argument 'X' changed to 'x' for consistency.
+
+    o linearpcfinhom
+    New arguments 'adjust.sigma', 'bw' and 'adjust.bw'.
+
+    o linearpcfdot.inhom, linearpcfcross.inhom
+    New arguments 'adjust.sigma', 'bw' and 'adjust.bw'.
+
+    o linearpcfEuclidInhom
+    New arguments 'adjust.sigma', 'bw' and 'adjust.bw'.
 
         CHANGES IN spatstat.linnet VERSION 3.0-6
 

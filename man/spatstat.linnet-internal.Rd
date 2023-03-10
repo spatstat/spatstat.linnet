@@ -109,7 +109,8 @@ linearKmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots, correction,
 linearpcfengine(X, \dots, r, reweight, denom, samplesize, correction, ratio)
 linearpcfmulti(X, I, J, r, \dots, correction)
 linearpcfmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots,
-                     correction, normalise, sigma)
+                     correction, normalise,
+                     sigma, adjust.sigma, bw, adjust.bw)
 linearKmultiEngine(X, I, J, \dots,
                    r, reweight, denom, samplesize, correction, showworking)
 linearPCFmultiEngine(X, I, J, \dots,
