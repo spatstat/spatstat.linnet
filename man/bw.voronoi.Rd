@@ -52,9 +52,11 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
   intensity \code{\link{densityVoronoi.lpp}}.
 }
 \value{
-  A numerical value giving the selected bandwidth.
+  A single numerical value giving the selected bandwidth.
   The result also belongs to the class \code{"bw.optim"}
-  which can be plotted.
+  (see \code{\link[spatstat.explore]{bw.optim.object}})
+  which can be plotted to show the bandwidth selection criterion
+  as a function of \code{sigma}.
 }
 \references{
   Moradi, M., Cronie, 0., Rubak, E., Lachieze-Rey, R.,
@@ -66,7 +68,7 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
   \spatstatAuthors and \mehdi.
 }
 \seealso{
-  \code{\link{densityVoronoi.lpp}}
+  \code{\link{densityVoronoi.lpp}}, \code{\link[spatstat.explore]{bw.optim.object}}
 }
 \examples{
    np <- if(interactive()) 10 else 3

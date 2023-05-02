@@ -136,9 +136,11 @@
   the fastest option is \code{distance="euclidean"}.
 }
 \value{
-  A numerical value giving the selected bandwidth.
+  A single numerical value giving the selected bandwidth.
   The result also belongs to the class \code{"bw.optim"}
-  which can be plotted.
+  (see \code{\link[spatstat.explore]{bw.optim.object}})
+  which can be plotted to show the bandwidth selection criterion
+  as a function of \code{sigma}.
 }
 \references{
   Kelsall, J.E. and Diggle, P.J. (1995)
@@ -153,7 +155,8 @@
   Greg McSwiggan and \adrian.
 }
 \seealso{
-  \code{\link{relrisk.lpp}}, \code{\link[spatstat.explore]{bw.relrisk}}
+  \code{\link{relrisk.lpp}}, \code{\link[spatstat.explore]{bw.relrisk}},
+  \code{\link[spatstat.explore]{bw.optim.object}}
 }
 \examples{
    set.seed(2020)

@@ -89,13 +89,17 @@
   because the integral is approximately constant.
 }
 \value{
-  A numerical value giving the selected bandwidth.
+  A single numerical value giving the selected bandwidth.
   The result also belongs to the class \code{"bw.optim"}
-  which can be plotted.
+  (see \code{\link[spatstat.explore]{bw.optim.object}})
+  which can be plotted to show the bandwidth selection criterion
+  as a function of \code{sigma}.
 }
 \seealso{
   \code{\link{density.lpp}},
   \code{\link{bw.scott}}.
+
+  \code{\link[spatstat.explore]{bw.optim.object}}.
 
   For point patterns in two-dimensional space, use \code{\link{bw.ppl}}.
 }
