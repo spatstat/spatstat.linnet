@@ -14,10 +14,14 @@
 
   \method{as.linim}{default}(X, L, \dots,
                              eps = NULL, dimyx = NULL, xy = NULL,
+                             rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
                              delta=NULL, nd=NULL)
 
   \method{as.linim}{linfun}(X, L=domain(X), \dots,
                             eps = NULL, dimyx = NULL, xy = NULL,
+                            rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
                             delta=NULL, nd=NULL)
 }
 \arguments{
@@ -30,7 +34,7 @@
   \item{\dots}{Additional arguments passed to \code{X} when \code{X}
     is a function.
   }
-  \item{eps,dimyx,xy}{
+  \item{eps,dimyx,xy,rule.eps}{
     Optional arguments passed to \code{\link{as.mask}} to control
     the pixel resolution.
   }
@@ -66,7 +70,7 @@
   First \code{X} is converted to a pixel image object \code{Y}
   (object of class \code{"im"}).
   The conversion is performed by \code{\link{as.im}}.
-  The arguments \code{eps}, \code{dimyx} and \code{xy}
+  The arguments \code{eps}, \code{dimyx}, \code{xy} and \code{rule.eps}
   determine the pixel resolution.
 
   Next \code{Y} is converted to a pixel image on a linear network

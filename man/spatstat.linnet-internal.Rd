@@ -120,7 +120,8 @@ resampleNetworkDataFrame(df, template)
        update, leaveoneout, everywhere, loo.given, sigma, lambdaname)
 sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
-          eps, dimyx, xy, delta, nd, interpolate, jitter, jitterfactor,
+          eps, dimyx, xy, rule.eps,
+          delta, nd, interpolate, jitter, jitterfactor,
           modelname, covname, dataname, subset, clip.predict)
 vnnFind(seg, tp, ns, nv, from, to, seglen, huge, tol, kmax)
 ldtEngine(nv, ns, from, to, seglen, huge,

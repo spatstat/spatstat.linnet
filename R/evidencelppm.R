@@ -3,7 +3,7 @@
 #'
 #'   spatialCovariateEvidence method for class lppm
 #'
-#'   $Revision: 1.9 $ $Date: 2022/05/20 10:12:52 $
+#'   $Revision: 1.10 $ $Date: 2023/05/02 07:56:12 $
 
 
 spatialCovariateEvidence.lppm <- local({
@@ -11,12 +11,15 @@ spatialCovariateEvidence.lppm <- local({
   spatialCovariateEvidence.lppm <- function(model, covariate, ...,
                              lambdatype=c("cif", "trend", "intensity"),
                              eps=NULL, dimyx=NULL, xy=NULL,
+                             rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
                              delta=NULL, nd=NULL,
                              interpolate=TRUE,
                              jitter=TRUE, jitterfactor=1, 
                              modelname=NULL, covname=NULL,
                              dataname=NULL, subset=NULL, clip.predict=TRUE) {
     lambdatype <- match.arg(lambdatype)
+    rule.eps <- match.arg(rule.eps)
     #' evaluate covariate values at data points and at pixels
     ispois <- is.poisson(model)
     csr <- ispois && is.stationary(model)
@@ -77,11 +80,13 @@ spatialCovariateEvidence.lppm <- local({
           Zimage <- covariate
           if(resolution.given) Zimage <- as.linim(Zimage,
                                                   eps=eps, dimyx=dimyx, xy=xy,
+                                                  rule.eps=rule.eps,
                                                   delta=delta, nd=nd)
         } else {
           type <- "im"
           Zimage <- as.linim(covariate, L,
                              eps=eps, dimyx=dimyx, xy=xy,
+                             rule.eps=rule.eps,
                              delta=delta, nd=nd)
         }
         if(!interpolate) {
@@ -100,6 +105,7 @@ spatialCovariateEvidence.lppm <- local({
         type <- "function"
         Zimage <- as.linim(covariate, L,
                            eps=eps, dimyx=dimyx, xy=xy,
+                           rule.eps=rule.eps,
                            delta=delta, nd=nd)
         #' evaluate exactly at quadrature points
         Zvalues <- covariate(U$x, U$y)
@@ -141,10 +147,12 @@ spatialCovariateEvidence.lppm <- local({
         #' convert 2D pixel images to 'linim'
         Zimage[!islinim] <- lapply(Zimage[!islinim], as.linim, L=L,
                                    eps=eps, dimyx=dimyx, xy=xy,
+                                   rule.eps=rule.eps,
                                    delta=delta, nd=nd)
         if(resolution.given) 
           Zimage[islinim] <- lapply(Zimage[!islinim], as.linim,
                                    eps=eps, dimyx=dimyx, xy=xy,
+                                   rule.eps=rule.eps,
                                    delta=delta, nd=nd)
         #' evaluate covariate at each data point by interpolation
         Zvalues <- numeric(npoints(U))
@@ -186,6 +194,7 @@ spatialCovariateEvidence.lppm <- local({
           Zimage[[k]] <- as.linim(functioncaller, L=L, m=possmarks[k],
                                   f=covariate,
                                   eps=eps, dimyx=dimyx, xy=xy,
+                                  rule.eps=rule.eps,
                                   delta=delta, nd=nd)
         #' collapse function body to single string
         covname <- singlestring(covname)

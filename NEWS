@@ -1,4 +1,18 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.1-0.001
+
+OVERVIEW
+
+    o Minor improvements
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o rhohat.lpp, rhohat.lppm
+    New argument 'rule.eps' passed to 'as.mask'.
+
+    o as.linim.default, as.linim.linfun
+    New argument 'rule.eps' passed to 'as.mask'.
+
         CHANGES IN spatstat.linnet VERSION 3.1-0
 
 OVERVIEW

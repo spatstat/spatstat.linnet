@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.17 $   $Date: 2022/07/10 10:14:55 $
+#   $Revision: 1.18 $   $Date: 2023/05/02 08:02:49 $
 #
 
 linfun <- function(f, L) {
@@ -53,8 +53,11 @@ print.linfun <- function(x, ...) {
 summary.linfun <- function(object, ...) { print(object, ...) }
 
 as.linim.linfun <- function(X, L=domain(X),
-                            ..., eps = NULL, dimyx = NULL, xy = NULL,
-                                       delta=NULL, nd=NULL) {
+                            ...,
+                            eps = NULL, dimyx = NULL, xy = NULL,
+                            rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
+                            delta=NULL, nd=NULL) {
   if(is.null(L))
     L <- domain(X)
   #' create template
@@ -62,7 +65,10 @@ as.linim.linfun <- function(X, L=domain(X),
   if(length(typical) != 1)
     stop(paste("The function must return a single value",
                "when applied to a single point"))
-  Y <- as.linim(typical, L, eps=eps, dimyx=dimyx, xy=xy, delta=delta, nd=nd)
+  rule.eps <- match.arg(rule.eps)
+  Y <- as.linim(typical, L, eps=eps, dimyx=dimyx, xy=xy,
+                rule.eps=rule.eps,
+                delta=delta, nd=nd)
   # extract coordinates of sample points along network
   df <- attr(Y, "df")
   coo <- df[, c("x", "y", "mapXY", "tp")]
@@ -107,7 +113,7 @@ plot.linfun <- function(x, ..., L=NULL, main) {
   if(is.null(L)) L <- as.linnet(x)
   argh <- list(...)
   fargnames <- get("otherfargs", envir=environment(x))
-  resolution <- c("eps", "dimyx", "xy", "delta", "nd")
+  resolution <- c("eps", "dimyx", "xy", "rule.eps", "delta", "nd")
   convert <- names(argh) %in% c(fargnames, resolution)
   Z <- do.call(as.linim, append(list(x, L=L), argh[convert]))
   rslt <- do.call(plot.linim, append(list(Z, main=main), argh[!convert]))

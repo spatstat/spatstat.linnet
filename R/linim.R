@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.83 $   $Date: 2023/01/15 10:31:26 $
+#  $Revision: 1.84 $   $Date: 2023/05/02 08:01:15 $
 #
 #  Image/function on a linear network
 #
@@ -367,9 +367,12 @@ as.linim <- function(X, ...) {
 }
 
 as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
-                                        delta = NULL, nd = NULL) {
+                             rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
+                             delta = NULL, nd = NULL) {
   stopifnot(inherits(L, "linnet"))
-  Y <- as.im(X, W=Frame(L), ..., eps=eps, dimyx=dimyx, xy=xy)
+  rule.eps <- match.arg(rule.eps)
+  Y <- as.im(X, W=Frame(L), ..., eps=eps, dimyx=dimyx, xy=xy, rule.eps=rule.eps)
   M <- as.mask.psp(as.psp(L), as.owin(Y))
   Y[complement.owin(M)] <- NA
   df <- NULL
@@ -383,8 +386,10 @@ as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
     df <- df[,c("xc", "yc", "x", "y", "seg", "tp", "values")]
     names(df)[names(df) == "seg"] <- "mapXY"
   }
-  if(is.mask(WL <- Window(L)) && !all(sapply(list(eps, dimyx, xy), is.null)))
-     Window(L, check=FALSE) <- as.mask(WL, eps=eps, dimyx=dimyx, xy=xy)
+  if(is.mask(WL <- Window(L)) && !all(sapply(list(eps, dimyx, xy), is.null))) {
+    Window(L, check=FALSE) <- as.mask(WL,
+                              eps=eps, dimyx=dimyx, xy=xy, rule.eps=rule.eps)
+  }
   out <- linim(L, Y, df=df, restrict=FALSE)
   return(out)
 }
