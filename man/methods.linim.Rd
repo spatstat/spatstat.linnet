@@ -85,7 +85,7 @@
   another object of class \code{"linim"}.
 }
 \examples{
-   M <- as.mask.psp(as.psp(simplenet))
+   M <- psp2mask(as.psp(simplenet))
    Z <- as.im(function(x,y) {x-y}, W=M)
    X <- linim(simplenet, Z)
    ## ............  print basic details .........................

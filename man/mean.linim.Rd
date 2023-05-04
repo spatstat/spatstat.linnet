@@ -60,7 +60,7 @@
   \code{\link{quantilefun}}
 }
 \examples{
-  M <- as.mask.psp(as.psp(simplenet))
+  M <- psp2mask(as.psp(simplenet))
   Z <- as.im(function(x,y) {x-y}, W=M)
   X <- linim(simplenet, Z)
   X

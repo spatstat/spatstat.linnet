@@ -3,7 +3,7 @@
 #'
 #'   Copyright (C) 2019 Adrian Baddeley, Suman Rakshit and Tilman Davies
 #'
-#'   $Revision: 1.12 $ $Date: 2023/02/25 04:13:20 $
+#'   $Revision: 1.13 $ $Date: 2023/05/04 01:38:23 $
 
 densityQuick.lpp <- function(x, sigma=NULL, ...,
                              kernel="gaussian",
@@ -135,7 +135,7 @@ qkdeEngine <- function(x, sigma=NULL, ...,
            Z <- if(diggle || raw) KX else (KX/KS)
            M <- if(shortcut) {
                   precomputed$M %orifnull% solutionset(PS > 0)
-                } else as.mask.psp(S, KS)
+                } else psp2mask(S, KS)
            Z <- Z[M, drop=FALSE]
            #' build linim object, using precomputed sample points if available
            result <- linim(L, Z, restrict=FALSE, df=precomputed$df)

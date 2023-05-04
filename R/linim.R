@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.84 $   $Date: 2023/05/02 08:01:15 $
+#  $Revision: 1.85 $   $Date: 2023/05/04 01:37:22 $
 #
 #  Image/function on a linear network
 #
@@ -30,7 +30,7 @@ linim <- function(L, Z, ..., restrict=TRUE, df=NULL) {
   }
   if(restrict) {
     #' restrict image to pixels actually lying on the network
-    M <- as.mask.psp(as.psp(L), Z)
+    M <- psp2mask(as.psp(L), Z)
     if(dfgiven) {
       #' ensure all mapped pixels are untouched
       pos <- nearest.pixel(df$xc, df$yc, Z)
@@ -190,7 +190,7 @@ plot.linim <- local({
         #' first fatten the lines 
         L <- attr(x, "L")
         S <- as.psp(L)
-        D <- distmap(as.mask.psp(S, xy=x))
+        D <- distmap(psp2mask(S, xy=x))
         fatwin <- levelset(D, fatten)
         x <- nearestValue(x)[fatwin, drop=FALSE]
       }
@@ -373,7 +373,7 @@ as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
   stopifnot(inherits(L, "linnet"))
   rule.eps <- match.arg(rule.eps)
   Y <- as.im(X, W=Frame(L), ..., eps=eps, dimyx=dimyx, xy=xy, rule.eps=rule.eps)
-  M <- as.mask.psp(as.psp(L), as.owin(Y))
+  M <- psp2mask(as.psp(L), as.owin(Y))
   Y[complement.owin(M)] <- NA
   df <- NULL
   if(!is.null(delta) || !is.null(nd)) {
@@ -595,7 +595,7 @@ as.linnet.linim <- function(X, ...) {
   changed <- (okx != oky) | (okx & oky & yvalue != xvalue)
   df$values[changed] <- yvalue[changed]
   #' restrict main pixel image to network
-  m <- as.mask.psp(L, as.mask(y))$m
+  m <- psp2mask(L, as.mask(y))$m
   m[pos] <- TRUE
   y$v[!m] <- NA
   #' package up

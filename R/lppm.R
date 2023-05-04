@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.55 $   $Date: 2023/02/04 03:22:09 $
+#  $Revision: 1.56 $   $Date: 2023/05/04 01:38:01 $
 #
 
 lppm <- function(X, ...) {
@@ -114,7 +114,7 @@ predict.lppm <- local({
     #' locations not given; want a pixel image
     #' pixellate the lines
     Llines <- as.psp(L)
-    linemask <- as.mask.psp(Llines, ...)
+    linemask <- psp2mask(Llines, ...)
     lineimage <- as.im(linemask)
     #' extract pixel centres
     xx <- rasterx.mask(linemask)
@@ -375,7 +375,7 @@ model.images.lppm <- local({
   }
 
   netmask <- function(L, template) {
-    as.im(as.mask.psp(as.psp(L), xy=as.mask(template)))
+    as.im(psp2mask(as.psp(L), xy=as.mask(template)))
   }
     
   tolinim <- function(x, L, imL) linim(L, eval.im(x * imL), restrict=FALSE)

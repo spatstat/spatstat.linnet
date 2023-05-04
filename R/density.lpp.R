@@ -108,7 +108,7 @@ densityEqualSplit <- function(x, sigma=NULL, ...,
   switch(at,
          pixels = {
            ## pixellate linear network
-           linemask <- as.mask.psp(Llines, ...)
+           linemask <- psp2mask(Llines, ...)
            lineimage <- as.im(linemask, value=0)
            ## extract pixel centres
            xx <- raster.x(linemask)
