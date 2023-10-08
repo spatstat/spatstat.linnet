@@ -68,11 +68,8 @@
   \code{\link[spatstat.geom]{owin.object}},
   \code{\link[spatstat.geom]{owin}}.
 
-  Additional methods for \code{as.owin} are provided
-  in the \pkg{maptools} package:
-  \code{as.owin.SpatialPolygon},
-  \code{as.owin.SpatialPolygons},
-  \code{as.owin.SpatialPolygonsDataFrame}.
+  Additional methods for \code{as.owin} may be provided
+  by other packages outside the \pkg{spatstat} family.
 }
 \examples{
   as.owin(simplenet)
@@ -84,3 +81,4 @@
 \keyword{manip}
  
  
+\concept{Linear network}

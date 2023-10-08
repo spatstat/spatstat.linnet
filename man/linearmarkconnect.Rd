@@ -89,3 +89,4 @@ linearmarkconnect(X, i, j, r=NULL, \dots)
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

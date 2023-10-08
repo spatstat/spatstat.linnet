@@ -62,3 +62,4 @@ Extract the Variables in a Point Process Model on a Network
 \keyword{spatial}
 \keyword{models}
 
+\concept{Linear network}

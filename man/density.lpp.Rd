@@ -159,3 +159,4 @@ Okabe, A. and Sugihara, K. (2012)
 \keyword{spatial}
 \keyword{methods}
 \keyword{smooth}
+\concept{Linear network}

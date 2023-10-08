@@ -41,3 +41,5 @@
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Tessellation}
+\concept{Linear network}

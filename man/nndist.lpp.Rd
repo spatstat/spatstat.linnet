@@ -76,3 +76,4 @@
    nndist(X, by=marks(X))
 }
 \keyword{spatial}
+\concept{Linear network}

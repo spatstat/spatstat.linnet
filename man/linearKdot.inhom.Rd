@@ -127,3 +127,4 @@ linearKdot.inhom(X, i, lambdaI=NULL, lambdadot=NULL, r=NULL, \dots,
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

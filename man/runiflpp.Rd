@@ -77,3 +77,4 @@ runiflpp(n, L, nsim=1, drop=TRUE, ex=NULL)
 }
 \keyword{spatial}
 \keyword{datagen}
+\concept{Linear network}

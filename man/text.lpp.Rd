@@ -52,3 +52,4 @@
 }
 \keyword{spatial}
 \keyword{hplot}
+\concept{Linear network}

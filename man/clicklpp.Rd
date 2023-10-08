@@ -81,3 +81,4 @@
 }
 \keyword{spatial}
 \keyword{iplot}
+\concept{Linear network}

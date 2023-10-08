@@ -100,3 +100,5 @@ lintess(L, df, marks=NULL)
 \keyword{spatial}
 \keyword{datagen}
 
+\concept{Tessellation}
+\concept{Linear network}

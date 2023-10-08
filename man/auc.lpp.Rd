@@ -109,3 +109,4 @@
   auc(fit)
 }
 \keyword{spatial}
+\concept{Linear network}

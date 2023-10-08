@@ -109,5 +109,5 @@ models on a linear network.
 \keyword{spatial}
 \keyword{models}
 \keyword{methods}
- 
- 
+\concept{Model selection} 
+\concept{Linear network}

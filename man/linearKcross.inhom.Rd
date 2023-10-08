@@ -131,3 +131,4 @@ linearKcross.inhom(X, i, j, lambdaI=NULL, lambdaJ=NULL,
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

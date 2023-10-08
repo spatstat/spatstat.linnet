@@ -88,3 +88,4 @@
 \keyword{spatial}
 \keyword{methods}
 \keyword{models}
+\concept{Linear network}

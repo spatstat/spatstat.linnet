@@ -94,3 +94,4 @@
    plot(L, show.vertices=TRUE, use.marks=TRUE, legend=TRUE)
 }
 \keyword{spatial}
+\concept{Linear network}

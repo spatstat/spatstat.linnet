@@ -72,3 +72,4 @@ linequad(X, Y, \dots, eps = NULL, nd = 1000, random = FALSE)
 }
 \keyword{datagen}
 \keyword{spatial}
+\concept{Linear network}

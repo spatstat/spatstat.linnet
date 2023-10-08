@@ -297,3 +297,7 @@
    envelope(X, nsim=ns)
 }
 \keyword{spatial}
+\concept{Linear network}
+\concept{Goodness-of-fit}
+\concept{Test of randomness}
+\concept{Envelope of simulations}

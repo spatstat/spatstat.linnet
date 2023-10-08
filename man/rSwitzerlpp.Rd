@@ -82,3 +82,4 @@ rSwitzerlpp(L, lambdacut, rintens = rexp, \dots,
 \keyword{spatial}
 \keyword{datagen}
 
+\concept{Linear network}

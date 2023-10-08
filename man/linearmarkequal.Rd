@@ -71,3 +71,4 @@ linearmarkequal(X, r=NULL, \dots)
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

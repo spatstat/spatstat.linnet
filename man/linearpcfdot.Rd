@@ -84,3 +84,4 @@ linearpcfdot(X, i, r=NULL, \dots, correction="Ang")
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

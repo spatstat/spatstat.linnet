@@ -97,3 +97,4 @@
   plot(roc(fit))
 }
 \keyword{spatial}
+\concept{Linear network}

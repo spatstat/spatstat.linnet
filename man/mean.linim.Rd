@@ -75,3 +75,4 @@
 \keyword{spatial}
 \keyword{methods}
 \keyword{univar}
+\concept{Linear network}

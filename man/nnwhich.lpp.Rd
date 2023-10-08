@@ -64,3 +64,4 @@
    nnwhich(X, k=2)
 }
 \keyword{spatial}
+\concept{Linear network}

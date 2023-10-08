@@ -98,3 +98,4 @@
 \keyword{spatial}
 \keyword{methods}
 \keyword{smooth}
+\concept{Linear network}

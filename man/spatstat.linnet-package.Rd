@@ -202,4 +202,4 @@
 }
 \keyword{spatial}
 \keyword{package}
-
+\concept{Linear network}

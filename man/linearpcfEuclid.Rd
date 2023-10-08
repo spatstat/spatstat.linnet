@@ -58,3 +58,4 @@ linearpcfEuclid(X, r = NULL, ...)
 }
 \keyword{spatial}
 \keyword{nonparametric}
+\concept{Linear network}

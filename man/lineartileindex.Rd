@@ -71,3 +71,5 @@ lineartileindex(seg, tp, Z, method = c("encode", "C", "interpreted"))
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Linear network}
+\concept{Tessellation}

@@ -125,3 +125,4 @@ lpp(X, L, \dots)
   lpp(L=letterA)
 }
 \keyword{spatial}
+\concept{Linear network}

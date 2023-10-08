@@ -46,3 +46,5 @@ intersect.lintess(X, Y)
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Tessellation}
+\concept{Linear network}

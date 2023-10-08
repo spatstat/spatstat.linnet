@@ -105,6 +105,7 @@
   If \code{style="width"} then
   the pixel values of \code{x} are used to determine the widths of
   thick lines centred on the line segments of the linear network.
+  This style of plot is often attributed to Xie and Yan (2008).
   The mapping from pixel values to line widths is determined by
   the arguments \code{scale} and \code{adjust}.
   The plotting of colours and borders of the lines is controlled by
@@ -164,6 +165,10 @@
   events on a linear network, with applications to
   ecology and criminology.
   \emph{Scandinavian Journal of Statistics} \bold{39}, 591--617.
+
+  Xie, Z. and Yan, J. (2008) 
+  Kernel Density Estimation of traffic accidents in a network space.
+  \emph{Computers, Environment and Urban Systems} \bold{32}, 396--406.
 }
 \examples{
   X <- linfun(function(x,y,seg,tp){y^2+x}, simplenet)
@@ -183,3 +188,4 @@
 
 }
 \keyword{spatial}
+\concept{Linear network}

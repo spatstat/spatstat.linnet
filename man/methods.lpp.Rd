@@ -106,3 +106,4 @@
 }
 \keyword{spatial}
 \keyword{methods}
+\concept{Linear network}

@@ -135,3 +135,4 @@ ecology and criminology.
    sum(lengths_psp(di$lines))
 }
 \keyword{spatial}
+\concept{Linear network}

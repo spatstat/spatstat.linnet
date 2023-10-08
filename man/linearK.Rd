@@ -75,3 +75,4 @@ linearK(X, r=NULL, ..., correction="Ang", ratio=FALSE)
 }
 \keyword{spatial}
 \keyword{nonparametric}
+\concept{Linear network}

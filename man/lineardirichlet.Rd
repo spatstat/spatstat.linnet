@@ -39,7 +39,10 @@ lineardirichlet(X)
   \adrian.
 }
 \seealso{
-  \code{\link{lintess}}
+  \code{\link{lintess}}.
+
+  For the Dirichlet tessellation in two-dimensional space,
+  see \code{\link[spatstat.geom]{dirichlet}}.
 }
 \examples{
   X <- runiflpp(5, simplenet)
@@ -48,3 +51,5 @@ lineardirichlet(X)
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Dirichlet tessellation}
+\concept{Linear network}

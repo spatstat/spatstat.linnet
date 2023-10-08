@@ -140,3 +140,4 @@ linearpcfdot.inhom(X, i, lambdaI, lambdadot, r=NULL, \dots,
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

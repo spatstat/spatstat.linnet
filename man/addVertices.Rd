@@ -110,4 +110,4 @@ addVertices(L, X, join=NULL, joinmarks=NULL)
 }
 \keyword{spatial}
 \keyword{manip}
-
+\concept{Linear network}

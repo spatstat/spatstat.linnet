@@ -67,3 +67,4 @@
    d[1:3, 1:3]
 }
 \keyword{spatial}
+\concept{Linear network}

@@ -82,3 +82,4 @@ in the result is a piece of the second segment of \code{X}.
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Linear network}

@@ -254,3 +254,5 @@
 \keyword{htest}
 \keyword{spatial}
 
+\concept{Linear network}
+\concept{Goodness-of-fit}

@@ -117,3 +117,5 @@
 }
 \keyword{spatial}
 \keyword{hplot}
+\concept{Tessellation}
+\concept{Linear network}

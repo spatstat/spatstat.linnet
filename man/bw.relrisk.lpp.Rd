@@ -169,3 +169,5 @@
 \keyword{methods}
 \keyword{smooth}
 
+\concept{Bandwidth selection}
+\concept{Linear network}

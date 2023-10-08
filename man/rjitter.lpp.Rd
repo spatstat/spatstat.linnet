@@ -57,3 +57,4 @@
 }
 \keyword{spatial}
 \keyword{datagen}
+\concept{Linear network}

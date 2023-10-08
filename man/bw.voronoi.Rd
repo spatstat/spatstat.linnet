@@ -80,3 +80,4 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
 \keyword{spatial}
 \keyword{methods}
 \keyword{smooth}
+\concept{Bandwidth selection}

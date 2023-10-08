@@ -144,3 +144,4 @@ linearpcfcross.inhom(X, i, j, lambdaI, lambdaJ, r=NULL, \dots,
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

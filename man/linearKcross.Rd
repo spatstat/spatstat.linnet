@@ -84,3 +84,4 @@ linearKcross(X, i, j, r=NULL, \dots, correction="Ang")
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

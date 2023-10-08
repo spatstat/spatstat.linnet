@@ -137,3 +137,4 @@ densityQuick.lpp(x, sigma=NULL, \dots,
 \keyword{spatial}
 \keyword{nonparametric}
 
+\concept{Linear network}

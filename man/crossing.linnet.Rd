@@ -42,3 +42,4 @@ crossing.linnet(X, Y)
 }
 \keyword{spatial}
 \keyword{manip}
+\concept{Linear network}

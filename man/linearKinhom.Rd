@@ -183,3 +183,4 @@ linearKinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
 \keyword{nonparametric}
 
 
+\concept{Linear network}

@@ -85,3 +85,4 @@ rcelllpp(L, lambda, rnumgen = NULL, \dots, saveid=FALSE)
 \keyword{spatial}
 \keyword{datagen}
 
+\concept{Linear network}

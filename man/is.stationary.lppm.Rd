@@ -60,3 +60,4 @@
 }
 \keyword{spatial}
 \keyword{models}
+\concept{Linear network}

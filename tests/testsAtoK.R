@@ -218,7 +218,7 @@ local({
 #'     tests/hypotests.R
 #'     Hypothesis tests
 #' 
-#'  $Revision: 1.9 $ $Date: 2020/11/02 06:39:23 $
+#'  $Revision: 1.10 $ $Date: 2023/07/17 07:30:48 $
 
 if(FULLTEST) {
 local({
@@ -230,7 +230,7 @@ local({
 #
 #  tests/imageops.R
 #
-#   $Revision: 1.40 $   $Date: 2022/10/23 01:57:03 $
+#   $Revision: 1.43 $   $Date: 2023/08/29 01:03:59 $
 #
 
 

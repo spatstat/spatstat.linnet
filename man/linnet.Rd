@@ -99,3 +99,4 @@ linnet(vertices, m, edges, sparse=FALSE, warn=TRUE)
   letterA <- linnet(v, edges=edg)
 }
 \keyword{spatial}
+\concept{Linear network}

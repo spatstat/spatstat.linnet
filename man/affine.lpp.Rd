@@ -93,3 +93,5 @@
 }
 \keyword{spatial}
 \keyword{math}
+\concept{Geometrical transformations}
+\concept{Linear network}
