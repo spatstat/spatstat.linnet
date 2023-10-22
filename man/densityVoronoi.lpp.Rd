@@ -99,3 +99,4 @@
 \keyword{methods}
 \keyword{smooth}
 \concept{Linear network}
+\concept{Adaptive smoothing}
