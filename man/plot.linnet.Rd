@@ -24,7 +24,7 @@
     Main title for plot. Use \code{main=""} to suppress it.
   }
   \item{add}{
-    Logical. If code{TRUE}, superimpose the graphics
+    Logical. If \code{TRUE}, superimpose the graphics
     over the current plot. If \code{FALSE}, generate a new plot.
   }
   \item{do.plot}{
