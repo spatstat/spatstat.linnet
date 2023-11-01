@@ -73,6 +73,9 @@ lintess(L, df, marks=NULL)
   \code{\link{divide.linnet}} to make a tessellation demarcated by
   given points.
 
+  \code{\link{chop.linnet}} to make a tessellation demarcated by
+  infinite lines.
+  
   \code{\link{lineardirichlet}} to create the Dirichlet-Voronoi
   tessellation from a point pattern on a linear network.
   

@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.4 $  $Date: 2020/11/04 02:19:04 $
+#'   $Revision: 1.6 $  $Date: 2023/11/01 08:00:38 $
 #' 
 
 divide.linnet <- local({
@@ -73,7 +73,23 @@ divide.linnet <- local({
 
 
 intersect.lintess <- function(X, Y) {
-  # common refinement of two tessellations on linear network
+  ## common refinement of two tessellations on linear network
+  if(is.tess(X)) {
+    ## X is a 2-dimensional tessellation
+    ## Y should contain linear network information
+    L <- as.linnet(Y)
+    ## find tessellation on L induced by X
+    X <- traceTessLinnet(X, L)
+    if(is.linnet(Y)) return(X)
+  }
+  if(is.tess(Y)) {
+    ## Y is a 2-dimensional tessellation
+    ## X should contain linear network information
+    L <- as.linnet(X)
+    ## find tessellation on L induced by Y
+    Y <- traceTessLinnet(Y, L)
+    if(is.linnet(X)) return(Y)
+  }
   verifyclass(X, "lintess")
   verifyclass(Y, "lintess")
   if(!identical(as.linnet(X), as.linnet(Y)))
@@ -132,6 +148,48 @@ intersect.lintess <- function(X, Y) {
   return(out)
 }
 
+traceTessLinnet <- function(A, L) {
+  ## linear tessellation on network L induced by 2D tessellation A
+  stopifnot(is.tess(A))
+  stopifnot(is.linnet(L))
+  til <- solapply(tiles(A), as.polygonal)
+  ntil <- length(til)
+  if(A$type == "image" && ntil > 1) {
+    ## ensure disjoint
+    tcum <- til[[1L]]
+    for(i in 2:ntil) {
+      til.i <- til[[i]]
+      til[[i]] <- setminus.owin(til.i, tcum)
+      tcum <- union.owin(tcum, til.i)
+    }
+  }
+  ## extract all edges of tiles
+  edg <- do.call(superimpose.psp, unname(solapply(til, edges)))
+  ## extract segments on network
+  lin <- L$lines
+  ## determine crossing points
+  xing <- as.lpp(unique(crossing.psp(edg, lin)), L=L)
+  ## induce tessellation
+  D <- divide.linnet(xing)
+  df <- D$df
+  ## create test points in the middle of each piece of segment
+  dfmid <- with(df, data.frame(seg=seg, tp=(t0+t1)/2))
+  Xmid <- lpp(dfmid, L)
+  ## classify each test point in tessellation A
+  ind <- tileindex(as.ppp(Xmid), Z=A)
+  tn <- tilenames(A)
+  if(anyNA(ind)) {
+    ## add a tile 
+    tn <- c(tn, "<OTHER>")
+    ind[is.na(ind)] <- length(tn)
+  }
+  ## create linear tessellation data
+  dfnew <- df
+  dfnew$tile <- factor(ind, levels=1:length(tn), labels=tn)
+  ## return
+  Z <- lintess(L, dfnew)
+  return(Z)
+}
 
 chop.linnet <- function(X, L) {
   X <- as.linnet(X)
