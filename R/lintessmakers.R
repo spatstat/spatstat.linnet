@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.6 $  $Date: 2023/11/01 08:00:38 $
+#'   $Revision: 1.7 $  $Date: 2023/12/01 19:53:54 $
 #' 
 
 divide.linnet <- local({
@@ -159,8 +159,10 @@ traceTessLinnet <- function(A, L) {
     tcum <- til[[1L]]
     for(i in 2:ntil) {
       til.i <- til[[i]]
-      til[[i]] <- setminus.owin(til.i, tcum)
-      tcum <- union.owin(tcum, til.i)
+      if(!is.empty(til.i)) {
+        til[[i]] <- setminus.owin(til.i, tcum)
+        tcum <- union.owin(tcum, til.i)
+      }
     }
   }
   ## extract all edges of tiles
