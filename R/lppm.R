@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.56 $   $Date: 2023/05/04 01:38:01 $
+#  $Revision: 1.57 $   $Date: 2024/01/25 10:21:02 $
 #
 
 lppm <- function(X, ...) {
@@ -82,6 +82,18 @@ is.lppm <- function(x) { inherits(x, "lppm") }
 
 # undocumented
 as.ppm.lppm <- function(object) { object$fit }
+
+##
+
+getglmdata.lppm <- function(object, ...) { getglmdata(as.ppm(object), ...) }
+
+getglmfit.lppm <- function(object, ...) { getglmfit(as.ppm(object), ...) }
+
+getglmsubset.lppm <- function(object, ...) { getglmsubset(as.ppm(object), ...) }
+
+hasglmfit.lppm <- function(object) { hasglmfit(as.ppm(object)) }
+
+##
 
 fitted.lppm <- function(object, ..., dataonly=FALSE, new.coef=NULL,
                         leaveoneout=FALSE) {
