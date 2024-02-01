@@ -3,7 +3,7 @@
 #'
 #'    densityVoronoi.lpp
 #'
-#'    $Revision: 1.14 $  $Date: 2021/07/01 11:31:50 $
+#'    $Revision: 1.15 $  $Date: 2024/01/29 08:04:32 $
 #' 
 
 densityVoronoi.lpp <- function(X, f = 1, ..., nrep = 1, verbose = TRUE){
@@ -152,7 +152,7 @@ bw.voronoi <- function(X, ..., probrange = c(0.2,0.8), nprob = 10,
                      creator="bw.voronoi",
                      criterion="Likelihood Cross-Validation",
                      warnextreme=warn, hargnames=c("probrange", "prob"),
-                     unitname=NULL)
+                     unitname=NULL, hword="probability")
   return(result)
 }
 
