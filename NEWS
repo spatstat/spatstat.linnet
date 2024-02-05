@@ -1,4 +1,15 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.1-4.001
+
+OVERVIEW
+
+    o Slightly accelerated
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o spatstat.linnet package
+    Some computations slightly accelerated.
+
         CHANGES IN spatstat.linnet VERSION 3.1-4
 
 OVERVIEW

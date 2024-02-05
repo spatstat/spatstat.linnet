@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.87 $    $Date: 2022/08/06 10:54:00 $
+#    $Revision: 1.88 $    $Date: 2024/02/04 08:04:51 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -585,7 +585,7 @@ rescale.linnet <- function(X, s, unitname) {
   wp <- as.polygonal(w)
   if(is.mask(w)) {
     ## protect against pixellation artefacts
-    pixel <- owin(w$xstep * c(-1,1)/2, w$ystep * c(-1,1)/2)
+    pixel <- owinInternalRect(w$xstep * c(-1,1)/2, w$ystep * c(-1,1)/2)
     wp <- MinkowskiSum(wp, pixel)
     wp <- intersect.owin(wp, Frame(w))
   }
