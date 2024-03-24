@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.82 $   $Date: 2022/10/09 11:00:03 $
+#  $Revision: 1.83 $   $Date: 2024/03/24 00:53:42 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -21,6 +21,8 @@ lpp <- function(X, L, ...) {
       X <- as.data.frame(X)
       #' validate local coordinates
       if(nrow(X) > 0) {
+        X$seg <- as.integer(X$seg)
+        X$tp  <- as.double(X$tp)
         nedge <- nsegments(L)
         if(with(X, any(seg < 1 | seg > nedge)))
           stop("Segment index coordinate 'seg' exceeds bounds")
@@ -47,7 +49,8 @@ lpp <- function(X, L, ...) {
       #' projected points (spatial coordinates and marks)
       df  <- as.data.frame(pro$Xproj)
       #' local coordinates
-      lo  <- data.frame(seg=pro$mapXY, tp=pro$tp)
+      lo  <- data.frame(seg = as.integer(pro$mapXY),
+                        tp  = as.double(pro$tp))
     }
   }
   # combine spatial, local, marks

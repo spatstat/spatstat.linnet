@@ -1,9 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.1-4.001
+        CHANGES IN spatstat.linnet VERSION 3.1-5
 
 OVERVIEW
 
-    o Slightly accelerated
+    o Slightly accelerated.
+
+    o Internal stability improvements.
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
