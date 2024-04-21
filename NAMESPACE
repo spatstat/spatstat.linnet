@@ -4,7 +4,7 @@
 
 import(stats,graphics,grDevices,methods,utils)
 
-import(spatstat.utils,Matrix,spatstat.sparse)
+import(spatstat.utils,spatstat.univar,Matrix,spatstat.sparse)
 import(spatstat.data,spatstat.geom,spatstat.random)
 import(spatstat.explore,spatstat.model)
 
