@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.88 $    $Date: 2024/02/04 08:04:51 $
+#    $Revision: 1.89 $    $Date: 2024/05/01 06:26:34 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -213,6 +213,7 @@ plot.linnet <- function(x, ..., main=NULL, add=FALSE,
   if(is.null(main))
     main <- short.deparse(substitute(x))
   stopifnot(inherits(x, "linnet"))
+  argh <- list(...)
   lines <- as.psp(x)
   if(show.vertices) vert <- vertices(x)
   #' plan layout and save symbolmaps
@@ -239,8 +240,11 @@ plot.linnet <- function(x, ..., main=NULL, add=FALSE,
     RV <- NULL
   }
   ## initialise plot
-  if(!add) 
-    plot(B, type="n", main=main)
+  if(!add) {
+    args.main <- argh[names(argh) %in% c("cex.main", "adj.main", "col")]
+    do.call(plot, append(list(x=quote(B), type="n", main=main),
+                         args.main))
+  }
   ## plot segments and (optionally) vertices
   do.call(plot,
           resolve.defaults(list(x=quote(lines),

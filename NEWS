@@ -1,4 +1,22 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.1-5.002
+
+OVERVIEW
+
+    o spatstat.linnet now depends on 'spatstat.univar'.
+
+    o Minor improvements.
+
+PACKAGE DEPENDENCE
+
+    o spatstat.linnet
+    Now depends on the new package 'spatstat.univar'.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o plot.linnet, plot.lpp
+    These functions now recognise the argument 'adj.main'.
+
         CHANGES IN spatstat.linnet VERSION 3.1-5
 
 OVERVIEW
