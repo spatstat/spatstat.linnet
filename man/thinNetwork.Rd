@@ -8,13 +8,14 @@
   or related object.
 }
 \usage{
-thinNetwork(X, retainvertices, retainedges)
+thinNetwork(X, retainvertices=NULL, retainedges=NULL)
 }
 \arguments{
   \item{X}{
     A linear network (object of class \code{"linnet"}),
-    or a point pattern on a linear network (object of class
-    \code{"lpp"}).
+    a point pattern on a linear network (object of class
+    \code{"lpp"}) or a pixel image on a linear network
+    (object of class \code{"linim"}).
   }
   \item{retainvertices}{
     Optional. Subset index specifying which vertices should be retained
@@ -60,6 +61,8 @@ thinNetwork(X, retainvertices, retainedges)
   occur, including renumbering of the segments and vertices.
   If \code{X} is a point pattern on a linear network, then data points
   will be deleted if they lie on a deleted edge.
+  If \code{X} is a pixel image on a linear network, then the image
+  will be restricted to the new sub-network.
 }
 \value{
   An object of the same kind as \code{X}.

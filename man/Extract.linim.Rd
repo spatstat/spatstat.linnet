@@ -55,6 +55,12 @@
   Y[X]
   Y[square(c(0.3, 0.6))]
 }
+\seealso{
+  \code{\link{thinNetwork}} to extract the data
+  lying on selected edges of the network.
+
+  \code{\link{linim}} to make a pixel image on a network.
+}
 \author{
   \adrian
 }

@@ -3,7 +3,7 @@
 #'
 #' Surgery on linear networks and related objects
 #'
-#' $Revision: 1.34 $  $Date: 2022/07/20 08:13:54 $
+#' $Revision: 1.35 $  $Date: 2024/06/05 08:57:15 $
 #'
 
 insertVertices <- function(L, ...) {
@@ -251,20 +251,22 @@ repairNetwork <- function(X) {
   return(Y)
 }
 
-thinNetwork <- function(X, retainvertices, retainedges) {
+thinNetwork <- function(X, retainvertices=NULL, retainedges=NULL) {
   ## thin a network by retaining only the specified edges and/or vertices 
-  if(!inherits(X, c("linnet", "lpp")))
-    stop("X should be a linnet or lpp object", call.=FALSE)
-  gotvert <- !missing(retainvertices)
-  gotedge <- !missing(retainedges)
+  if(!inherits(X, c("linnet", "lpp", "linim")))
+    stop("X should be a linnet or lpp or linim object", call.=FALSE)
+  gotvert <- !is.null(retainvertices)
+  gotedge <- !is.null(retainedges)
   if(!gotedge && !gotvert)
     return(X)
+  #' .................. extract data ...................
   L <- as.linnet(X)
   from <- L$from
   to   <- L$to
   V <- L$vertices
   sparse <- identical(L$sparse, TRUE)
   edgemarks <- marks(L$lines) # vertex marks are handled automatically
+  #' ..................................................
   #' determine which edges/vertices are to be retained
   edgesFALSE <- logical(nsegments(L))
   verticesFALSE <- logical(npoints(V))
@@ -290,6 +292,7 @@ thinNetwork <- function(X, retainvertices, retainedges) {
     retainvertices[from[retainedges]] <- TRUE
     retainvertices[to[retainedges]]   <- TRUE
   }
+  #' ................ make sub-network .................
   ## assign new serial numbers to vertices, and recode
   Vsub <- V[retainvertices]
   newserial <- cumsum(retainvertices)
@@ -302,7 +305,7 @@ thinNetwork <- function(X, retainvertices, retainedges) {
   nontrivial <- (newfrom != newto) & !duplicated(edgepairs)
   edgepairs <- edgepairs[nontrivial,,drop=FALSE]
   reverse <- reverse[nontrivial]
-  ## extract relevant subset of network
+  ## construct relevant subset of network
   Lsub <- linnet(Vsub, edges=edgepairs, sparse=sparse, warn=FALSE)
   ## reattach marks to edges
   if(!is.null(edgemarks))
@@ -310,28 +313,51 @@ thinNetwork <- function(X, retainvertices, retainedges) {
   ## tack on information about subset
   attr(Lsub, "retainvertices") <- retainvertices
   attr(Lsub, "retainedges") <- retainedges
-  ## done?
-  if(inherits(X, "linnet"))
+  #' ............... handle data on the network .............
+  if(inherits(X, "linnet")) {
     return(Lsub)
-  ## X is an lpp object
-  ## Find data points that lie on accepted segments
-  dat <- X$data # hyperframe, may include marks
-  ok <- retainedges[unlist(dat$seg)]
-  dsub <- dat[ok, , drop=FALSE]
-  ## compute new serial numbers for retained segments
-  segmap <- cumsum(retainedges)
-  oldseg <- as.integer(unlist(dsub$seg))
-  dsub$seg <- newseg <- segmap[oldseg]
-  ## adjust tp coordinate if segment endpoints were reversed
-  if(any(revseg <- reverse[newseg])) {
-    tp  <- as.numeric(unlist(dsub$tp))
-    dsub$tp[revseg] <- 1 - tp[revseg]
+  } else if(inherits(X, "linim")) {
+    #' extract pixel data
+    Xim <- as.im(X)
+    XimLsub <- Xim[Lsub, drop=FALSE]
+    #' extract data frame of sample points and image values on subset
+    df <- attr(X, "df")
+    segid <- as.integer(df$mapXY)
+    dfsub <- df[retainedges[segid], , drop=FALSE]
+    #' assign new serial numbers to retained segments
+    segmap <- cumsum(retainedges)
+    oldseg <- segid[retainedges[segid]]
+    newseg <- segmap[oldseg]
+    dfsub$mapXY <- newseg
+    ## adjust tp coordinate if segment endpoints were reversed
+    if(any(revseg <- reverse[newseg])) {
+      tp  <- as.numeric(unlist(dfsub$tp))
+      dfsub$tp[revseg] <- 1 - tp[revseg]
+    }
+    ## make new linim object
+    Y <- linim(Lsub, XimLsub, df=dfsub)
+    return(Y)
+  } else {
+    ## X is an lpp object
+    ## Find data points that lie on accepted segments
+    dat <- X$data # hyperframe, may include marks
+    ok <- retainedges[unlist(dat$seg)]
+    dsub <- dat[ok, , drop=FALSE]
+    ## compute new serial numbers for retained segments
+    segmap <- cumsum(retainedges)
+    oldseg <- as.integer(unlist(dsub$seg))
+    dsub$seg <- newseg <- segmap[oldseg]
+    ## adjust tp coordinate if segment endpoints were reversed
+    if(any(revseg <- reverse[newseg])) {
+      tp  <- as.numeric(unlist(dsub$tp))
+      dsub$tp[revseg] <- 1 - tp[revseg]
+    }
+    ## make new lpp object
+    Y <- ppx(data=dsub, domain=Lsub, coord.type=as.character(X$ctype))
+    class(Y) <- c("lpp", class(Y))
+    ## tack on information about subset
+    attr(Y, "retainpoints") <- ok
   }
-  # make new lpp object
-  Y <- ppx(data=dsub, domain=Lsub, coord.type=as.character(X$ctype))
-  class(Y) <- c("lpp", class(Y))
-  ## tack on information about subset
-  attr(Y, "retainpoints") <- ok
   return(Y)
 }
 

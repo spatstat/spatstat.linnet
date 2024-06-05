@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.1-5.002
+        CHANGES IN spatstat.linnet VERSION 3.1-5.003
 
 OVERVIEW
 
@@ -14,6 +14,9 @@ PACKAGE DEPENDENCE
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o thinNetwork
+    X can be a pixel image on a linear network (object of class 'linim').
+    
     o plot.linnet, plot.lpp
     These functions now recognise the argument 'adj.main'.
 
