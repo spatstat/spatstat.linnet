@@ -683,7 +683,7 @@ resolve.heat.steps <-
   #' ------------- SPACING OF SAMPLE POINTS, dx ---------------
   if(dx.given) {
     if(verbose) splat(" Validating dx =", dx)
-    check.finite(dx)
+    check.finite(dx, xname="dx")
     stopifnot(dx > 0)
     if(finespacing && dx > lmin/3)
       stop(paste("dx must not exceed (shortest nonzero edge length)/3 =",

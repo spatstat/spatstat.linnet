@@ -3,7 +3,7 @@
 ##
 ##    Copyright (c) Greg McSwiggan and Adrian Baddeley 2017-2020
 ##
-##    $Revision: 1.12 $  $Date: 2022/05/23 02:33:06 $
+##    $Revision: 1.13 $  $Date: 2024/06/09 00:09:40 $
 
 densityfun.lpp <- function(X, sigma, ...,
                            weights=NULL, nsigma=1, verbose=FALSE) {
@@ -13,7 +13,7 @@ densityfun.lpp <- function(X, sigma, ...,
     if(nsigma != 1)
       stop("nsigma must be equal to 1 when sigma is infinite")
     return(flatdensityfunlpp(X, weights=weights, disconnect=TRUE))
-  } else check.finite(sigma)
+  } else check.finite(sigma, xname="sigma")
   if(!is.null(weights)) 
     check.nvector(weights, npoints(X), vname="weights")
   #' 
