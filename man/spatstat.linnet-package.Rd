@@ -170,14 +170,19 @@
     road accidents on a road network). 
 
     Examples of such objects include the following datasets
-    provided with the package:
+    provided in the \pkg{spatstat.data} package:
     
     \tabular{ll}{
       \code{\link[spatstat.data]{chicago}} \tab Chicago crime data \cr
       \code{\link[spatstat.data]{dendrite}} \tab Dendritic spines data \cr
       \code{\link[spatstat.data]{spiders}} \tab Spider webs on mortar lines of brick wall 
     }
-
+    There is also a dataset provided in the extension package
+    \pkg{spatstat.Knet}:
+    \tabular{ll}{
+      \code{wacrashes} \tab Road accidents in Western Australia
+    }
+    
     Point patterns on a network can be created by the following
     functions:
 

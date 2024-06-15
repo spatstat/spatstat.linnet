@@ -12,13 +12,26 @@ This package `spatstat.linnet` is one of the sub-packages.
 It contains the subset of the functionality of `spatstat`
 that deals with data on linear networks.
 
-### Overview
+There is also an extension package
+[spatstat.Knet](https://github.com/spatstat/spatstat.Knet)
+which contains additional algorithms for linear networks.
+
+### Where to find data
+
+Examples of datasets on linear networks are
+the point patterns `chicago`, `dendrite` and `spiders` provided in the
+[spatstat.data](https://github.com/spatstat/spatstat.data)
+package (available when `spatstat.linnet` is loaded)
+and the point pattern `wacrashes` provided in the extension package
+[spatstat.Knet](https://github.com/spatstat/spatstat.Knet)
+(which must be loaded separately).
+
+### Overview of `spatstat.linnet`
 
 `spatstat.linnet` supports
 
 #### Network geometry
 
-- examples of linear networks
 - creation of linear networks from coordinate data
 - extraction of networks from tessellations
 - modification of networks 
@@ -70,5 +83,7 @@ that deals with data on linear networks.
 - fitted/predicted intensity
 - analysis of deviance for point process model
 - simulate fitted model
+
+
 
 
