@@ -42,7 +42,6 @@ and the point pattern `wacrashes` provided in the extension package
 
 #### Point patterns on a network
 
-- examples of point patterns on linear networks
 - creation of point patterns on a network from coordinate data
 - extraction of sub-patterns
 - shortest-path distance measurement
