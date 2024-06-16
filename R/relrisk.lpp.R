@@ -3,7 +3,7 @@
 #
 #   Estimation of relative risk on network
 #
-#  $Revision: 1.9 $  $Date: 2023/01/27 04:32:26 $
+#  $Revision: 1.10 $  $Date: 2024/06/16 02:43:20 $
 #
 
 relrisk.lpp <- local({
@@ -265,7 +265,7 @@ bw.relrisk.lpp <- function(X, ...,
   if(ntypes == 1L)
     stop("There is only one type of point", call.=FALSE)
   if(ntypes > 2L && distance == "path")
-    stop(paste("Sorry, bw.relrisklpp(distance='path') is not yet supported",
+    stop(paste("Sorry, bw.relrisk.lpp(distance='path') is not yet supported",
                "for > 2 types of points"), call.=FALSE)
   ## determine range of bandwidths
   if(got.hmax <- !missing(hmax)) { check.1.real(hmax) ; stopifnot(hmax > 0) }
@@ -288,7 +288,7 @@ bw.relrisk.lpp <- function(X, ...,
   if(distance == "euclidean") {
     if(verbose) splat("Euclidean smoothing")
     if(method %in% c("McSwiggan", "KelsallDiggle"))
-      stop(paste0("Sorry, bw.relrisklpp(method=", sQuote(method),
+      stop(paste0("Sorry, bw.relrisk.lpp(method=", sQuote(method),
                   ") is not yet supported for > 2 types of points"),
            call.=FALSE)
     sigmavalues <- seq(hmin, hmax, length.out=nh)

@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.83 $   $Date: 2024/03/24 00:53:42 $
+#  $Revision: 1.85 $   $Date: 2024/06/16 02:02:52 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -602,6 +602,9 @@ superimpose.lpp <- function(..., L=NULL) {
 
 identify.lpp <- function(x, ...) {
   verifyclass(x, "lpp")
+  if(dev.cur() == 1 && interactive()) {
+    eval(substitute(plot(X), list(X=substitute(x))))
+  }
   P <- as.ppp(x)
   id <- identify(P$x, P$y, ...)
   if(!is.marked(x)) return(id)

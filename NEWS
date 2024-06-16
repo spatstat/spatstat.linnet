@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.1-5.007
+        CHANGES IN spatstat.linnet VERSION 3.1-5.009
 
 OVERVIEW
 
@@ -14,6 +14,10 @@ PACKAGE DEPENDENCE
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o identify.lpp
+    Automatically starts a new plot device and displays `x`
+    if there is no plot device open.
+    
     o thinNetwork
     X can be a pixel image on a linear network (object of class 'linim').
     
