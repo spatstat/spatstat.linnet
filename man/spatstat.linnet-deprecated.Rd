@@ -1,4 +1,5 @@
 \name{spatstat.linnet-deprecated}
+\alias{spatstat.linnet-deprecated} %DoNotExport
 \alias{circumradius.linnet}
 \alias{rjitterlpp}
 \alias{bw.relrisklpp}

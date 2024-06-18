@@ -33,7 +33,11 @@ chop.linnet(X, L)
   \adrian.
 }
 \seealso{
-  \code{\link{crossing.linnet}}
+  \code{\link{crossing.linnet}} to determine the crossing points
+  between the lines and the network.
+
+  \code{\link{divide.linnet}} to divide a network into a tessellation
+  using arbitrary cut points.
 }
 \examples{
    L <- infline(p=runif(3), theta=runif(3, max=pi/2))

@@ -1,5 +1,6 @@
 \name{spatstat.linnet-internal} 
 \title{Internal spatstat.linnet functions}
+\alias{spatstat.linnet-internal} %DoNotExport
 
 
 %% Linear networks code is corralled here
