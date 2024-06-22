@@ -1,11 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.1-5.010
+        CHANGES IN spatstat.linnet VERSION 3.1-5.011
 
 OVERVIEW
 
     o spatstat.linnet now depends on 'spatstat.univar'.
 
     o Minor improvements.
+
+    o Internal improvements.
 
 PACKAGE DEPENDENCE
 

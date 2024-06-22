@@ -1,6 +1,6 @@
 Package: spatstat.linnet
-Version: 3.1-5.010
-Date: 2024-06-18
+Version: 3.1-5.011
+Date: 2024-06-22
 Title: Linear Networks Functionality of the 'spatstat' Family
 Authors@R: c(person("Adrian", "Baddeley", 
                     role = c("aut", "cre", "cph"),
@@ -26,7 +26,7 @@ Authors@R: c(person("Adrian", "Baddeley",
 	            role = "ctb"))
 Maintainer: Adrian Baddeley <Adrian.Baddeley@curtin.edu.au>
 Depends: R (>= 3.5.0), spatstat.data (>= 3.0-4), spatstat.univar (>= 2.0-3.003), spatstat.geom (>= 3.2-9.023), spatstat.random (>= 3.2-3.003), spatstat.explore (>= 3.2-7.006), spatstat.model (>= 3.2-11.005), stats, graphics, grDevices, methods, utils
-Imports: spatstat.utils (>= 3.0-4), Matrix, spatstat.sparse (>= 3.0-3)
+Imports: spatstat.utils (>= 3.0-5), Matrix, spatstat.sparse (>= 3.1-0)
 Suggests: goftest, locfit, spatstat (>= 3.0)
 Description: Defines types of spatial data on a linear network
 	     and provides functionality for geometrical operations,

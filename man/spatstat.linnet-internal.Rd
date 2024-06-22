@@ -11,16 +11,25 @@
 \alias{as.linfun.linfun}
 \alias{as.owin.lintess}
 \alias{default.linnet.tolerance}
+\alias{evaluateNetCovariate}
+\alias{evaluateNetCovariateAlongNetwork}
+\alias{evaluateNetCovariateAtPoints}
+\alias{exactlppm}
 \alias{getglmdata.lppm}
 \alias{getglmfit.lppm}
 \alias{getglmsubset.lppm}
 \alias{hasglmfit.lppm}
+\alias{is.poisson.exactlppm}
+\alias{is.stationary.exactlppm}
 \alias{makeLinnetTolerance}
+\alias{predict.exactlppm}
+\alias{print.exactlppm}
 \alias{print.lintess}
 \alias{print.summary.linim}
 \alias{print.summary.linnet}
 \alias{print.summary.lintess}
 \alias{resolve.heat.steps}
+\alias{response.exactlppm}
 \alias{rmaxEuclidean}
 \alias{summary.lintess}
 \alias{nobjects.lintess}
@@ -50,6 +59,7 @@
 \alias{resolve.lambda.lpp}
 \alias{sortalongsegment}
 \alias{spatialCovariateEvidence.lppm}
+\alias{spatialCovariateEvidence.exactlppm}
 \alias{vnnFind}
 \alias{ldtEngine}
 \alias{qkdeEngine}
@@ -85,12 +95,21 @@ FDMKERNEL(lppobj, dtt, dtx, M, nsave, weights,
 \method{getglmsubset}{lppm}(object, \dots)
 \method{hasglmfit}{lppm}(object)
 default.linnet.tolerance(L)
+evaluateNetCovariate(covariate, locations, \dots)
+evaluateNetCovariateAlongNetwork(covariate, locations, \dots, types)
+evaluateNetCovariateAtPoints(covariate, locations, \dots, allow.column)
+exactlppm(X, baseline, \dots, subset)
+\method{is.poisson}{exactlppm}(x)
+\method{is.stationary}{exactlppm}(x)
 makeLinnetTolerance(toler)
+\method{predict}{exactlppm}(object, locations,\dots)
+\method{print}{exactlppm}(x, \dots)
 \method{print}{lintess}(x, \dots)
 \method{print}{summary.linim}(x, \dots)
 \method{print}{summary.linnet}(x, \dots)
 \method{print}{summary.lintess}(x, \dots)
 \method{summary}{lintess}(object, \dots)
+\method{response}{exactlppm}(object)
 \method{nobjects}{lintess}(x)
 \method{Window}{lintess}(X, \dots)
 \method{Window}{linnet}(X, \dots, check=TRUE) <- value
@@ -132,6 +151,9 @@ sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, rule.eps,
           delta, nd, interpolate, jitter, jitterfactor,
+          modelname, covname, dataname, subset, clip.predict)
+\method{spatialCovariateEvidence}{exactlppm}(model, covariate, \dots,
+          lambdatype, interpolate, jitter, jitterfactor,
           modelname, covname, dataname, subset, clip.predict)
 vnnFind(seg, tp, ns, nv, from, to, seglen, huge, tol, kmax)
 ldtEngine(nv, ns, from, to, seglen, huge,
