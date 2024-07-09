@@ -69,7 +69,7 @@
   \code{\link{linnet}},
   \code{\link{eval.linim}},
   \code{\link{Math.linim}},
-  \code{\link{im}}.
+  \code{\link[spatstat.geom]{im}}.
 }
 \examples{
   Z <- as.im(function(x,y) {x-y}, Frame(simplenet))

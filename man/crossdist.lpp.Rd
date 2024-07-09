@@ -42,7 +42,7 @@
   in the first pattern to each point in the second pattern,
   measuring distance by the shortest path along the network.
 
-  This is a method for the generic function \code{\link{crossdist}}
+  This is a method for the generic function \code{\link[spatstat.geom]{crossdist}}
   for the class of point patterns on a linear network
   (objects of class \code{"lpp"}).
 
@@ -73,10 +73,10 @@
   computed using an efficient C algorithm.
 }
 \seealso{
-  \code{\link{crossdist}},
-  \code{\link{crossdist.ppp}},
-  \code{\link{pairdist}},
-  \code{\link{nndist}}
+  \code{\link[spatstat.geom]{crossdist}},
+  \code{\link[spatstat.geom]{crossdist.ppp}},
+  \code{\link[spatstat.geom]{pairdist}},
+  \code{\link[spatstat.geom]{nndist}}
 }
 \examples{
    v <- split(chicago)

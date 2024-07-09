@@ -74,7 +74,7 @@
   }
 }
 \details{
-  The command \code{\link{relrisk}} is generic and can be used to
+  The command \code{\link[spatstat.explore]{relrisk}} is generic and can be used to
   estimate relative risk in different ways.
   
   This function \code{relrisk.lpp} is the method for point patterns
@@ -193,7 +193,7 @@
   numbers, or the values \code{Inf} or \code{NA}. 
 }
 \seealso{
-  \code{\link{relrisk}}
+  \code{\link[spatstat.explore]{relrisk}}
 }
 \examples{
    ## case-control data: 2 types of points

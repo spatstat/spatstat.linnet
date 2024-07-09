@@ -43,7 +43,7 @@
   underlying network, while \code{plot(x, add=TRUE)} would plot only the
   points. The interpretation of arguments controlling the colours and
   plot symbols is different here: they determine a symbol map, as explained
-  in the help for \code{\link{plot.ppp}}.
+  in the help for \code{\link[spatstat.geom]{plot.ppp}}.
 }
 \value{
   Null.

@@ -59,7 +59,7 @@
 }
 \seealso{
   \code{\link{linim}},
-  \code{\link{integral.im}}
+  \code{\link[spatstat.geom]{integral.im}}
 }
 \examples{
   # make some data

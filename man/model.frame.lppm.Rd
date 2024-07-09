@@ -33,7 +33,7 @@ Extract the Variables in a Point Process Model on a Network
   The result is a data frame containing all the variables used in
   fitting the model. The data frame has one row for each quadrature point
   used in fitting the model. The quadrature scheme can be extracted using
-  \code{\link{quad.ppm}}.  
+  \code{\link[spatstat.model]{quad.ppm}}.  
 }
 \value{
   A \code{data.frame} containing all the variables used in the

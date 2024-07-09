@@ -25,11 +25,11 @@
     A numeric value in the same units as the spatial coordinates of \code{x}.
     Alternatively \code{sigma} may be a function which selects a
     bandwidth when applied to \code{X},
-    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    for example, \code{\link[spatstat.explore]{bw.scott.iso}} or \code{\link{bw.lppl}}.
     There is a sensible default.
   }
   \item{\dots}{
-    Arguments passed to \code{\link{as.mask}} determining the
+    Arguments passed to \code{\link[spatstat.geom]{as.mask}} determining the
     resolution of the result.
   }
   \item{at}{
@@ -49,7 +49,7 @@
   }
   \item{kernel}{
     Character string specifying the smoothing kernel.
-    See \code{\link{dkernel}} for possible options.
+    See \code{\link[spatstat.univar]{dkernel}} for possible options.
   }
   \item{continuous}{
     Logical value indicating whether to compute the

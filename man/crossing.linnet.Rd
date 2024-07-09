@@ -30,7 +30,7 @@ crossing.linnet(X, Y)
   \adrian.
 }
 \seealso{
-  \code{\link{crossing.psp}}
+  \code{\link[spatstat.geom]{crossing.psp}}
 %  \code{\link{chop.linnet}}
 }
 \examples{

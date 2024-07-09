@@ -30,7 +30,7 @@
 \details{
   This function is used to superimpose several point patterns
   on the same linear network. It is a method for the generic
-  function \code{\link{superimpose}}.
+  function \code{\link[spatstat.geom]{superimpose}}.
 
   Each of the arguments \code{\dots}
   can be either a point pattern on a linear network
@@ -58,7 +58,7 @@
   attached to the elements of the corresponding patterns.
 }
 \seealso{
-  \code{\link{superimpose}}
+  \code{\link[spatstat.geom]{superimpose}}
 }
 \examples{
   X <- rpoislpp(5, simplenet)

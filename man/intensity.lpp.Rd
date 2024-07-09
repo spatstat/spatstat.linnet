@@ -19,7 +19,7 @@
   }
 }
 \details{
-  This is a method for the generic function \code{\link{intensity}}
+  This is a method for the generic function \code{\link[spatstat.geom]{intensity}}
   It computes the empirical intensity of a point pattern
   on a linear network (object of class \code{"lpp"}),
   i.e. the average density of points per unit length.
@@ -32,17 +32,14 @@
   (giving the intensity for each possible type).
 }
 \seealso{
-  \code{\link{intensity}}, 
-  \code{\link{intensity.ppp}}
+  \code{\link[spatstat.geom]{intensity}}, 
+  \code{\link[spatstat.geom]{intensity.ppp}}
 }
 \examples{
   intensity(chicago)
 }
 \author{\adrian
-  
-  
   and \rolf
-  
 }
 \keyword{spatial}
 \keyword{nonparametric}

@@ -55,9 +55,9 @@
   \code{\link[stats]{median}},
   \code{\link[stats]{quantile}},
 
-  \code{\link{mean.im}},
-  \code{\link{quantile.im}},
-  \code{\link{quantilefun}}
+  \code{\link[spatstat.geom]{mean.im}},
+  \code{\link[spatstat.geom]{quantile.im}},
+  \code{\link[spatstat.univar]{quantilefun}}
 }
 \examples{
   M <- psp2mask(as.psp(simplenet))

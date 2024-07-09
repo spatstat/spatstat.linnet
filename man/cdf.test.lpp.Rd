@@ -143,7 +143,7 @@
   observation window are evaluated,
   weighted according to the point process intensity of the fitted model,
   and compiled into a cumulative distribution function \eqn{F} using
-  \code{\link{ewcdf}}.
+  \code{\link[spatstat.univar]{ewcdf}}.
 
   The probability integral transformation is then applied:
   the values of the \code{covariate} at the original data points
@@ -173,7 +173,7 @@
   gives an informative summary of the test outcome.
 
   The return value also belongs to the class \code{"cdftest"}
-  for which there is a plot method \code{\link{plot.cdftest}}.
+  for which there is a plot method \code{\link[spatstat.explore]{plot.cdftest}}.
   The plot method displays the empirical cumulative distribution
   function of the covariate at the data points, and the predicted
   cumulative distribution function of the covariate under the model,

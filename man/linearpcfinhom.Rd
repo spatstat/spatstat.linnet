@@ -52,7 +52,7 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
     (class \code{"lppm"} or \code{"ppm"}).
     If \code{update=TRUE} (the default),
     the model will first be refitted to the data \code{X}
-    (using \code{\link{update.lppm}} or \code{\link{update.ppm}})
+    (using \code{\link{update.lppm}} or \code{\link[spatstat.model]{update.ppm}})
     before the fitted intensity is computed.
     If \code{update=FALSE}, the fitted intensity of the
     model will be computed without re-fitting it to \code{X}.
@@ -111,7 +111,7 @@ linearpcfinhom(X, lambda=NULL, r=NULL, ..., correction="Ang",
   the data, before computing the fitted intensity.
   This can be disabled by setting \code{update=FALSE}.
   The intensity at data points will be computed
-  by \code{\link{fitted.lppm}} or \code{\link{fitted.ppm}}.
+  by \code{\link{fitted.lppm}} or \code{\link[spatstat.model]{fitted.ppm}}.
   A leave-one-out estimate will be computed if \code{leaveoneout=TRUE}
   and \code{update=TRUE}.
   

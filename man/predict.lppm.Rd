@@ -41,7 +41,7 @@
     the prediction.
   }
   \item{\dots}{
-    Optional arguments passed to \code{\link{as.mask}}
+    Optional arguments passed to \code{\link[spatstat.geom]{as.mask}}
     to determine the
     pixel resolution (if \code{locations} is missing).
   }

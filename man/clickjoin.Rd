@@ -47,7 +47,7 @@
   pair of vertices joined by an edge.
 
   The selection of points is performed
-  using \code{\link{identify.ppp}} which typically expects the user to
+  using \code{\link[spatstat.geom]{identify.ppp}} which typically expects the user to
   click the left mouse button.  This point-and-click interaction
   continues until the user terminates it, 
   by pressing the middle mouse button,
@@ -66,7 +66,7 @@
 }
 \seealso{
   \code{\link{linnet}},
-  \code{\link{clickppp}}
+  \code{\link[spatstat.geom]{clickppp}}
 }
 \keyword{spatial}
 \keyword{datagen}

@@ -47,7 +47,7 @@
   observed at a set of irregular locations on a linear network.
   
   \code{Smooth.lpp} is a method for the generic function
-  \code{\link{Smooth}} for the class \code{"lpp"} of point patterns.
+  \code{\link[spatstat.explore]{Smooth}} for the class \code{"lpp"} of point patterns.
   Thus you can type simply \code{Smooth(X)}.
   
   Smoothing is performed by kernel weighting, using the Gaussian kernel
@@ -124,7 +124,7 @@
   bandwidth that was used.
 }
 \seealso{
-  \code{\link{Smooth}},
+  \code{\link[spatstat.explore]{Smooth}},
   \code{\link{density.lpp}}.
 }
 \examples{

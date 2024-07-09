@@ -29,8 +29,8 @@
   of the maximum shortest-path distance from \eqn{u} to another point
   \eqn{v} on the network.
   
-  The functions \code{\link{boundingradius}} and
-  \code{\link{diameter}} are generic;
+  The functions \code{\link[spatstat.geom]{boundingradius}} and
+  \code{\link[spatstat.geom]{diameter}} are generic;
   the functions \code{boundingradius.linnet} and \code{diameter.linnet}
   are the methods for objects of class \code{linnet}.
 }
@@ -41,7 +41,7 @@
   \adrian
 }
 \seealso{
- \code{\link{boundingradius}}, \code{\link{diameter}}, 
+ \code{\link[spatstat.geom]{boundingradius}}, \code{\link[spatstat.geom]{diameter}}, 
  \code{\link{linnet}}
 }
 \examples{

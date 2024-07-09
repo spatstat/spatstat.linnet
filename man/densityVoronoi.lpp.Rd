@@ -36,7 +36,7 @@
   dataset on a linear network.
   The result is a pixel image on the network, giving the estimated intensity.
 
-  This function is a method for the generic \code{\link{densityVoronoi}}
+  This function is a method for the generic \code{\link[spatstat.explore]{densityVoronoi}}
   for the class \code{"lpp"} of point patterns on a linear network.
   
   If \code{f=1} (the default), the Voronoi estimate (Barr and Schoenberg, 2010)
@@ -81,7 +81,7 @@
   \spatstatAuthors and \mehdi.
 }
 \seealso{
-  \code{\link{densityVoronoi}} is the generic, with a method for
+  \code{\link[spatstat.explore]{densityVoronoi}} is the generic, with a method for
   class \code{"ppp"}.
 
   \code{\link{lineardirichlet}} computes the Dirichlet-Voronoi

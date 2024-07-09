@@ -69,7 +69,7 @@
   boundary of \code{j}, and those pieces which lie inside the window
   \code{ji} are included in the resulting network. 
 
-  Use \code{\link{unmark}} to remove all the marks in a marked point
+  Use \code{\link[spatstat.geom]{unmark}} to remove all the marks in a marked point
   pattern, and \code{\link{subset.lpp}} to remove only some columns of marks. 
 }
 \seealso{

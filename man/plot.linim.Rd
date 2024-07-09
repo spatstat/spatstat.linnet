@@ -27,7 +27,7 @@
     The pixel image to be plotted. An object of class \code{"linim"}.
   }
   \item{\dots}{
-    Extra graphical parameters, passed to \code{\link{plot.im}}
+    Extra graphical parameters, passed to \code{\link[spatstat.geom]{plot.im}}
     if \code{style="colour"}, or to \code{\link[graphics]{polygon}}
     if \code{style="width"}.
   }
@@ -98,9 +98,9 @@
 
   If \code{style="colour"} (the default) then
   the pixel values of \code{x} are plotted as colours,
-  using \code{\link{plot.im}}.
+  using \code{\link[spatstat.geom]{plot.im}}.
   The mapping from pixel values to colours is determined by any
-  additional arguments \code{\dots} which are passed to \code{\link{plot.im}}.
+  additional arguments \code{\dots} which are passed to \code{\link[spatstat.geom]{plot.im}}.
   
   If \code{style="width"} then
   the pixel values of \code{x} are used to determine the widths of
@@ -126,7 +126,7 @@
   If \code{style="colour"}, these arguments are mapped to
   the arguments \code{ribside}, \code{ribsep}, \code{ribwid},
   \code{ribscale} and \code{ribargs} respectively, which are passed
-  to \code{\link{plot.im}}.
+  to \code{\link[spatstat.geom]{plot.im}}.
 }
 \section{Thin lines}{
   When \code{style="colour"} it often appears that the lines are
@@ -135,9 +135,9 @@
   directly over the network. To make the lines appear thicker in the
   plot, use the argument \code{fatten}. The domain of the image will be
   expanded by a distance equal to \code{fatten/2} in every direction
-  using \code{\link{dilation.owin}}; the pixel values will
+  using \code{\link[spatstat.geom]{dilation.owin}}; the pixel values will
   be extrapolated to this expanded domain using
-  \code{\link{nearestValue}}. This may improve the visual appearance
+  \code{\link[spatstat.geom]{nearestValue}}. This may improve the visual appearance
   of the plot.
 }
 \value{
@@ -156,7 +156,7 @@
 }
 \seealso{
   \code{\link{linim}},
-  \code{\link{plot.im}},
+  \code{\link[spatstat.geom]{plot.im}},
   \code{\link[graphics]{polygon}}
 }
 \references{

@@ -69,12 +69,12 @@
   and \code{\link[graphics]{par}}.
 }
 \seealso{
-  \code{\link{clickppp}},
+  \code{\link[spatstat.geom]{clickppp}},
   \code{\link{identify.lpp}},
   \code{\link[graphics]{locator}},
-  \code{\link{clickpoly}},
-  \code{\link{clickbox}},
-  \code{\link{clickdist}}
+  \code{\link[spatstat.geom]{clickpoly}},
+  \code{\link[spatstat.geom]{clickbox}},
+  \code{\link[spatstat.geom]{clickdist}}
 }
 \author{
   \spatstatAuthors, based on an idea by Dominic Schuhmacher.  

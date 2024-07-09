@@ -18,7 +18,7 @@
     pixel image with logical values, or a point pattern (an object
     of class \code{"ppp"}), or any type of index that applies to a
     matrix, or something that can be converted to a point pattern
-    by \code{\link{as.ppp}} (using the window of \code{x}).
+    by \code{\link[spatstat.geom]{as.ppp}} (using the window of \code{x}).
   }
   \item{j}{
     An integer or logical vector serving as the column index
@@ -41,11 +41,11 @@
   \code{"linim"} representing a pixel image on a linear network.
 
   The pixel values are replaced according to the rules
-  described in the help for \code{\link{[<-.im}}.
+  described in the help for \code{\link[spatstat.geom]{[<-.im}}.
   Then the auxiliary data are updated.
 }
 \seealso{
-  \code{\link{[<-.im}}.
+  \code{\link[spatstat.geom]{[<-.im}}.
 }
 \examples{
   # make a function

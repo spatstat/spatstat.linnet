@@ -21,7 +21,7 @@
   \item{\dots}{
     Arguments passed to \code{\link[graphics]{segments}} (if
     \code{style="segments"})
-    or to \code{\link{plot.im}} (if \code{style="image"})
+    or to \code{\link[spatstat.geom]{plot.im}} (if \code{style="image"})
     to control the plot.
   }
   \item{main}{
@@ -40,7 +40,7 @@
     using different segment widths to distinguish
     the different tiles or values. If \code{style="image"}, the
     tessellation is converted to a pixel image and plotted by
-    \code{\link{plot.im}}.
+    \code{\link[spatstat.geom]{plot.im}}.
   }
   \item{col}{
     Vector of colours, or colour map, determining the colours used
@@ -59,7 +59,7 @@
     for the colour map or width map.
   }
   \item{ribargs}{
-    Arguments passed to \code{\link{plot.colourmap}} controlling the
+    Arguments passed to \code{\link[spatstat.geom]{plot.colourmap}} controlling the
     display of the colour map legend.
   }
   \item{multiplot}{
@@ -91,7 +91,7 @@
   \code{\link[graphics]{segments}}, drawing segments of different widths.
   
   If \code{style="image"}, the tessellation is converted to a pixel
-  image, and plotted as a colour image using \code{\link{plot.im}}.
+  image, and plotted as a colour image using \code{\link[spatstat.geom]{plot.im}}.
 
   The colours or widths are determined by the \code{values}
   associated with each tile of the tessellation. If \code{values} is

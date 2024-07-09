@@ -35,7 +35,7 @@
     is a function.
   }
   \item{eps,dimyx,xy,rule.eps}{
-    Optional arguments passed to \code{\link{as.mask}} to control
+    Optional arguments passed to \code{\link[spatstat.geom]{as.mask}} to control
     the pixel resolution.
   }
   \item{delta}{
@@ -63,13 +63,13 @@
     \item
     a pixel image, an object of class \code{"im"}.
     \item
-    any type of data acceptable to \code{\link{as.im}},
+    any type of data acceptable to \code{\link[spatstat.geom]{as.im}},
     such as a function, numeric value, or window.
   }
 
   First \code{X} is converted to a pixel image object \code{Y}
   (object of class \code{"im"}).
-  The conversion is performed by \code{\link{as.im}}.
+  The conversion is performed by \code{\link[spatstat.geom]{as.im}}.
   The arguments \code{eps}, \code{dimyx}, \code{xy} and \code{rule.eps}
   determine the pixel resolution.
 
@@ -92,7 +92,7 @@
   An image object on a linear network; an object of class \code{"linim"}.
 }
 \seealso{
-  \code{\link{as.im}}
+  \code{\link[spatstat.geom]{as.im}}
 }
 \examples{
   f <- function(x,y){ x + y }

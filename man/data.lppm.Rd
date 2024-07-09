@@ -29,7 +29,7 @@
 }
 \seealso{
   \code{\link{lppm}},
-  \code{\link{data.ppm}}
+  \code{\link[spatstat.model]{data.ppm}}
 }
 \examples{
  fit <- lppm(spiders ~ x)

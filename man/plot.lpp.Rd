@@ -23,7 +23,7 @@
   }
   \item{\dots}{
     Additional arguments passed to \code{\link{plot.linnet}}
-    or \code{\link{plot.ppp}}.
+    or \code{\link[spatstat.geom]{plot.ppp}}.
   }
   \item{main}{
     Main title for plot.
@@ -64,11 +64,11 @@
     Position of legend relative to main plot.
   }
   \item{leg.args}{
-    List of additional arguments passed to \code{\link{plot.symbolmap}}
-    or \code{\link{symbolmap}} to control the legend.
+    List of additional arguments passed to \code{\link[spatstat.geom]{plot.symbolmap}}
+    or \code{\link[spatstat.geom]{symbolmap}} to control the legend.
     In addition to arguments documented under
-    \code{\link{plot.symbolmap}}, and graphical arguments recognised
-    by \code{\link{symbolmap}}, the list may also include the argument
+    \code{\link[spatstat.geom]{plot.symbolmap}}, and graphical arguments recognised
+    by \code{\link[spatstat.geom]{symbolmap}}, the list may also include the argument
     \code{sep} giving the separation between the main plot and the
     legend, or \code{sep.frac} giving the separation as a fraction
     of the relevant dimension (width or height) of the main plot.
@@ -93,7 +93,7 @@
 }
 \details{
   The linear network is plotted by \code{\link{plot.linnet}},
-  then the points are plotted using code equivalent to \code{\link{plot.ppp}}.
+  then the points are plotted using code equivalent to \code{\link[spatstat.geom]{plot.ppp}}.
 
   Commonly-used arguments include:
   \itemize{
@@ -106,7 +106,7 @@
     (this argument takes precedence over \code{chars}).
   }
   These are documented in the help file for
-  \code{\link{plot.ppp}}.
+  \code{\link[spatstat.geom]{plot.ppp}}.
 
   If \code{shape="crossticks"}, the points are
   drawn as short line segments perpendicular to the network.
@@ -122,7 +122,7 @@
 \seealso{
   \code{\link{lpp}}.
 
-  See \code{\link{plot.ppp}} for options for representing the points.
+  See \code{\link[spatstat.geom]{plot.ppp}} for options for representing the points.
 
   See also \code{\link{points.lpp}}, \code{\link{text.lpp}}.
 }

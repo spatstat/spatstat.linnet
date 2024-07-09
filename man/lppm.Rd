@@ -22,7 +22,7 @@ lppm(X, ...)
     point process model.
   }
   \item{\dots}{
-    Arguments passed to \code{\link{ppm}}.
+    Arguments passed to \code{\link[spatstat.model]{ppm}}.
   }
   \item{interaction}{
     An object of class \code{"interact"}
@@ -52,7 +52,7 @@ lppm(X, ...)
 \details{
   This function fits a point process model to data that specify
   a point pattern on a linear network. It is a counterpart of
-  the model-fitting function \code{\link{ppm}} designed
+  the model-fitting function \code{\link[spatstat.model]{ppm}} designed
   to work with objects of class \code{"lpp"} instead of \code{"ppp"}.
 
   The function \code{lppm} is generic, with methods for
@@ -75,7 +75,7 @@ lppm(X, ...)
   spatial trend of the model.
 
   Other arguments \code{...} are passed from \code{lppm.formula}
-  to \code{lppm.lpp} and from \code{lppm.lpp} to \code{\link{ppm}}.
+  to \code{lppm.lpp} and from \code{lppm.lpp} to \code{\link[spatstat.model]{ppm}}.
 }
 \value{
   An object of class \code{"lppm"} representing the fitted model.
@@ -89,7 +89,7 @@ lppm(X, ...)
 \seealso{
   \code{\link{methods.lppm}},
   \code{\link{predict.lppm}},
-  \code{\link{ppm}},
+  \code{\link[spatstat.model]{ppm}},
   \code{\link{lpp}}.
 }
 \examples{

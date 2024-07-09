@@ -65,7 +65,7 @@
   An image object of class \code{"linim"}.
 }
 \seealso{
-  \code{\link{eval.im}},
+  \code{\link[spatstat.geom]{eval.im}},
   \code{\link{linim}}
 }
 \examples{

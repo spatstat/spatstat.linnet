@@ -17,8 +17,8 @@
     Linear network (object of class \code{"linnet"}).
   }
   \item{\dots}{
-    Graphics arguments passed to \code{\link{plot.psp}}
-    and \code{\link{plot.ppp}}.
+    Graphics arguments passed to \code{\link[spatstat.geom]{plot.psp}}
+    and \code{\link[spatstat.geom]{plot.ppp}}.
   }
   \item{main}{
     Main title for plot. Use \code{main=""} to suppress it.

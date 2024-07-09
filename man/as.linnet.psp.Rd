@@ -33,7 +33,7 @@
   using the distance threshold \code{eps}.
 
   If any segments in \code{X} cross over each other, they are first
-  cut into pieces using \code{\link{selfcut.psp}}.
+  cut into pieces using \code{\link[spatstat.geom]{selfcut.psp}}.
 
   Then any pair of segment endpoints lying closer than \code{eps}
   units apart, is treated as a single vertex. The linear network
@@ -58,7 +58,7 @@ in the result is a piece of the second segment of \code{X}.
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link{linnet}}, \code{\link{selfcut.psp}},
+  \code{\link{linnet}}, \code{\link[spatstat.geom]{selfcut.psp}},
   \code{\link{methods.linnet}}.
 }
 \examples{

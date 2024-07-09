@@ -26,7 +26,7 @@ lineartileindex(seg, tp, Z, method = c("encode", "C", "interpreted"))
 }
 \details{
   This low-level function is 
-  the analogue of \code{\link{tileindex}} for linear networks.
+  the analogue of \code{\link[spatstat.geom]{tileindex}} for linear networks.
   For a tessellation \code{Z} on a linear network,
   and a list of query points on the same network,
   the function determines which tile of the tessellation 

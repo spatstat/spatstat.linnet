@@ -97,11 +97,11 @@
 }
 \seealso{
   \code{\link{density.lpp}},
-  \code{\link{bw.scott}}.
+  \code{\link[spatstat.explore]{bw.scott}}.
 
   \code{\link[spatstat.explore]{bw.optim.object}}.
 
-  For point patterns in two-dimensional space, use \code{\link{bw.ppl}}.
+  For point patterns in two-dimensional space, use \code{\link[spatstat.explore]{bw.ppl}}.
 }
 \examples{
   if(interactive()) {

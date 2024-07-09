@@ -37,7 +37,7 @@ runiflpp(n, L, nsim=1, drop=TRUE, ex=NULL)
 \details{
   The specified number \code{n} of random points is
   generated with uniform distribution on the network \code{L}.
-  The random points are generated using \code{\link{runifpointOnLines}}.
+  The random points are generated using \code{\link[spatstat.random]{runifpointOnLines}}.
 
   If \code{n} is an integer vector, then a multitype point pattern is
   generated, with \code{n[i]} random points of type \code{i}.

@@ -27,11 +27,11 @@ densityQuick.lpp(x, sigma=NULL, \dots,
     in the same units as the coordinates of \code{x}.
     Alternatively \code{sigma} may be a function which selects a
     bandwidth when applied to \code{x},
-    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    for example, \code{\link[spatstat.explore]{bw.scott.iso}} or \code{\link{bw.lppl}}.
     There is a sensible default.
   }
   \item{\dots}{
-    Additional arguments passed to \code{\link{as.mask}}
+    Additional arguments passed to \code{\link[spatstat.geom]{as.mask}}
     to determine the pixel resolution, or arguments passed to
     \code{sigma} if it is a function.
   }
@@ -124,7 +124,7 @@ densityQuick.lpp(x, sigma=NULL, \dots,
   \code{\link{density.lpp}}, the main function for density estimation
   on a network.
 
-  \code{\link{bw.scott}}, \code{\link{bw.scott.iso}},
+  \code{\link[spatstat.explore]{bw.scott}}, \code{\link[spatstat.explore]{bw.scott.iso}},
   \code{\link{bw.lppl}}for bandwidth selection.
 }
 \examples{

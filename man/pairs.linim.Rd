@@ -54,7 +54,7 @@
 }
 \seealso{
   \code{\link{pairs.default}},
-  \code{\link{pairs.im}}
+  \code{\link[spatstat.explore]{pairs.im}}
 }
 \examples{
   fit <- lppm(chicago ~ marks * (x+y))

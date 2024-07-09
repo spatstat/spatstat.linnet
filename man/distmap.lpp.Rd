@@ -26,7 +26,7 @@
   whose greyscale values are the values of the distance map.
 }
 \details{
-  This is a method for the generic function \code{\link{distmap}}.
+  This is a method for the generic function \code{\link[spatstat.geom]{distmap}}.
   It computes the distance map of the point pattern \code{X}
   as a pixel image on the network.
 
@@ -36,7 +36,7 @@
   of \code{X}).
 }
 \seealso{
-  Generic function \code{\link{distmap}} and methods.
+  Generic function \code{\link[spatstat.geom]{distmap}} and methods.
 }
 \examples{
   plot(distmap(spiders))

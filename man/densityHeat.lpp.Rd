@@ -25,11 +25,11 @@
     A numeric value in the same units as the spatial coordinates of \code{x}.
     Alternatively \code{sigma} may be a function which selects a
     bandwidth when applied to \code{X},
-    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    for example, \code{\link[spatstat.explore]{bw.scott.iso}} or \code{\link{bw.lppl}}.
     There is a sensible default.
   }
   \item{\dots}{
-    Arguments passed to \code{\link{as.mask}} determining the
+    Arguments passed to \code{\link[spatstat.geom]{as.mask}} determining the
     resolution of the result. (Any other arguments are ignored.)
   }
   \item{at}{
@@ -142,10 +142,10 @@
     selected by \code{finespacing=TRUE}. If it is too coarse,
     the pixel resolution can be refined using
     the arguments \code{dimyx}, \code{eps} or \code{xy}
-    passed to \code{\link{as.mask}}. For example,
+    passed to \code{\link[spatstat.geom]{as.mask}}. For example,
     \code{dimyx=512} would specify a 512 x 512 pixel grid.
     The default pixel resolution can be changed for the remainder of
-    the \R session by \code{\link{spatstat.options}('npixel')}.
+    the \R session by \code{\link[spatstat.geom]{spatstat.options}('npixel')}.
   }
 }
 \value{

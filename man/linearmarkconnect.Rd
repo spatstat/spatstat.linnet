@@ -40,10 +40,10 @@ linearmarkconnect(X, i, j, r=NULL, \dots)
   }
 }
 \value{
-  An object of class \code{"fv"} (see \code{\link{fv.object}}).
+  An object of class \code{"fv"} (see \code{\link[spatstat.explore]{fv.object}}).
 }
 \details{
-  This is a counterpart of the function \code{\link{markconnect}} 
+  This is a counterpart of the function \code{\link[spatstat.explore]{markconnect}} 
   for a point pattern on a linear network (object of class \code{"lpp"}).
 
   The argument \code{i} will be interpreted as
@@ -75,7 +75,7 @@ linearmarkconnect(X, i, j, r=NULL, \dots)
  \code{\link{linearpcfcross}},
  \code{\link{linearpcf}},
  \code{\link{linearmarkequal}},
- \code{\link{markconnect}}.
+ \code{\link[spatstat.explore]{markconnect}}.
 }
 \examples{
    pab <- linearmarkconnect(chicago, "assault", "burglary")

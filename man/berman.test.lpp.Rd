@@ -36,7 +36,7 @@
   \item{\dots}{
     Additional arguments controlling the pixel resolution
     (arguments \code{dimyx} and \code{eps} passed to
-    \code{\link{as.mask}})
+    \code{\link[spatstat.geom]{as.mask}})
     or other undocumented features.
   }
 }
@@ -136,7 +136,7 @@
   An object of class \code{"htest"} (hypothesis test)
   and also of class \code{"bermantest"},
   containing the results of the test. The return value can be
-  plotted (by \code{\link{plot.bermantest}}) or printed
+  plotted (by \code{\link[spatstat.explore]{plot.bermantest}}) or printed
   to give an informative summary of the test.
 }
 \section{Warning}{

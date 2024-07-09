@@ -30,7 +30,7 @@
     on which the point pattern should be generated.
   }
   \item{\dots}{
-    Arguments passed to \code{\link{rpoisppOnLines}}.
+    Arguments passed to \code{\link[spatstat.random]{rpoisppOnLines}}.
   }
   \item{nsim}{
     Number of simulated realisations to generate.

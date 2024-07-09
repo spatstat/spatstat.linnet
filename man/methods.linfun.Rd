@@ -34,7 +34,7 @@
   \item{L}{A linear network}
   \item{\dots}{
     Extra arguments passed to \code{\link{as.linim}}, 
-    \code{\link{plot.linim}}, \code{\link{plot.im}}
+    \code{\link{plot.linim}}, \code{\link[spatstat.geom]{plot.im}}
     or \code{\link{print.default}}, or arguments passed to
     \code{x} if it is a function.
   }
@@ -45,7 +45,7 @@
   \code{\link{plot}}, \code{\link{print}}, \code{\link{summary}}
   \code{\link{as.data.frame}} and \code{\link{as.function}},
   and for the \pkg{spatstat} generic function
-  \code{\link{as.owin}}.
+  \code{\link[spatstat.geom]{as.owin}}.
 
   An object of class \code{"linfun"} represents a
   mathematical function that could be evaluated at any location

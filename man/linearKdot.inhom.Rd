@@ -67,10 +67,10 @@ linearKdot.inhom(X, i, lambdaI=NULL, lambdadot=NULL, r=NULL, \dots,
   }
 }
 \value{
-  An object of class \code{"fv"} (see \code{\link{fv.object}}).
+  An object of class \code{"fv"} (see \code{\link[spatstat.explore]{fv.object}}).
 }
 \details{
-  This is a counterpart of the function \code{\link{Kdot.inhom}} 
+  This is a counterpart of the function \code{\link[spatstat.explore]{Kdot.inhom}} 
   for a point pattern on a linear network (object of class \code{"lpp"}).
 
   The argument \code{i} will be interpreted as

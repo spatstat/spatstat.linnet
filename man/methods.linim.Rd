@@ -51,10 +51,10 @@
   \code{\link{print}}, \code{\link{summary}}
   and \code{\link{as.data.frame}},
   and the \pkg{spatstat} generic functions
-  \code{\link{as.im}},
-  \code{\link{shift}}, 
-  \code{\link{scalardilate}} and 
-  \code{\link{affine}}.
+  \code{\link[spatstat.geom]{as.im}},
+  \code{\link[spatstat.geom]{shift}}, 
+  \code{\link[spatstat.geom]{scalardilate}} and 
+  \code{\link[spatstat.geom]{affine}}.
 
   An object of class \code{"linfun"} represents a
   pixel image defined on a linear network. 

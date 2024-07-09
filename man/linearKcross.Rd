@@ -42,10 +42,10 @@ linearKcross(X, i, j, r=NULL, \dots, correction="Ang")
   \item{\dots}{Ignored.}
 }
 \value{
-  An object of class \code{"fv"} (see \code{\link{fv.object}}).
+  An object of class \code{"fv"} (see \code{\link[spatstat.explore]{fv.object}}).
 }
 \details{
-  This is a counterpart of the function \code{\link{Kcross}} 
+  This is a counterpart of the function \code{\link[spatstat.explore]{Kcross}} 
   for a point pattern on a linear network (object of class \code{"lpp"}).
 
   The arguments \code{i} and \code{j} will be interpreted as

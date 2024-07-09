@@ -197,7 +197,7 @@
 }
 \details{
   This is a method for the generic
-  function \code{\link{envelope}} 
+  function \code{\link[spatstat.explore]{envelope}} 
   applicable to point patterns on a linear network.
   
   The argument \code{Y} can be either a point pattern on a linear
@@ -207,7 +207,7 @@
   patterns on the same linear network.
   The upper and lower
   envelopes of these evaluated functions will be computed
-  as described in \code{\link{envelope}}.
+  as described in \code{\link[spatstat.explore]{envelope}}.
   
   The type of simulation is determined as follows.
   \itemize{
@@ -250,13 +250,13 @@
 \value{
   Function value table (object of class \code{"fv"})
   with additional information,
-  as described in \code{\link{envelope}}.
+  as described in \code{\link[spatstat.explore]{envelope}}.
 }
 \author{
   \wei and \adrian
 }
 \seealso{
-   \code{\link{envelope}},
+   \code{\link[spatstat.explore]{envelope}},
    \code{\link{linearK}}
 }
 \references{

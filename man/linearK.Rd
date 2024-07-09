@@ -65,7 +65,7 @@ linearK(X, r=NULL, ..., correction="Ang", ratio=FALSE)
 }
 
 \seealso{
-  \code{\link{compileK}},
+  \code{\link[spatstat.explore]{compileK}},
   \code{\link{lpp}}
 }
 \examples{

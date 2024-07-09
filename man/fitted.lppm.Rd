@@ -45,7 +45,7 @@
   
   The locations \eqn{u} at which the fitted conditional intensity/trend
   is evaluated, are the points of the
-  quadrature scheme used to fit the model in \code{\link{ppm}}.
+  quadrature scheme used to fit the model in \code{\link[spatstat.model]{ppm}}.
   They include the data points (the points of the original point pattern
   dataset \code{x}) and other ``dummy'' points 
   in the window of observation.
@@ -57,7 +57,7 @@
   reduced pattern \code{X[-i]}, then predicting the value at
   \code{X[i]}. (Instead of literally performing this calculation,
   we apply a Taylor approximation using the influence function
-  computed in \code{\link{dfbetas.ppm}}. 
+  computed in \code{\link[spatstat.model]{dfbetas.ppm}}. 
 }
 \value{
   A vector containing the values of the fitted spatial trend.
@@ -68,13 +68,7 @@
   by \code{union.quad(quad.ppm(object))}.
 }
 \author{
-  \adrian
-  
-  
-  \rolf
-  
-  and \ege
-  
+  \spatstatAuthors.
 }
 \seealso{
   \code{\link{lppm}},

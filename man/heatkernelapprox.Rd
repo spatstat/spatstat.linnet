@@ -51,7 +51,7 @@ heatkernelapprox(X, sigma, nmax = 20, floored=TRUE)
   Greg McSwiggan and \adrian.
 }
 \seealso{
-  \code{\link{hotrod}}
+  \code{\link[spatstat.univar]{hotrod}}
 }
 \examples{
   X <- runiflpp(3,simplenet)

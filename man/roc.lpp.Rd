@@ -27,7 +27,7 @@
     Cartesian coordinates.    
   }
   \item{\dots}{
-    Arguments passed to \code{\link{as.mask}} controlling the
+    Arguments passed to \code{\link[spatstat.geom]{as.mask}} controlling the
     pixel resolution for calculations.
   }
   \item{high}{

@@ -44,10 +44,10 @@ linearpcfcross(X, i, j, r=NULL, \dots, correction="Ang")
   }
 }
 \value{
-  An object of class \code{"fv"} (see \code{\link{fv.object}}).
+  An object of class \code{"fv"} (see \code{\link[spatstat.explore]{fv.object}}).
 }
 \details{
-  This is a counterpart of the function \code{\link{pcfcross}} 
+  This is a counterpart of the function \code{\link[spatstat.explore]{pcfcross}} 
   for a point pattern on a linear network (object of class \code{"lpp"}).
 
   The argument \code{i} will be interpreted as
@@ -78,7 +78,7 @@ linearpcfcross(X, i, j, r=NULL, \dots, correction="Ang")
 \seealso{
  \code{\link{linearpcfdot}},
  \code{\link{linearpcf}},
- \code{\link{pcfcross}}.
+ \code{\link[spatstat.explore]{pcfcross}}.
 }
 \examples{
    g <- linearpcfcross(chicago, "assault")

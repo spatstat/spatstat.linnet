@@ -47,7 +47,7 @@
   }
   \item{unitname}{
     Optional. New name for the unit of length.
-    A value acceptable to the function \code{\link{unitname<-}}
+    A value acceptable to the function \code{\link[spatstat.geom]{unitname<-}}
   }
 }
 \value{
@@ -56,11 +56,11 @@
 }
 \details{
   These functions are methods for the generic functions
-  \code{\link{affine}},
-  \code{\link{shift}},
-  \code{\link{rotate}},
-  \code{\link{rescale}} and
-  \code{\link{scalardilate}}
+  \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{shift}},
+  \code{\link[spatstat.geom]{rotate}},
+  \code{\link[spatstat.geom]{rescale}} and
+  \code{\link[spatstat.geom]{scalardilate}}
   applicable to objects of class \code{"linnet"}.
 
   All of these functions
@@ -71,11 +71,11 @@
   \code{\link{linnet}} and \code{\link{as.linnet}}.
   
   Generic functions
-  \code{\link{affine}},
-  \code{\link{shift}},
-  \code{\link{rotate}},
-  \code{\link{scalardilate}},
-  \code{\link{rescale}}.
+  \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{shift}},
+  \code{\link[spatstat.geom]{rotate}},
+  \code{\link[spatstat.geom]{scalardilate}},
+  \code{\link[spatstat.geom]{rescale}}.
 }
 \examples{
   U <- rotate(simplenet, pi)

@@ -26,7 +26,7 @@
     Cartesian coordinates.    
   }
   \item{\dots}{
-    Arguments passed to \code{\link{as.mask}} controlling the
+    Arguments passed to \code{\link[spatstat.geom]{as.mask}} controlling the
     pixel resolution for calculations.
   }
   \item{high}{
@@ -36,7 +36,7 @@
 }
 \details{
   This command computes the AUC, the area under the Receiver Operating
-  Characteristic curve. The ROC itself is computed by \code{\link{roc}}.
+  Characteristic curve. The ROC itself is computed by \code{\link[spatstat.explore]{roc}}.
 
   The function \code{\link[spatstat.explore]{auc}} is generic,
   with methods for \code{"ppp"} and \code{"ppm"} described in the help file

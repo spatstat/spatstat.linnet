@@ -63,7 +63,7 @@ vertexdegree(x)
   }
   \item{value}{
     A valid name for the unit of length for \code{x}.
-    See \code{\link{unitname}}.
+    See \code{\link[spatstat.geom]{unitname}}.
   }
   \item{fatal}{
     Logical value indicating whether data in the wrong format
@@ -91,18 +91,18 @@ vertexdegree(x)
   into another linear network with the required format.
   
   The other functions are methods for the generic commands
-  \code{\link{as.owin}},
-  \code{\link{as.psp}},
-  \code{\link{nsegments}},
-  \code{\link{nvertices}},
-  \code{\link{pixellate}},
+  \code{\link[spatstat.geom]{as.owin}},
+  \code{\link[spatstat.geom]{as.psp}},
+  \code{\link[spatstat.geom]{nsegments}},
+  \code{\link[spatstat.geom]{nvertices}},
+  \code{\link[spatstat.geom]{pixellate}},
   \code{\link[base]{print}},
   \code{\link[base]{summary}},
-  \code{\link{unitname}},
-  \code{\link{unitname<-}},
-  \code{\link{vertices}},
-  \code{\link{volume}}
-  and \code{\link{Window}}
+  \code{\link[spatstat.geom]{unitname}},
+  \code{\link[spatstat.geom]{unitname<-}},
+  \code{\link[spatstat.geom]{vertices}},
+  \code{\link[spatstat.geom]{volume}}
+  and \code{\link[spatstat.geom]{Window}}
   for the class \code{"linnet"}.
 
   The methods \code{as.owin.linnet} and \code{Window.linnet}
@@ -123,7 +123,7 @@ vertexdegree(x)
 
   The method \code{pixellate.linnet} applies \code{\link{as.psp.linnet}}
   to convert the network to a collection of line segments,
-  then invokes \code{\link{pixellate.psp}}.
+  then invokes \code{\link[spatstat.geom]{pixellate.psp}}.
 }
 \value{
   For \code{as.linnet} the value is an object of class \code{"linnet"}.
@@ -137,18 +137,18 @@ vertexdegree(x)
   \code{\link{linnet}}.
 
   Generic functions:
-  \code{\link{as.owin}},
-  \code{\link{as.psp}},
-  \code{\link{nsegments}},
-  \code{\link{nvertices}},
-  \code{\link{pixellate}},
+  \code{\link[spatstat.geom]{as.owin}},
+  \code{\link[spatstat.geom]{as.psp}},
+  \code{\link[spatstat.geom]{nsegments}},
+  \code{\link[spatstat.geom]{nvertices}},
+  \code{\link[spatstat.geom]{pixellate}},
   \code{\link{print}},
   \code{\link{summary}},
-  \code{\link{unitname}},
-  \code{\link{unitname<-}},
-  \code{\link{vertices}},
-  \code{\link{volume}}
-  and \code{\link{Window}}.
+  \code{\link[spatstat.geom]{unitname}},
+  \code{\link[spatstat.geom]{unitname<-}},
+  \code{\link[spatstat.geom]{vertices}},
+  \code{\link[spatstat.geom]{volume}}
+  and \code{\link[spatstat.geom]{Window}}.
 
   Special tools: \code{\link{thinNetwork}},
   \code{\link{insertVertices}},

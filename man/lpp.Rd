@@ -14,7 +14,7 @@ lpp(X, L, \dots)
   \item{X}{
     Locations of the points. A matrix or data frame of coordinates,
     or a point pattern object (of class
-    \code{"ppp"}) or other data acceptable to \code{\link{as.ppp}}.
+    \code{"ppp"}) or other data acceptable to \code{\link[spatstat.geom]{as.ppp}}.
   }
   \item{L}{
     Linear network (object of class \code{"linnet"}).
@@ -82,7 +82,7 @@ lpp(X, L, \dots)
   See \code{\link{as.lpp}} for converting data to an \code{lpp} object.
 
   See \code{\link{methods.lpp}} and
-  \code{\link{methods.ppx}} for other methods applicable
+  \code{\link[spatstat.geom]{methods.ppx}} for other methods applicable
   to \code{lpp} objects.
 
   Calculations on an \code{lpp} object:

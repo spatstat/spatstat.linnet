@@ -32,7 +32,7 @@ linearmarkequal(X, r=NULL, \dots)
   }
 }
 \value{
-  An object of class \code{"fv"} (see \code{\link{fv.object}}).
+  An object of class \code{"fv"} (see \code{\link[spatstat.explore]{fv.object}}).
 }
 \details{
   This is the mark equality function
@@ -56,7 +56,7 @@ linearmarkequal(X, r=NULL, \dots)
  \code{\link{linearpcfcross}},
  \code{\link{linearpcf}},
  \code{\link{linearmarkconnect}},
- \code{\link{markconnect}}.
+ \code{\link[spatstat.explore]{markconnect}}.
 }
 \examples{
    if(interactive()) {

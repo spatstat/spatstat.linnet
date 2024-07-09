@@ -28,7 +28,7 @@
     in the same units as the spatial coordinates of \code{x}.
     Alternatively \code{sigma} may be a function which selects a
     bandwidth when applied to \code{X},
-    for example, \code{\link{bw.scott.iso}} or \code{\link{bw.lppl}}.
+    for example, \code{\link[spatstat.explore]{bw.scott.iso}} or \code{\link{bw.lppl}}.
     There is a sensible default.
   }
   \item{\dots}{
@@ -49,7 +49,7 @@
   }
   \item{kernel}{
     Character string specifying the smoothing kernel.
-    See \code{\link{dkernel}} for possible options.
+    See \code{\link[spatstat.univar]{dkernel}} for possible options.
   }
   \item{continuous}{
     Logical value indicating whether to compute the
