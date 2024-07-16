@@ -2,7 +2,7 @@
 
 ## Spatial analysis on a linear network, for the spatstat family
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/spatstat.linnet)](http://CRAN.R-project.org/package=spatstat.linnet) 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/spatstat.linnet)](http://CRAN.R-project.org/package=spatstat.linnet) 
 [![GitHub R package version](https://img.shields.io/github/r-package/v/spatstat/spatstat.linnet)](https://github.com/spatstat/spatstat.linnet)
 
 The original `spatstat` package has been split into several sub-packages
