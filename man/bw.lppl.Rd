@@ -110,7 +110,7 @@
     plot(density(spiders, b, distance="e"))
   } else {
     b1 <- bw.lppl(spiders, ns=2)
-    b2 <- bw.lppl(spiders, ns=2, shortcut=TRUE)
+    b2 <- bw.lppl(spiders, ns=2, shortcut=FALSE)
   }
 }
 \references{
