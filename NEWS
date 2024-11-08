@@ -1,4 +1,17 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.2-2.001
+
+OVERVIEW
+
+    o Shortest path between two points on a network.
+
+NEW FUNCTIONS
+
+    o shortestpath
+    Find the shortest path between two specified points on a network,
+    and return it as a line segment pattern.
+
+
         CHANGES IN spatstat.linnet VERSION 3.2-2
 
 OVERVIEW
