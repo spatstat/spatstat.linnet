@@ -157,7 +157,8 @@
 \seealso{
   \code{\link{linim}},
   \code{\link[spatstat.geom]{plot.im}},
-  \code{\link[graphics]{polygon}}
+  \code{\link[graphics]{polygon}},
+  \code{\link[spatstat.geom]{default.image.colours}}
 }
 \references{
   Ang, Q.W., Baddeley, A. and Nair, G. (2012)
