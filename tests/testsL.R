@@ -17,7 +17,7 @@ cat(paste("--------- Executing",
 #
 # Tests for lpp code
 #
-#  $Revision: 1.72 $  $Date: 2024/06/05 09:11:58 $
+#  $Revision: 1.74 $  $Date: 2025/01/18 03:44:09 $
 
 
 local({
@@ -376,7 +376,7 @@ local({
     df <- data.frame(seg=1:ns, t0=0, t1=1, tile=letters[1:ns])
     M <- data.frame(len=lengths_psp(S), ang=angles.psp(S))
     V <- lintess(simplenet, df, marks=M)
-
+    
     ## methods for class lintess
     U <- unmark(V)
     U <- unstack(V)
@@ -413,6 +413,7 @@ local({
     Zmm <- intersect.lintess(X,Y)
     Zum <- intersect.lintess(unmark(X),Y)
     Zmu <- intersect.lintess(X,unmark(Y))
+
   }
 
   if(FULLTEST) {
@@ -710,7 +711,7 @@ reset.spatstat.options()
 #'
 #'   Tests of lppm and class support
 #' 
-#'   $Revision: 1.2 $ $Date: 2020/06/12 00:24:09 $
+#'   $Revision: 1.3 $ $Date: 2025/01/18 03:43:52 $
 #'
 
 
@@ -765,6 +766,15 @@ local({
     fit1e <- emend(fit1)
     fit2e <- emend(fit2)
     fit3e <- emend(fit3)
+  }
+
+  if(FULLTEST) {
+    #' handling of lintess covariates
+    df <- data.frame(seg=1:10, t0=0, t1=1, tile=rep(c("A", "B"), 5))
+    V <- lintess(simplenet, df)
+    X <- runiflpp(20, simplenet)
+    mod <- lppm(X ~ V)
+    Lam <- predict(mod)
   }
 
   #' fundamental utilities:

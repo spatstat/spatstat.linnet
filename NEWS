@@ -1,4 +1,20 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.2-3.001
+
+OVERVIEW
+
+    o Bug fix in lppm.
+
+BUG FIXES
+
+    o lppm
+    For models involving covariates of class 'lintess', the internal
+    structure of the fitted model was corrupted, leading to errors in
+    calculating properties of the fitted model, such as predict.lppm.
+    [Spotted by Andrea Gilardi.]
+    [Bug fix requires spatstat.model 3.3-3.002]
+    Fixed.
+
         CHANGES IN spatstat.linnet VERSION 3.2-3
 
 OVERVIEW
