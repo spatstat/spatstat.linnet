@@ -1,4 +1,16 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.2-5.001
+
+OVERVIEW
+
+    o Bug fix in "[.lpp"
+    
+BUG FIXES
+
+    o [.lpp
+    Results with snip=TRUE were incorrect in some cases.
+    Fixed.
+
         CHANGES IN spatstat.linnet VERSION 3.2-5
 
 OVERVIEW

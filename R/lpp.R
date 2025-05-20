@@ -476,29 +476,23 @@ local2lpp <- function(L, seg, tp, X=NULL, df.only=FALSE) {
   L <- x$domain
   if(is.vanilla(unitname(w)))
     unitname(w) <- unitname(x)
-  # Find vertices that lie inside 'w'
-  vertinside <- inside.owin(L$vertices, w=w)
-  from <- L$from
-  to   <- L$to
   if(snip) {
-    ## For efficiency, first restrict network to relevant segments.
-    ## Find segments EITHER OF whose endpoints lie in 'w'
-    okedge <- vertinside[from] | vertinside[to]
-    ## extract relevant subset of network graph
-    x <- thinNetwork(x, retainedges=okedge)
-    ## Now add vertices at crossing points with boundary of 'w'
+    ## Segments will be trimmed to lie wholly inside 'w'
+    ## Insert new vertices at crossing points with boundary of 'w'
     b <- crossing.psp(as.psp(L), edges(w))
-    x <- insertVertices(x, unique(b))
-    boundarypoints <- attr(x, "id")
-    ## update data
-    L <- x$domain
-    from <- L$from
-    to   <- L$to
+    x <- insertVertices(x, unique(b)) # updated 'x'
+    L <- domain(x)                    # updated 'L'
+    boundarypoints <- attr(x, "id") # remember which points were added
+    ## Find vertices of updated network that lie inside 'w'
     vertinside <- inside.owin(L$vertices, w=w)
+    ## Treat boundary points as being inside
     vertinside[boundarypoints] <- TRUE
+  } else {
+    ## Find vertices of original network that lie inside 'w'
+    vertinside <- inside.owin(L$vertices, w=w)
   }
-  ## find segments whose endpoints BOTH lie in 'w'
-  edgeinside <- vertinside[from] & vertinside[to]
+  ## Retain an edge if BOTH endpoints lie inside
+  edgeinside <- vertinside[L$from] & vertinside[L$to]
   ## extract relevant subset of network
   xnew <- thinNetwork(x, retainedges=edgeinside)
   ## adjust window without checking
