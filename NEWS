@@ -1,4 +1,16 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.2-6.001
+
+OVERVIEW
+
+    o Interactively identify segments of a network.
+    
+NEW FUNCTIONS
+
+    o identify.linnet
+    Interactively identify segments of a network.
+    
+
         CHANGES IN spatstat.linnet VERSION 3.2-6
 
 OVERVIEW
