@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.45 $   $Date: 2022/05/21 09:52:11 $
+#'   $Revision: 1.48 $   $Date: 2025/05/24 04:50:53 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -441,4 +441,85 @@ as.linfun.lintess <- local({
 
   as.linfun.lintess
 })
+
+identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
+                             n=nobjects(x), plot=TRUE) {
+  verifyclass(x, "lintess")
+  check.1.integer(n)
+  if (dev.cur() == 1 && interactive()) {
+    eval(substitute(plot(X), list(X = substitute(x))))
+  }
+  ## extract information
+  L <- x$L
+  df <- x$df
+  B <- Frame(L)
+  Bplus <- grow.rectangle(B, max(sidelengths(B))/4)
+  V <- vertices(L)
+  Vx <- V$x
+  Vy <- V$y
+  ## extract all pieces of all tiles
+  from <- L$from[df$seg]  # index of vertex at left end of network segment
+  to <- L$to[df$seg]
+  xfrom <- Vx[from]       # x coordinate of vertex at left end of network seg
+  yfrom <- Vy[from]
+  xto <- Vx[to]
+  yto <- Vy[to]
+  x0 <- xfrom + (xto - xfrom) * df$t0  # x coord of left end of tile fragment 
+  y0 <- yfrom + (yto - yfrom) * df$t0
+  x1 <- xfrom + (xto - xfrom) * df$t1
+  y1 <- yfrom + (yto - yfrom) * df$t1
+  S <- psp(x0, y0, x1, y1, Bplus) # one segment for each row of 'df'
+  ## Associate each segment of S with its containing tile
+  idmap <- as.integer(df$tile)
+  ## 
+  if(plot) {
+    ## information for annotating
+    mids <- midpoints.psp(S)
+    poz <- c(1, 2, 4, 3)[(floor(angles.psp(S)/(pi/4)) %% 4) + 1L]
+    gp <- graphicsPars("lines")
+  }
+  ## start identifying
+  out <- integer(0)
+  while(length(out) < n) {
+    xy <- spatstatLocator(1, type="n")
+    ## check for interrupt exit
+    if(length(xy$x) == 0)
+      break
+    ## find nearest tile fragment
+    X <- ppp(xy$x, xy$y, window=Bplus)
+    fragid <- project2segment(X, S)$mapXY
+    if(length(fragid) == 0) {
+      cat("Query location is too far away\n")
+    } else {
+      tileid <- idmap[fragid]
+      if(tileid %in% out) {
+        cat(paste("Tile", ident, "already selected\n"))
+      } else {
+        ## add to list
+        if(plot) {
+          ## Display
+          mi <- mids[fragid]
+          li <- labels[tileid]
+          po <- poz[fragid]
+          mix <- mi$x
+          miy <- mi$y
+          dont.complain.about(li, mix, miy)
+          do.call.matched(graphics::text.default,
+                          resolve.defaults(list(x=quote(mix), 
+                                                y=quote(miy), 
+                                                labels=quote(li)),
+                                           list(...),
+                                           list(pos=po)))
+          do.call.matched(plot.psp,
+                          resolve.defaults(list(x=S[idmap == tileid], add=TRUE),
+                                           list(...),
+                                           list(col="blue", lwd=2)),
+                          extrargs=gp)
+        }
+        out <- c(out, tileid)
+      }
+    }
+  }
+  return(out)
+}
 
