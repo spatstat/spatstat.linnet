@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.48 $   $Date: 2025/05/24 04:50:53 $
+#'   $Revision: 1.51 $   $Date: 2025/05/29 08:05:03 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -26,7 +26,7 @@ lintess <- function(L, df, marks=NULL) {
                "missing from data frame"),
          call.=FALSE)
   #' straighten out
-  df <- df[, needed]
+  df <- df[, needed, drop=FALSE]
   df$seg <- as.integer(df$seg)
   df$tile <- as.factor(df$tile)
   if(any(reversed <- with(df, t1 < t0)))
@@ -268,7 +268,7 @@ plot.lintess <- local({
                              x1=vx[from] * (1-t1) + vx[to] * t1,
                              y1=vy[from] * (1-t1) + vy[to] * t1,
                              marks=values[as.integer(tile)]))
-    S <- as.psp(segdata, window=Window(L))
+    S <- as.psp(segdata, window=Window(L), check=FALSE)
     cmap <- plot(S, style=style, add=add, do.plot=do.plot, main=main, 
                  ribbon=ribbon, ribargs=ribargs, col=col, ...)
     return(invisible(cmap))
@@ -493,7 +493,7 @@ identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
     } else {
       tileid <- idmap[fragid]
       if(tileid %in% out) {
-        cat(paste("Tile", ident, "already selected\n"))
+        cat(paste("Tile", tileid, "already selected\n"))
       } else {
         ## add to list
         if(plot) {

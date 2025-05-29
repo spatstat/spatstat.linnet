@@ -1,6 +1,7 @@
 \name{as.linfun} 
 \alias{as.linfun}
 \alias{as.linfun.linim}
+\alias{as.linfun.linnet}
 \alias{as.linfun.lintess}
 \title{
   Convert Data to a Function on a Linear Network
@@ -13,6 +14,8 @@
   as.linfun(X, \dots)
 
   \method{as.linfun}{linim}(X, \dots)
+
+  \method{as.linfun}{linnet}(X, \dots, values=marks(X))
 
   \method{as.linfun}{lintess}(X, \dots, values=marks(X), navalue=NA)
 }
@@ -40,12 +43,22 @@
   converts objects of class \code{"linim"} (pixel images on a linear
   network) to functions on the network.
 
+  The method \code{as.linfun.linnet} converts a linear network (object
+  of class \code{"linnet"}) to a function on the network. The function
+  values are specified by the argument \code{values}.
+  It should be a vector with one entry for each segment of the network;
+  any point lying on segment number \code{i} will return the value \code{values[i]}.
+  If \code{values} is missing or \code{NULL}, the function values are
+  taken to be the marks attached to the segments (\code{values=marks(X)});
+  if there are no marks attached to the segments, the function value is
+  the integer index of the segment (\code{values=seq_len(nsegments(X))}).
+
   The method \code{as.linfun.lintess} converts a tessellation
   on a linear network into a function with a different value
   on each tile of the tessellation.
   The function values are specified by the argument \code{values}.
   It should be a vector with one entry for each tile of the tessellation;
-  any point lying in tile number \code{i} will return the value \code{v[i]}.
+  any point lying in tile number \code{i} will return the value \code{values[i]}.
   If \code{values} is missing, the marks of the tessellation
   are taken as the function values. 
   If \code{values} is missing and the tessellation has no marks,
@@ -72,6 +85,8 @@
    f <- as.linfun(D)
    f
    f(X)
+
+   h <- as.linfun(simplenet)
 
    # tessellation on network
    Z <- lineardirichlet(Y)

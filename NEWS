@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.2-6.002
+        CHANGES IN spatstat.linnet VERSION 3.2-6.003
 
 OVERVIEW
 
@@ -14,6 +14,9 @@ NEW FUNCTIONS
     
     o identify.lintess
     Interactively identify tiles of a tessellation on a network.
+
+    o as.linfun.linnet
+    Create a function on a linear network which maps each network segment to a specified value.
     
 
         CHANGES IN spatstat.linnet VERSION 3.2-6

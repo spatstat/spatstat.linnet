@@ -1,6 +1,7 @@
 \name{marks.linnet}
 \alias{marks.linnet}
 \alias{marks<-.linnet}
+\alias{unmark.linnet}
 \title{Marks of a Network}
 \description{
   Extract or change the marks attached to
@@ -10,9 +11,11 @@
 \method{marks}{linnet}(x, of=c("segments", "vertices"), \dots)           
 
 \method{marks}{linnet}(x, of=c("segments", "vertices"), \dots) <- value
+
+\method{unmark}{linnet}(X)
 }
 \arguments{
-  \item{x}{
+  \item{x,X}{
     Linear network (object of class \code{"linnet"}).
   }
   \item{of}{
@@ -43,8 +46,9 @@
   These functions extract or change the marks
   attached to the network \code{x}.
   They are methods for the generic functions
-  \code{\link[spatstat.geom]{marks}} and 
+  \code{\link[spatstat.geom]{marks}}, 
   \code{\link[spatstat.geom]{marks<-}}
+  and \code{\link[spatstat.geom]{unmark}}
   for the class \code{"linnet"} of linear networks.
 
   A linear network may include a set of marks attached to the line segments,
@@ -68,7 +72,8 @@
   Similarly for \code{marks(x, "vertices") <- value} the number of
   marks must match the number of vertices.
   
-  To remove marks, use \code{marks(x, of) <- NULL}.
+  To remove marks, use \code{unmark(x)} to remove all marks,
+  or \code{marks(x, of) <- NULL} to remove the specified kind of marks.
 
   To extract the vertices (including their marks) as a point pattern,
   use \code{vertices(x)}. To extract the segments (including their
@@ -86,6 +91,7 @@
   L
   marks(L, "v")
   marks(L, "s")
+  unmark(L)
 }
 \author{
   \spatstatAuthors.

@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.91 $    $Date: 2025/05/23 03:47:03 $
+#    $Revision: 1.92 $    $Date: 2025/05/29 04:33:30 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -136,6 +136,12 @@ marks.linnet <- function(x, of=c("segments", "vertices"), ...) {
            marks(x$lines, ...) <- value
          })
   return(x)
+}
+
+unmark.linnet <- function(X) {
+  marks(X, of="segments") <- NULL
+  marks(X, of="vertices") <- NULL
+  return(X)
 }
 
 print.linnet <- function(x, ...) {

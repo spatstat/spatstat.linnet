@@ -148,3 +148,14 @@ as.linfun <- function(X, ...) {
 }
 
 as.linfun.linfun <- function(X, ...) { return(X) }
+
+as.linfun.linnet <- function(X, ..., values=marks(X)) {
+  if(missing(values) || is.null(values)) {
+    values <- marks(X) %orifnull% seq_len(nsegments(X))
+    if(!is.null(dim(values))) values <- values[,1]
+  } 
+  stopifnot(length(values) == nsegments(X))
+  f <- function(x, y, seg, tp) { values[seg] }
+  g <- linfun(f, unmark(X))
+  return(g)
+}

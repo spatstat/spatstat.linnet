@@ -84,6 +84,10 @@ lintess(L, df, marks=NULL)
 
   \code{\link{tile.lengths}} to compute the length of each tile
   in the tessellation.
+
+  \code{\link{lineartileindex}} and \code{\link{identify.lintess}}
+  to identify which tile of the tessellation
+  contains a given location on the network.
   
   The undocumented methods \code{Window.lintess} and
   \code{as.owin.lintess} extract the spatial window.
