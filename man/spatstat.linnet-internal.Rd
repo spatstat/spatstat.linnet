@@ -151,10 +151,10 @@ sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, rule.eps,
           delta, nd, interpolate, jitter, jitterfactor,
-          modelname, covname, dataname, subset, clip.predict)
+          modelname, covname, dataname, subset, clip.predict, raster.action)
 \method{spatialCovariateEvidence}{exactlppm}(model, covariate, \dots,
           lambdatype, interpolate, jitter, jitterfactor,
-          modelname, covname, dataname, subset, clip.predict)
+          modelname, covname, dataname, subset, clip.predict, raster.action)
 vnnFind(seg, tp, ns, nv, from, to, seglen, huge, tol, kmax)
 ldtEngine(nv, ns, from, to, seglen, huge,
           coUXord, vnndist, vnnwhich, vnnlab)

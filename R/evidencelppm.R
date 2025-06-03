@@ -3,7 +3,7 @@
 #'
 #'   spatialCovariateEvidence method for class lppm
 #'
-#'   $Revision: 1.14 $ $Date: 2024/06/22 10:14:04 $
+#'   $Revision: 1.15 $ $Date: 2025/06/02 07:06:52 $
 
 
 spatialCovariateEvidence.lppm <- local({
@@ -17,9 +17,11 @@ spatialCovariateEvidence.lppm <- local({
                              interpolate=TRUE,
                              jitter=TRUE, jitterfactor=1, 
                              modelname=NULL, covname=NULL,
-                             dataname=NULL, subset=NULL, clip.predict=TRUE) {
+                             dataname=NULL, subset=NULL, clip.predict=TRUE,
+                             raster.action) {
     lambdatype <- match.arg(lambdatype)
     rule.eps <- match.arg(rule.eps)
+    dont.complain.about(raster.action)
     #' evaluate covariate values at data points and at pixels
     ispois <- is.poisson(model)
     csr <- ispois && is.stationary(model)
@@ -269,9 +271,10 @@ spatialCovariateEvidence.exactlppm <- local({
                                  interpolate=TRUE,
                                  jitter=TRUE, jitterfactor=1,
                                  modelname=NULL, covname=NULL,
-                                 dataname=NULL, subset=NULL, clip.predict=TRUE) {
+                                 dataname=NULL, subset=NULL, clip.predict=TRUE,
+                                 raster.action) {
     lambdatype <- match.arg(lambdatype)
-    dont.complain.about(lambdatype)
+    dont.complain.about(lambdatype, raster.action)
     if(is.null(covariate)) stop("The covariate is NULL")
     #' evaluate covariate values at data points and at pixels
     ispois <- TRUE

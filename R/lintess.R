@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.51 $   $Date: 2025/05/29 08:05:03 $
+#'   $Revision: 1.52 $   $Date: 2025/05/31 10:06:37 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -448,6 +448,14 @@ identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
   check.1.integer(n)
   if (dev.cur() == 1 && interactive()) {
     eval(substitute(plot(X), list(X = substitute(x))))
+  }
+  if(!missing(labels)) {
+    if(!is.null(dim(labels))) labels <- labels[,1]
+    labels <- unname(unlist(labels))
+    if(length(labels) != nobjects(x))
+      stop(paste("The number of", sQuote("labels"),
+                 "should equal the number of tiles"),
+           call.=FALSE)
   }
   ## extract information
   L <- x$L

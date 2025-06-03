@@ -2,22 +2,24 @@
 \alias{auc.lpp}
 \alias{auc.lppm}
 \title{
-  Area Under ROC Curve for Data on a Network
+  Area Under ROC Curve for Network Data
 }
 \description{
   Compute the AUC (area under the Receiver Operating Characteristic
-  curve) for a fitted point process model on a linear network.
+  curve) for a point pattern on a network,
+  or a fitted point process model on a network.
 }
 \usage{
-\method{auc}{lpp}(X, covariate, \dots, high = TRUE)
+\method{auc}{lpp}(X, covariate, \dots, high = TRUE,
+                     subset=NULL)
 
-\method{auc}{lppm}(X, \dots)
+\method{auc}{lppm}(X, \dots, subset=NULL)
 }
 \arguments{
   \item{X}{
-    Point pattern (object of class \code{"ppp"} or \code{"lpp"})
-    or fitted point process model (object of class \code{"ppm"}
-    or \code{"kppm"} or \code{"lppm"}).
+    Point pattern on a network (object of class \code{"lpp"})
+    or fitted point process model on a network
+    (object of class \code{"lppm"}).
   }
   \item{covariate}{
     Spatial covariate. Either a \code{function(x,y)},
@@ -26,25 +28,24 @@
     Cartesian coordinates.    
   }
   \item{\dots}{
-    Arguments passed to \code{\link[spatstat.geom]{as.mask}} controlling the
-    pixel resolution for calculations.
+    Arguments passed to \code{\link[spatstat.explore]{roc}},
+    and arguments passed to \code{\link[spatstat.geom]{as.mask}}
+    controlling the pixel resolution for calculations.
   }
   \item{high}{
     Logical value indicating whether the threshold operation
     should favour high or low values of the covariate.
+  }
+  \item{subset}{
+    Optional. A spatial window (object of class \code{"owin"})
+    specifying a subset of the data, for which the AUC should be
+    calculated.
   }
 }
 \details{
   This command computes the AUC, the area under the Receiver Operating
   Characteristic curve. The ROC itself is computed by \code{\link[spatstat.explore]{roc}}.
 
-  The function \code{\link[spatstat.explore]{auc}} is generic,
-  with methods for \code{"ppp"} and \code{"ppm"} described in the help file
-  for \code{\link[spatstat.explore]{auc}}.
-
-  This help file describes the methods for classes \code{"lpp"} and
-  \code{"lppm"}.
-  
   For a point pattern \code{X} and a covariate \code{Z}, the
   AUC is a numerical index that measures the ability of the 
   covariate to separate the spatial domain
@@ -76,11 +77,14 @@
   Numeric.
   For \code{auc.lpp}, the result is a single number
   giving the AUC value.
+  
   For \code{auc.lppm}, the result is a 
   numeric vector of length 2 giving the AUC value 
   and the theoretically expected AUC value for this model.
 }
 \references{
+  \rocpaper.
+  
   Lobo, J.M.,
   \ifelse{latex}{\out{Jim{\'e}nez}}{Jimenez}-Valverde, A.
   and Real, R. (2007)
@@ -96,17 +100,21 @@
   \ifelse{latex}{\out{Birkh{\"a}user}}{Birkhauser}, Basel.
 }
 \author{
-  \spatstatAuthors.
+  \rocketAuthors.
 }
 \seealso{
-  \code{\link[spatstat.explore]{auc}},
-  \code{\link[spatstat.explore]{roc}},
-  \code{\link{roc.lpp}}
+  \code{\link{roc}}.
+  
+  \code{\link{auc}},
+  \code{\link{auc.ppm}}.
+
+  \code{\link[spatstat.explore]{youden}}.
+
 }
 \examples{
-  auc(spiders, "x")
-  fit <- lppm(spiders ~ x + y)
+  Crimes <- unmark(chicago)
+  fit <- lppm(Crimes ~ x)
   auc(fit)
+  auc(Crimes, "x")
 }
 \keyword{spatial}
-\concept{Linear network}

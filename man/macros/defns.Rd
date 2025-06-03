@@ -46,5 +46,9 @@
 \newcommand{\baddchangclustersim}{Baddeley, A. and Chang, Y.-M. (2023) Robust algorithms for simulating cluster point processes. \emph{Journal of Statistical Computation and Simulation} \bold{93}, 1950--1975.}
 \newcommand{\smoothpcfpaper}{Baddeley, A., Davies, T.M. and Hazelton, M.L. (2025) An improved estimator of the pair correlation function of a spatial point process. \emph{Biometrika}, to appear.}
 \newcommand{\smoothpcfpapercite}{Baddeley, Davies and Hazelton (2025)}
+%% ROC paper
+\newcommand{\rocketAuthors}{\adrian, \ege and Suman Rakshit}
+\newcommand{\rocpapercite}{Baddeley et al (2025)}
+\newcommand{\rocpaper}{Baddeley, A., Rubak, E., Rakshit, S. and Nair, G. (2025) ROC curves for spatial point patterns and presence-absence data. Submitted for publication.}
 
 

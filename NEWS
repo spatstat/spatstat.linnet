@@ -1,11 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.2-6.003
+        CHANGES IN spatstat.linnet VERSION 3.2-6.004
 
 OVERVIEW
 
     o Interactively identify segments of a network.
 
     o Interactively identify tiles of a tessellation on a network.
+
+    o Extension of ROC curves.
 
 NEW FUNCTIONS
 
@@ -18,6 +20,37 @@ NEW FUNCTIONS
     o as.linfun.linnet
     Create a function on a linear network which maps each network segment to a specified value.
     
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o roc.lpp
+    New argument 'baseline' allows calculation of ROC relative to a baseline.
+
+    o roc.lpp
+    New argument 'weights' for numerical weights on the data points.
+
+    o roc.lpp
+    New argument 'method' determines the estimation method.
+
+    o roc.lpp
+    New arguments 'CI', 'alpha' for calculating confidence intervals.
+
+    o roc.lpp
+    New argument 'subset' specifies a sub-region of the spatial domain
+    in which the ROC should be calculated.
+
+    o roc.lppm
+    New argument 'baseline' allows calculation of ROC relative to a baseline.
+
+    o roc.lppm
+    New argument 'method' determines the estimation method.
+
+    o roc.lppm
+    New arguments 'CI', 'alpha' for calculating confidence intervals.
+
+    o roc.lppm
+    New argument 'subset' specifies a sub-region of the spatial domain
+    in which the ROC should be calculated.
+
 
         CHANGES IN spatstat.linnet VERSION 3.2-6
 
