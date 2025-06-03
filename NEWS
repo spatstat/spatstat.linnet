@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.2-6.004
+        CHANGES IN spatstat.linnet VERSION 3.2-6.006
 
 OVERVIEW
 
@@ -18,7 +18,8 @@ NEW FUNCTIONS
     Interactively identify tiles of a tessellation on a network.
 
     o as.linfun.linnet
-    Create a function on a linear network which maps each network segment to a specified value.
+    Create a function on a linear network which maps each network segment
+    to a specified value.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 
@@ -30,7 +31,8 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o roc.lpp
     New argument 'method' determines the estimation method.
-
+    New options include a kernel smoothing estimate and a monotone estimate.
+    
     o roc.lpp
     New arguments 'CI', 'alpha' for calculating confidence intervals.
 
@@ -43,13 +45,18 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o roc.lppm
     New argument 'method' determines the estimation method.
-
+    New options include a kernel smoothing estimate and a monotone estimate.
+    
     o roc.lppm
     New arguments 'CI', 'alpha' for calculating confidence intervals.
 
     o roc.lppm
     New argument 'subset' specifies a sub-region of the spatial domain
     in which the ROC should be calculated.
+
+    o roc.lppm
+    New argument 'leaveoneout' specifies whether to use leave-one-out estimates
+    of intensity at the data points.
 
 
         CHANGES IN spatstat.linnet VERSION 3.2-6
