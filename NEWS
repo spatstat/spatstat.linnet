@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.2-6.006
+        CHANGES IN spatstat.linnet VERSION 3.2-6.007
 
 OVERVIEW
 
@@ -58,6 +58,8 @@ SIGNIFICANT USER-VISIBLE CHANGES
     New argument 'leaveoneout' specifies whether to use leave-one-out estimates
     of intensity at the data points.
 
+    o chop.linnet
+    Improved labels of tiles in the resulting tessellation.
 
         CHANGES IN spatstat.linnet VERSION 3.2-6
 

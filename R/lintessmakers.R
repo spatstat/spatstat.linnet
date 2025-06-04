@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.7 $  $Date: 2023/12/01 19:53:54 $
+#'   $Revision: 1.8 $  $Date: 2025/06/04 02:42:54 $
 #' 
 
 divide.linnet <- local({
@@ -204,7 +204,7 @@ chop.linnet <- function(X, L) {
   ## find crossing points (remembering provenance)
   Y <- crossing.psp(LS, XS, fatal=FALSE, details=TRUE)
   ## initialise tessellation
-  Tess <- lintess(X)
+  Tess <- lintess(X) # entire tessellation is a single tile named '1'
   if(is.null(Y) || npoints(Y) == 0)
     return(Tess)
   ## extract info about network
@@ -214,6 +214,10 @@ chop.linnet <- function(X, L) {
   segseq <- seq_len(nXS)
   ## allocate vertices to halfplanes defined by lines
   Vin <- whichhalfplane(L, V)
+  if(anyNA(Vin)) {
+    warning("Internal error: NA values returned by whichhalfplane()")
+    Vin[is.na(Vin)] <- FALSE
+  }
   ## group crossing-points by the infinite line that made them
   M <- marks(Y) # column names: iA, tA, jB, tB
   MM <- split(M, linemap[M$iA], drop=FALSE)
@@ -224,8 +228,6 @@ chop.linnet <- function(X, L) {
     if(is.data.frame(Mi) && (ni <- nrow(Mi)) > 0) {
       #' for each segment, determine which end is in lower left halfplane
       startsinside <- Vin[i, startvertex ]
-      if(anyNA(startsinside))
-        browser()
       #' find segments of X that are split, and position of split
       jj <- Mi$jB
       tt <- Mi$tB
@@ -256,6 +258,13 @@ chop.linnet <- function(X, L) {
       Tess <- intersect.lintess(Tess, Tessi)
     }
   }
+  ## edit tile names
+  tn <- tilenames(Tess)
+  de <- (tn != "<OTHER>")
+  tnde <- tn[de]
+  tnde <- gsub(":", "", tnde)          # delete ':' representing intersection
+  tnde <- substr(tnde, 2, nchar(tnde)) # delete initial '1' for L itself
+  tilenames(Tess)[de] <- tnde
   return(Tess)
 }
 
