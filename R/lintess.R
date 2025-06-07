@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.52 $   $Date: 2025/05/31 10:06:37 $
+#'   $Revision: 1.53 $   $Date: 2025/06/06 04:04:15 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -442,7 +442,7 @@ as.linfun.lintess <- local({
   as.linfun.lintess
 })
 
-identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
+identify.lintess <- function(x, ..., labels=tilenames(x),
                              n=nobjects(x), plot=TRUE) {
   verifyclass(x, "lintess")
   check.1.integer(n)
@@ -487,8 +487,8 @@ identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
     gp <- graphicsPars("lines")
   }
   ## start identifying
-  out <- integer(0)
-  while(length(out) < n) {
+  id <- integer(0)
+  while(length(id) < n) {
     xy <- spatstatLocator(1, type="n")
     ## check for interrupt exit
     if(length(xy$x) == 0)
@@ -500,7 +500,7 @@ identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
       cat("Query location is too far away\n")
     } else {
       tileid <- idmap[fragid]
-      if(tileid %in% out) {
+      if(tileid %in% id) {
         cat(paste("Tile", tileid, "already selected\n"))
       } else {
         ## add to list
@@ -524,10 +524,20 @@ identify.lintess <- function(x, ..., labels=seq_len(nobjects(x)),
                                            list(col="blue", lwd=2)),
                           extrargs=gp)
         }
-        out <- c(out, tileid)
+        id <- c(id, tileid)
       }
     }
   }
+  out <- data.frame(id=id, name=tilenames(x)[id])
+  marx <- marks(x)
+  switch(markformat(marx),
+         vector = {
+           out <- cbind(out, data.frame(marks=marx[id]))
+         },
+         dataframe = {
+           out <- cbind(out, marx[id, , drop=FALSE])
+         },
+         {})
   return(out)
 }
 

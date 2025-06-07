@@ -9,7 +9,7 @@
   in a different colour. 
 }
 \usage{
-  \method{identify}{lintess}(x, \dots, labels=seq_len(nobjects(x)),
+  \method{identify}{lintess}(x, \dots, labels=tilenames(x),
                              n=nobjects(x), plot=TRUE)
 }
 \arguments{
@@ -33,8 +33,10 @@
   }
 }
 \value{
-  A vector containing the serial numbers of the tiles of
-  \code{x} that were identified.
+  A \code{data.frame} with columns \code{id} and \code{name}
+  containing the serial numbers and names of the tiles of
+  \code{x} that were identified, in the order that they were identified;
+  If \code{x} is marked, subsequent columns contain the marks for these tiles.
 }
 \details{
   This is a method for the generic function \code{\link[graphics]{identify}}
@@ -53,7 +55,8 @@
 
   Each time a tile is identified,
   text will be displayed alongside the tile
-  showing its serial number, and the tile will be re-drawn in a
+  showing the name of the tile,
+  and the tile will be re-drawn in a
   different colour.
 }
 \seealso{
