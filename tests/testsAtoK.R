@@ -65,20 +65,31 @@ local({
 #'   Tests of "click*" functions
 #'   using queueing feature of spatstatLocator
 #'
-#'   $Revision: 1.8 $ $Date: 2022/10/23 00:45:36 $
+#'   $Revision: 1.9 $ $Date: 2025/06/07 03:56:07 $
 
 local({
-  Y <- coords(runiflpp(6, simplenet))
+  Y <- runiflpp(6, simplenet)
   if(FULLTEST) {
     #' clicklpp
-    spatstat.utils::queueSpatstatLocator(Y)
+    spatstat.utils::queueSpatstatLocator(coords(Y))
     XL <- clicklpp(simplenet)
+    #' identify.linnet
+    YJ <- rjitter(as.ppp(Y), 0.1)
+    spatstat.utils::queueSpatstatLocator(YJ[1:3])
+    IL <- identify(simplenet)
+    #' identify.lpp
+    spatstat.utils::queueSpatstatLocator(YJ[1:4])
+    IP <- identify(Y)
+    #' identify.lintess
+    L <- infline(p=runif(3), theta=runif(3, max=pi/2))
+    LT <- chop.linnet(simplenet, L)
+    spatstat.utils::queueSpatstatLocator(YJ[1:4])
+    IT <- identify(LT)
   }
   if(ALWAYS) {
-    spatstat.utils::queueSpatstatLocator(Y)
+    #' clickppp with arguments
+    spatstat.utils::queueSpatstatLocator(coords(Y))
     XM <- clicklpp(simplenet, n=3, types=c("a", "b"))
-  }
-  if(ALWAYS) {
     #' lineardisc
     plot(simplenet)
     spatstat.utils::queueSpatstatLocator(as.ppp(runiflpp(1, simplenet)))
