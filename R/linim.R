@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.85 $   $Date: 2023/05/04 01:37:22 $
+#  $Revision: 1.86 $   $Date: 2025/06/14 03:35:24 $
 #
 #  Image/function on a linear network
 #
@@ -679,7 +679,12 @@ quantile.linim <- function(x, probs = seq(0,1,0.25), ...) {
   len <- lengths_psp(as.psp(L))
   iseg <- as.integer(seg)
   wts <- len[iseg]/nvals[iseg]
-  return(weighted.quantile(vals, wts, probs))
+  #' quantiles
+  result <- do.call(weighted.quantile,
+                    resolve.defaults(list(x=vals, w=wts, probs=probs),
+                                     list(...),
+                                     list(type=4, collapse=FALSE)))
+  return(result)
 }
 
 quantilefun.linim <- function(x, ..., type=1) {

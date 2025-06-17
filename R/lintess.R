@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.53 $   $Date: 2025/06/06 04:04:15 $
+#'   $Revision: 1.55 $   $Date: 2025/06/17 08:05:49 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -443,7 +443,8 @@ as.linfun.lintess <- local({
 })
 
 identify.lintess <- function(x, ..., labels=tilenames(x),
-                             n=nobjects(x), plot=TRUE) {
+                             n=nobjects(x), plot=TRUE,
+                             paint=plot, paint.args=list()) {
   verifyclass(x, "lintess")
   check.1.integer(n)
   if (dev.cur() == 1 && interactive()) {
@@ -504,7 +505,7 @@ identify.lintess <- function(x, ..., labels=tilenames(x),
         cat(paste("Tile", tileid, "already selected\n"))
       } else {
         ## add to list
-        if(plot) {
+        if(plot || paint) {
           ## Display
           mi <- mids[fragid]
           li <- labels[tileid]
@@ -512,17 +513,21 @@ identify.lintess <- function(x, ..., labels=tilenames(x),
           mix <- mi$x
           miy <- mi$y
           dont.complain.about(li, mix, miy)
-          do.call.matched(graphics::text.default,
-                          resolve.defaults(list(x=quote(mix), 
-                                                y=quote(miy), 
-                                                labels=quote(li)),
-                                           list(...),
-                                           list(pos=po)))
-          do.call.matched(plot.psp,
-                          resolve.defaults(list(x=S[idmap == tileid], add=TRUE),
-                                           list(...),
-                                           list(col="blue", lwd=2)),
-                          extrargs=gp)
+          if(plot) 
+            do.call.matched(graphics::text.default,
+                            resolve.defaults(list(x=quote(mix), 
+                                                  y=quote(miy), 
+                                                  labels=quote(li)),
+                                             list(...),
+                                             list(pos=po)))
+          if(paint)
+            do.call.matched(plot.psp,
+                            resolve.defaults(list(x=S[idmap == tileid],
+                                                  add=TRUE),
+                                             paint.args,
+                                             list(...),
+                                             list(col="blue", lwd=2)),
+                            extrargs=gp)
         }
         id <- c(id, tileid)
       }

@@ -5,12 +5,13 @@
   If a tessellation on a linear network is plotted in the graphics window,
   then each time the left mouse button is pressed,
   this function will find the tile which contains
-  the mouse position, print the serial number of the tile, and draw the tile
-  in a different colour. 
+  the mouse position, print the serial number of the tile containing
+  this position, and draw the tile in a different colour. 
 }
 \usage{
   \method{identify}{lintess}(x, \dots, labels=tilenames(x),
-                             n=nobjects(x), plot=TRUE)
+                             n=nobjects(x), plot=TRUE, paint=plot,
+                             paint.args=list())
 }
 \arguments{
   \item{x}{
@@ -30,6 +31,15 @@
   }
   \item{plot}{
     Logical. Whether to plot the \code{labels} when a tile is identified.
+  }
+  \item{paint}{
+    Logical. Whether to redraw each identified tile, using a
+    different colour.
+  }
+  \item{paint.args}{
+    Optional list of arguments passed to \code{\link{plot.psp}} determining the
+    colour and style in which each identified tile will be
+    redrawn, if \code{paint=TRUE}.
   }
 }
 \value{
@@ -58,6 +68,8 @@
   showing the name of the tile,
   and the tile will be re-drawn in a
   different colour.
+
+  The procedure terminates when the right mouse button is pressed.
 }
 \seealso{
   \code{\link[graphics]{identify}},
