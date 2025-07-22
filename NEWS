@@ -1,13 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.2-6.010
+        CHANGES IN spatstat.linnet VERSION 3.2-6.011
 
 OVERVIEW
+
+    o Extension of ROC curves.
 
     o Interactively identify segments of a network.
 
     o Interactively identify tiles of a tessellation on a network.
-
-    o Extension of ROC curves.
 
 NEW FUNCTIONS
 
