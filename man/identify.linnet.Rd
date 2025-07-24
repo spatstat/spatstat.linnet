@@ -16,7 +16,7 @@
     (object of class \code{"linnet"}).
   }
   \item{\dots}{
-    Arguments passed to \code{\link{identify.psp}} and ultimately to
+    Arguments passed to \code{\link[spatstat.geom]{identify.psp}} and ultimately to
     \code{\link[graphics]{identify.default}}.
   }
 }
@@ -44,7 +44,7 @@
 }
 \seealso{
   \code{\link[graphics]{identify}},
-  \code{\link{identify.psp}},
+  \code{\link[spatstat.geom]{identify.psp}},
   \code{\link{plot.linnet}}.
 }
 \author{

@@ -43,8 +43,14 @@
   }
 }
 \details{
-  This command computes the AUC, the area under the Receiver Operating
-  Characteristic curve. The ROC itself is computed by \code{\link[spatstat.explore]{roc}}.
+  The generic \code{\link[spatstat.explore]{auc}} computes the AUC,
+  the area under the curve of the Receiver Operating Characteristic.
+  The ROC curve itself is computed by the generic \code{\link[spatstat.explore]{roc}}.
+
+  The functions \code{auc.lpp} and \code{auc.lppm}
+  are methods for \code{\link[spatstat.explore]{auc}} for
+  point patterns on a linear network (class \code{"lpp"}) and
+  fitted point process models on a linear network (class \code{"lppm"}).
 
   For a point pattern \code{X} and a covariate \code{Z}, the
   AUC is a numerical index that measures the ability of the 
@@ -103,10 +109,10 @@
   \rocketAuthors.
 }
 \seealso{
-  \code{\link{roc}}.
+  \code{\link[spatstat.explore]{roc}}.
   
-  \code{\link{auc}},
-  \code{\link{auc.ppm}}.
+  \code{\link[spatstat.explore]{auc}},
+  \code{\link[spatstat.model]{auc.ppm}}.
 
   \code{\link[spatstat.explore]{youden}}.
 

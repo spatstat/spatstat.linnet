@@ -37,8 +37,8 @@
     different colour.
   }
   \item{paint.args}{
-    Optional list of arguments passed to \code{\link{plot.psp}} determining the
-    colour and style in which each identified tile will be
+    Optional list of arguments passed to \code{\link[spatstat.geom]{plot.psp}}
+    determining the colour and style in which each identified tile will be
     redrawn, if \code{paint=TRUE}.
   }
 }
@@ -73,7 +73,8 @@
 }
 \seealso{
   \code{\link[graphics]{identify}},
-  \code{\link{plot.lintess}}
+  \code{\link{plot.lintess}},
+  \code{\link[spatstat.geom]{plot.psp}}
 }
 \author{
   \spatstatAuthors.
