@@ -5,9 +5,10 @@
 #'
 #'    GNU Public Licence 2.0
 #'
-#'    $Revision: 1.10 $ $Date: 2023/03/10 03:44:50 $
+#'    $Revision: 1.11 $ $Date: 2025/09/03 04:19:31 $
 
 linearKEuclid <- function(X, r=NULL, ...) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   # extract info about pattern
   np <- as.double(npoints(X))
@@ -24,6 +25,7 @@ linearKEuclid <- function(X, r=NULL, ...) {
 }
 
 linearpcfEuclid <- function(X, r=NULL, ...) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   # extract info about pattern
   np <- as.double(npoints(X))
@@ -46,6 +48,7 @@ linearpcfEuclid <- function(X, r=NULL, ...) {
 linearKEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
                           normalise=TRUE, normpower=2,
 			  update=TRUE, leaveoneout=TRUE, sigma=NULL) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
 
   if(is.null(lambda)) 
@@ -85,6 +88,7 @@ linearpcfEuclidInhom <- function(X, lambda=NULL, r=NULL,  ...,
 			  update=TRUE, leaveoneout=TRUE,
                           sigma=NULL, adjust.sigma=1,
                           bw="nrd0", adjust.bw=1) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
 
   if(is.null(lambda)) 

@@ -1,12 +1,13 @@
 #
 # linearK
 #
-# $Revision: 1.65 $ $Date: 2023/02/28 01:55:41 $
+# $Revision: 1.66 $ $Date: 2025/09/03 04:08:52 $
 #
 # K function for point pattern on linear network
 #
 #
 linearK <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -40,6 +41,7 @@ linearKinhom <- function(X, lambda=NULL, r=NULL,  ...,
                          correction="Ang", normalise=TRUE, normpower=1,
 			 update=TRUE, leaveoneout=TRUE, sigma=NULL,
 			 ratio=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   loo.given <- !missing(leaveoneout)
   correction <- pickoption("correction", correction,
@@ -174,6 +176,7 @@ resolve.lambda.lpp <- function(X, lambda, subset=NULL, ...,
 linearKengine <- function(X, ..., r=NULL, reweight=NULL,
                           denom=1, samplesize=NULL,
                           correction="Ang", ratio=FALSE, showworking=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern

@@ -1,12 +1,13 @@
 #
 # linearpcf.R
 #
-# $Revision: 1.32 $ $Date: 2023/03/10 03:51:30 $
+# $Revision: 1.33 $ $Date: 2025/09/03 04:11:22 $
 #
 # pair correlation function for point pattern on linear network
 #
 #
 linearpcf <- function(X, r=NULL, ..., correction="Ang", ratio=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -47,6 +48,7 @@ linearpcfinhom <- function(X, lambda=NULL, r=NULL,  ...,
 			   update=TRUE, leaveoneout=TRUE,
                            sigma=NULL, adjust.sigma=1,
                            bw="nrd0", adjust.bw=1, ratio=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   loo.given <- !missing(leaveoneout)
   correction <- pickoption("correction", correction,
@@ -112,6 +114,7 @@ linearpcfengine <- function(X, ..., r=NULL,
                             reweight=NULL,
                             denom=1, samplesize=NULL,
 			    correction="Ang", ratio=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern

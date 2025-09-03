@@ -1,13 +1,14 @@
 #
 # linearpcfmulti.R
 #
-# $Revision: 1.19 $ $Date: 2023/03/10 03:37:19 $
+# $Revision: 1.20 $ $Date: 2025/09/03 04:13:05 $
 #
 # pair correlation functions for multitype point pattern on linear network
 #
 #
 
 linearpcfdot <- function(X, i, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -26,6 +27,7 @@ linearpcfdot <- function(X, i, r=NULL, ..., correction="Ang") {
 }
 
 linearpcfcross <- function(X, i, j, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -51,6 +53,7 @@ linearpcfcross <- function(X, i, j, r=NULL, ..., correction="Ang") {
 }
 
 linearpcfmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -96,6 +99,7 @@ linearpcfdot.inhom <- function(X, i, lambdaI, lambdadot,
                                r=NULL, ..., correction="Ang", normalise=TRUE,
                                sigma=NULL, adjust.sigma=1,
                                bw="nrd0", adjust.bw=1) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -122,6 +126,7 @@ linearpcfcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
                                correction="Ang", normalise=TRUE,
                                sigma=NULL, adjust.sigma=1,
                                bw="nrd0", adjust.bw=1) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -160,6 +165,7 @@ linearpcfmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
                                normalise=TRUE,
                                sigma=NULL, adjust.sigma=1,
                                bw="nrd0", adjust.bw=1) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -207,6 +213,7 @@ linearpcfmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
 linearPCFmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL,
                                  denom=1, samplesize=NULL, 
                                  correction="Ang", showworking=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern

@@ -1,13 +1,14 @@
 #
 # linearKmulti
 #
-# $Revision: 1.22 $ $Date: 2023/02/25 03:39:27 $
+# $Revision: 1.23 $ $Date: 2025/09/03 04:10:17 $
 #
 # K functions for multitype point pattern on linear network
 #
 #
 
 linearKdot <- function(X, i, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -25,6 +26,7 @@ linearKdot <- function(X, i, r=NULL, ..., correction="Ang") {
 }
 
 linearKcross <- function(X, i, j, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -49,6 +51,7 @@ linearKcross <- function(X, i, j, r=NULL, ..., correction="Ang") {
 }
 
 linearKmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -92,6 +95,7 @@ linearKmulti <- function(X, I, J, r=NULL, ..., correction="Ang") {
 linearKdot.inhom <- function(X, i, lambdaI=NULL, lambdadot=NULL,
                              r=NULL, ..., correction="Ang", normalise=TRUE,
                              sigma=NULL) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -117,6 +121,7 @@ linearKcross.inhom <- function(X, i, j, lambdaI=NULL, lambdaJ=NULL,
                                r=NULL, ...,
                                correction="Ang", normalise=TRUE,
                                sigma=NULL) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -149,6 +154,7 @@ linearKcross.inhom <- function(X, i, j, lambdaI=NULL, lambdaJ=NULL,
 linearKmulti.inhom <- function(X, I, J, lambdaI=NULL, lambdaJ=NULL,
                                r=NULL, ...,
                                correction="Ang", normalise=TRUE, sigma=NULL) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
                            c(none="none",
@@ -195,6 +201,7 @@ linearKmulti.inhom <- function(X, I, J, lambdaI=NULL, lambdaJ=NULL,
 linearKmultiEngine <- function(X, I, J, ..., r=NULL, reweight=NULL,
                                denom=1, samplesize=NULL, 
                                correction="Ang", showworking=FALSE) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   # ensure distance information is present
   X <- as.lpp(X, sparse=FALSE)
   # extract info about pattern

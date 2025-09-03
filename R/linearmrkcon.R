@@ -3,10 +3,11 @@
 #
 # mark connection function & mark equality function for linear networks
 #
-# $Revision: 1.4 $ $Date: 2017/02/07 08:12:05 $
+# $Revision: 1.5 $ $Date: 2025/09/03 04:16:38 $
 #
 
 linearmarkconnect <- function(X, i, j, r=NULL, ...) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   if(!is.multitype(X, dfok=FALSE)) 
 	stop("Point pattern must be multitype")
   marx <- marks(X)
@@ -37,6 +38,7 @@ linearmarkconnect <- function(X, i, j, r=NULL, ...) {
 linearmarkequal <- local({
   
   linearmarkequal <- function(X, r=NULL, ...) {
+    if(is.NAobject(X)) return(NAobject("fv"))
     if(!is.multitype(X, dfok=FALSE)) 
       stop("Point pattern must be multitype")
   

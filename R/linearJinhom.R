@@ -7,7 +7,7 @@
 #' Copyright (c) Mehdi Moradi and Adrian Baddeley 2020-2022
 #' GNU Public Licence >= 2.0
 #' 
-#' $Revision: 1.17 $ $Date: 2022/06/17 01:30:58 $
+#' $Revision: 1.18 $ $Date: 2025/09/03 04:06:40 $
 #'
 
 linearJinhom <- function(X, lambda=NULL, lmin=NULL,
@@ -18,6 +18,7 @@ linearJinhom <- function(X, lambda=NULL, lmin=NULL,
                          sigma=bw.scott.iso,
                          f=0.2, nrep=200,
                          ngrid=256) {
+  if(is.NAobject(X)) return(NAobject("fv"))
   verifyclass(X, "lpp")
   nX <- npoints(X)
   L <- domain(X)
