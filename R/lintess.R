@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.55 $   $Date: 2025/06/17 08:05:49 $
+#'   $Revision: 1.57 $   $Date: 2025/09/08 05:51:48 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -303,7 +303,9 @@ as.owin.lintess <- function(W, ...) { as.owin(as.linnet(W), ...) }
 
 Window.lintess <- function(X, ...) { as.owin(as.linnet(X)) }
 
-domain.lintess <- as.linnet.lintess <- function(X, ...) { X$L }
+domain.lintess <- as.linnet.lintess <- function(X, ...) {
+  X$L %orifnull% NAobject("linnet")
+}
 
 as.data.frame.lintess <- function(x, ...) {
   df <- x$df

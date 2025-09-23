@@ -1,10 +1,19 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-1.001
+        CHANGES IN spatstat.linnet VERSION 3.3-2
 
 OVERVIEW
 
     o Summary functions handle NA objects.
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o Summary functions
+    (linearK, linearKinhom, linearKeuclid,
+    linearKcross, linearKdot, linearKcross.inhom, linearKdot.inhom	
+    linearpcf, linearpcfinhom, linearpcfEuclid
+    linearpcfcross, linearpcfdot, linearpcfcross.inhom, linearpcfdot.inhom	
+    linearmarkequal, linearmarkconnect, linearJinhom)
+    If X is a missing point pattern, a missing object of class 'fv' is returned.
 
         CHANGES IN spatstat.linnet VERSION 3.3-1
 

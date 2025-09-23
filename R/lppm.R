@@ -411,11 +411,11 @@ model.frame.lppm <- function(formula, ...) {
 }
 
 domain.lppm <- as.linnet.lppm <- function(X, ...) {
-  as.linnet(X$X, ...)
+  if(is.NAobject(X)) NAobject("linnet") else as.linnet(X$X, ...)
 }
 
 nobs.lppm <- function(object, ...) {
-  npoints(object$X)
+  if(is.NAobject(object)) NA_integer_ else npoints(object$X)
 }
 
 is.poisson.lppm <- function(x) { is.poisson(x$fit) }

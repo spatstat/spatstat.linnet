@@ -391,6 +391,7 @@ domain.lpp <- function(X, ...) { as.linnet(X) }
 
 as.linnet.lpp <- function(X, ..., fatal=TRUE, sparse) {
   verifyclass(X, "lpp", fatal=fatal)
+  if(is.NAobject(X)) return(NAobject("linnet"))
   L <- X$domain
   if(!missing(sparse))
     L <- as.linnet(L, sparse=sparse)
