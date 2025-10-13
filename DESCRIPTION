@@ -1,6 +1,6 @@
 Package: spatstat.linnet
-Version: 3.3-2
-Date: 2025-09-24
+Version: 3.3-2.001
+Date: 2025-10-13
 Title: Linear Networks Functionality of the 'spatstat' Family
 Authors@R: c(person("Adrian", "Baddeley", 
                     role = c("aut", "cre", "cph"),

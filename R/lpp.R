@@ -63,7 +63,7 @@ lpp <- function(X, L, ...) {
     ctype <- c(rep("s", 2), rep("l", 2), rep("m", nmark))
   }
   out <- ppx(data=df, domain=L, coord.type=ctype)
-  class(out) <- c("lpp", class(out))
+  class(out) <- unique(c("lpp", class(out)))
   return(out)
 }
 
@@ -445,7 +445,7 @@ local2lpp <- function(L, seg, tp, X=NULL, df.only=FALSE) {
   if(df.only) return(data)
   ctype <- c("s", "s", "l", "l")
   out <- ppx(data=data, domain=L, coord.type=ctype)
-  class(out) <- c("lpp", class(out))
+  class(out) <- unique(c("lpp", class(out)))
   return(out)
 }
 
@@ -465,7 +465,7 @@ local2lpp <- function(L, seg, tp, X=NULL, df.only=FALSE) {
       xi <- ppx(data=daij, domain=x$domain, coord.type=as.character(x$ctype))
       if(drop)
         xi <- xi[drop=TRUE] # call [.ppx to remove unused factor levels
-      class(xi) <- c("lpp", class(xi))
+      class(xi) <- unique(c("lpp", class(xi)))
     }
     x <- xi
   } 

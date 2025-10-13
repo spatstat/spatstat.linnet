@@ -64,7 +64,7 @@ linim <- function(L, Z, ..., restrict=TRUE, df=NULL) {
   out <- Z
   attr(out, "L") <- L
   attr(out, "df") <- df
-  class(out) <- c("linim", class(out))
+  class(out) <- unique(c("linim", class(out)))
   return(out)
 }
 
@@ -90,7 +90,7 @@ summary.linim <- function(object, ...) {
   if("integral" %in% names(y))
     y$integral <- integral(object)
   y$network <- summary(as.linnet(object))
-  class(y) <- c("summary.linim", class(y))
+  class(y) <- unique(c("summary.linim", class(y)))
   return(y)
 }
 

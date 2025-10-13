@@ -354,7 +354,7 @@ thinNetwork <- function(X, retainvertices=NULL, retainedges=NULL) {
     }
     ## make new lpp object
     Y <- ppx(data=dsub, domain=Lsub, coord.type=as.character(X$ctype))
-    class(Y) <- c("lpp", class(Y))
+    class(Y) <- unique(c("lpp", class(Y)))
     ## tack on information about subset
     attr(Y, "retainpoints") <- ok
   }
