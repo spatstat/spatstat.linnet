@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.85 $   $Date: 2024/06/16 02:02:52 $
+#  $Revision: 1.87 $   $Date: 2025/11/16 01:48:05 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -710,3 +710,4 @@ text.lpp <- function(x, ...) {
   co <- coords(x)
   graphics::text.default(x=co$x, y=co$y, ...)
 }
+

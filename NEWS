@@ -3,7 +3,17 @@
 
 OVERVIEW
 
-    o Internal fixes.
+    o Lurking variable plots on a network.
+
+    o Internal improvements.
+
+NEW FUNCTIONS
+
+    o lurking.lpp
+    Lurking variable plot for point pattern on a linear network.
+
+    o lurking.lppm
+    Lurking variable plot for point process model on a linear network.
 
 
         CHANGES IN spatstat.linnet VERSION 3.3-2
