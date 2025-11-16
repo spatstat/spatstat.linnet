@@ -711,7 +711,7 @@ reset.spatstat.options()
 #'
 #'   Tests of lppm and class support
 #' 
-#'   $Revision: 1.3 $ $Date: 2025/01/18 03:43:52 $
+#'   $Revision: 1.5 $ $Date: 2025/11/16 02:29:30 $
 #'
 
 
@@ -735,6 +735,7 @@ local({
     fit3 <- lppm(X ~ Z)
     summary(fit3)
     pseudoR2(fit3)
+    lurking(fit3, expression(x))
   }
 
   Window(fit1)
@@ -793,6 +794,18 @@ local({
     cT <- spatialCovariateEvidence(fit2, ycoord, interpolate=TRUE)
     cF <- spatialCovariateEvidence(fit2, ycoord, interpolate=FALSE)
   }
-  
+
+  if(FULLTEST) {
+    ## mppm with lpp response
+    h <- hyperframe(Points = runiflpp(20, simplenet, nsim=3),
+                    D = solapply(runiflpp(4, simplenet, nsim=3), distfun))
+    fit <- mppm(Points ~ D, data=h)
+    print(fit)
+    print(summary(fit))
+    vcov(fit)
+    plot(fit)
+    lurking(fit, expression(x))
+    SX <- simulate(fit, nsim=2)
+  }
 })
 
