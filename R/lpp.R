@@ -1,7 +1,7 @@
 #
 # lpp.R
 #
-#  $Revision: 1.87 $   $Date: 2025/11/16 01:48:05 $
+#  $Revision: 1.89 $   $Date: 2025/11/16 05:44:56 $
 #
 # Class "lpp" of point patterns on linear networks
 
@@ -521,6 +521,14 @@ affine.lpp <- function(X,  mat=diag(c(1,1)), vec=c(0,0), ...) {
   Y <- X
   Y$data[, c("x","y")] <- affinexy(X$data[, c("x","y")], mat=mat, vec=vec)
   Y$domain <- affine(X$domain, mat=mat, vec=vec, ...)
+  return(Y)
+}
+
+flipxy.lpp <- function(X) {
+  verifyclass(X, "lpp")
+  Y <- X
+  Y$domain <- flipxy(X$domain)
+  Y$data[, c("x","y")] <- flipxy(X$data[, c("y","x")])
   return(Y)
 }
 

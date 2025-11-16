@@ -1,5 +1,6 @@
 \name{affine.linnet} 
 \alias{affine.linnet} 
+\alias{flipxy.linnet} 
 \alias{shift.linnet}
 \alias{rotate.linnet}
 \alias{rescale.linnet}
@@ -11,6 +12,8 @@
 }
 \usage{
   \method{affine}{linnet}(X, mat=diag(c(1,1)), vec=c(0,0), \dots)
+
+  \method{flipxy}{linnet}(X)
 
   \method{shift}{linnet}(X, vec=c(0,0), \dots, origin=NULL)
 
@@ -57,6 +60,7 @@
 \details{
   These functions are methods for the generic functions
   \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{flipxy}},
   \code{\link[spatstat.geom]{shift}},
   \code{\link[spatstat.geom]{rotate}},
   \code{\link[spatstat.geom]{rescale}} and
@@ -72,6 +76,7 @@
   
   Generic functions
   \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{flipxy}},
   \code{\link[spatstat.geom]{shift}},
   \code{\link[spatstat.geom]{rotate}},
   \code{\link[spatstat.geom]{scalardilate}},

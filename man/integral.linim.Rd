@@ -20,7 +20,7 @@
   }
   \item{domain}{
     Optional window specifying the domain of integration.
-    Alternatively a tessellation.
+    Alternatively a tessellation (class \code{"tess"} or \code{"lintess"}).
   }
   \item{weight}{
     Optional numerical weight function for the integration.
@@ -47,7 +47,8 @@
 
   If \code{domain} is a window (class \code{"owin"}) then the integration
   will be restricted to this window. If \code{domain} is a tessellation
-  (class \code{"tess"}) then the integral of \code{f} in each
+  (class \code{"tess"} or \code{"lintess"})
+  then the integral of \code{f} in each
   tile of \code{domain} will be computed.
 
   If \code{weight} is given, effectively the integral of \code{weight * f}

@@ -1,13 +1,20 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.006
+        CHANGES IN spatstat.linnet VERSION 3.3-2.009
 
 OVERVIEW
 
-    o Lurking variable plots on a network.
+    o Lurking variable plot on a network.
 
+    o Quadrat counting on a linear network.
+
+    o More geometrical operations on linear network objects.
+    
     o Internal improvements.
 
 NEW FUNCTIONS
+
+    o as.lintess
+    Convert other kinds of data to a tessellation on a network.
 
     o lurking.lpp
     Lurking variable plot for point pattern on a linear network.
@@ -15,6 +22,25 @@ NEW FUNCTIONS
     o lurking.lppm
     Lurking variable plot for point process model on a linear network.
 
+    o flipxy.linnet
+    Swap x and y coordinates of a linear network
+
+    o flipxy.lpp
+    Swap x and y coordinates of a point pattern on a linear network
+
+    o quadratcount.lpp
+    Method for quadrat counting on a linear network.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o integral.linim, integral.linfun
+    Argument 'domain' can be a tessellation on a network (class 'lintess').
+
+BUG FIXES
+
+    o intersect.lintess
+    Result was incorrect if X was a tessellation and Y was a linear network.
+    Fixed.
 
         CHANGES IN spatstat.linnet VERSION 3.3-2
 

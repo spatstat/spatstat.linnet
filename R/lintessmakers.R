@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.8 $  $Date: 2025/06/04 02:42:54 $
+#'   $Revision: 1.9 $  $Date: 2025/11/16 06:20:27 $
 #' 
 
 divide.linnet <- local({
@@ -179,15 +179,14 @@ traceTessLinnet <- function(A, L) {
   Xmid <- lpp(dfmid, L)
   ## classify each test point in tessellation A
   ind <- tileindex(as.ppp(Xmid), Z=A)
-  tn <- tilenames(A)
   if(anyNA(ind)) {
-    ## add a tile 
-    tn <- c(tn, "<OTHER>")
-    ind[is.na(ind)] <- length(tn)
+    ## add a tile
+    levels(ind) <- c(levels(ind), "<OTHER>")
+    ind[is.na(ind)] <- "<OTHER>"
   }
   ## create linear tessellation data
   dfnew <- df
-  dfnew$tile <- factor(ind, levels=1:length(tn), labels=tn)
+  dfnew$tile <- ind
   ## return
   Z <- lintess(L, dfnew)
   return(Z)

@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.92 $    $Date: 2025/05/29 04:33:30 $
+#    $Revision: 1.93 $    $Date: 2025/11/16 04:47:59 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -584,6 +584,15 @@ rescale.linnet <- function(X, s, unitname) {
   if(missing(s) || is.null(s)) s <- 1/unitname(X)$multiplier
   Y <- scalardilate(X, f=1/s)
   unitname(Y) <- rescale(unitname(X), s, unitname)
+  return(Y)
+}
+
+flipxy.linnet <- function(X) {
+  verifyclass(X, "linnet")
+  Y <- X
+  Y$window   <- flipxy(X$window)
+  Y$vertices <- flipxy(X$vertices)
+  Y$lines    <- flipxy(X$lines)
   return(Y)
 }
 

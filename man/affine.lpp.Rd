@@ -1,5 +1,6 @@
 \name{affine.lpp} 
 \alias{affine.lpp} 
+\alias{flipxy.lpp} 
 \alias{shift.lpp} 
 \alias{rotate.lpp}
 \alias{rescale.lpp}
@@ -10,6 +11,8 @@
 }
 \usage{
   \method{affine}{lpp}(X, mat=diag(c(1,1)), vec=c(0,0), \dots)
+
+  \method{flipxy}{lpp}(X)
 
   \method{shift}{lpp}(X, vec=c(0,0), \dots, origin=NULL)
 
@@ -58,6 +61,7 @@
 \details{
   These functions are methods for the generic functions
   \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{flipxy}},
   \code{\link[spatstat.geom]{shift}},
   \code{\link[spatstat.geom]{rotate}},
   \code{\link[spatstat.geom]{rescale}} and
@@ -73,6 +77,7 @@
   
   Generic functions
   \code{\link[spatstat.geom]{affine}},
+  \code{\link[spatstat.geom]{flipxy}},
   \code{\link[spatstat.geom]{shift}},
   \code{\link[spatstat.geom]{rotate}},
   \code{\link[spatstat.geom]{scalardilate}},

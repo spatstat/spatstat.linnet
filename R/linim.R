@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.86 $   $Date: 2025/06/14 03:35:24 $
+#  $Revision: 1.92 $   $Date: 2025/11/16 11:01:59 $
 #
 #  Image/function on a linear network
 #
@@ -607,16 +607,22 @@ as.linnet.linim <- function(X, ...) {
 
 integral.linim <- function(f, domain=NULL, weight=NULL, ...){
   verifyclass(f, "linim")
-  if(!is.null(weight))
+  if(!is.null(weight)) {
+    ## absorb weight into f
     weight <- as.linim(weight, domain(f))
-  if(is.tess(domain)) {
-    result <- sapply(tiles(domain), integral.linim, f = f)
-    if(length(dim(result)) > 1) result <- t(result)
-    return(result)
+    f <- weight * f
+    weight <- NULL
   }
   if(!is.null(domain)) {
-    f <- f[domain]
-    if(!is.null(weight)) weight <- weight[domain]
+    ## domain could be a spatial region or a tessellation
+    if(is.owin(domain) || is.im(domain) || is.numeric(domain)) {
+      ## restrict integrand to spatial region and continue
+      f <- f[domain, drop=FALSE]
+      domain <- NULL
+    } else if(!inherits(domain, c("tess", "lintess"))) {
+      stop(paste("Format of argument", sQuote("domain"), "not understood"),
+           call.=FALSE)
+    }
   }
   #' extract data
   L <- as.linnet(f)
@@ -624,10 +630,10 @@ integral.linim <- function(f, domain=NULL, weight=NULL, ...){
   df <- attr(f, "df")
   vals <- df$values
   seg <- factor(df$mapXY, levels=1:ns)
-  #' weight
-  if(!is.null(weight)) {
-    samplepoints <- ppp(df$xc, df$yc, window=Frame(L), check=FALSE)
-    vals <- vals * safelookup(weight, samplepoints)
+  if(!is.null(domain)) {
+    tp   <- df$tp
+    xx  <- df$x
+    yy  <- df$y
   }
   #' ensure each segment has at least one sample point
   nper <- table(seg)
@@ -636,29 +642,58 @@ integral.linim <- function(f, domain=NULL, weight=NULL, ...){
     mp <- midpoints.psp(as.psp(L)[missed])
     #' nearest pixel value
     valmid <- safelookup(f, mp)
-    if(!is.null(weight))
-      valmid <- valmid * safelookup(weight, mp)
-    #' concatenate factors
-    seg <- unlist(list(seg, factor(missed, levels=1:ns)))
+    #' concatenate data
     vals <- c(vals, valmid)
+    seg  <- unlist(list(seg, factor(missed, levels=1:ns)))
+    if(!is.null(domain)) {
+      tp   <-  c(tp, rep(0.5, sum(missed)))
+      coom <- coords(mp)
+      xx   <- c(xx, coom$x)
+      yy   <- c(yy, coom$y)
+    }
     #' update
     nper <- table(seg)
   }
-  #' take average of data on each segment
-  if(!is.complex(vals)) vals <- as.numeric(vals)
-  num <- tapplysum(vals, list(seg), na.rm=TRUE)
-  mu <- num/nper
-  #' weighted sum
-  len <- lengths_psp(as.psp(L))
-  if(anyNA(vals)) {
-    ##    p <- as.numeric(by(!is.na(vals), seg, mean, ..., na.rm=TRUE))
-    ##    p[is.na(p)] <- 0
-    defined <- as.numeric(!is.na(vals))
-    pnum <- tapplysum(defined, list(seg), na.rm=FALSE)
-    p <- pnum/nper
-    len <- len * p
+  
+  #' now handle tessellations
+  if(inherits(domain, "lintess")) {
+    ## tessellation on network
+    splitfac <- lineartileindex(as.integer(seg), tp, domain)
+  } else if(is.tess(domain)) {
+    ## tessellation of 2D space
+    splitfac <- tileindex(xx, yy, domain)
+  } else {
+    splitfac <- factor(rep(1, length(seg)))
   }
-  return(sum(mu * len))
+  splitlevels <- levels(splitfac)
+  nsplit <- length(splitlevels)
+
+  #' calculate integral
+  if(is.complex(vals)) {
+    result <- complex(nsplit)
+  } else {
+    vals <- as.numeric(vals)
+    result <- numeric(nsplit)
+  }
+  len <- lengths_psp(as.psp(L))
+
+  for(i in seq_len(nsplit)) {
+    vals.i <- if(nsplit == 1) vals else ( vals * (splitfac == splitlevels[i]) )
+    #' take average of data on each segment
+    num <- tapplysum(vals.i, list(seg), na.rm=TRUE)
+    mu <- num/nper
+    #' weighted sum
+    if(anyNA(vals.i)) {
+      defined <- as.numeric(!is.na(vals.i))
+      pnum <- tapplysum(defined, list(seg), na.rm=FALSE)
+      p <- pnum/nper
+      len <- len * p
+    }
+    result[i] <- sum(mu * len)
+  }
+  if(nsplit > 1)
+    names(result) <- splitlevels
+  return(result)
 }
 
 mean.linim <- function(x, ...) {
