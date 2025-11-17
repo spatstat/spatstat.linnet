@@ -23,7 +23,9 @@ quadrat.test.lpp <-
                  list(tess=tess)
                } else if(!missing(xbreaks)) {
                  list(xbreaks=xbreaks, ybreaks=ybreaks)
-               } else list(nx=nx, ny=ny)
+               } else if(!missing(nx)) {
+                 list(nx=nx, ny=ny)
+               } else list()
    do.call(quadrat.testEngine,
            resolve.defaults(list(quote(X),
                                 alternative=alternative,
@@ -62,7 +64,9 @@ quadrat.test.lppm <-
                  list(tess=tess)
                } else if(!missing(xbreaks)) {
                  list(xbreaks=xbreaks, ybreaks=ybreaks)
-               } else list(nx=nx, ny=ny)
+               } else if(!missing(nx)) {
+                 list(nx=nx, ny=ny)
+               } else list()
    do.call(quadrat.testEngine,
           resolve.defaults(list(quote(Xdata), 
                                 alternative=alternative,
