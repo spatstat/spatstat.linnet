@@ -1,11 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.009
+        CHANGES IN spatstat.linnet VERSION 3.3-2.011
 
 OVERVIEW
 
     o Lurking variable plot on a network.
 
-    o Quadrat counting on a linear network.
+    o Quadrat counting and quadrat tests on a linear network.
 
     o More geometrical operations on linear network objects.
     
@@ -30,6 +30,9 @@ NEW FUNCTIONS
 
     o quadratcount.lpp
     Method for quadrat counting on a linear network.
+
+    o quadrat.test.lpp, quadrat.test.lppm
+    Methods for quadrat test on a linear network.
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
