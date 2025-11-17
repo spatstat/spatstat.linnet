@@ -3,7 +3,7 @@
 #'
 #'  Quadrat counting tests for lpp and lppm
 #'
-#'  $Revision: 1.1 $ $Date: 2025/11/17 09:34:34 $
+#'  $Revision: 1.2 $ $Date: 2025/11/17 10:39:44 $
 
 quadrat.test.lpp <-
   function(X, ...,
@@ -19,11 +19,13 @@ quadrat.test.lpp <-
    Xname <- short.deparse(substitute(X))
    method <- match.arg(method)
    alternative <- match.arg(alternative)
+   tessinfo <- if(!is.null(tess)) {
+                 list(tess=tess)
+               } else if(!missing(xbreaks)) {
+                 list(xbreaks=xbreaks, ybreaks=ybreaks)
+               } else list(nx=nx, ny=ny)
    do.call(quadrat.testEngine,
            resolve.defaults(list(quote(X),
-                                tess=tess,
-                                nx=nx, ny=ny,
-                                xbreaks=xbreaks, ybreaks=ybreaks,
                                 alternative=alternative,
                                 method=method,
                                 conditional=conditional,
@@ -31,8 +33,9 @@ quadrat.test.lpp <-
                                 fit=lambda,
                                 df.est=df.est,
                                 nsim=nsim),
-                           list(...), 
-                           list(Xname=Xname, fitname="CSR on a network")))
+                            tessinfo,
+                            list(...), 
+                            list(Xname=Xname, fitname="CSR on a network")))
 }
 
 quadrat.test.lppm <- 
@@ -55,17 +58,20 @@ quadrat.test.lppm <-
     stop("Sorry, not yet implemented for marked point process models")
    Xdata <- response(X)
    dont.complain.about(Xdata)
+   tessinfo <- if(!is.null(tess)) {
+                 list(tess=tess)
+               } else if(!missing(xbreaks)) {
+                 list(xbreaks=xbreaks, ybreaks=ybreaks)
+               } else list(nx=nx, ny=ny)
    do.call(quadrat.testEngine,
           resolve.defaults(list(quote(Xdata), 
-                                tess=tess,
-                                nx=nx, ny=ny,
-                                xbreaks=xbreaks, ybreaks=ybreaks,
                                 alternative=alternative,
                                 method=method,
                                 conditional=conditional, CR=CR,
                                 nsim=nsim, 
                                 fit=X,
                                 df.est=df.est),
+                           tessinfo,
                            list(...),
                            list(Xname=dataname, fitname=fitname)))
 }
