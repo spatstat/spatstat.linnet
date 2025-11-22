@@ -1,9 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.013
+        CHANGES IN spatstat.linnet VERSION 3.3-2.015
 
 OVERVIEW
 
     o Lurking variable plot on a network.
+
+    o Partial residual plot on a network.
 
     o Quadrat counting and quadrat tests on a linear network.
 
@@ -28,6 +30,8 @@ NEW FUNCTIONS
     o flipxy.lpp
     Swap x and y coordinates of a point pattern on a linear network
 
+    o parres.lppm
+    Partial residual plot for point process model on a linear network.
     o quadratcount.lpp
     Method for quadrat counting on a linear network.
 
@@ -38,6 +42,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o integral.linim, integral.linfun
     Argument 'domain' can be a tessellation on a network (class 'lintess').
+
+    o print.lintess
+    Output improved.
 
 BUG FIXES
 

@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.63 $   $Date: 2025/11/16 01:48:22 $
+#  $Revision: 1.65 $   $Date: 2025/11/22 02:02:06 $
 #
 
 lppm <- function(X, ...) {
@@ -479,4 +479,47 @@ lurking.lpp <- function(object, covariate, type="raw", ..., covname) {
   }
   model <- lppm(object ~ 1, forcefit=TRUE)
   lurking.ppm(as.ppm(model), covariate, type=type, ..., covname=covname)
+}
+
+parres.lppm <- function(model, covariate, ...,
+                        smooth.effect=FALSE, subregion=NULL,
+                        bw="nrd0", adjust=1, from=NULL,to=NULL, n=512,
+                        bw.input = c("points", "quad"),
+                        bw.restrict = FALSE,
+                        covname) {  
+  callstring <- paste(deparse(sys.call()), collapse = "")
+  modelname <- short.deparse(substitute(model))
+
+  stopifnot(is.lppm(model))
+
+  if(is.marked(model))
+    stop("Sorry, this is not yet implemented for marked models")
+  
+  if(missing(covariate)) {
+    mc <- model.covariates(model)
+    if(length(mc) == 1) covariate <- mc else stop("covariate must be provided")
+  }
+  if(missing(covname)) 
+    covname <- sensiblevarname(deparse(substitute(covariate)), "X")
+
+  if(is.null(adjust)) adjust <- 1
+
+  bw.input <- match.arg(bw.input)
+  
+  partialResidualEngine(model         = as.ppm(model),
+                        covariate     = covariate,
+                        ...,
+                        smooth.effect = smooth.effect,
+                        subregion     = subregion,
+                        bw            = bw,
+                        adjust        = adjust,
+                        from          = from,
+                        to            = to,
+                        n             = n,
+                        bw.input      = bw.input,
+                        bw.restrict   = bw.restrict,
+                        covname       = covname,
+                        callstring    = callstring,
+                        modelname     = modelname,
+                        do.variance   = is.poisson(model))
 }
