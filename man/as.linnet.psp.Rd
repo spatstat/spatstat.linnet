@@ -7,7 +7,7 @@
   Converts a line segment pattern to a linear network.
 }
 \usage{
- \method{as.linnet}{psp}(X, \dots, eps, sparse=FALSE)
+ \method{as.linnet}{psp}(X, \dots, eps, sparse=FALSE, chop=TRUE, fuse=TRUE)
 }
 \arguments{
   \item{X}{
@@ -20,24 +20,40 @@
     Optional. Distance threshold. If two segment endpoints
     are closer than \code{eps} units apart, they will be treated
     as the same point, and will become a single vertex in the
-    linear network.
+    linear network. Ignored if \code{fuse=FALSE}.
   }
   \item{sparse}{
     Logical value indicating whether to use a sparse matrix
     representation, as explained in \code{\link{linnet}}.
   }
+  \item{chop}{
+    Logical value specifying whether segments which cross each other
+    should be subdivided into separate segments of the network which
+    meet at the intersection point.
+  }
+  \item{fuse}{
+    Logical value specifying whether two vertices lyin closer than \code{eps}
+    should be treated as a single vertex.
+  }
 }
 \details{
   This command converts any collection of line segments into a linear
-  network by guessing the connectivity of the network,
-  using the distance threshold \code{eps}.
+  network by guessing the connectivity of the network.
 
-  If any segments in \code{X} cross over each other, they are first
+  If \code{chop=TRUE} (the default), then
+  if any segments in \code{X} cross over each other, they are first
   cut into pieces using \code{\link[spatstat.geom]{selfcut.psp}}.
 
-  Then any pair of segment endpoints lying closer than \code{eps}
-  units apart, is treated as a single vertex. The linear network
-  is then constructed using \code{\link{linnet}}.
+  If \code{fuse=TRUE} (the default), 
+  then any pair of segment endpoints lying closer than \code{eps}
+  units apart, is treated as a single vertex.
+
+  After these modifications, the linear network
+  is constructed using \code{\link{linnet}}.
+
+  If \code{chop=FALSE} and \code{fuse=FALSE}, each segment in the
+  segment pattern \code{X} becomes an edge in the resulting network,
+  and no other edges or vertices are created.
 
   It would be wise to check the result by plotting the degree
   of each vertex, as shown in the Examples.
@@ -79,6 +95,9 @@ in the result is a piece of the second segment of \code{X}.
   (camefrom <- attr(L, "camefrom"))
   parts <- which(camefrom == 1)
   plot(S[parts], add=TRUE, col="green", lwd=2)
+
+  # convert to a network without changing the geometry
+  H <- as.linnet(B, chop=FALSE, fuse=FALSE)
 }
 \keyword{spatial}
 \keyword{manip}
