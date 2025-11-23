@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.17 $ $Date: 2022/05/21 09:52:11 $
+#  $Revision: 1.23 $ $Date: 2025/11/23 03:36:15 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -15,15 +15,17 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     Xproj <- as.ppp(X)
     if(!missing(Y) && !is.null(Y))
       warning("Argument Y ignored when X is an lpp object")
-    Y <- as.psp(X)
+    Y <- as.linnet(X)
   } else if(is.ppp(X)) {
-    # project data points onto segments
-    stopifnot(is.psp(Y))
-    v <- project2segment(X, Y)
+    ## project data points onto segments
+    if(missing(Y))
+      stop("Argument Y is required when X is a point pattern", call.=FALSE)
+    stopifnot(is.psp(Y) || is.linnet(Y))
+    v <- project2segment(X, as.psp(Y))
     Xproj <- v$Xproj
     mapXY <- v$mapXY
     tp    <- v$tp
-  } else stop("X should be an object of class lpp or ppp")
+  } else stop("X should be a point pattern object of class lpp or ppp")
   
   # handle multitype
   ismulti <- is.multitype(X)
@@ -35,7 +37,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
   }
   #
   win <- as.owin(Y)
-  len <- lengths_psp(Y)
+  len <- lengths_psp(as.psp(Y))
   nseg <- length(len)
   if(is.null(eps)) {
     stopifnot(is.numeric(nd) && length(nd) == 1L & is.finite(nd) && nd > 0)
@@ -100,11 +102,20 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 maxscratch = as.integer(maxscratch),
                 PACKAGE="spatstat.linnet")
       }
-      seqdum <- seq_len(z$ndum)
-      dum <- with(z, ppp(xdum[seqdum], ydum[seqdum], window=W, check=FALSE))
+      ## dummy points
+      ndum <- z$ndum
+      seqdum <- seq_len(ndum)
       wdum <- z$wdum[seqdum]
+      sdum <- z$sdum[seqdum] + 1L
+      tdum <- z$tdum[seqdum]
+      xdum <- z$xdum[seqdum]
+      ydum <- z$ydum[seqdum]
+      dum <- ppp(xdum, ydum, window=W, check=FALSE)
+      ## data points (original ordering)
       wdat <- numeric(nX)
       wdat[ooX] <- z$wdat
+      sdat <- coordsX$seg
+      tdat <- coordsX$tp
       dat <- as.ppp(X)
     } else {
       ntypes <- length(flev)
@@ -163,24 +174,34 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 maxscratch = as.integer(maxscratch),
                 PACKAGE="spatstat.linnet")
       }
-      seqdum <- seq_len(z$ndum)
-      marques <- factor(z$mdum[seqdum] + 1L, labels=flev)
-      dum <- with(z, ppp(xdum[seqdum], ydum[seqdum], marks=marques,
-                         window=W, check=FALSE))
+      ## dummy points
+      ndum <- z$ndum
+      seqdum <- seq_len(ndum)
       wdum <- z$wdum[seqdum]
+      sdum <- z$sdum[seqdum] + 1L
+      tdum <- z$tdum[seqdum]
+      mdum <- factor(z$mdum[seqdum] + 1L, labels=flev)
+      xdum <- z$xdum[seqdum]
+      ydum <- z$ydum[seqdum]
+      dum <- ppp(xdum, ydum, marks=mdum, window=W, check=FALSE)
+      ## data points (original order)
       wdat <- numeric(nX)
       wdat[ooX] <- z$wdat
+      sdat <- coordsX$seg
+      tdat <- coordsX$tp
       dat <- as.ppp(X)
     }      
   } else {
-    ## older, interpreted code
-    ## initialise quad scheme 
-    dat <- dum <- ppp(numeric(0), numeric(0), window=win)
-    wdat <- wdum <- numeric(0)
-    if(ismulti)
-      marks(dat) <- marks(dum) <- marx[integer(0)]
+    ## Interpreted code
+    W <- Frame(X)
+    xX <- coords(X)$x
+    yX <- coords(X)$y
+    mX <- if(ismulti) marx else NULL
+    xdat <- xdum <- ydat <- ydum <- wdat <- wdum <- tdat <- tdum <- numeric(0)
+    jdat <- sdat <- sdum <- integer(0)
+    mdat <- mdum <- if(ismulti) marx[integer(0)] else NULL
     ## consider each segment in turn
-    YY    <- as.data.frame(Y)
+    YY    <- as.data.frame(as.psp(Y))
     for(i in 1:nseg) {
       ## divide segment into pieces of length eps
       ## with shorter bits at each end
@@ -188,53 +209,81 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       nwhole <- floor(leni/eps)
       if(leni/eps - nwhole < 0.5 && nwhole > 2)
         nwhole <- nwhole - 1
-      rump <- (leni - nwhole * eps)/2
-      brks <- c(0, rump + (0:nwhole) * eps, leni)
+      epsfrac <- eps/leni
+      rumpfrac <- (1 - nwhole * epsfrac)/2
+      brks <- c(0, rumpfrac + (0:nwhole) * epsfrac, 1)
       nbrks <- length(brks)
-      ## dummy points at middle of each piece
-      sdum <- (brks[-1L] + brks[-nbrks])/2
-      x <- with(YY, x0[i] + (sdum/leni) * (x1[i]-x0[i]))
-      y <- with(YY, y0[i] + (sdum/leni) * (y1[i]-y0[i]))
-      newdum <- list(x=x, y=y)
-      ndum <- length(sdum)
-      IDdum <- 1:ndum
-      ## relevant data points
+      ## create a dummy point at the middle of each piece
+      tdumi <- (brks[-1L] + brks[-nbrks])/2
+      ndumi <- length(tdumi)
+      xdumi <- with(YY, x0[i] + tdumi * (x1[i]-x0[i]))
+      ydumi <- with(YY, y0[i] + tdumi * (y1[i]-y0[i]))
+      sdumi <- rep(i, ndumi)
+      IDdumi <- 1:ndumi
+      ## data points on this segment
       relevant <- (mapXY == i)
-      newdat <- Xproj[relevant]
-      sdat   <- leni * tp[relevant]
-      IDdat  <- findInterval(sdat, brks,
-                             rightmost.closed=TRUE, all.inside=TRUE)
+      jdati   <- which(relevant)
+      xdati   <- xX[relevant]
+      ydati   <- yX[relevant]
+      tdati   <- tp[relevant]
+      ndati   <- length(tdati)
+      sdati   <- rep(i, ndati)
+      IDdati  <- findInterval(tdati, brks,
+                              rightmost.closed=TRUE, all.inside=TRUE)
       ## determine weights
-      w <- countingweights(id=c(IDdum, IDdat), areas=diff(brks))
-      wnewdum <- w[1:ndum]
-      wnewdat <- w[-(1:ndum)]
+      w <- countingweights(id=c(IDdumi, IDdati), areas=diff(brks) * leni)
+      wdumi <- w[1:ndumi]
+      wdati <- w[-(1:ndumi)]
       ##
-      if(!ismulti) {
-        ## unmarked pattern
-        dat <- superimpose(dat, newdat, W=win, check=FALSE)
-        dum <- superimpose(dum, newdum, W=win, check=FALSE)
-        wdat <- c(wdat, wnewdat)
-        wdum <- c(wdum, wnewdum)
-      } else {
-        ## marked point pattern
+      if(ismulti) {
         ## attach correct marks to data points
-        marks(newdat) <- marx[relevant]
-        dat <- superimpose(dat, newdat, W=win, check=FALSE)
-        wdat <- c(wdat, wnewdat)
-        newdum <- as.ppp(newdum, W=win, check=FALSE)
+        mdati <- marx[relevant]
         ## replicate dummy points with each mark
         ## also add points at data locations with other marks
+        xdumiU <- xdumi
+        ydumiU <- ydumi
+        sdumiU <- sdumi
+        tdumiU <- tdumi
+        wdumiU <- wdumi
         for(k in seq_len(length(flev))) {
           le <- flev[k]
-          avoid <- (marks(newdat) != le)
-          dum <- superimpose(dum,
-                             newdum %mark% le,
-                             newdat[avoid] %mark% le,
-                             W=win, check=FALSE)
-          wdum <- c(wdum, wnewdum, wnewdat[avoid])
+          avoid <- (mdati != le)
+          mdumi <- c(mdumi, rep(le, ndumi), rep(le, sum(avoid)))
+          xdumi <- c(xdumi, xdumiU,          xdati[avoid])
+          ydumi <- c(ydumi, ydumiU,          ydati[avoid])
+          sdumi <- c(sdumi, sdumiU,          sdati[avoid])
+          tdumi <- c(tdumi, tdumiU,          tdati[avoid])
+          wdumi <- c(wdumi, wdumiU,          wdati[avoid])
         }
       }
+      ## concatenate data points
+      xdat <- c(xdat, xdati)
+      ydat <- c(ydat, ydati)
+      sdat <- c(sdat, sdati)
+      tdat <- c(tdat, tdati)
+      wdat <- c(wdat, wdati)
+      jdat <- c(jdat, jdati)
+      ## concatenate dummy points
+      xdum <- c(xdum, xdumi)
+      ydum <- c(ydum, ydumi)
+      sdum <- c(sdum, sdumi)
+      tdum <- c(tdum, tdumi)
+      wdum <- c(wdum, wdumi)
+      if(ismulti) {
+        mdat <- c(mdat, mdati)
+        mdum <- c(mdum, mdumi)
+      }
     }
+    ## map data points back to their original order
+    odat <- order(jdat)
+    xdat <- xdat[odat]
+    ydat <- ydat[odat]
+    wdat <- wdat[odat]
+    sdat <- sdat[odat]
+    tdat <- tdat[odat]
+    ## Now create point patterns
+    dat <- ppp(xdat, ydat, marks=mdat, window=W, check=FALSE)
+    dum <- ppp(xdum, ydum, marks=mdum, window=W, check=FALSE)
   }
   ## save parameters
   dmethod <- paste("Equally spaced along each segment at spacing eps =",
@@ -247,8 +296,10 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 weight = list(method=wmethod))
   ## make quad scheme
   Qout <- quad(dat, dum, c(wdat, wdum), param=param)
-  ## silently attach lines
+  ## silently attach lines and local coordinates
   attr(Qout, "lines") <- Y
+  attr(Qout, "seg") <- c(sdat, sdum)
+  attr(Qout, "tp")  <- c(tdat, tdum)
   return(Qout)
 }
 

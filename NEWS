@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.015
+        CHANGES IN spatstat.linnet VERSION 3.3-2.016
 
 OVERVIEW
 
@@ -43,6 +43,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o integral.linim, integral.linfun
     Argument 'domain' can be a tessellation on a network (class 'lintess').
 
+    o linequad
+    Argument 'Y' can be a linear network.
+    
     o print.lintess
     Output improved.
 

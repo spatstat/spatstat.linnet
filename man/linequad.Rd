@@ -16,7 +16,7 @@ linequad(X, Y, \dots, eps = NULL, nd = 1000, random = FALSE)
   }
   \item{Y}{
     Line segments on which the points of \code{X} lie.
-    An object of class \code{"psp"}.
+    An object of class \code{"psp"} or \code{"linnet"}.
     Required only when \code{X} is a \code{"ppp"} object.
   }
   \item{\dots}{
