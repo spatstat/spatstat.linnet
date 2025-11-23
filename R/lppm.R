@@ -523,3 +523,9 @@ parres.lppm <- function(model, covariate, ...,
                         modelname     = modelname,
                         do.variance   = is.poisson(model))
 }
+
+residuals.lppm <- function(object, type="raw", ...) {
+  res <- residuals(as.ppm(object), type=type, ...)
+  attr(res, "plekken") <- attr(quad.ppm(object), "plekken")
+  return(res)
+}
