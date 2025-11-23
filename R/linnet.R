@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.96 $    $Date: 2025/11/23 04:40:31 $
+#    $Revision: 1.97 $    $Date: 2025/11/23 06:47:21 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -407,7 +407,7 @@ as.linnet.psp <- function(X, ..., eps, sparse=FALSE, chop=TRUE, fuse=TRUE) {
     nontrivial <- (from != to) & !duplicated(fromto)
     join <- fromto[nontrivial, , drop=FALSE]
   } 
-  result <- linnet(V, edges=join, sparse=sparse)
+  result <- linnet(V, edges=join, sparse=sparse, warn=FALSE)
   if(is.marked(X)) marks(result$lines) <- marks(X[nontrivial])
   attr(result, "camefrom") <- camefrom[nontrivial]
   return(result)

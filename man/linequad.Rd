@@ -27,7 +27,7 @@ linequad(X, Y, \dots, eps = NULL, nd = 1000, random = FALSE)
     segment. (This is the maximum spacing; some spacings will be shorter.)
   }
   \item{nd}{
-    Optional. Total number of dummy points to be generated.
+    Optional. Total number of dummy locations to be generated.
     (Actual number may be larger.)
   }
   \item{random}{
@@ -53,12 +53,24 @@ linequad(X, Y, \dots, eps = NULL, nd = 1000, random = FALSE)
   all line segments in the network.
 
   Every line segment of the network will contain at least one dummy
-  point. Consequently the actual number of dummy points generated
+  location. Consequently the actual number of dummy location generated
   will typically be greater than \code{nd},
   especially when \code{nd} is small.
   If \code{eps} is specified, the
-  number of dummy points will be greater than \code{totlen/eps},
+  number of dummy locations will be greater than \code{totlen/eps},
   especially when \code{eps} is large.
+
+  If \code{X} is a multitype point pattern with \eqn{m} possible types,
+  the dummy points will also be a marked point pattern.
+  At each dummy location, \eqn{m} marked dummy points will be placed,
+  one dummy point of each possible type.
+  Additionally at each data location, a further \eqn{m - 1} dummy
+  points will be placed, one dummy point of each possible type
+  other than the type of the data point. The total number of dummy
+  points will be \eqn{mk + (m-1) n = m(k+n) - n}
+  and the total number of quadrature points will be \eqn{m(k+n)},
+  where \eqn{k} is the number of dummy locations
+  and \eqn{n} is the number of data points in \code{X}.
 }
 \value{
   A quadrature scheme (object of class \code{"quad"}).

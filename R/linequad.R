@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.24 $ $Date: 2025/11/23 03:49:17 $
+#  $Revision: 1.31 $ $Date: 2025/11/23 08:17:48 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -15,13 +15,20 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     Xproj <- as.ppp(X)
     if(!missing(Y) && !is.null(Y))
       warning("Argument Y ignored when X is an lpp object")
-    Y <- as.linnet(X)
+    L <- as.linnet(X)
+    S <- as.psp(L)
   } else if(is.ppp(X)) {
     ## project data points onto segments
     if(missing(Y))
       stop("Argument Y is required when X is a point pattern", call.=FALSE)
-    stopifnot(is.psp(Y) || is.linnet(Y))
-    v <- project2segment(X, as.psp(Y))
+    if(is.linnet(Y)) {
+      L <- Y
+      S <- as.psp(L)
+    } else if(is.psp(Y)) {
+      S <- Y
+      L <- as.linnet(S, chop=FALSE, fuse=FALSE)
+    }
+    v <- project2segment(X, S)
     Xproj <- v$Xproj
     mapXY <- v$mapXY
     tp    <- v$tp
@@ -36,8 +43,8 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     flev <- factor(levels(marx))
   }
   #
-  win <- as.owin(Y)
-  len <- lengths_psp(as.psp(Y))
+  win <- as.owin(S)
+  len <- lengths_psp(S)
   nseg <- length(len)
   if(is.null(eps)) {
     stopifnot(is.numeric(nd) && length(nd) == 1L & is.finite(nd) && nd > 0)
@@ -110,13 +117,23 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       tdum <- z$tdum[seqdum]
       xdum <- z$xdum[seqdum]
       ydum <- z$ydum[seqdum]
-      dum <- ppp(xdum, ydum, window=W, check=FALSE)
+      dumdf <- data.frame(x   = xdum,
+                          y   = ydum,
+                          seg = sdum,
+                          tp  = tdum)
+      DUM <- lpp(dumdf, L)
       ## data points (original ordering)
       wdat <- numeric(nX)
       wdat[ooX] <- z$wdat
       sdat <- coordsX$seg
       tdat <- coordsX$tp
-      dat <- as.ppp(X)
+      xdat <- coordsX$x
+      ydat <- coordsX$y
+      datdf <- data.frame(x   = xdat,
+                          y   = ydat,
+                          seg = sdat,
+                          tp  = tdat)
+      DAT <- lpp(datdf, L)
     } else {
       ntypes <- length(flev)
       ndummax <- ntypes * (ndummax + nX)
@@ -183,13 +200,26 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       mdum <- factor(z$mdum[seqdum] + 1L, labels=flev)
       xdum <- z$xdum[seqdum]
       ydum <- z$ydum[seqdum]
-      dum <- ppp(xdum, ydum, marks=mdum, window=W, check=FALSE)
+      dumdf <- data.frame(x     = xdum,
+                          y     = ydum,
+                          seg   = sdum,
+                          tp    = tdum,
+                          marks = mdum)
+      DUM <- lpp(dumdf, L)
       ## data points (original order)
       wdat <- numeric(nX)
       wdat[ooX] <- z$wdat
+      xdat <- coordsX$x
+      ydat <- coordsX$y
       sdat <- coordsX$seg
       tdat <- coordsX$tp
-      dat <- as.ppp(X)
+      mdat <- marx
+      datdf <- data.frame(x     = xdat,
+                          y     = ydat,
+                          seg   = sdat,
+                          tp    = tdat,
+                          marks = mdat)
+      DAT <- lpp(datdf, L)
     }      
   } else {
     ## Interpreted code
@@ -200,8 +230,8 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     xdat <- xdum <- ydat <- ydum <- wdat <- wdum <- tdat <- tdum <- numeric(0)
     jdat <- sdat <- sdum <- integer(0)
     mdat <- mdum <- if(ismulti) marx[integer(0)] else NULL
-    ## consider each segment in turn
-    YY    <- as.data.frame(as.psp(Y))
+    ##  ------------ LOOP: consider each segment in turn -------------
+    Sdata    <- as.data.frame(S)
     for(i in 1:nseg) {
       ## divide segment into pieces of length eps
       ## with shorter bits at each end
@@ -216,8 +246,8 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       ## create a dummy point at the middle of each piece
       tdumi <- (brks[-1L] + brks[-nbrks])/2
       ndumi <- length(tdumi)
-      xdumi <- with(YY, x0[i] + tdumi * (x1[i]-x0[i]))
-      ydumi <- with(YY, y0[i] + tdumi * (y1[i]-y0[i]))
+      xdumi <- with(Sdata, x0[i] + tdumi * (x1[i]-x0[i]))
+      ydumi <- with(Sdata, y0[i] + tdumi * (y1[i]-y0[i]))
       sdumi <- rep(i, ndumi)
       IDdumi <- 1:ndumi
       ## data points on this segment
@@ -236,15 +266,24 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
       wdati <- w[-(1:ndumi)]
       ##
       if(ismulti) {
-        ## attach correct marks to data points
+        ## (1) attach correct marks to data points
+        ## (2) replicate dummy points with each mark
+        ## (3) add new dummy points at data locations with other marks
         mdati <- marx[relevant]
-        ## replicate dummy points with each mark
-        ## also add points at data locations with other marks
+        ## save coordinates of unmarked dummy points
         xdumiU <- xdumi
         ydumiU <- ydumi
         sdumiU <- sdumi
         tdumiU <- tdumi
         wdumiU <- wdumi
+        ## start collecting coordinates of marked dummy poinys
+        xdumi <- xdumi[integer(0)]
+        ydumi <- ydumi[integer(0)]
+        sdumi <- sdumi[integer(0)]
+        tdumi <- tdumi[integer(0)]
+        wdumi <- wdumi[integer(0)]
+        mdumi <- marx[integer(0)]
+        ## for each mark level ...
         for(k in seq_len(length(flev))) {
           le <- flev[k]
           avoid <- (mdati != le)
@@ -256,14 +295,14 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
           wdumi <- c(wdumi, wdumiU,          wdati[avoid])
         }
       }
-      ## concatenate data points
+      ## concatenate data points in segment i
       xdat <- c(xdat, xdati)
       ydat <- c(ydat, ydati)
       sdat <- c(sdat, sdati)
       tdat <- c(tdat, tdati)
       wdat <- c(wdat, wdati)
       jdat <- c(jdat, jdati)
-      ## concatenate dummy points
+      ## concatenate dummy points in segment i
       xdum <- c(xdum, xdumi)
       ydum <- c(ydum, ydumi)
       sdum <- c(sdum, sdumi)
@@ -274,6 +313,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
         mdum <- c(mdum, mdumi)
       }
     }
+    ##  ------------ END LOOP over segments  -------------
     ## map data points back to their original order
     odat <- order(jdat)
     xdat <- xdat[odat]
@@ -281,9 +321,23 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     wdat <- wdat[odat]
     sdat <- sdat[odat]
     tdat <- tdat[odat]
-    ## Now create point patterns
-    dat <- ppp(xdat, ydat, marks=mdat, window=W, check=FALSE)
-    dum <- ppp(xdum, ydum, marks=mdum, window=W, check=FALSE)
+    if(ismulti)
+      mdat <- mdat[odat]
+    ## Finally create point patterns
+    dumdf <- data.frame(x   = xdum,
+                        y   = ydum,
+                        seg = sdum,
+                        tp  = tdum)
+    datdf <- data.frame(x   = xdat,
+                        y   = ydat,
+                        seg = sdat,
+                        tp  = tdat)
+    if(ismulti) {
+      datdf$marks <- mdat
+      dumdf$marks <- mdum
+    }
+    DUM <- lpp(dumdf, L)
+    DAT <- lpp(datdf, L)
   }
   ## save parameters
   dmethod <- paste("Equally spaced along each segment at spacing eps =",
@@ -295,11 +349,10 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
   param <- list(dummy = list(method=dmethod),
                 weight = list(method=wmethod))
   ## make quad scheme
-  Qout <- quad(dat, dum, c(wdat, wdum), param=param)
-  ## silently attach lines/network and local coordinates
-  attr(Qout, "domain") <- Y
-  attr(Qout, "localcoords") <- list(seg = c(sdat, sdum),
-                                    tp  = c(tdat, tdum))
+  Qout <- quad(as.ppp(DAT), as.ppp(DUM), c(wdat, wdum), param=param)
+  ## add information
+  attr(Qout, "plekken") <- superimpose(DAT, DUM, L=L)
+  ## 
   return(Qout)
 }
 
