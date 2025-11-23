@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.23 $ $Date: 2025/11/23 03:36:15 $
+#  $Revision: 1.24 $ $Date: 2025/11/23 03:49:17 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -296,10 +296,10 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 weight = list(method=wmethod))
   ## make quad scheme
   Qout <- quad(dat, dum, c(wdat, wdum), param=param)
-  ## silently attach lines and local coordinates
-  attr(Qout, "lines") <- Y
-  attr(Qout, "seg") <- c(sdat, sdum)
-  attr(Qout, "tp")  <- c(tdat, tdum)
+  ## silently attach lines/network and local coordinates
+  attr(Qout, "domain") <- Y
+  attr(Qout, "localcoords") <- list(seg = c(sdat, sdum),
+                                    tp  = c(tdat, tdum))
   return(Qout)
 }
 
