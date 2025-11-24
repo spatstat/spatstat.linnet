@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.93 $   $Date: 2025/11/24 02:58:15 $
+#  $Revision: 1.95 $   $Date: 2025/11/24 04:24:55 $
 #
 #  Image/function on a linear network
 #
@@ -750,7 +750,9 @@ marginalIntegralOfLinim <- function(f, margin=c("x", "y")) {
   sampleclass <- factor(sampleclass, levels=seq_len(length(pixcoord)))
   #' calculate indefinite integral
   z <- tapplysum(vals * sampleweight, list(sampleclass))
-  result <- data.frame(v=pixcoord, integral=z)
+  result <- data.frame(v          = pixcoord,
+                       cumulative = cumsum(z),
+                       marginal   = z/delta)
   colnames(result)[1] <- margin
   return(result)
 }

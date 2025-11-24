@@ -4,7 +4,7 @@
 ## Makes diagnostic plots based on residuals or energy weights
 ## for a point process model on a network
 ##
-## $Revision: 1.3 $ $Date: 2025/11/24 02:48:11 $
+## $Revision: 1.4 $ $Date: 2025/11/24 04:29:25 $
 ##
 
 diagnose.lppm <- function(object, ..., type="raw", which="all", 
@@ -238,35 +238,33 @@ diagLppmEngine <- function(object, ..., type="eem", typename, opt,
   ## -------------- marginals of smoothed field ------------------------
 
   if(opt$xmargin) {
-    ma <- marginalIntegralOfLinim(Z, "x")
-    xx <- ma$x
-    Fx <- ma$integral
+    M <- marginalIntegralOfLinim(Z, "x")
+    xx <- M$x
+    fx <- M$marginal
     if(type == "eem") {
-      ## length of network to the left of x
       One <- eval.linim(1 + 0 * Z)
-      Ema <- marginalIntegralOfLinim(One, "x")
-      EFx <- Ema$integral
+      EM <- marginalIntegralOfLinim(One, "x")
+      Efx <- EM$marginal
     } else {
       ## zero
-      EFx <- numeric(length(xx))
+      Efx <- numeric(length(xx))
     }
-    result$xmargin <- list(x=xx, xZ=Fx, ExZ=EFx)
+    result$xmargin <- list(x=xx, xZ=fx, ExZ=Efx)
   }
   
   if(opt$ymargin) {
-    ma <- marginalIntegralOfLinim(Z, "y")
-    yy <- ma$y
-    Fy <- ma$integral
+    M <- marginalIntegralOfLinim(Z, "y")
+    yy <- M$y
+    fy <- M$marginal
     if(type == "eem") {
-      ## length of network below height y
       One <- eval.linim(1 + 0 * Z)
-      Ema <- marginalIntegralOfLinim(One, "y")
-      EFy <- Ema$integral
+      EM <- marginalIntegralOfLinim(One, "y")
+      Efy <- EM$marginal
     } else {
       ## zero
-      EFy <- numeric(length(yy))
+      Efy <- numeric(length(yy))
     }
-    result$ymargin <- list(y=yy, yZ=Fy, EyZ=EFy)
+    result$ymargin <- list(y=yy, yZ=fy, EyZ=Efy)
   }
   
 
