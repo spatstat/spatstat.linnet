@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.021
+        CHANGES IN spatstat.linnet VERSION 3.3-2.022
 
 OVERVIEW
 
@@ -20,6 +20,12 @@ NEW FUNCTIONS
     o as.lintess
     Convert other kinds of data to a tessellation on a network.
 
+    o diagnose.lppm
+    Diagnostic plots for point process model on a linear network.
+    
+    o eem.lppm
+    Stoyan-Grabarnik exponential energy weights diagnostic.
+    
     o lurking.lpp
     Lurking variable plot for point pattern on a linear network.
 

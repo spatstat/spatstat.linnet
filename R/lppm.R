@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.65 $   $Date: 2025/11/22 02:02:06 $
+#  $Revision: 1.66 $   $Date: 2025/11/24 01:07:52 $
 #
 
 lppm <- function(X, ...) {
@@ -522,6 +522,15 @@ parres.lppm <- function(model, covariate, ...,
                         callstring    = callstring,
                         modelname     = modelname,
                         do.variance   = is.poisson(model))
+}
+
+eem.lppm <- function(fit, ...) {
+  verifyclass(fit, "lppm")
+  lambda <- fitted(fit, dataonly=TRUE, ...)
+  eemarks <- 1/lambda
+  attr(eemarks, "type") <- "eem"
+  attr(eemarks, "typename") <- "exponential energy marks"
+  return(eemarks)
 }
 
 residuals.lppm <- function(object, type="raw", ...) {

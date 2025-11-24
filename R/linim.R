@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.92 $   $Date: 2025/11/16 11:01:59 $
+#  $Revision: 1.93 $   $Date: 2025/11/24 02:58:15 $
 #
 #  Image/function on a linear network
 #
@@ -699,6 +699,60 @@ integral.linim <- function(f, domain=NULL, weight=NULL, ...){
 mean.linim <- function(x, ...) {
   trap.extra.arguments(...)
   integral(x)/sum(lengths_psp(as.psp(as.linnet(x))))
+}
+
+marginalIntegralOfLinim <- function(f, margin=c("x", "y")) {
+  verifyclass(f, "linim")
+  margin <- match.arg(margin)
+  Z <- as.im(f)
+  #' extract network data
+  L <- as.linnet(f)
+  ns <- nsegments(L)
+  df <- attr(f, "df")
+  vals <- df$values
+  tp   <- df$tp
+  xx  <- df$x
+  yy  <- df$y
+  seg <- factor(df$mapXY, levels=1:ns)
+  #' ensure each segment has at least one sample point
+  nper <- table(seg)
+  if(any(missed <- (nper == 0))) {
+    missed <- unname(which(missed))
+    mp <- midpoints.psp(as.psp(L)[missed])
+    #' nearest pixel value
+    valmid <- safelookup(f, mp)
+    #' concatenate data
+    vals <- c(vals, valmid)
+    seg  <- unlist(list(seg, factor(missed, levels=1:ns)))
+    tp   <-  c(tp, rep(0.5, sum(missed)))
+    coom <- coords(mp)
+    xx   <- c(xx, coom$x)
+    yy   <- c(yy, coom$y)
+    #' update
+    nper <- table(seg)
+  }
+  #' each sample point represents a length increment
+  len <- lengths_psp(as.psp(L))
+  sampleweight <- (len/nper)[as.integer(seg)]
+  #' determine sequence of x or y values and classify each sample point
+  switch(margin,
+         x = {
+           pixcoord <- Z$xcol
+           samplecoord <- xx
+         },
+         y = {
+           pixcoord <- Z$yrow
+           samplecoord <- yy
+         })
+  delta <- mean(diff(pixcoord))
+  bks <- c(pixcoord[1] - delta, pixcoord) + delta/2
+  sampleclass <- fastFindInterval(samplecoord, bks, left.open=FALSE)
+  sampleclass <- factor(sampleclass, levels=seq_len(length(pixcoord)))
+  #' calculate indefinite integral
+  z <- tapplysum(vals * sampleweight, list(sampleclass))
+  result <- data.frame(v=pixcoord, integral=z)
+  colnames(result)[1] <- margin
+  return(result)
 }
 
 quantile.linim <- function(x, probs = seq(0,1,0.25), ...) {

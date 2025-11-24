@@ -17,6 +17,7 @@
 \alias{as.owin.lintess}
 \alias{as.owin.linearquadratcount}
 \alias{Window.linearquadratcount}
+\alias{diagLppmEngine}
 \alias{domain.linearquadratcount}
 \alias{default.linnet.tolerance}
 \alias{evaluateNetCovariate}
@@ -32,8 +33,10 @@
 \alias{is.poisson.exactlppm}
 \alias{is.stationary.exactlppm}
 \alias{makeLinnetTolerance}
+\alias{marginalIntegralOfLinim}
 \alias{plot.linearquadratcount}
 \alias{predict.exactlppm}
+\alias{print.diaglppm}
 \alias{print.exactlppm}
 \alias{print.lintess}
 \alias{print.summary.linim}
@@ -113,6 +116,10 @@ as.lintess(X, \dots)
 \method{as.owin}{lintess}(W, \dots)
 \method{as.owin}{linearquadratcount}(W, \dots, fatal)
 \method{Window}{linearquadratcount}(X, \dots)
+diagLppmEngine(object, \dots, type, typename, opt,
+               sigma, compute.sd, compute.cts,
+               envelope, nsim, nrank,
+               rv, oldstyle, splineargs, verbose)
 \method{domain}{linearquadratcount}(X, \dots)
 \method{flipxy}{lintess}(X, \dots)
 \method{getglmdata}{lppm}(object, \dots)
@@ -128,8 +135,10 @@ exactlppm(X, baseline, \dots, subset)
 \method{is.poisson}{exactlppm}(x)
 \method{is.stationary}{exactlppm}(x)
 makeLinnetTolerance(toler)
+marginalIntegralOfLinim(f, margin)
 \method{plot}{linearquadratcount}(x, \dots, main, add, do.plot, textargs)
 \method{predict}{exactlppm}(object, locations,\dots)
+\method{print}{diaglppm}(x, \dots)
 \method{print}{exactlppm}(x, \dots)
 \method{print}{lintess}(x, \dots)
 \method{print}{summary.linim}(x, \dots)
