@@ -10,11 +10,15 @@ The original `spatstat` package has been split into several sub-packages
 
 This package `spatstat.linnet` is one of the sub-packages. 
 It contains the subset of the functionality of `spatstat`
-that deals with data on linear networks.
+that deals with **data on linear networks**.
 
 There is also an extension package
 [spatstat.Knet](https://github.com/spatstat/spatstat.Knet)
 which contains additional algorithms for linear networks.
+
+You are viewing the GitHub repository which holds
+the latest **development version** of `spatstat.linnet`.
+For the latest public release on CRAN, click the green badge above.
 
 ### Where to find data
 
@@ -83,6 +87,23 @@ and the point pattern `wacrashes` provided in the extension package
 - analysis of deviance for point process model
 - simulate fitted model
 
+### Installing the package
+
+This repository contains the _development version_ of
+`spatstat.linnet`. The easiest way to install the development version
+is to start R and type
+
+```R
+repo <- c('https://spatstat.r-universe.dev', 'https://cloud.r-project.org')
+install.packages("spatstat.linnet", dependencies=TRUE, repos=repo)
+```
+
+To install the latest _public release_ of `spatstat.linnet`,
+type
+
+```R
+install.packages("spatstat.linnet")
+```
 
 
 
