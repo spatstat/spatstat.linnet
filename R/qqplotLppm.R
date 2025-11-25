@@ -4,7 +4,7 @@
 #' 
 #'  qqplot.lppm()       QQ plot (including simulation)
 #'
-#'  $Revision: 1.2 $   $Date: 2025/11/24 08:56:11 $
+#'  $Revision: 1.3 $   $Date: 2025/11/25 00:14:39 $
 #'
 
 qqplot.lppm <- local({
@@ -104,7 +104,7 @@ qqplot.lppm <- local({
         envir.expr <- parent.frame()
     } else if(inherits(expr, "envelope")) {
       simpat <- attr(expr, "simpatterns")
-      if(!is.null(simpat) && all(sapply(simpat, is.ppp))) {
+      if(!is.null(simpat) && all(sapply(simpat, is.lpp))) {
         expr <- expression(simpat[[inext]])
         envir.expr <- envir.here
         dont.complain.about(simpat)
@@ -114,7 +114,7 @@ qqplot.lppm <- local({
                         "is an envelope object,",
                         "but does not contain point patterns"),
                   call.=FALSE)
-    } else if(is.list(expr) && all(sapply(expr, is.ppp))) {
+    } else if(is.list(expr) && all(sapply(expr, is.lpp))) {
       simpat <- expr
       expr <- expression(simpat[[inext]])
       envir.expr <- envir.here
@@ -123,7 +123,7 @@ qqplot.lppm <- local({
       how.simulating <- "extracting point pattern from list"
     } else stop(paste(sQuote("expr"),
                       "should be an expression, or an envelope object,",
-                      "or a list of point patterns"),
+                      "or a list of point patterns on a network"),
                 call.=FALSE)
 
     exprstring <- if(simsource == "expr") deparse(expr) else NULL
