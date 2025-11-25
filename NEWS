@@ -1,13 +1,9 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.023
+        CHANGES IN spatstat.linnet VERSION 3.3-2.024
 
 OVERVIEW
 
-    o Lurking variable plot on a network.
-
-    o Partial residual plot on a network.
-
-    o Residual measure for a fitted point process model on a linear network.
+    o Diagnostics for a fitted point process model on a linear network.
 
     o Quadrat counting and quadrat tests on a linear network.
 
@@ -40,6 +36,9 @@ NEW FUNCTIONS
 
     o parres.lppm
     Partial residual plot for point process model on a linear network.
+
+    o qqplot.lppm
+    Residual Q-Q plot for  point process model on a linear network.
     
     o quadratcount.lpp
     Method for quadrat counting on a linear network.

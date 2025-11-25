@@ -35,10 +35,12 @@
 \alias{makeLinnetTolerance}
 \alias{marginalIntegralOfLinim}
 \alias{plot.linearquadratcount}
+\alias{plot.qqlppm}
 \alias{predict.exactlppm}
 \alias{print.diaglppm}
 \alias{print.exactlppm}
 \alias{print.lintess}
+\alias{print.qqlppm}
 \alias{print.summary.linim}
 \alias{print.summary.linnet}
 \alias{print.summary.lintess}
@@ -137,10 +139,12 @@ exactlppm(X, baseline, \dots, subset)
 makeLinnetTolerance(toler)
 marginalIntegralOfLinim(f, margin)
 \method{plot}{linearquadratcount}(x, \dots, main, add, do.plot, textargs)
+\method{plot}{qqlppm}(x, \dots, limits, monochrome, limcol)
 \method{predict}{exactlppm}(object, locations,\dots)
 \method{print}{diaglppm}(x, \dots)
 \method{print}{exactlppm}(x, \dots)
 \method{print}{lintess}(x, \dots)
+\method{print}{qqlppm}(x, \dots)
 \method{print}{summary.linim}(x, \dots)
 \method{print}{summary.linnet}(x, \dots)
 \method{print}{summary.lintess}(x, \dots)
