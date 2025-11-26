@@ -252,12 +252,16 @@
  \code{\link{lppm}}
 }
 \examples{
-    X <- unmark(chicago)
-    if(interactive()) X <- X[c(FALSE,TRUE)]
+    if(online <- interactive()) {
+      X <- unmark(chicago)
+      fit <- lppm(X ~ x + y)
+      ns <- 100
+    } else {
+      X <- runiflpp(20, simplenet)
+      fit <- lppm(X ~ y)
+      ns <- 4
+    }
 
-    fit <- lppm(X ~ x + y)
-
-    ns <- if(interactive()) 100 else 4
     qqplot.lppm(fit, nsim=ns)
     qqplot.lppm(fit, nsim=ns, type="pearson")
 
