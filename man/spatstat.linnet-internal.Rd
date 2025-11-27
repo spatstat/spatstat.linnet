@@ -168,7 +168,7 @@ flatdensityatpointslpp(X, \dots, leaveoneout, disconnect, weights, what)
 local2lpp(L, seg, tp, X, df.only)
 looHeatLPP(U0, Amatrix, npts, niter, nsave,
            lixelweight, lixelmap, verbose) 
-looVoronoiLPP(X)
+looVoronoiLPP(X, metric)
 validate.lpp.coords(X, fatal, context)
 \method{as.ppm}{lppm}(object)
 pointsAlongNetwork(L, delta)
@@ -226,7 +226,7 @@ qkdeEngine(x, sigma, \dots, at, what,
 %NAMESPACE S3method("Summary", "linimlist")
 LinimOp(e1, e2, op)
 LinimListOp(e1, e2, op)
-traceTessLinnet(A, L)
+traceTessLinnet(A, L, reltol)
 
 }
 \details{

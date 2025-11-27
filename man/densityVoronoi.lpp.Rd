@@ -7,7 +7,9 @@
   on the network.
 }
 \usage{
-\method{densityVoronoi}{lpp}(X, f = 1, \dots, nrep = 1, verbose = TRUE)
+\method{densityVoronoi}{lpp}(X, f = 1, \dots,
+              metric=c("shortestpath", "Euclidean"),
+              nrep = 1, verbose = TRUE)
 }
 \arguments{
   \item{X}{
@@ -20,6 +22,11 @@
   \item{\dots}{
     Arguments passed to \code{\link{linim}} determining the
     pixel resolution of the result.
+  }
+  \item{metric}{
+    Character string (partially matched) specifying the distance
+    metric used to define the Dirichlet tessellation.
+    Argument passed to \code{\link{lineardirichlet}}.
   }
   \item{nrep}{
     Number of independent repetitions of the randomised
@@ -92,8 +99,17 @@
   See also \code{\link{density.lpp}}.
 }
 \examples{
-   nr <- if(interactive()) 100 else 3
-   plot(densityVoronoi(spiders, 0.1, nrep=nr))
+   if(interactive()) {
+     X <- spiders
+     nr <- 100
+   } else {
+     X <- runiflpp(10, simplenet)
+     nr <- 3
+   }
+   plot(densityVoronoi(X))
+   plot(densityVoronoi(X, 0.1, nrep=nr))
+   plot(densityVoronoi(X, metric="E"))
+   plot(dirichlet(as.ppp(X)), add=TRUE, lty=2)
 }
 \keyword{spatial}
 \keyword{methods}

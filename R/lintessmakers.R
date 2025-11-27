@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.9 $  $Date: 2025/11/16 06:20:27 $
+#'   $Revision: 1.11 $  $Date: 2025/11/27 03:06:48 $
 #' 
 
 divide.linnet <- local({
@@ -148,10 +148,13 @@ intersect.lintess <- function(X, Y) {
   return(out)
 }
 
-traceTessLinnet <- function(A, L) {
+traceTessLinnet <- function(A, L, reltol) {
   ## linear tessellation on network L induced by 2D tessellation A
   stopifnot(is.tess(A))
   stopifnot(is.linnet(L))
+  ## relative tolerance for close points
+  if(missing(reltol)) reltol <- .Machine$double.eps
+  ## extract tiles as polygons
   til <- solapply(tiles(A), as.polygonal)
   ntil <- length(til)
   if(A$type == "image" && ntil > 1) {
@@ -170,19 +173,54 @@ traceTessLinnet <- function(A, L) {
   ## extract segments on network
   lin <- L$lines
   ## determine crossing points
-  xing <- as.lpp(unique(crossing.psp(edg, lin)), L=L)
+  xing2D <- unique(crossing.psp(edg, lin))
+  xingL <- as.lpp(xing2D, L=L)
+  if(reltol > 0) {
+    ## remove very close pairs of points that lie on the same segment
+    ## (which usually arise from numerical error)
+    thresh <- reltol * diameter(Frame(A))
+    if(minnndist(xing2D) <= thresh) {
+      ## find close pairs in 2D
+      cl <- closepairs(xing2D, thresh, twice=FALSE)
+      I <- cl$i
+      J <- cl$j  # I < J always because 'twice=FALSE'
+      ## find those pairs which lie on the same segment
+      seg <- coords(xingL)$seg
+      hit <- (seg[I] == seg[J])
+      ## remove the second point
+      remove <- J[hit]
+      if(length(remove)) 
+        xingL <- xingL[-remove]
+    }
+  }
   ## induce tessellation
-  D <- divide.linnet(xing)
+  D <- divide.linnet(xingL)
   df <- D$df
   ## create test points in the middle of each piece of segment
   dfmid <- with(df, data.frame(seg=seg, tp=(t0+t1)/2))
   Xmid <- lpp(dfmid, L)
   ## classify each test point in tessellation A
   ind <- tileindex(as.ppp(Xmid), Z=A)
+  ## The following can be replaced with tileindex(.. all.inside=TRUE) later
   if(anyNA(ind)) {
-    ## add a tile
-    levels(ind) <- c(levels(ind), "<OTHER>")
-    ind[is.na(ind)] <- "<OTHER>"
+    ## assign to nearest tile
+    bad <- is.na(ind)
+    nbad <- sum(bad)
+    Xbad <- as.ppp(Xmid)[bad]
+    for(i in seq_len(ntil)) {
+      dtile.i <- distfun(as.polygonal(til[[i]]))(Xbad)
+      if(i == 1) {
+        dtile.min <- dtile.i
+        closest   <- rep(1, nbad)
+      } else {
+        better <- (dtile.i < dtile.min)
+        if(any(better)) {
+          dtile.min[better] <- dtile.i[better]
+          closest[better] <- i
+        }
+      }
+    }
+    ind[bad] <- levels(ind)[closest]
   }
   ## create linear tessellation data
   dfnew <- df

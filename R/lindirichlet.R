@@ -2,10 +2,18 @@
 #'
 #'   Dirichlet tessellation on a linear network
 #'
-#'   $Revision: 1.10 $  $Date: 2020/03/16 10:28:51 $
+#'   $Revision: 1.12 $  $Date: 2025/11/27 05:34:50 $
 
-lineardirichlet <- function(X) {
+lineardirichlet <- function(X, metric=c("shortestpath", "Euclidean")) {
   stopifnot(is.lpp(X))
+  metric <- match.arg(metric)
+  if(metric == "Euclidean") {
+    P <- as.ppp(X)
+    Window(P) <- Frame(P)
+    D2 <- dirichlet(P)
+    result <- intersect.lintess(D2, domain(X))
+    return(result)
+  }
   #' unique points, remembering original sequence
   ii <- which(!duplicated(X))
   uX <- X[ii]

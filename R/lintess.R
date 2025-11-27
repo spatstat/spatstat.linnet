@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.62 $   $Date: 2025/11/17 10:49:09 $
+#'   $Revision: 1.64 $   $Date: 2025/11/27 03:13:31 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -407,6 +407,8 @@ lineartileindex <- function(seg, tp, Z,
            })
   return(answer)
 }
+
+as.function.lintess <- function(x, ...) { as.linfun.lintess(x, ...) }
 
 as.linfun.lintess <- local({
 

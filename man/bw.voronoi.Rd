@@ -11,7 +11,9 @@
 }
 \usage{
 bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
-           prob = NULL, nrep = 100, verbose = TRUE, warn=TRUE)
+           prob = NULL, nrep = 100,
+           metric=c("shortestpath", "Euclidean"),
+           verbose = TRUE, warn=TRUE)
 }
 \arguments{
   \item{X}{
@@ -35,6 +37,11 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
   }
   \item{nrep}{
     Number of simulated realisations to be used for the computation.
+  }
+  \item{metric}{
+    Character string (partially matched) specifying the distance
+    metric used to define the Dirichlet tessellation.
+    Argument passed to \code{\link{lineardirichlet}}.
   }
   \item{verbose}{
     Logical value indicating whether to print progress reports.

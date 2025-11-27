@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.18 $   $Date: 2023/05/02 08:02:49 $
+#   $Revision: 1.19 $   $Date: 2025/11/27 01:01:21 $
 #
 
 linfun <- function(f, L) {
@@ -90,6 +90,8 @@ as.data.frame.linfun <- function(x, ...) {
   as.data.frame(as.linim(x, ...))
 }
 
+as.function.linim <- function(x, ...) { as.linfun.linim(x, ...) }
+
 as.linfun.linim <- function(X, ...) {
   trap.extra.arguments(..., .Context="as.linfun.linim")
   ## extract info
@@ -159,3 +161,7 @@ as.linfun.linnet <- function(X, ..., values=marks(X)) {
   g <- linfun(f, unmark(X))
   return(g)
 }
+
+as.function.linfun <- function(x, ...) { return(x) }
+
+as.function.linnet <- function(x, ...) { as.linfun.linnet(x, ...) }

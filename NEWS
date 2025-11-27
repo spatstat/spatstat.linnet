@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.3-2.026
+        CHANGES IN spatstat.linnet VERSION 3.3-2.027
 
 OVERVIEW
 
@@ -53,10 +53,23 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o as.linnet.psp
     New arguments 'chop' and 'fuse'.
-    
+
+    o bw.voronoi
+    New argument 'metric' passed to 'densityVoronoi.lpp'.
+
+    o densityVoronoi.lpp
+    New argument 'metric' passed to 'lineardirichlet'.
+
     o integral.linim, integral.linfun
     Argument 'domain' can be a tessellation on a network (class 'lintess').
 
+    o intersect.lintess
+    Improved behaviour when X or Y is a 2D tessellation.
+
+    o lineardirichlet
+    New argument 'metric' allows the tessellation to be constructed
+    using either the shortest-path distance or Euclidean distance.
+    
     o linequad
     Argument 'Y' can be a linear network.
     

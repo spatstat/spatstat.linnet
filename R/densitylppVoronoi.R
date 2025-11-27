@@ -3,15 +3,18 @@
 #'
 #'    densityVoronoi.lpp
 #'
-#'    $Revision: 1.15 $  $Date: 2024/01/29 08:04:32 $
+#'    $Revision: 1.16 $  $Date: 2025/11/27 03:51:46 $
 #' 
 
-densityVoronoi.lpp <- function(X, f = 1, ..., nrep = 1, verbose = TRUE){
-  # Check input
+densityVoronoi.lpp <- function(X, f = 1, ...,
+                               metric=c("shortestpath", "Euclidean"),
+                               nrep = 1, verbose = TRUE){
+  ## Check input
   stopifnot(is.lpp(X))
   check.1.real(f)
   if(badprobability(f))
     stop("f should be a probability between 0 and 1")
+  metric <- match.arg(metric)
   check.1.integer(nrep)
   stopifnot(nrep >= 1)
 
@@ -30,13 +33,13 @@ densityVoronoi.lpp <- function(X, f = 1, ..., nrep = 1, verbose = TRUE){
   if(f == 1) {
     #' Voronoi estimate
     if(!anyDuplicated(X)) {
-      tes <- lineardirichlet(X)
+      tes <- lineardirichlet(X, metric=metric)
       num <- 1
     } else {
       um <- uniquemap(X)
       first <- (um == seq_along(um))
       UX <- X[first]
-      tes <- lineardirichlet(UX)
+      tes <- lineardirichlet(UX, metric=metric)
       num <- as.integer(table(factor(um, levels=um[first])))
     }
     v <- tile.lengths(tes)
@@ -61,13 +64,13 @@ densityVoronoi.lpp <- function(X, f = 1, ..., nrep = 1, verbose = TRUE){
       dflist[[i]]         <- blankentry
     } else {
       if(!anyDuplicated(Xthin)) {
-        tes <- lineardirichlet(Xthin)
+        tes <- lineardirichlet(Xthin, metric=metric)
         num <- 1
       } else {
         um <- uniquemap(Xthin)
         first <- (um == seq_along(um))
         UXthin <- Xthin[first]
-        tes <- lineardirichlet(UXthin)
+        tes <- lineardirichlet(UXthin, metric=metric)
         num <- as.integer(table(factor(um, levels=um[first])))
       }
       v <- tile.lengths(tes)
@@ -101,9 +104,12 @@ densityVoronoi.lpp <- function(X, f = 1, ..., nrep = 1, verbose = TRUE){
 }
 
 bw.voronoi <- function(X, ..., probrange = c(0.2,0.8), nprob = 10,
-                       prob = NULL, nrep = 100, verbose = TRUE, warn=TRUE){
+                       prob = NULL, nrep = 100, 
+                       metric=c("shortestpath", "Euclidean"),
+                       verbose = TRUE, warn=TRUE) {
   stopifnot(is.lpp(X))
   trap.extra.arguments(..., .Context="in bw.voronoi")
+  metric <- match.arg(metric)
   if(!is.null(prob)) {
     stopifnot(is.numeric(prob) && is.vector(prob))
     nprob <- length(prob)
@@ -136,10 +142,10 @@ bw.voronoi <- function(X, ..., probrange = c(0.2,0.8), nprob = 10,
       if(any(retain)) {
         Xp <- X[retain]
         #' compute leave-one-out estimates for points in Xp
-        lamhat[retain, j, irep] <- looVoronoiLPP(Xp)/pj
+        lamhat[retain, j, irep] <- looVoronoiLPP(Xp, metric=metric)/pj
         #' compute leave-one-out estimates for other points
         if(any(extra <- !retain)) {
-          tess <- lineardirichlet(Xp)
+          tess <- lineardirichlet(Xp, metric=metric)
           idx <- as.integer(lineartileindex(segX[extra], tpX[extra], tess))
           lamhat[extra, j, irep] <- 1/(pj * tile.lengths(tess)[idx])
         }
@@ -157,9 +163,8 @@ bw.voronoi <- function(X, ..., probrange = c(0.2,0.8), nprob = 10,
 }
 
 
-looVoronoiLPP <- function(X) {
+looVoronoiLPP <- function(X, metric) {
   #' Compute leave-one-out Voronoi intensity estimate
-  #' Hacked from 'lineardirichlet'
   nX <- npoints(X)
   if(nX == 0) return(numeric(0))
   #' Unique points, remembering original sequence
@@ -169,6 +174,15 @@ looVoronoiLPP <- function(X) {
   #' trivial case
   if(nuX <= 1) 
     return(rep(1/volume(domain(X)), nX))
+  if(metric == "Euclidean") {
+    ## brute force, for now
+    vu <- numeric(nuX)
+    for(j in seq_len(nuX)) 
+      vu[j] <- densityVoronoi(uX[-j], metric="Euclidean")[uX[j]]
+    values <- numeric(nX)
+    values[ii] <- vu
+  }
+  #' The following is hacked from 'lineardirichlet'
   #' local coordinates
   coUX <- coords(uX)[, c("seg", "tp")]
   #' add label from original sequence index
