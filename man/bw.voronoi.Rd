@@ -78,11 +78,20 @@ bw.voronoi(X, \dots, probrange = c(0.2, 0.8), nprob = 10,
   \code{\link{densityVoronoi.lpp}}, \code{\link[spatstat.explore]{bw.optim.object}}
 }
 \examples{
-   np <- if(interactive()) 10 else 3
-   nr <- if(interactive()) 100 else 2
-   b <- bw.voronoi(spiders, nprob=np, nrep=nr)
+   if(interactive()) {
+     X <- spiders
+     np <- 10
+     nr <- 100
+   } else {
+     X <- runiflpp(4, simplenet)
+     np <- 3
+     nr <- 2
+   }
+   b <- bw.voronoi(X, nprob=np, nrep=nr)
    b
    plot(b)
+   bE <- bw.voronoi(X, nprob=np, nrep=nr, metric="E")
+   bE
 }
 \keyword{spatial}
 \keyword{methods}

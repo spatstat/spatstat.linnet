@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.11 $  $Date: 2025/11/27 03:06:48 $
+#'   $Revision: 1.12 $  $Date: 2025/11/27 06:32:02 $
 #' 
 
 divide.linnet <- local({
@@ -175,7 +175,7 @@ traceTessLinnet <- function(A, L, reltol) {
   ## determine crossing points
   xing2D <- unique(crossing.psp(edg, lin))
   xingL <- as.lpp(xing2D, L=L)
-  if(reltol > 0) {
+  if(reltol > 0 && npoints(xingL) >= 2) {
     ## remove very close pairs of points that lie on the same segment
     ## (which usually arise from numerical error)
     thresh <- reltol * diameter(Frame(A))
