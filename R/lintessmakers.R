@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.12 $  $Date: 2025/11/27 06:32:02 $
+#'   $Revision: 1.13 $  $Date: 2025/11/27 07:50:47 $
 #' 
 
 divide.linnet <- local({
@@ -148,12 +148,12 @@ intersect.lintess <- function(X, Y) {
   return(out)
 }
 
-traceTessLinnet <- function(A, L, reltol) {
+traceTessLinnet <- function(A, L, epsfrac) {
   ## linear tessellation on network L induced by 2D tessellation A
   stopifnot(is.tess(A))
   stopifnot(is.linnet(L))
-  ## relative tolerance for close points
-  if(missing(reltol)) reltol <- .Machine$double.eps
+  ## relative threshold defining whether two points are different
+  if(missing(epsfrac)) epsfrac <- .Machine$double.eps
   ## extract tiles as polygons
   til <- solapply(tiles(A), as.polygonal)
   ntil <- length(til)
@@ -175,10 +175,10 @@ traceTessLinnet <- function(A, L, reltol) {
   ## determine crossing points
   xing2D <- unique(crossing.psp(edg, lin))
   xingL <- as.lpp(xing2D, L=L)
-  if(reltol > 0 && npoints(xingL) >= 2) {
+  if(epsfrac > 0 && npoints(xingL) >= 2) {
     ## remove very close pairs of points that lie on the same segment
     ## (which usually arise from numerical error)
-    thresh <- reltol * diameter(Frame(A))
+    thresh <- epsfrac * diameter(Frame(A))
     if(minnndist(xing2D) <= thresh) {
       ## find close pairs in 2D
       cl <- closepairs(xing2D, thresh, twice=FALSE)

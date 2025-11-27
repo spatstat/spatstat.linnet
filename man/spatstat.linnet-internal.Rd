@@ -226,7 +226,7 @@ qkdeEngine(x, sigma, \dots, at, what,
 %NAMESPACE S3method("Summary", "linimlist")
 LinimOp(e1, e2, op)
 LinimListOp(e1, e2, op)
-traceTessLinnet(A, L, reltol)
+traceTessLinnet(A, L, epsfrac)
 
 }
 \details{
