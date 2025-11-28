@@ -48,7 +48,7 @@
   of weights \eqn{m[i]}{m_i} associated with the points \eqn{x[i]}{x_i}
   of the original data pattern. The original data pattern
   (in corresponding order) can be
-  extracted from \code{fit} using \code{\link{response}}.
+  extracted from \code{fit} using \code{\link{response.lppm}}.
   
   The function \code{\link{diagnose.lppm}}
   produces a set of sensible diagnostic plots based on these weights.

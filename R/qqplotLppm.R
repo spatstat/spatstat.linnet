@@ -4,7 +4,7 @@
 #' 
 #'  qqplot.lppm()       QQ plot (including simulation)
 #'
-#'  $Revision: 1.3 $   $Date: 2025/11/25 00:14:39 $
+#'  $Revision: 1.4 $   $Date: 2025/11/28 06:37:57 $
 #'
 
 qqplot.lppm <- local({
@@ -232,7 +232,6 @@ qqplot.lppm <- local({
            mean = {
              ## compute quantiles corresponding to probabilities p[i]
              ## separately in each realisation.
-             browser()
              datquant <- weighted.quantile(x=dat,
                                            w=pixwt,
                                            probs=probs)

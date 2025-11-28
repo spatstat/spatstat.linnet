@@ -247,7 +247,7 @@
 }
 \seealso{
  \code{\link{diagnose.lppm}},
- \code{\link{lurking}},
+ \code{\link{lurking.lppm}},
  \code{\link{residuals.lppm}},
  \code{\link{lppm}}
 }

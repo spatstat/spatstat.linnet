@@ -8,6 +8,8 @@ OVERVIEW
     o Quadrat counting and quadrat tests on a linear network.
 
     o More geometrical operations on linear network objects.
+
+    o Pixelwise arithmetic on a linear network.
     
     o Internal improvements.
 
@@ -21,6 +23,12 @@ NEW FUNCTIONS
     
     o eem.lppm
     Stoyan-Grabarnik exponential energy weights diagnostic.
+
+    o harmonise.linim
+    Convert several images on a network to a common pixel grid.
+
+    o linim.apply
+    Apply a function pixelwise to a list of images on a network.
     
     o lurking.lpp
     Lurking variable plot for point pattern on a linear network.

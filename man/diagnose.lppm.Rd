@@ -74,7 +74,7 @@
     \code{FALSE} for non-Poisson models. See Details.
   }
   \item{envelope,nsim,nrank}{
-    Arguments passed to \code{\link{lurking}}
+    Arguments passed to \code{\link{envelope.lppm}}
     in order to plot simulation envelopes for the lurking variable plots.
   }
   \item{rv}{
@@ -110,7 +110,7 @@
     or using the correct asymptotic formula (\code{oldstyle=FALSE}).
   }
   \item{splineargs}{
-    Argument passed to \code{\link{lurking}} 
+    Argument passed to \code{\link[stats]{smooth.spline}} 
     to control the smoothing in the lurking variable plot.
   }
   \item{x}{
@@ -121,7 +121,7 @@
   \item{main}{Main title for the plot.}
   \item{\dots}{
     Extra arguments, controlling either the resolution of the smoothed image
-    (passed from \code{diagnose.lppm} to \code{\link[spatstat.linnet]{density.lpp}}) 
+    (passed from \code{diagnose.lppm} to \code{\link{density.lpp}}) 
     or the appearance of the plots
     (passed from \code{diagnose.lppm} to \code{plot.diaglppm} and from 
     \code{plot.diaglppm} to \code{\link{plot.default}}).
@@ -157,7 +157,7 @@
   \describe{
     \item{\code{"eem"}:}{
     exponential energy marks (Stoyan and Grabarnik, 1991) 
-    computed by \code{\link{eem}}.
+    computed by \code{\link{eem.lppm}}.
     These are positive weights attached to the data points
     (i.e. the points of the point pattern dataset
     to which the model was fitted).

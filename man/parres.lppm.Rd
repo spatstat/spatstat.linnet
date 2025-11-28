@@ -109,7 +109,7 @@
       not present in the model.
       Alternatively \code{covariate} can be the name of a
       covariate that was supplied when the model was fitted
-      (i.e. in the call to \code{\link{ppm}})
+      (i.e. in the call to \code{\link[spatstat.model]{ppm}})
       but which does not feature in the model formula.
       In either case we speak of a new covariate \eqn{Z(u)}.
       If the fitted model intensity is \eqn{\lambda(u)}{lambda(u)}
@@ -195,7 +195,7 @@
   Ya-Mei Chang and Yong Song.
 }
 \seealso{
-  \code{\link{addvar}},
+  \code{\link[spatstat.model]{addvar}},
   \code{\link[spatstat.explore]{rhohat}},
   \code{\link[spatstat.explore]{rho2hat}}
 }

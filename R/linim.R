@@ -1,7 +1,7 @@
 #
 # linim.R
 #
-#  $Revision: 1.95 $   $Date: 2025/11/24 04:24:55 $
+#  $Revision: 1.102 $   $Date: 2025/11/28 05:37:41 $
 #
 #  Image/function on a linear network
 #
@@ -370,21 +370,34 @@ as.linim.default <- function(X, L, ..., eps = NULL, dimyx = NULL, xy = NULL,
                              rule.eps=c("adjust.eps",
                                         "grow.frame", "shrink.frame"),
                              delta = NULL, nd = NULL) {
-  stopifnot(inherits(L, "linnet"))
-  rule.eps <- match.arg(rule.eps)
-  Y <- as.im(X, W=Frame(L), ..., eps=eps, dimyx=dimyx, xy=xy, rule.eps=rule.eps)
-  M <- psp2mask(as.psp(L), as.owin(Y))
-  Y[complement.owin(M)] <- NA
   df <- NULL
-  if(!is.null(delta) || !is.null(nd)) {
-    if(is.null(delta)) delta <- volume(L)/nd
-    df <- pointsAlongNetwork(L, delta)
+  if(is.linim(L) && !is.null(attr(L, "df"))) {
+    ## use L as template
+    Y <- as.im(L, W=Frame(L), ..., xy=as.im(L))
+    df <- attr(L, "df")
+    L <- as.linnet(L)
+  } else {
+    ## construct template
+    rule.eps <- match.arg(rule.eps)
+    Y <- as.im(X, W=Frame(L), ...,
+               eps=eps, dimyx=dimyx, xy=xy, rule.eps=rule.eps)
+    M <- psp2mask(as.psp(L), as.owin(Y))
+    Y[complement.owin(M)] <- NA
+    if(!is.null(delta) || !is.null(nd)) {
+      if(is.null(delta)) delta <- volume(L)/nd
+      df <- pointsAlongNetwork(L, delta)
+      names(df)[names(df) == "seg"] <- "mapXY"
+    }
+  }
+  if(!is.null(df)) {
+    ## fill out entries in data frame
     pix <- nearest.valid.pixel(df$x, df$y, Y)
-    df$xc <- Y$xcol[pix$col]
-    df$yc <- Y$yrow[pix$row]
+    if(!all(c("xc", "yc") %in% names(df))) {
+      df$xc <- Y$xcol[pix$col]
+      df$yc <- Y$yrow[pix$row]
+    }
     df$values <- Y$v[cbind(pix$row, pix$col)]
-    df <- df[,c("xc", "yc", "x", "y", "seg", "tp", "values")]
-    names(df)[names(df) == "seg"] <- "mapXY"
+    df <- df[,c("xc", "yc", "x", "y", "mapXY", "tp", "values")]
   }
   if(is.mask(WL <- Window(L)) && !all(sapply(list(eps, dimyx, xy), is.null))) {
     Window(L, check=FALSE) <- as.mask(WL,
@@ -425,100 +438,45 @@ as.linim.linim <- function(X, ...) {
   return(Y)
 }
 
-# analogue of eval.im
-
-eval.linim <- function(expr, envir, harmonize=TRUE, warn=TRUE) {
-  sc <- sys.call()
-  # Get names of all variables in the expression
-  e <- as.expression(substitute(expr))
-  varnames <- all.vars(e)
-  allnames <- all.names(e, unique=TRUE)
-  funnames <- allnames[!(allnames %in% varnames)]
-  if(length(varnames) == 0)
-    stop("No variables in this expression")
-  # get the values of the variables
-  if(missing(envir)) {
-    envir <- parent.frame() # WAS: sys.parent()
-  } else if(is.list(envir)) {
-    envir <- list2env(envir, parent=parent.frame())
+as.linim.function <- function(X, L,
+                              ...,
+                              eps = NULL, dimyx = NULL, xy = NULL,
+                              rule.eps=c("adjust.eps",
+                                         "grow.frame", "shrink.frame"),
+                              delta=NULL, nd=NULL) {
+  if(is.linim(L) && !is.null(attr(L, "df"))) {
+    #' use L as template
+    Y <- L
+    L <- as.linnet(Y)
+  } else {
+    #' create template object
+    L <- as.linnet(L)
+    P <- as.ppp(runiflpp(1, L))
+    typical <- X(P$x, P$y, ...)
+    if(length(typical) != 1)
+      stop(paste("The function must return a single value",
+                 "when applied to a single point"))
+    rule.eps <- match.arg(rule.eps)
+    Y <- as.linim(typical, L, eps=eps, dimyx=dimyx, xy=xy,
+                  rule.eps=rule.eps,
+                  delta=delta, nd=nd)
   }
-  vars <- mget(varnames, envir=envir, inherits=TRUE, ifnotfound=list(NULL))
-  funs <- mget(funnames, envir=envir, inherits=TRUE, ifnotfound=list(NULL))
-  # Find out which variables are (linear) images
-  islinim <- unlist(lapply(vars, inherits, what="linim"))
-  if(!any(islinim))
-    stop("There are no linear images (class linim) in this expression")
-  # ....................................
-  # Evaluate the pixel values using eval.im
-  # ....................................
-  sc[[1L]] <- as.name('eval.im')
-  sc$envir <- envir
-  Y <- eval(sc)
-  # .........................................
-  # Then evaluate data frame entries if feasible
-  # .........................................
-  dfY <- NULL
-  linims <- vars[islinim]
-  nlinims <- length(linims)
-  dframes <- lapply(linims, attr, which="df")
-  nets <- lapply(linims, attr, which="L")
-  isim <- unlist(lapply(vars, is.im))
-  if(!any(isim & !islinim)) {
-    # all images are 'linim' objects
-    # Check that the images refer to the same linear network
-    if(nlinims > 1) {
-      agree <- unlist(lapply(nets[-1L], identical, y=nets[[1L]]))
-      if(!all(agree))
-        stop(paste("Images do not refer to the same linear network"))
-    }
-    dfempty <- unlist(lapply(dframes, is.null))
-    if(!any(dfempty)) {
-      # ensure data frames are compatible
-      if(length(dframes) > 1 && (
-          length(unique(nr <- sapply(dframes, nrow))) > 1   ||
-           !allElementsIdentical(dframes, "seg")            ||
-   	   !allElementsIdentical(dframes, "tp")
-	)) {
-        # find the one with finest spacing
-	imax <- which.max(nr)
-	# resample the others
-	dframes[-imax] <- lapply(dframes[-imax],
-	                         resampleNetworkDataFrame,
-	                         template=dframes[[imax]])
-      }
-      # replace each image variable by its data frame column of values
-      vars[islinim] <- lapply(dframes, getElement, "values")
-      # now evaluate expression
-      Yvalues <- eval(e, append(vars, funs))
-      # pack up
-      dfY <- dframes[[1L]]
-      dfY$values <- Yvalues
-    }
-  }
-  result <- linim(nets[[1L]], Y, df=dfY, restrict=FALSE)
-  return(result)
+  # extract coordinates of sample points along network in template
+  df <- attr(Y, "df")
+  coo <- df[, c("x", "y")]
+  # evaluate function at sample points
+  vals <- do.call(X, append(as.list(coo), list(...)))
+  # write values in data frame
+  df$values <- vals
+  attr(Y, "df") <- df
+  #' overwrite values in pixel array
+  Y$v[] <- NA
+  pix <- nearest.raster.point(df$xc, df$yc, Y)
+  Y$v[cbind(pix$row, pix$col)] <- vals
+  #'
+  return(Y)
 }
 
-resampleNetworkDataFrame <- function(df, template) {
-  # resample 'df' at the points of 'template'
-  invalues  <- df$values
-  insegment <- df$mapXY
-  inteepee  <- df$tp
-  out <- template
-  n <- nrow(out)
-  outvalues <- vector(mode = typeof(invalues), length=n)
-  outsegment <- out$mapXY
-  outteepee  <- out$tp
-  for(i in seq_len(n)) {
-    relevant <- which(insegment == outsegment[i])
-    if(length(relevant) > 0) {
-      j <- which.min(abs(inteepee[relevant] - outteepee[i]))
-      outvalues[i] <- invalues[relevant[j]]
-    }
-  }
-  out$values <- outvalues
-  return(out)
-}
 
 as.linnet.linim <- function(X, ...) {
   attr(X, "L")

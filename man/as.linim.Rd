@@ -3,6 +3,7 @@
 \alias{as.linim.linim}
 \alias{as.linim.linfun}
 \alias{as.linim.default}
+\alias{as.linim.function}
 \title{Convert to Pixel Image on Linear Network}
 \description{
   Converts various kinds of data to a pixel image on a linear network.
@@ -12,17 +13,24 @@
 
   \method{as.linim}{linim}(X, \dots)
 
+  \method{as.linim}{linfun}(X, L=domain(X), \dots,
+                            eps = NULL, dimyx = NULL, xy = NULL,
+                            rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
+                            delta=NULL, nd=NULL)
+
+  \method{as.linim}{function}(X, L, \dots,
+                             eps = NULL, dimyx = NULL, xy = NULL,
+                             rule.eps=c("adjust.eps",
+                                        "grow.frame", "shrink.frame"),
+                             delta=NULL, nd=NULL)
+
   \method{as.linim}{default}(X, L, \dots,
                              eps = NULL, dimyx = NULL, xy = NULL,
                              rule.eps=c("adjust.eps",
                                         "grow.frame", "shrink.frame"),
                              delta=NULL, nd=NULL)
 
-  \method{as.linim}{linfun}(X, L=domain(X), \dots,
-                            eps = NULL, dimyx = NULL, xy = NULL,
-                            rule.eps=c("adjust.eps",
-                                        "grow.frame", "shrink.frame"),
-                            delta=NULL, nd=NULL)
 }
 \arguments{
   \item{X}{
@@ -30,6 +38,8 @@
   }
   \item{L}{
     Linear network (object of class \code{"linnet"}).
+    Alternatively a pixel image on a network (class \code{"linim"}) to
+    be used as a template.
   }
   \item{\dots}{Additional arguments passed to \code{X} when \code{X}
     is a function.
@@ -41,11 +51,13 @@
   \item{delta}{
     Optional. Numeric value giving the approximate distance
     (in coordinate units) between successive
-    sample points along each segment of the network.
+    sample points along each segment of the network,
+    when \code{L} is a network.
   }
   \item{nd}{
     Optional. Integer giving the (approximate) number of 
-    sample points on the network. Ignored if \code{delta} is given.
+    sample points on the network, when \code{L} is a network.
+    Ignored if \code{delta} is given.
   }
 }
 \details{
@@ -62,6 +74,8 @@
     \code{"linim"}.
     \item
     a pixel image, an object of class \code{"im"}.
+    \item
+    a \code{function(x,y)} in the \R language.
     \item
     any type of data acceptable to \code{\link[spatstat.geom]{as.im}},
     such as a function, numeric value, or window.
@@ -81,12 +95,19 @@
 
   In addition to converting the
   function to a pixel image, the algorithm also generates a fine grid of
-  sample points evenly spaced along each segment of the network
-  (with spacing at most \code{delta} coordinate units). The function values
+  sample points evenly spaced along each segment of the network.
+  The function values
   at these sample points are stored in the resulting object as a data frame
   (the argument \code{df} of \code{\link{linim}}). This mechanism allows
   greater accuracy for some calculations (such as
   \code{\link{integral.linim}}).
+  If \code{L} is a \code{"linim"} object, then it is used
+  as a template; the sample points are
+  determined by the sample points in \code{L}.
+  Otherwise, \code{L} is treated as a network (class \code{"linnet"}),
+  and new sample points are constructed by placing them evenly-spaced
+  along each segment of the network with separation \code{delta}.
+  
 }
 \value{
   An image object on a linear network; an object of class \code{"linim"}.
