@@ -2,7 +2,7 @@
 #'
 #'  Analogues of eval.im, harmonise.im and im.apply for 'linim'
 #'
-#'  $Revision: 1.5 $ $Date: 2025/11/28 06:19:31 $
+#'  $Revision: 1.6 $ $Date: 2025/11/29 06:06:54 $
 
 harmonize.linim <- harmonise.linim <- function(...) {
   argz <- list(...)
@@ -216,7 +216,7 @@ linim.apply <- function(X, FUN, ...,
         df$values <- y[,i]
         result[[i]] <- linim(result[[i]], L=L, df=df)
       }
-      class(result) <- "solist"
+      result <- as.solist(result)
     }
   }
   return(result)
