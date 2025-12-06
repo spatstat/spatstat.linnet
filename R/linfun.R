@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.24 $   $Date: 2025/12/06 02:30:48 $
+#   $Revision: 1.28 $   $Date: 2025/12/06 10:10:17 $
 #
 
 linfun <- function(f, L) {
@@ -145,22 +145,64 @@ as.function.linfun <- function(x, ...) {
 
 integral.linfun <- function(f, domain=NULL, weight=NULL, ..., exact=FALSE,
                             delta, nd) {
-  if(exact && !is.null(domain)) {
-    warning("exact calculation is not yet supported for 'domain' argument",
-            call.=FALSE)
-    exact <- FALSE
-  }
   if(exact) {
-    ## use integrate() on each segment
-    L <- as.linnet(f)
+    ## decide whether exact calculation is feasible
+    weightok <- is.null(weight) || is.function(weight)
+    if(!weightok) {
+      warning("exact=TRUE ignored because 'weight' must be discretised",
+              call.=FALSE)
+      exact <- FALSE
+    }
+    domainok <- is.null(domain) || inherits(domain, c("lintess","tess","owin"))
+    if(!domainok) {
+      warning("exact=TRUE ignored because 'domain' must be discretised",
+              call.=FALSE)
+      exact <- FALSE
+    }
+  }
+  if(!exact) {
+    ## discrete calculation using integral.linim
+    if(missing(delta)) delta <- NULL
+    if(missing(nd)) nd <- NULL
+    fim <- as.linim(f, delta=delta, nd=nd)
+    result <- integral(fim, domain=domain, weight=weight, ...)
+    return(result)
+  }
+  ## 'exact' integration using integrate()
+  L <- domain(f)
+  if(is.function(weight)) {
+    ## absorb weight into f and continue
+    f.orig      <- f
+    weight.orig <- weight
+    wtf <- if(inherits(weight,"linfun")) weight.orig else linfun(weight.orig, L)
+    fw <- function(x, y, seg, tp, ...) {
+      f.orig(x, y, seg, tp, ...) * wtf(x, y, seg, tp, ...)
+    }
+    f <- linfun(fw, L)
+    weight <- NULL
+  }
+  ## map network to an interval [0, T] on the real line
+  m <- mapLinnetToLine(L)
+  totlen    <- m$totlen
+  netcoords <- m$netcoords
+  ## convert the integrand to a function on [0, T]
+  g <- function(x, ...) { do.call(f, append(netcoords(x), list(...))) }
+  eps <- .Machine$double.eps
+  ## preprocess different kinds of 'domain'
+  if(waswin <- is.owin(domain)) {
+    A <- domain
+    B <- Frame(L)
+    notA <- setminus.owin(B, A)
+    domain <- tess(tiles=list(inside=A, outside=notA), window=B)
+  }
+  if(is.tess(domain))
+    domain <- intersect.lintess(domain, L)
+  ## ----------------- start computing --------------------------
+  if(is.null(domain)) {
+    ## use integrate() on each segment for accuracy
     nseg <- nsegments(L)
     if(nseg == 0) return(0)
-    m <- mapLinnetToLine(L)
-    totlen    <- m$totlen
-    cumlen    <- m$cumlen
-    netcoords <- m$netcoords
-    g <- function(x, ...) { do.call(f, append(netcoords(x), list(...))) }
-    eps <- .Machine$double.eps
+    cumlen <- m$cumlen
     for(seg in seq_len(nseg)) {
       z <- integrate(g,
                      lower = if(seg == 1L) 0 else cumlen[seg-1],
@@ -168,11 +210,33 @@ integral.linfun <- function(f, domain=NULL, weight=NULL, ..., exact=FALSE,
                      ...)$value
       results <- if(seg == 1L) z else c(results, z)
     }
-    return(sum(results))
-  }
-  if(missing(delta)) delta <- NULL
-  if(missing(nd)) nd <- NULL
-  integral(as.linim(f, delta=delta, nd=nd), domain=domain, weight=weight, ...)
+    result <- sum(results)
+    return(result)
+  } else if(inherits(domain, "lintess")) {
+    ## use integrate() on each tile fragment
+    df <- domain$df
+    npieces <- nrow(df)
+    ## Each row of df represents a tile fragment
+    ## Map each fragment to an interval of the real line
+    flatcoord <- m$flatcoord
+    df$lower <- with(df, flatcoord(seg=seg, tp=t0))
+    df$upper <- with(df, flatcoord(seg=seg, tp=t1))
+    ## use integrate() on each fragment
+    integ <- numeric(npieces)
+    for(i in seq_len(npieces)) 
+      integ[i] <- integrate(g,
+                            lower=df$lower[i]+eps,
+                            upper=df$upper[i]-eps,
+                            ...)$value
+    ## sum contributions from fragments for each tile
+    result <- tapplysum(integ, list(tile=df$tile))
+    if(waswin) {
+      result <- result[[1L]]
+    } else {
+      names(result) <- tilenames(domain)
+    }
+    return(result)
+  } else stop("Internal error - unrecognised kind of domain", call.=FALSE)
 }
 
 as.linfun <- function(X, ...) {
