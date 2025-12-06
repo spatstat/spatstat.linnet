@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.23 $   $Date: 2025/11/28 05:33:09 $
+#   $Revision: 1.24 $   $Date: 2025/12/06 02:30:48 $
 #
 
 linfun <- function(f, L) {
@@ -143,7 +143,33 @@ as.function.linfun <- function(x, ...) {
   return(x)
 }
 
-integral.linfun <- function(f, domain=NULL, weight=NULL, ..., delta, nd) {
+integral.linfun <- function(f, domain=NULL, weight=NULL, ..., exact=FALSE,
+                            delta, nd) {
+  if(exact && !is.null(domain)) {
+    warning("exact calculation is not yet supported for 'domain' argument",
+            call.=FALSE)
+    exact <- FALSE
+  }
+  if(exact) {
+    ## use integrate() on each segment
+    L <- as.linnet(f)
+    nseg <- nsegments(L)
+    if(nseg == 0) return(0)
+    m <- mapLinnetToLine(L)
+    totlen    <- m$totlen
+    cumlen    <- m$cumlen
+    netcoords <- m$netcoords
+    g <- function(x, ...) { do.call(f, append(netcoords(x), list(...))) }
+    eps <- .Machine$double.eps
+    for(seg in seq_len(nseg)) {
+      z <- integrate(g,
+                     lower = if(seg == 1L) 0 else cumlen[seg-1],
+                     upper = cumlen[seg] - eps,
+                     ...)$value
+      results <- if(seg == 1L) z else c(results, z)
+    }
+    return(sum(results))
+  }
   if(missing(delta)) delta <- NULL
   if(missing(nd)) nd <- NULL
   integral(as.linim(f, delta=delta, nd=nd), domain=domain, weight=weight, ...)

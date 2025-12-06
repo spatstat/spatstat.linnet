@@ -92,6 +92,7 @@
 \alias{LinimOp}
 \alias{LinimListOp}
 \alias{traceTessLinnet}
+\alias{mapLinnetToLine}
 
 
 %%%%%%%
@@ -227,6 +228,7 @@ qkdeEngine(x, sigma, \dots, at, what,
 LinimOp(e1, e2, op)
 LinimListOp(e1, e2, op)
 traceTessLinnet(A, L, epsfrac)
+mapLinnetToLine(L)
 
 }
 \details{

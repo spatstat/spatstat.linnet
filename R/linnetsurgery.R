@@ -3,7 +3,7 @@
 #'
 #' Surgery on linear networks and related objects
 #'
-#' $Revision: 1.35 $  $Date: 2024/06/05 08:57:15 $
+#' $Revision: 1.36 $  $Date: 2025/12/06 02:24:01 $
 #'
 
 insertVertices <- function(L, ...) {
@@ -456,4 +456,45 @@ addVertices <- function(L, X, join=NULL, joinmarks=NULL) {
   }
   attr(out, "id") <- inew
   return(out)  
+}
+
+mapLinnetToLine <- function(L) {
+  ##' create 1-1 mappings between L and an interval of the real line
+  force(L)
+  S <- as.psp(L)
+  nseg <- nobjects(S)
+  lenfs <- lengths_psp(S)
+  cumlen <- cumsum(lenfs)
+  breaks <- c(0, cumlen)
+  totlen <- sum(lenfs)
+  cooV <- coords(vertices(L))
+  xfrom <- cooV$x[L$from]
+  yfrom <- cooV$y[L$from]
+  xto   <- cooV$x[L$to]
+  yto   <- cooV$y[L$to]
+  ##' map from real line to L (local coordinates)
+  netcoords <- function(z) {
+    z <- pmin(totlen, pmax(0, z))
+    seg <- findInterval(z, breaks, all.inside=TRUE)
+    tp <- (z-cumlen[seg])/lenfs[seg]
+    tp[!is.finite(tp) | tp < 0 | tp > 1] <- 0.5
+    x <- xfrom[seg] * (1-tp) + xto[seg] * tp
+    y <- yfrom[seg] * (1-tp) + yto[seg] * tp
+    return(list(x=x, y=y, seg=seg, tp=tp))
+  }
+  flatcoordfun <- function(x, y=NULL, seg, tp) {
+    if(missing(seg) || missing(tp)) {
+      xy <- xy.coords(x, y)
+      X <- lpp(xy, L)
+      cooX <- coords(X)
+      seg <- cooX$seg
+      tp <- cooX$tp
+    }
+    return(cumlen[seg] - (1-tp) * lenfs[seg])
+  }
+  flatcoord <- linfun(flatcoordfun, L)
+  return(list(netcoords=netcoords,
+              flatcoord=flatcoord,
+              totlen=totlen,
+              cumlen=cumlen))
 }

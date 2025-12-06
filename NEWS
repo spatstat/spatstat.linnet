@@ -1,4 +1,15 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.4-0.001
+
+OVERVIEW
+
+    o Improved algorithm for integrating a function on a network.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o integrate.linim
+    New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
+
         CHANGES IN spatstat.linnet VERSION 3.4-0
 
 OVERVIEW

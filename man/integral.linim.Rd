@@ -11,7 +11,7 @@
 \usage{
 \method{integral}{linim}(f, domain=NULL, weight=NULL, ...)
 
-\method{integral}{linfun}(f, domain=NULL, weight=NULL, ..., delta, nd)
+\method{integral}{linfun}(f, domain=NULL, weight=NULL, ..., exact=FALSE, delta, nd)
 }
 \arguments{
   \item{f}{
@@ -31,15 +31,21 @@
   \item{\dots}{
     Ignored.
   }
+  \item{exact}{
+    Logical value specifying whether to use a more accurate
+    (and slower) calculation method.
+    See Details.
+  }
   \item{delta}{
     Optional. 
     The step length (in coordinate units)
-    for computing the approximate integral.
+    for computing the approximate integral (if \code{exact=FALSE}).
     A single positive number.
   }
   \item{nd}{
     Optional. 
-    Integer giving the approximate number of sample points on the network.
+    Integer giving the approximate number of sample points on the
+    network (if \code{exact=FALSE}).
   }
 }
 \details{
@@ -53,6 +59,13 @@
 
   If \code{weight} is given, effectively the integral of \code{weight * f}
   is computed.
+
+  For objects of class \code{"linfun"} there is the option of using
+  a more accurate calculation method in which the integral along each
+  segment of the network is computed separately using the utility 
+  \code{\link[stats]{integrate}} from the \pkg{stats} package.
+  If \code{exact=TRUE}, additional arguments \code{\dots} are
+  passed to \code{\link[stats]{integrate}} to control the computation.
 }
 \value{
   A single numeric or complex value
@@ -60,12 +73,14 @@
 }
 \seealso{
   \code{\link{linim}},
-  \code{\link[spatstat.geom]{integral.im}}
+  \code{\link[spatstat.geom]{integral.im}},
+  \code{\link[stats]{integrate}}
 }
 \examples{
-  # make some data
+  # make a function and image data
   xcoord <- linfun(function(x,y,seg,tp) { x }, simplenet)
   integral(xcoord)
+  integral(xcoord, exact=TRUE)
   X <- as.linim(xcoord)
   integral(X)
 
