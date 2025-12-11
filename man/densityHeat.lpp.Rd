@@ -111,39 +111,51 @@
   is applied separately to each connected component of the network).
 }
 \section{Discretisation and Error Messages}{
-  The arguments \code{dx}, \code{dt} and \code{iterMax}
-  determine the discretisation of the network, according to
-  a set of rules. The argument \code{finespacing} determines
-  which rule will be applied. 
+  The computation is performed by discretising the network.
+  Accuracy of the result can be increased by using a finer
+  discretisation, at the cost of slower computation.
 
-  The arguments \code{dx}, \code{dt}, \code{iterMax}
-  are connected by several constraints; specifying one of these
-  arguments will affect the default values of the other two arguments.
-  
-  The argument \code{finespacing} specifies whether
-  a very fine spacing of sample points is required, in order to attain
-  hihg accuracy.
+  The simplest way to increase accuracy is to specify the 
+  argument \code{dx} which controls the spacing between sample points
+  on the network. 
+  However, specifying a very small value of \code{dx}
+  may result in an error, because it implies a very large number
+  of sample points or a very large number of iterations.
+
+  If \code{dx} is not specified, then it will be determined by
+  other arguments according to a set of rules.
+  The argument \code{finespacing} determines
+  which rule will be applied. 
   \itemize{
     \item
-    If \code{finespacing=TRUE} (the default), then the
-    sample point spacing \code{dx} must not exceed
+    If \code{finespacing=TRUE} (the default), then the sample points
+    will be chosen to ensure sufficient accuracy along every segment
+    of the network.
+    The sample point spacing \code{dx} must not exceed
     one-third of the length of the shortest
-    segment of the network. This ensures that the discrete approximation
+    segment of the network. The default value of \code{dx} is smaller
+    than this.
+    This ensures that the discrete approximation
     is accurate along every segment, no matter how short the segment
     is. However, this may not be feasible
     if it implies a very large number of sample points, or a large number
     of iterations: in such cases, the code may terminate with an error
     about illegal values of \code{dx}, \code{dt} or \code{iterMax}.
+    The user may increase the value of \code{iterMax} to relax this
+    constraint.
     \item
-    If \code{finespacing=FALSE}, then
-    the sample point spacing \code{dx} will be about one-half the width
-    of a pixel in the default pixellation of the window of \code{x}.
+    If \code{finespacing=FALSE}, then the sample points will be chosen
+    to ensure adequate accuracy at every pixel in the
+    default pixellation of the window of \code{x}.
+    The default spacing of sample points \code{dx}
+    will be about one-half the width of a pixel.
     This is usually a much coarser resolution than the one
     selected by \code{finespacing=TRUE}. If it is too coarse,
-    the pixel resolution can be refined using
-    the arguments \code{dimyx}, \code{eps} or \code{xy}
-    passed to \code{\link[spatstat.geom]{as.mask}}. For example,
-    \code{dimyx=512} would specify a 512 x 512 pixel grid.
+    the pixel resolution can be refined by specifying one of
+    the arguments \code{dimyx}, \code{eps} or \code{xy} which are
+    passed to \code{\link[spatstat.geom]{as.mask}}. For example, 
+    \code{dimyx=512} would specify a 512 x 512 pixel grid
+    and would increase accuracy relative to the default 128 x 128 grid.
     The default pixel resolution can be changed for the remainder of
     the \R session by \code{\link[spatstat.geom]{spatstat.options}('npixel')}.
   }

@@ -84,7 +84,7 @@
       \item
       In the default case
       (where \code{distance="path"} and
-      \code{continuous=TRUE} and \code{kernel="gaussian"},
+      \code{continuous=TRUE} and \code{kernel="gaussian"}),
       computation is performed rapidly by solving the classical heat equation
       on the network, as described in McSwiggan et al (2016).
       The arguments are passed to \code{\link{densityHeat.lpp}} which performs

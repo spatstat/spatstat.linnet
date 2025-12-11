@@ -78,8 +78,8 @@
   The result is a pixel image on the linear network (class
   \code{"linim"}) which can be plotted.
 
-  Smoothing is performed using one of the \dQuote{equal-split} rules described in
-  Okabe and Sugihara (2012).
+  Smoothing is performed using one of the \dQuote{equal-split}
+  rules described in Okabe and Sugihara (2012).
   
   \itemize{
     \item
@@ -117,6 +117,21 @@
   and is equal to the average density of points per unit length.
   (If the network is not connected, then this rule
   is applied separately to each connected component of the network).
+}
+\section{Discretisation}{
+  The kernel estimate is computed exactly (apart from numerical error)
+  but only at a discrete set of sample points along the network.
+  The spacing of sample points
+  is determined by the default pixel resolution.
+  To increase accuracy, a finer pixellation should be specified using
+  one of the arguments \code{dimyx}, \code{eps} or \code{xy} passed
+  to \code{\link[spatstat.geom]{as.mask}}. To increase accuracy
+  for the rest of the \R session, specify a larger value of
+  \code{spatstat.options('npixel')}. For example \code{dimyx=512}
+  or \code{spatstat.options(npixel=512)}would
+  specify a 512 x 512 pixel grid, reducing the sample spacing
+  by a factor of 4 from the default 128 x 128 grid. 
+  Refining the sample spacing will increase computation time.
 }
 \value{
   If \code{at="pixels"} (the default),
