@@ -1,15 +1,21 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.002
+        CHANGES IN spatstat.linnet VERSION 3.4-0.003
 
 OVERVIEW
 
     o Improved algorithm for integrating a function on a network.
+
+    o Improvement to perspective plot on a network.
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o integrate.linim
     New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
 
+    o persp.linim
+    Improved behaviour close to vertices of the network.
+    New argument 'extrapolate'.
+    
         CHANGES IN spatstat.linnet VERSION 3.4-0
 
 OVERVIEW

@@ -17,10 +17,12 @@ persp.linim <- local({
   
   persp.linim <- function(x, ..., main, grid=TRUE, ngrid=10,
                           col.grid="grey", col.base="white",
-                          neg.args=list(), warncross=FALSE) {
+                          neg.args=list(), warncross=FALSE,
+                          extrapolate=c("linear", "constant")) {
     xname <- short.deparse(substitute(x))
     if(missing(main)) main <- xname
     dotargs <- list(...)
+    extrapolate <- match.arg(extrapolate)
     #' 
     L <- as.linnet(x)
     R <- Frame(L)
@@ -63,7 +65,7 @@ persp.linim <- local({
       df$values    <- pmax(0, df$values)
       #' plot negative part
       neg.args <- resolve.defaults(neg.args, dotargs)
-      spectiveWalls(dfneg, segmentsequence, E, M, neg.args)
+      spectiveWalls(dfneg, segmentsequence, E, M, neg.args, extrapolate)
       #' plot baseline grid on top again
       spectiveGrid(R, ngrid, M, col=col.grid)
     }
@@ -74,7 +76,7 @@ persp.linim <- local({
                          x1=x1y1$x,
                          y1=x1y1$y, ...))
     #' plot function above grid (or entire function if no grid)
-    spectiveWalls(df, segmentsequence, E, M, dotargs)
+    spectiveWalls(df, segmentsequence, E, M, dotargs, extrapolate)
     #'   
     invisible(M)
   }
@@ -86,7 +88,10 @@ persp.linim <- local({
          z = tr[, 3]/tr[, 4])
   }
 
-  spectiveWalls <- function(df, segmentsequence, E, M, pargs) {
+  spectiveWalls <- function(df, segmentsequence, E, M, pargs,
+                            extrapolate=c("linear", "constant")) {
+    extrapolate <- match.arg(extrapolate)
+    shoot <- (extrapolate == "linear")
     #' split by segment
     for(i in segmentsequence) {
       dfi <- df[df$mapXY == i, , drop=FALSE]
@@ -94,11 +99,28 @@ persp.linim <- local({
         #' order by position along segment
         ord <- order(dfi$tp)
         dfi <- dfi[ord, , drop=FALSE]
-        #' extrapolate to segment endpoints
+        #' extrapolate to segment endpoints 
         Ei <- E[i,, drop=FALSE]
         xx <- c(Ei$x0, dfi$x, Ei$x1)
         yy <- c(Ei$y0, dfi$y, Ei$y1)
         zz <- with(dfi, c(values[1], values, values[nn]))
+        ##
+        if(shoot && nn > 1) {
+          ## linear extrapolation
+          last <- nn + 2L
+          if(abs(xx[last] - xx[1L]) > abs(yy[last] - yy[1L])) {
+            tp <- (xx - xx[1L])/(xx[last] - xx[1L])
+          } else {
+            tp <- (yy - yy[1L])/(yy[last] - yy[1L])
+          }
+          if(all(is.finite(tp))) {
+            zz[1] <- zz[2L] - tp[2L] * (zz[3L]-zz[2L])/(tp[3L]-tp[2L])
+            pen1 <- last - 1L
+            pen2 <- last - 2L
+            zz[last] <- zz[pen1] +
+              (1-tp[pen1]) * (zz[pen1]-zz[pen2])/(tp[pen1]-tp[pen2])
+          }
+        }
         #' make polygon in 3D      
         xx <- c(xx, rev(xx))
         yy <- c(yy, rev(yy))

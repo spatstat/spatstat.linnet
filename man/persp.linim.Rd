@@ -10,7 +10,8 @@
  \method{persp}{linim}(x, \dots, main,
                        grid = TRUE, ngrid = 10,
                        col.grid = "grey", col.base = "white",
-                       neg.args=list(), warncross=FALSE)
+                       neg.args=list(), warncross=FALSE,
+                       extrapolate=c("linear", "constant"))
 }
 \arguments{
   \item{x}{
@@ -47,6 +48,10 @@
     two segments of the network cross each other (which causes
     difficulty for the algorithm).
   }
+  \item{extrapolate}{
+    Character string (partially matched) specifying how to extrapolate
+    the value at the endpoint of each segment.
+  }
 }
 \details{
   The pixel values are interpreted as the spatially-varying height of a
@@ -54,6 +59,15 @@
   surfaces are drawn in perspective view.
 
   This style of plot is often attributed to Okabe and Sugihara (2012).
+
+  For each segment of the network, a polygon representing the
+  vertical surface is constructed by linearly interpolating between
+  the values of pixels that lie along the segment.
+  If \code{extrapolate="linear"} (the default), the polygon
+  height at the \emph{end} of the segment is determined by linearly
+  \emph{extrapolating} from the two nearest pixel values. 
+  If \code{extrapolate="constant"}, the polygon height at the end of
+  the segment is defined to be equal to the nearest pixel value.
 }
 \value{
   (Invisibly) the perspective transformation matrix,
