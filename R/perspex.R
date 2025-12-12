@@ -28,17 +28,31 @@ persp.linim <- local({
     R <- Frame(L)
     zlim <- range(x, 0)
     #' set up perspective transformation and plot horizontal plane
-    Z <- as.im(0, W=R, dimyx=ngrid)
-    col.grid.used <- if(grid && (zlim[1] >= 0)) col.grid else NA
-    argh <- resolve.defaults(list(x=Z, main=main,
-                                  border=col.grid.used,
-                                  col=col.base),
+    if(is.im(col.base)) {
+      #' Horizontal plane will be painted by a colour image
+      if(!is.subset.owin(Window(x), Window(col.base)))
+        Window(x) <- boundingbox(Window(x), Window(col.base))
+      Z <- 0 * col.base
+      BaseInfo <- list(colin=col.base)
+    } else if(is.colour(col.base)) {
+      #' Usual case: horizontal plane will be a single colour
+      Z <- as.im(0, W=R, dimyx=ngrid)
+      #' Draw grid lines by setting 'border' argument of persp.default
+      #' provided the function has no negative values
+      border <- if(grid && (zlim[1] >= 0)) col.grid else NA
+      BaseInfo <- list(col=col.base, border=border)
+    } else {
+      stop("Argument col.base should be a single colour or a pixel image",
+           call.=FALSE)
+    }
+    argh <- resolve.defaults(list(x=quote(Z), main=main),
+                             BaseInfo,
                              dotargs,
                              list(axes=FALSE, box=FALSE,
                                   zlim=zlim, zlab=xname, 
                                   scale=TRUE, expand=0.1))
     M <- do.call.matched(persp.im, argh,
-                         funargs=graphicsPars("persp"))
+                         extrargs=graphicsPars("persp"))
     #' compute the projection of the linear network
     S <- as.psp(L)
     E <- S$ends
@@ -58,16 +72,25 @@ persp.linim <- local({
     }
     #' extract function data
     df <- attr(x, "df")
-    #' handle negative values separately if a grid is shown
-    if(grid && zlim[1] < 0) {
+    #' handle negative values separately
+    if(zlim[1L] < 0) {
+      #' split function into positive and negative parts
       dfneg <- df
       dfneg$values <- pmin(0, df$values)
       df$values    <- pmax(0, df$values)
-      #' plot negative part
-      neg.args <- resolve.defaults(neg.args, dotargs)
-      spectiveWalls(dfneg, segmentsequence, E, M, neg.args, extrapolate)
-      #' plot baseline grid on top again
-      spectiveGrid(R, ngrid, M, col=col.grid)
+      if(is.im(col.base)) {
+        warning(paste("Negative function values will be obscured",
+                      "by colour image col.base"),
+                call.=FALSE)
+      } else {
+        #' plot negative part of function
+        neg.args <- resolve.defaults(neg.args, dotargs)
+        spectiveWalls(dfneg, segmentsequence, E, M, neg.args, extrapolate)
+      }
+      if(grid) {
+        #' plot baseline grid on horizontal plane
+        spectiveGrid(R, ngrid, M, col=col.grid)
+      }
     }
     #' plot network
     do.call.matched(segments,
@@ -75,10 +98,10 @@ persp.linim <- local({
                          y0=x0y0$y,
                          x1=x1y1$x,
                          y1=x1y1$y, ...))
-    #' plot function above grid (or entire function if no grid)
+    #' plot function above base plane
     spectiveWalls(df, segmentsequence, E, M, dotargs, extrapolate)
     #'   
-    invisible(M)
+    return(invisible(M))
   }
 
   trans3dz <- function(x,y,z,pmat) {

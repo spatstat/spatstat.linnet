@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.003
+        CHANGES IN spatstat.linnet VERSION 3.4-0.004
 
 OVERVIEW
 
@@ -15,6 +15,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o persp.linim
     Improved behaviour close to vertices of the network.
     New argument 'extrapolate'.
+
+    o persp.linim
+    Argument 'col.base' can be a pixel image, allowing a colour image
+    to be plotted on the horizontal plane at height zero.
     
         CHANGES IN spatstat.linnet VERSION 3.4-0
 
