@@ -18,6 +18,7 @@ persp.linim <- local({
   persp.linim <- function(x, ..., main, grid=TRUE, ngrid=10,
                           col.grid="grey", col.base="white",
                           neg.args=list(), warncross=FALSE,
+                          zadjust=1,
                           extrapolate=c("linear", "constant")) {
     xname <- short.deparse(substitute(x))
     if(missing(main)) main <- xname
@@ -26,6 +27,13 @@ persp.linim <- local({
     #' 
     L <- as.linnet(x)
     R <- Frame(L)
+    #' rescale function values to a scale commensurate with window
+    #'  (to achieve appropriate default scale in persp.default)
+    xmax <- max(abs(x))
+    if(rescaled <- (xmax > .Machine$double.eps)) {
+      scal <- max(sidelengths(R))/xmax
+      x    <- scal * x
+    }
     zlim <- range(x, 0)
     #' set up perspective transformation and plot horizontal plane
     if(is.im(col.base)) {
@@ -36,7 +44,7 @@ persp.linim <- local({
       BaseInfo <- list(colin=col.base)
     } else if(is.colour(col.base)) {
       #' Usual case: horizontal plane will be a single colour
-      Z <- as.im(0, W=R, dimyx=ngrid)
+      Z <- as.im(0, W=R, dimyx=rev(ngrid))
       #' Draw grid lines by setting 'border' argument of persp.default
       #' provided the function has no negative values
       border <- if(grid && (zlim[1] >= 0)) col.grid else NA
@@ -49,8 +57,10 @@ persp.linim <- local({
                              BaseInfo,
                              dotargs,
                              list(axes=FALSE, box=FALSE,
-                                  zlim=zlim, zlab=xname, 
-                                  scale=TRUE, expand=0.1))
+                                  zlim=zlim, zlab=xname,
+                                  scale=!rescaled,
+                                  #' expand=0.1 is default in persp.default
+                                  expand=zadjust * 0.1))
     M <- do.call.matched(persp.im, argh,
                          extrargs=graphicsPars("persp"))
     #' compute the projection of the linear network

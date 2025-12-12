@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.004
+        CHANGES IN spatstat.linnet VERSION 3.4-0.006
 
 OVERVIEW
 
@@ -19,7 +19,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o persp.linim
     Argument 'col.base' can be a pixel image, allowing a colour image
     to be plotted on the horizontal plane at height zero.
-    
+
+    o persp.linim
+    New argument 'zadjust' to control vertical scale.
+
         CHANGES IN spatstat.linnet VERSION 3.4-0
 
 OVERVIEW

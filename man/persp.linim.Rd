@@ -11,6 +11,7 @@
                        grid = TRUE, ngrid = 10,
                        col.grid = "grey", col.base = "white",
                        neg.args=list(), warncross=FALSE,
+                       zadjust=1,
                        extrapolate=c("linear", "constant"))
 }
 \arguments{
@@ -49,6 +50,9 @@
     Logical value indicating whether to issue a warning if
     two segments of the network cross each other (which causes
     difficulty for the algorithm).
+  }
+  \item{zadjust}{
+    Adjustment factor for vertical scale, relative to the default scale.
   }
   \item{extrapolate}{
     Character string (partially matched) specifying how to extrapolate
@@ -100,6 +104,14 @@
   other than white, or if \code{col.base} is a pixel image.
   A transparent colour for \code{col.base} can be used
   if it is supported by the graphics device.
+
+  Like all spatial plots in the \pkg{spatstat} family,
+  \code{persp.linim} does not independently rescale
+  the \eqn{x} and \eqn{y} coordinates. A long narrow window will be
+  represented as a long narrow window in the perspective view.
+  To override this and allow the coordinates to be independently
+  rescaled, use the argument \code{scale=TRUE} which will be passed
+  to \code{\link[graphics]{persp.default}}.
 }
 \value{
   (Invisibly) the perspective transformation matrix,
