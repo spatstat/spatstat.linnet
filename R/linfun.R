@@ -259,3 +259,7 @@ as.linfun.linnet <- function(X, ..., values=marks(X)) {
 as.function.linfun <- function(x, ...) { return(x) }
 
 as.function.linnet <- function(x, ...) { as.linfun.linnet(x, ...) }
+
+levelset.linfun <- function(X, thresh, compare="<=", ...) {
+  levelset(as.linim(X), thresh=thresh, compare=compare, ...)
+}

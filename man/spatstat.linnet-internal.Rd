@@ -32,6 +32,7 @@
 \alias{intensity.linearquadratcount}
 \alias{is.poisson.exactlppm}
 \alias{is.stationary.exactlppm}
+\alias{levelset.linfun}
 \alias{makeLinnetTolerance}
 \alias{marginalIntegralOfLinim}
 \alias{plot.linearquadratcount}
@@ -137,6 +138,7 @@ exactlppm(X, baseline, \dots, subset)
 \method{intensity}{linearquadratcount}(X, \dots, fun)
 \method{is.poisson}{exactlppm}(x)
 \method{is.stationary}{exactlppm}(x)
+\method{levelset}{linfun}(X, thresh, compare, \dots)
 makeLinnetTolerance(toler)
 marginalIntegralOfLinim(f, margin)
 \method{plot}{linearquadratcount}(x, \dots, main, add, do.plot, textargs)
