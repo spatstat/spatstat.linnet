@@ -50,7 +50,7 @@ if(FULLTEST) {
 ##
 ##  Check validity of update.ppm
 ##
-##  $Revision: 1.8 $ $Date: 2022/10/23 01:19:19 $
+##  $Revision: 1.9 $ $Date: 2025/12/19 00:37:21 $
 
 local({
   

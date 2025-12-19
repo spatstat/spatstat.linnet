@@ -8,10 +8,41 @@
   or a point pattern on a linear network.
 }
 \usage{
-\method{lurking}{lppm}(object, covariate,
+ \method{lurking}{lppm}(object, covariate,
                     type="raw",
+                    cumulative=TRUE,
                     \dots,
-                    covname)
+                    plot.it = TRUE,
+                    plot.sd = is.poisson(object),
+                    clipwindow=NULL,
+                    rv = NULL,
+                    envelope=FALSE, nsim=39, nrank=1,
+                    typename,
+                    covname,
+                    oldstyle=FALSE,
+                    check=TRUE,
+                    verbose=TRUE,
+                    nx=128,
+                    splineargs=list(spar=0.5),
+                    internal=NULL) 
+
+ \method{lurking}{lpp}(object, covariate,
+                    type="raw",
+                    cumulative=TRUE,
+                    \dots,
+                    plot.it = TRUE,
+                    plot.sd = is.poisson(object),
+                    clipwindow=NULL,
+                    rv = NULL,
+                    envelope=FALSE, nsim=39, nrank=1,
+                    typename,
+                    covname,
+                    oldstyle=FALSE,
+                    check=TRUE,
+                    verbose=TRUE,
+                    nx=128,
+                    splineargs=list(spar=0.5),
+                    internal=NULL) 
 }
 \arguments{
   \item{object}{
@@ -25,20 +56,96 @@
   \item{covariate}{
     The covariate against which residuals should be plotted.
     Either a numeric vector, a pixel image, or an \code{expression}.
-    See \emph{Details} below.
   }
   \item{type}{
     String indicating the type of residuals or weights to be computed.
     Choices include \code{"eem"},
     \code{"raw"}, \code{"inverse"} and \code{"pearson"}.
   }
+  \item{cumulative}{
+    Logical value indicating whether to plot a
+    cumulative sum of marks (\code{cumulative=TRUE}, the default)
+    or the derivative
+    of this sum, a marginal density of the smoothed residual field
+    (\code{cumulative=FALSE}).
+   }
   \item{\dots}{
-    Further arguments passed to \code{\link[spatstat.model]{lurking.ppm}}
-    to control the computation and the plot behaviour.
+    Arguments passed to \code{\link{plot.default}}
+    and \code{\link{lines}} to control the plot behaviour.
+  }
+  \item{plot.it}{
+    Logical value indicating whether 
+    plots should be shown. If \code{plot.it=FALSE}, only
+    the computed coordinates for the plots are returned.
+    See \emph{Value}.
+  }
+  \item{plot.sd}{
+    Logical value indicating whether 
+    error bounds should be added to plot.
+    The default is \code{TRUE} for Poisson models and
+    \code{FALSE} for non-Poisson models. See Details.
+  }
+  \item{clipwindow}{
+    If not \code{NULL} this argument indicates that residuals shall
+    only be computed inside a subregion of the window containing the
+    original point pattern data. Then \code{clipwindow} should be
+    a window object of class \code{"owin"}.
+  }
+  \item{rv}{
+    Usually absent. 
+    If this argument is present, the point process residuals will not be
+    calculated from the fitted model \code{object},
+    but will instead be taken directly from \code{rv}. 
+  }
+  \item{envelope}{
+    Logical value indicating whether to compute simulation envelopes
+    for the plot. Alternatively \code{envelope} may be a list of
+    point patterns to use for computing the simulation envelopes,
+    or an object of class \code{"envelope"} containing simulated point
+    patterns.
+  }
+  \item{nsim}{
+    Number of simulated point patterns to be generated
+    to produce the simulation envelope, if \code{envelope=TRUE}.
+  }
+  \item{nrank}{
+    Integer. Rank of the envelope value amongst the \code{nsim} simulated
+    values. A rank of 1 means that the minimum and maximum
+    simulated values will be used.
+  }
+  \item{typename}{
+    Usually absent. 
+    If this argument is present, it should be a string, and will be used
+    (in the axis labels of plots) to describe the type of residuals.
   }
   \item{covname}{
     A string name for the covariate, to be used in axis labels of plots.
   }
+  \item{oldstyle}{
+    Logical flag indicating whether error bounds should be plotted
+    using the approximation given in the original paper
+    (\code{oldstyle=TRUE}),
+    or using the correct asymptotic formula (\code{oldstyle=FALSE}).
+  }
+  \item{check}{
+    Logical flag indicating whether the integrity of the data structure
+    in \code{object} should be checked.
+  }
+  \item{verbose}{
+    Logical value indicating
+    whether to print progress reports during Monte Carlo simulation.
+  }
+  \item{nx}{
+    Integer. Number of covariate values to be used in the plot.
+  }
+  \item{splineargs}{
+    A list of arguments passed to \code{smooth.spline}
+    for the estimation of the derivatives in the case \code{cumulative=FALSE}.
+  }
+  \item{internal}{
+    Internal use only.
+  }
+
 }
 \value{
   The (invisible) return value is an object 
@@ -154,7 +261,8 @@
   reserved words; see \code{\link[spatstat.linnet]{lppm}}.
 }
 \seealso{
- \code{\link[spatstat.linnet]{lppm}}
+  \code{\link[spatstat.linnet]{lppm}},
+  \code{\link[spatstat.model]{lurking}}
 }
 \references{
   Baddeley, A., Turner, R., \Moller, J. and Hazelton, M. (2005)

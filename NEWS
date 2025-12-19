@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.007
+        CHANGES IN spatstat.linnet VERSION 3.4-0.008
 
 OVERVIEW
 
@@ -22,6 +22,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o persp.linim
     New argument 'zadjust' to control vertical scale.
+
+BUG FIXES
+
+    o lurking.lppm
+    Crashed if envelope=TRUE.
+    Fixed.
 
         CHANGES IN spatstat.linnet VERSION 3.4-0
 

@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.67 $   $Date: 2025/11/24 08:23:09 $
+#  $Revision: 1.68 $   $Date: 2025/12/19 07:50:29 $
 #
 
 lppm <- function(X, ...) {
@@ -457,29 +457,6 @@ emend.lppm <- function(object, ...) {
 }
 
 response.lppm <- function(object) { data.lppm(object) }
-
-lurking.lppm <- function(object, covariate, type="raw", ..., covname) {
-  stopifnot(is.lppm(object))
-  if(missing(covname)) {
-    cl <- match.call()
-    co <- cl$covariate
-    covname <- if(is.name(co)) as.character(co) else
-               if(is.expression(co)) format(co[[1]]) else "covariate"
-  }
-  lurking.ppm(as.ppm(object), covariate, type=type, ..., covname=covname)
-}
-
-lurking.lpp <- function(object, covariate, type="raw", ..., covname) {
-  stopifnot(is.lpp(object))
-  if(missing(covname)) {
-    cl <- match.call()
-    co <- cl$covariate
-    covname <- if(is.name(co)) as.character(co) else
-               if(is.expression(co)) format(co[[1]]) else "covariate"
-  }
-  model <- lppm(object ~ 1, forcefit=TRUE)
-  lurking.ppm(as.ppm(model), covariate, type=type, ..., covname=covname)
-}
 
 parres.lppm <- function(model, covariate, ...,
                         smooth.effect=FALSE, subregion=NULL,
