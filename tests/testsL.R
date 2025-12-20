@@ -736,6 +736,11 @@ local({
     summary(fit3)
     pseudoR2(fit3)
     lurking(fit3, expression(x))
+    lurking(fit3, Z)
+    if(FULLTEST) {
+      lurking(fit3, "x", envelope=TRUE, nsim=9)
+      lurking(fit3, Z, envelope=TRUE, nsim=9)
+    }
   }
 
   Window(fit1)

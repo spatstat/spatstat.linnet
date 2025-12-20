@@ -3,7 +3,7 @@
 #'
 #'  Method for 'lurking' for lppm
 #'
-#'  $Revision: 1.3 $ $Date: 2025/12/19 07:51:46 $
+#'  $Revision: 1.7 $ $Date: 2025/12/20 04:26:26 $
 
 lurking.lpp <- lurking.lppm <- function(object, covariate,
                          type="raw",
@@ -50,7 +50,10 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
   if(missing(covname) || is.null(covname)) {
     co <- cl$covariate
     covname <- if(is.name(co)) as.character(co) else
-               if(is.expression(co)) format(co[[1]]) else NULL
+               if(is.expression(co)) format(co[[1]]) else 
+               if(is.character(co) && 
+                  length(co) == 1 &&
+                  co %in% c("x", "y")) paste(co, "coordinate") else NULL
   }
 
   #' spatial covariates
@@ -109,13 +112,46 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
   if(is.null(subQset)) subQset <- rep.int(TRUE, n.quad(Q))
   
   #################################################################
+  #' trap case where covariate = "<name>"
+  if(is.character(covariate) && (length(covariate) == 1)) {
+    #' covariate is a single string
+    is.cartesian <- covariate %in% c("x", "y")
+    if(!is.cartesian) {
+      #' not a reserved name; convert to an expression and evaluate later
+      covariate <- str2expression(covariate)
+    }
+  } else {
+    is.cartesian <- FALSE
+  }
+
+  #################################################################
   ## compute the covariate
-  if(is.im(covariate)) {
+  covunits <- NULL
+  if(is.cartesian) {
+    #' covariate is name of cartesian coordinate
+    switch(covariate,
+           x = {
+             covvalues <- quadpoints$x
+             covrange <- Frame(quadpoints)$xrange
+           },
+           y = {
+             covvalues <- quadpoints$y
+             covrange <- Frame(quadpoints)$yrange
+           })
+    covunits <- unitname(quadpoints)
+  } else if(is.im(covariate)) {
     covvalues <- covariate[quadpoints, drop=FALSE]
     covrange <- internal$covrange %orifnull% range(covariate, finite=TRUE)
+  } else if(is.function(covariate)) {
+    covvalues <- pointweights(quadpoints,
+                              weights=covariate,
+                              weightsname="covariate")
+    covrange <- internal$covrange %orifnull% range(covvalues, finite=TRUE)
+    if(inherits(covariate, c("distfun", "distfunlpp")))
+      covunits <- unitname(quadpoints)
   } else if(is.vector(covariate) && is.numeric(covariate)) {
     covvalues <- covariate
-    covrange <- internal$covrange %orifnull% range(covariate, finite=TRUE)
+    covrange <- internal$covrange %orifnull% range(covvalues, finite=TRUE)
     if(length(covvalues) != npoints(quadpoints))
       stop("Length of covariate vector,", length(covvalues), "!=",
            npoints(quadpoints), ", number of quadrature points")
@@ -206,6 +242,7 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
                       covrange=covrange,
                       typename=typename,
                       covname=covname,
+                      covunits=covunits,
                       cl=cl, clenv=clenv,
                       oldstyle=oldstyle, check=check, verbose=verbose,
                       nx=nx, splineargs=splineargs,

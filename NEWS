@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.008
+        CHANGES IN spatstat.linnet VERSION 3.4-0.009
 
 OVERVIEW
 
@@ -11,6 +11,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o integrate.linim
     New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
+
+    o lurking.lppm, lurking.lpp
+    Argument 'covariate' can be a function(x,y)
+    or one of the strings "x" or "y".
 
     o persp.linim
     Improved behaviour close to vertices of the network.
