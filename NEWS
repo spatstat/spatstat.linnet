@@ -9,7 +9,7 @@ OVERVIEW
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
-    o integrate.linim
+    o integral.linfun
     New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
 
     o lurking.lppm, lurking.lpp
