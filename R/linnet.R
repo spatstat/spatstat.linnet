@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.97 $    $Date: 2025/11/23 06:47:21 $
+#    $Revision: 1.98 $    $Date: 2025/12/21 02:34:52 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -222,6 +222,7 @@ plot.linnet <- function(x, ..., main=NULL, add=FALSE,
   argh <- list(...)
   lines <- as.psp(x)
   if(show.vertices) vert <- vertices(x)
+  #' ..........................................................
   #' plan layout and save symbolmaps
   RS <- do.call(plot,
                resolve.defaults(list(x=quote(lines),
@@ -245,34 +246,38 @@ plot.linnet <- function(x, ..., main=NULL, add=FALSE,
   } else {
     RV <- NULL
   }
-  ## initialise plot
-  if(!add) {
-    args.main <- argh[names(argh) %in% c("cex.main", "adj.main", "col")]
-    do.call(plot, append(list(x=quote(B), type="n", main=main),
-                         args.main))
-  }
-  ## plot segments and (optionally) vertices
-  do.call(plot,
-          resolve.defaults(list(x=quote(lines),
-                                add=TRUE,
-                                show.window=show.window,
-                                show.all=TRUE, 
-                                main="",
-                                multiplot=FALSE),
-                           args.segments,
-                           list(...),
-                           list(use.marks=FALSE, legend=FALSE)))
-  if(show.vertices) {
+  #' ---------------- actual plotting ------------------------
+  if(do.plot) {
+    ## initialise plot
+    if(!add) {
+      args.main <- argh[names(argh) %in% c("cex.main", "adj.main", "col")]
+      do.call(plot, append(list(x=quote(B), type="n", main=main),
+                           args.main))
+    }
+    ## plot segments and (optionally) vertices
     do.call(plot,
-            resolve.defaults(list(x=quote(vert),
+            resolve.defaults(list(x=quote(lines),
                                   add=TRUE,
-                                  show.window=FALSE,
-                                  show.all=TRUE,
-                                  main=""),
-                             args.vertices,
+                                  show.window=show.window,
+                                  show.all=TRUE, 
+                                  main="",
+                                  multiplot=FALSE),
+                             args.segments,
                              list(...),
                              list(use.marks=FALSE, legend=FALSE)))
+    if(show.vertices) {
+      do.call(plot,
+              resolve.defaults(list(x=quote(vert),
+                                    add=TRUE,
+                                    show.window=FALSE,
+                                    show.all=TRUE,
+                                    main=""),
+                               args.vertices,
+                               list(...),
+                               list(use.marks=FALSE, legend=FALSE)))
+    }
   }
+  #' --------- return colour maps and layout ----------------------
   result <- list(segments=RS, vertices=RV)
   attr(result, "bbox") <- B
   return(invisible(result))

@@ -1,11 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.009
+        CHANGES IN spatstat.linnet VERSION 3.4-0.010
 
 OVERVIEW
 
     o Improved algorithm for integrating a function on a network.
 
     o Improvement to perspective plot on a network.
+
+    o Minor improvements and bug fixes.
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
@@ -25,12 +27,16 @@ SIGNIFICANT USER-VISIBLE CHANGES
     to be plotted on the horizontal plane at height zero.
 
     o persp.linim
-    New argument 'zadjust' to control vertical scale.
+    New argument 'zadjust' to adjust the vertical scale.
 
 BUG FIXES
 
     o lurking.lppm
     Crashed if envelope=TRUE.
+    Fixed.
+
+    o plot.linnet
+    Disobeyed 'do.plot=FALSE'.
     Fixed.
 
         CHANGES IN spatstat.linnet VERSION 3.4-0
