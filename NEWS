@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.011
+        CHANGES IN spatstat.linnet VERSION 3.4-0.012
 
 OVERVIEW
 
@@ -9,8 +9,16 @@ OVERVIEW
 
     o Minor improvements and bug fixes.
 
+NEW FUNCTIONS
+
+    o roadways
+    Identify roadways in a network.
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
+    o density.lpp
+    Improved message output when verbose=TRUE.
+    
     o integral.linfun
     New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
 

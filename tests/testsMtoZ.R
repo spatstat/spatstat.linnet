@@ -35,7 +35,7 @@ if(FULLTEST) {
 #'
 #' Test whether plot(do.plot=FALSE) has no side effects on graphics system
 #'
-#'  $Revision: 1.4 $  $Date: 2025/12/22 08:29:32 $
+#'  $Revision: 1.6 $  $Date: 2025/12/23 00:24:24 $
 
 local({
   if(FULLTEST) {

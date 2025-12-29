@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.98 $    $Date: 2025/12/21 02:34:52 $
+#    $Revision: 1.99 $    $Date: 2025/12/29 09:31:32 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -770,3 +770,44 @@ identify.linnet <- function(x, ...) {
   }
   identify(as.psp(x), ...)
 }
+
+roadways <- function(X, what=c("labels", "segments", "function")) {
+  verifyclass(X, "linnet")
+  what <- match.arg(what)
+  ## vertices at each end of segment
+  from <- X$from
+  to   <- X$to
+  ## identify which vertices are just a 'bend' in the road
+  bend <- (vertexdegree(X) == 2)
+  ## identify which segments meet at each 'bend' vertex
+  a <- b <- integer(0)
+  for(i in which(bend)) {
+    jj <- which(from == i | to == i)
+    if(length(jj) != 2)
+      stop(paste("Internal error: found", length(jj), "segments instead of 2"),
+           call.=FALSE)
+    a <- c(a, jj[1L])
+    b <- c(b, jj[2L])
+  }
+  ## identify 
+  lab0 <- cocoEngine(nsegments(X), a - 1L, b - 1L, "roadways algorithm")
+  ## renumber sequentially
+  lab <- as.integer(factor(lab0))
+  # Convert labels to factor
+  lab <- factor(lab)
+  ##
+  switch(what,
+         labels = {
+           result <- lab
+         },
+         segments = {
+           result <- as.psp(X) %mark% lab
+         },
+         "function" = {
+           f <- function(x,y,seg,tp, ...) { lab[seg] }
+           result <- linfun(f, X)
+         })
+  return(result)
+}
+  
+           
