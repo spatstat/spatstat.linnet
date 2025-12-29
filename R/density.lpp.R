@@ -433,7 +433,15 @@ FDMKERNEL <- function(lppobj, dtt, dtx, M, nsave=1,
   blocklength <- blockend - blockstart + 1L
   elapsedtime <- blockend * dtt
 
-  if(verbose) cat("Running iterative solver ..")
+  if(verbose) {
+    #' estimate run time for iterative solver
+    tstart <- proc.time()
+    niets <- A %*% U0
+    tend <- proc.time()
+    dura <- M * (tend-tstart)
+    splat("Starting iterative solver. Estimated duration", codetime(dura))
+    cat("Running iterative solver ..")
+  }
   
   U <- matrix(0, nvert, nsave)
 
