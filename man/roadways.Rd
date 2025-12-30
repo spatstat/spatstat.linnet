@@ -21,8 +21,8 @@ roadways(X, what = c("labels", "segments", "function"))
 }
 \details{
   A \sQuote{roadway} in a network is a path which does not
-  pass through any forks in the network, that is, a path which only visits
-  vertices of degree 2.
+  pass through any forks in the network, that is, a path which only
+  passes through vertices of degree 2.
 
   Given a linear network \code{X},
   this function identifies the roadways in \code{X} and assigns a label to each
@@ -39,7 +39,7 @@ roadways(X, what = c("labels", "segments", "function"))
     has degree 2 (i.e. there are exactly 2 edges of the network which
     end at the vertex)
     \item the terminal vertices \eqn{v_1}{v[1]} and \eqn{v_n}{v[n]}
-    do not have degree 2.
+    do not have degree 2, unless they are the same vertex.
   }
 
   Every edge (segment) of the network belomgs to a unique roadway.
@@ -63,8 +63,10 @@ roadways(X, what = c("labels", "segments", "function"))
   \code{\link{connected.linnet}}
 }
 \examples{
-  L <- domain(dendrite)
-  plot(roadways(L, what="s"))
+  A <- edges(letterR)
+  B <- shift(rotate(A, 0.15), c(-0.13, 0))
+  L <- as.linnet(superimpose(A,B))
+  plot(roadways(L, what="s"), col=sample(1:13), lwd=2, show.window=FALSE)
 }
 \keyword{spatial}
 \keyword{manip}

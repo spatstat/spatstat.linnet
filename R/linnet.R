@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.99 $    $Date: 2025/12/29 09:31:32 $
+#    $Revision: 1.100 $    $Date: 2025/12/30 01:49:16 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -393,10 +393,15 @@ as.linnet.psp <- function(X, ..., eps, sparse=FALSE, chop=TRUE, fuse=TRUE) {
       stopifnot(eps >= 0)
     }
     if(eps > 0 && minnndist(V) <= eps) {
+      #' divide into clusters of close pairs
       gV <- marks(connected(V, eps))
+      #' centroid of each cluster
       xx <- as.numeric(by(V$x, gV, mean))
       yy <- as.numeric(by(V$y, gV, mean))
-      V <- ppp(xx, yy, window=Window(X))
+      Vmean <- ppp(xx, yy, window=Frame(X))
+      #' data point closest to centroid (ensures it's inside window)
+      kk <- nncross(Vmean, V, what="which")
+      V <- V[kk]
     }
     first  <- endpoints.psp(X, "first")
     second <- endpoints.psp(X, "second")

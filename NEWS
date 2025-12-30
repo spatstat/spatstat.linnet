@@ -1,11 +1,13 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.012
+        CHANGES IN spatstat.linnet VERSION 3.4-0.013
 
 OVERVIEW
 
     o Improved algorithm for integrating a function on a network.
 
     o Improvement to perspective plot on a network.
+
+    o Identify roadways in a network.
 
     o Minor improvements and bug fixes.
 
@@ -39,6 +41,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 BUG FIXES
 
+    o as.linnet.psp
+    Crashed sometimes if the window of X was not convex.
+    Fixed.
+    
     o lurking.lppm
     Crashed if envelope=TRUE.
     Fixed.
