@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.102 $    $Date: 2026/01/01 02:43:45 $
+#    $Revision: 1.104 $    $Date: 2026/01/01 09:41:56 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -775,7 +775,7 @@ identify.linnet <- function(x, ...) {
   identify(as.psp(x), ...)
 }
 
-roadways <- function(X, what=c("labels", "segments", "tessellation", "function")) {
+highways <- function(X, what=c("tessellation", "labels")) {
   verifyclass(X, "linnet")
   what <- match.arg(what)
   ## identify which vertices are just a 'bend' in the road
@@ -796,15 +796,12 @@ roadways <- function(X, what=c("labels", "segments", "tessellation", "function")
   b <- seg[second]
   ## Thus edges a[j], b[j] share a common vertex of degree 2, for each j
   ## Identify equivalence classes
-  lab <- cocoLabels(nsegments(X), a, b, "roadways algorithm")
+  lab <- cocoLabels(nsegments(X), a, b, "highways algorithm")
   lab <- as.factor(lab)
   ##
   switch(what,
          labels = {
            result <- lab
-         },
-         segments = {
-           result <- as.psp(X) %mark% lab
          },
          tessellation = {
            df <- data.frame(seg=seq_len(nsegments(X)),
@@ -812,10 +809,6 @@ roadways <- function(X, what=c("labels", "segments", "tessellation", "function")
                             t1=1,
                             tile=lab)
            result <- lintess(X, df)
-         },
-         "function" = {
-           f <- function(x,y,seg,tp, ...) { lab[seg] }
-           result <- linfun(f, X)
          })
   return(result)
 }
