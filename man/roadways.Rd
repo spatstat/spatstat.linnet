@@ -66,8 +66,9 @@ roadways(X, what = c("labels", "segments", "function"))
   A <- edges(letterR)
   B <- shift(rotate(A, 0.15), c(-0.13, 0))
   L <- as.linnet(superimpose(A,B))
-  n <- length(levels(roadways(L)))
-  plot(roadways(L, what="s"), col=sample(rainbow(n)), lwd=2, show.window=FALSE)
+  plot(roadways(L, what="s"),
+       col=rainbow, scramble.cols=TRUE,
+       lwd=2, show.window=FALSE)
 }
 \keyword{spatial}
 \keyword{manip}

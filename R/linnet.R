@@ -3,7 +3,7 @@
 #    
 #    Linear networks
 #
-#    $Revision: 1.100 $    $Date: 2025/12/30 01:49:16 $
+#    $Revision: 1.102 $    $Date: 2026/01/01 02:43:45 $
 #
 # An object of class 'linnet' defines a linear network.
 # It includes the following components
@@ -779,22 +779,24 @@ identify.linnet <- function(x, ...) {
 roadways <- function(X, what=c("labels", "segments", "function")) {
   verifyclass(X, "linnet")
   what <- match.arg(what)
-  ## vertices at each end of segment
-  from <- X$from
-  to   <- X$to
   ## identify which vertices are just a 'bend' in the road
   bend <- (vertexdegree(X) == 2)
-  ## identify which segments meet at each 'bend' vertex
-  a <- b <- integer(0)
-  for(i in which(bend)) {
-    jj <- which(from == i | to == i)
-    if(length(jj) != 2)
-      stop(paste("Internal error: found", length(jj), "segments instead of 2"),
-           call.=FALSE)
-    a <- c(a, jj[1L])
-    b <- c(b, jj[2L])
-  }
-  ## identify 
+  ## assemble all (segment, vertex) pairs where vertex is endpoint of segment
+  seg <- seq_len(nsegments(X))
+  seg <- c(seg, seg)
+  ver <- c(X$from, X$to)
+  ## retain only those (segment, vertex) where vertex is a 'bend'
+  ok <- bend[ver]
+  seg <- seg[ok]
+  ver <- ver[ok]
+  ## match (segment, vertex) pairs with the same vertex
+  second <- which(duplicated(ver))
+  first <- uniquemap(ver)[second]
+  ## extract corresponding edges
+  a <- seg[first]
+  b <- seg[second]
+  ## Thus edges a[j], b[j] share a common vertex of degree 2, for each j
+  ## Identify equivalence classes
   lab0 <- cocoEngine(nsegments(X), a - 1L, b - 1L, "roadways algorithm")
   ## renumber sequentially
   lab <- as.integer(factor(lab0))
