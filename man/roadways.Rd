@@ -9,7 +9,7 @@
   any forks in the network.
 }
 \usage{
-roadways(X, what = c("labels", "segments", "function"))
+roadways(X, what = c("labels", "segments", "tessellation", "function"))
 }
 \arguments{
   \item{X}{
@@ -47,14 +47,20 @@ roadways(X, what = c("labels", "segments", "function"))
   it belongs to. If \code{what="labels"} (the default), the result is a
   factor of length equal to \code{nsegments(X)} giving the
   classification of segments. If \code{what="segments"}, the result is
-  a line segment pattern (object of class \code{"psp"}) with marks
-  indicating the classification. If \code{what="function"}, the result
+  a line segment pattern (object of class \code{"psp"}) with
+  factor-valued marks indicating the classification of segments.
+  If \code{what="tessellation"}, the result is a tessellation of
+  \code{X} (object of class \code{"lintess"}) in which the tiles of the
+  tessellation are the roadways.
+  If \code{what="function"}, the result
   is a function of class \code{"linfun"} which can be applied to any
-  location on the network to determine which roadway it belongs to.
+  location on the network and returns a categorical value
+  indicating which roadway the location belongs to.
 }
 \value{
-  A factor, or an object of class \code{"psp"}, or a function
-  of class \code{"linfun"}.
+  A factor, or an object of class \code{"psp"},
+  a tessellation of class \code{"lintess"},
+  or a function of class \code{"linfun"}.
 }
 \author{
   \adrian

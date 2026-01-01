@@ -689,8 +689,7 @@ connected.linnet <- function(X, ..., what=c("labels", "components")) {
   verifyclass(X, "linnet")
   what <- match.arg(what)
   nv <- npoints(vertices(X))
-  lab0 <- cocoEngine(nv, X$from - 1L, X$to - 1L, "connected.linnet")
-  lab <- lab0 + 1L
+  lab <- cocoLabels(nv, X$from, X$to, "connected.linnet")
   lab <- factor(as.integer(factor(lab)))
   if(what == "labels")
     return(lab)
@@ -776,7 +775,7 @@ identify.linnet <- function(x, ...) {
   identify(as.psp(x), ...)
 }
 
-roadways <- function(X, what=c("labels", "segments", "function")) {
+roadways <- function(X, what=c("labels", "segments", "tessellation", "function")) {
   verifyclass(X, "linnet")
   what <- match.arg(what)
   ## identify which vertices are just a 'bend' in the road
@@ -789,7 +788,7 @@ roadways <- function(X, what=c("labels", "segments", "function")) {
   ok <- bend[ver]
   seg <- seg[ok]
   ver <- ver[ok]
-  ## match (segment, vertex) pairs with the same vertex
+  ## match (segment, vertex) pairs which have the same vertex
   second <- which(duplicated(ver))
   first <- uniquemap(ver)[second]
   ## extract corresponding edges
@@ -797,11 +796,8 @@ roadways <- function(X, what=c("labels", "segments", "function")) {
   b <- seg[second]
   ## Thus edges a[j], b[j] share a common vertex of degree 2, for each j
   ## Identify equivalence classes
-  lab0 <- cocoEngine(nsegments(X), a - 1L, b - 1L, "roadways algorithm")
-  ## renumber sequentially
-  lab <- as.integer(factor(lab0))
-  # Convert labels to factor
-  lab <- factor(lab)
+  lab <- cocoLabels(nsegments(X), a, b, "roadways algorithm")
+  lab <- as.factor(lab)
   ##
   switch(what,
          labels = {
@@ -809,6 +805,13 @@ roadways <- function(X, what=c("labels", "segments", "function")) {
          },
          segments = {
            result <- as.psp(X) %mark% lab
+         },
+         tessellation = {
+           df <- data.frame(seg=seq_len(nsegments(X)),
+                            t0=0,
+                            t1=1,
+                            tile=lab)
+           result <- lintess(X, df)
          },
          "function" = {
            f <- function(x,y,seg,tp, ...) { lab[seg] }

@@ -4,7 +4,7 @@
 #'   Creation of linear tessellations
 #'   and intersections between lintess objects
 #'
-#'   $Revision: 1.13 $  $Date: 2025/11/27 07:50:47 $
+#'   $Revision: 1.14 $  $Date: 2026/01/01 08:00:42 $
 #' 
 
 divide.linnet <- local({
@@ -48,8 +48,7 @@ divide.linnet <- local({
         iedge <- c(iedge, joined[-njoin])
       jedge <- c(jedge, joined[-1L])
     }
-    lab0 <- cocoEngine(nbits, iedge - 1L, jedge - 1L)
-    lab <- lab0 + 1L
+    lab <- cocoLabels(nbits, iedge, jedge, "divide.linnet")
     lab <- as.integer(factor(lab))
     df <- df[,c("seg", "t0", "t1")]
     df$tile <- lab
