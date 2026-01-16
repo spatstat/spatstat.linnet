@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.017
+        CHANGES IN spatstat.linnet VERSION 3.4-0.018
 
 OVERVIEW
 
@@ -7,14 +7,14 @@ OVERVIEW
 
     o Improvement to perspective plot on a network.
 
-    o Identify highways in a network.
+    o Identify threads in a network.
 
     o Minor improvements and bug fixes.
 
 NEW FUNCTIONS
 
-    o highways
-    Identify highways in a network.
+    o threads
+    Identify threads in a network.
     
 SIGNIFICANT USER-VISIBLE CHANGES
 

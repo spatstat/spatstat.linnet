@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.31 $ $Date: 2025/11/23 08:17:48 $
+#  $Revision: 1.32 $ $Date: 2026/01/09 01:35:25 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -63,7 +63,7 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
     ooX <- order(coordsX$seg)
     ndumeach <- ceiling(len/eps) + 1L
     ndummax <- sum(ndumeach)
-    maxdataperseg <- max(table(factor(coordsX$seg, levels=1:nsegments(L))))
+    maxdataperseg <- max(tabulate(coordsX$seg, nbins=nsegments(L)))
     maxscratch <- max(ndumeach) + maxdataperseg
     if(!ismulti) {
       if(!random) {

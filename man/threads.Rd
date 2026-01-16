@@ -1,15 +1,15 @@
-\name{highways}
-\alias{highways}
+\name{threads}
+\alias{threads}
 \title{
-  Identify Uninterrupted Highways in a Linear Network
+  Identify Uninterrupted Threads in a Linear Network
 }
 \description{
-  Given a linear network, find the highways.
-  A highway is a set of connected edges which do not pass through
+  Given a linear network, find the threads.
+  A thread is a set of connected edges which do not pass through
   any forks in the network.
 }
 \usage{
-highways(X, what = c("tessellation", "labels"))
+threads(X, what = c("tessellation", "labels"))
 }
 \arguments{
   \item{X}{
@@ -20,14 +20,14 @@ highways(X, what = c("tessellation", "labels"))
   }
 }
 \details{
-  A \sQuote{highway} in a network is a subset of the edges of the network
+  A \sQuote{thread} in a network is a subset of the edges of the network
   which does not pass through any forks in the network.
 
   Given a linear network \code{X},
-  this function identifies the highways in \code{X} and assigns a label to each
-  edge (segment) of the network indicating which highway it belongs to.
+  this function identifies the threads in \code{X} and assigns a label to each
+  edge (segment) of the network indicating which thread it belongs to.
   
-  Formally a highway is a set of edges joining successive
+  Formally a thread is a set of edges joining successive
   vertices \eqn{v_1, \ldots, v_n}{v[1], ..., v[n]} of the network
   such that
   \itemize{
@@ -41,14 +41,14 @@ highways(X, what = c("tessellation", "labels"))
     do not have degree 2, unless they are the same vertex.
   }
 
-  Every edge (segment) of the network belomgs to a unique highway.
-  This algorithm assigns a label to each edge indicating which highway
+  Every edge (segment) of the network belomgs to a unique thread.
+  This algorithm assigns a label to each edge indicating which thread
   it belongs to. If \code{what="labels"} (the default), the result is a
   factor of length equal to \code{nsegments(X)} giving the
   classification of segments.
   If \code{what="tessellation"}, the result is a tessellation of
   \code{X} (object of class \code{"lintess"}) in which the tiles of the
-  tessellation are the highways.
+  tessellation are the threads.
 }
 \value{
   A factor, or a tessellation on the network (object of class \code{"lintess"}).
@@ -61,9 +61,9 @@ highways(X, what = c("tessellation", "labels"))
 }
 \examples{
   A <- edges(letterR)
-  B <- edges(disc(centre=centroid.owin(letterR)))
+  B <- edges(disc(npoly=16, centre=centroid.owin(letterR)))
   L <- as.linnet(superimpose(A,B))
-  plot(highways(L, what="tess"),
+  plot(threads(L),
        col=rainbow, scramble.cols=TRUE,
        lwd=2, show.window=FALSE)
 }
