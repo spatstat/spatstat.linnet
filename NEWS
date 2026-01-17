@@ -1,11 +1,11 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-0.018
+        CHANGES IN spatstat.linnet VERSION 3.4-0.019
 
 OVERVIEW
 
     o Improved algorithm for integrating a function on a network.
 
-    o Improvement to perspective plot on a network.
+    o Improvements to perspective plot of a function on a network.
 
     o Identify threads in a network.
 
@@ -51,6 +51,10 @@ BUG FIXES
 
     o plot.linnet
     Disobeyed 'do.plot=FALSE'.
+    Fixed.
+
+    o shortestpath
+    This function was defined, but was not exported from spatstat.linnet.
     Fixed.
 
         CHANGES IN spatstat.linnet VERSION 3.4-0
