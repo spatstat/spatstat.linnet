@@ -4,7 +4,7 @@
 ## Makes diagnostic plots based on residuals or energy weights
 ## for a point process model on a network
 ##
-## $Revision: 1.4 $ $Date: 2025/11/24 04:29:25 $
+## $Revision: 1.5 $ $Date: 2026/01/19 05:49:54 $
 ##
 
 diagnose.lppm <- function(object, ..., type="raw", which="all", 
@@ -139,7 +139,7 @@ diagLppmEngine <- function(object, ..., type="eem", typename, opt,
   W <- Window(Q)
 
   ## quadrature points on the network
-  U <- attr(Q, "plekken") %orifnull% lpp(U2D, L)
+  U <- attr(Q, "situ") %orifnull% lpp(U2D, L)
 
   ## 
   ppmfit <- as.ppm(object)

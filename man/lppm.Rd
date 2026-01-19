@@ -101,20 +101,10 @@ lppm(X, ...)
   lppm(X ~ marks * x)
 }
 \references{
-  Ang, Q.W. (2010)
-  \emph{Statistical methodology for events on a network}.
-  Master's thesis, School of Mathematics and Statistics, University of
-  Western Australia.
-  
-  Ang, Q.W., Baddeley, A. and Nair, G. (2012)
-  Geometrically corrected second-order analysis of 
-  events on a linear network, with applications to
-  ecology and criminology.
-  \emph{Scandinavian Journal of Statistics} \bold{39}, 591--617.
-
-  McSwiggan, G., Nair, M.G. and Baddeley, A. (2012)
-  Fitting Poisson point process models to events 
-  on a linear network. Manuscript in preparation.
+  McSwiggan, G. (2019)  
+  Spatial point process methods for linear networks
+  with applications to road accident analysis.
+  PhD thesis, University of Western Australia.
 }
 \keyword{spatial}
 \keyword{models}

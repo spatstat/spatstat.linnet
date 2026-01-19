@@ -1,7 +1,7 @@
 #
 # linequad.R
 #
-#  $Revision: 1.32 $ $Date: 2026/01/09 01:35:25 $
+#  $Revision: 1.33 $ $Date: 2026/01/19 05:50:01 $
 #
 # create quadscheme for a pattern of points lying *on* line segments
 
@@ -350,8 +350,8 @@ linequad <- function(X, Y, ..., eps=NULL, nd=1000, random=FALSE) {
                 weight = list(method=wmethod))
   ## make quad scheme
   Qout <- quad(as.ppp(DAT), as.ppp(DUM), c(wdat, wdum), param=param)
-  ## add information
-  attr(Qout, "plekken") <- superimpose(DAT, DUM, L=L)
+  ## add information: point locations 'in situ'
+  attr(Qout, "situ") <- superimpose(DAT, DUM, L=L)
   ## 
   return(Qout)
 }

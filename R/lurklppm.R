@@ -51,9 +51,14 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
     co <- cl$covariate
     covname <- if(is.name(co)) as.character(co) else
                if(is.expression(co)) format(co[[1]]) else 
-               if(is.character(co) && 
-                  length(co) == 1 &&
-                  co %in% c("x", "y")) paste(co, "coordinate") else NULL
+               if(is.character(co) && length(co) == 1) {
+                 switch(co,
+                        x = "x coordinate",
+                        y = "y coordinate",
+                        seg = "segment number",
+                        tp = "tp coordinate",
+                        NULL)
+               } else NULL
   }
 
   #' spatial covariates
@@ -107,6 +112,8 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
   quadpoints <- union.quad(Q)
   Z <- is.data(Q)
   wts <- w.quad(Q)
+  ## positions on the network
+  situ <- attr(Q, "situ")
   ## subset of quadrature points used to fit model
   subQset <- getglmsubset(object2D)
   if(is.null(subQset)) subQset <- rep.int(TRUE, n.quad(Q))
@@ -115,30 +122,39 @@ lurking.lpp <- lurking.lppm <- function(object, covariate,
   #' trap case where covariate = "<name>"
   if(is.character(covariate) && (length(covariate) == 1)) {
     #' covariate is a single string
-    is.cartesian <- covariate %in% c("x", "y")
-    if(!is.cartesian) {
+    is.coordinate <- covariate %in% c("x", "y", "seg", "tp")
+    if(!is.coordinate) {
       #' not a reserved name; convert to an expression and evaluate later
       covariate <- str2expression(covariate)
     }
   } else {
-    is.cartesian <- FALSE
+    is.coordinate <- FALSE
   }
 
   #################################################################
   ## compute the covariate
   covunits <- NULL
-  if(is.cartesian) {
-    #' covariate is name of cartesian coordinate
+  if(is.coordinate) {
+    #' covariate is name of a spatial or local coordinate
     switch(covariate,
            x = {
              covvalues <- quadpoints$x
              covrange <- Frame(quadpoints)$xrange
+             covunits <- unitname(quadpoints)
            },
            y = {
              covvalues <- quadpoints$y
              covrange <- Frame(quadpoints)$yrange
+             covunits <- unitname(quadpoints)
+           },
+           seg = {
+             covvalues <- coords(situ)$seg
+             covrange <- range(covvalues)
+           },
+           tp = {
+             covvalues <- coords(situ)$tp
+             covrange <- c(0,1)
            })
-    covunits <- unitname(quadpoints)
   } else if(is.im(covariate)) {
     covvalues <- covariate[quadpoints, drop=FALSE]
     covrange <- internal$covrange %orifnull% range(covariate, finite=TRUE)

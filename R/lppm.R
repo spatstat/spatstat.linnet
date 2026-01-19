@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.68 $   $Date: 2025/12/19 07:50:29 $
+#  $Revision: 1.69 $   $Date: 2026/01/19 05:49:47 $
 #
 
 lppm <- function(X, ...) {
@@ -126,12 +126,29 @@ predict.lppm <- local({
     X <- object$X
     fit <- object$fit
     L <- as.linnet(X)
-    
+
+    ## functions to evaluate the local covariates
+    LocalCoords <- list(seg = linfun(function(x,y,seg,tp) { seg }, L),
+                        tp  = linfun(function(x,y,seg,tp) { seg }, L))
+
     if(!is.null(locations)) {
-      #' locations given; return a vector/matrix of predicted values
-      if(is.lpp(locations)) locations <- as.ppp(locations)
+      ## determine whether 'locations' includes local coordinates
+      if(is.data.frame(locations)) {
+        ## data frame of spatial locations
+        gotlocal <- all(c("seg", "tp") %in% names(locations))
+      } else if(is.lpp(locations)) {
+        ## point pattern on network
+        gotlocal <- TRUE
+        loci <- locations
+        locations <- as.ppp(locations)
+        attr(locations, "situ") <- loci
+      } else {
+        ## other spatial data
+        gotlocal <- FALSE
+      }
       values <- predict(fit, locations=locations, covariates=covariates,
-                        type=type, se=se, new.coef=new.coef)
+                        type=type, se=se, new.coef=new.coef,
+                        extracovariates=if(!gotlocal) LocalCoords else NULL)
       return(values)
     }
   
@@ -157,7 +174,8 @@ predict.lppm <- local({
     if(!is.multitype(fit)) {
       #' unmarked
       values <- predict(fit, locations=projloc, covariates=covariates,
-                        type=type, se=se, new.coef=new.coef)
+                        type=type, se=se, new.coef=new.coef,
+                        extracovariates=LocalCoords)
       if(!se) {
         out <- putvalues(values, lineimage, pixelcentres, projdata, L)
       } else {
@@ -175,7 +193,8 @@ predict.lppm <- local({
         markk <- factor(lev[k], levels=lev)
         locnk <- cbind(projloc, data.frame(marks=markk))
         values <- predict(fit, locations=locnk, covariates=covariates,
-                          type=type, se=se, new.coef=new.coef)
+                          type=type, se=se, new.coef=new.coef,
+                          extracovariates=LocalCoords)
         if(!se) {
           out[[k]] <- putvalues(values, lineimage, pixelcentres, projdata, L)
         } else {
@@ -512,6 +531,6 @@ eem.lppm <- function(fit, ...) {
 
 residuals.lppm <- function(object, type="raw", ...) {
   res <- residuals(as.ppm(object), type=type, ...)
-  attr(res, "plekken") <- attr(quad.ppm(object), "plekken")
+  attr(res, "situ") <- attr(quad.ppm(object), "situ")
   return(res)
 }

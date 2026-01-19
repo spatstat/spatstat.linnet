@@ -24,8 +24,9 @@
   }
   \item{locations}{
     Optional. Locations at which predictions should be computed.
-    Either a data frame with two columns of coordinates,
-    or a binary image mask.
+    Either a point pattern (class \code{"lpp"} or \code{"ppp"}),
+    a data frame containing spatial coordinates,
+    or a binary image mask, or a pixel image.
   }
   \item{covariates}{
     Values of external covariates required by the model.
@@ -78,11 +79,14 @@
     (If the model is multitype, the result is a list of such pixel
     images, one for each possible type of point.)
     \item
-    If \code{locations} is a data frame, the result is a 
+    If \code{locations} is a data frame containing
+    spatial coordinates \code{x} and \code{y}, and/or 
+    local coordinates \code{seg} and \code{tp}, the result is a 
     numeric vector of predicted values at the locations specified by
     the data frame.
     \item
-    If \code{locations} is a binary mask, the result is a pixel image
+    If \code{locations} is a binary mask or pixel image,
+    the result is a pixel image
     with predicted values computed at the pixels of the mask.
     (If the model is multitype, the result is a list of such pixel
     images, one for each possible type of point.)
