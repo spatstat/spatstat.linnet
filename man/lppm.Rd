@@ -73,6 +73,51 @@ lppm(X, ...)
   to such a point pattern;
   and the right hand side \code{trend} is an expression specifying the
   spatial trend of the model.
+  Variable names which appear in the \code{trend} can be
+  \itemize{
+    \item the name of an object in the current environment
+    \item the name of an entry in the list \code{covariates}
+    \item one of the reserved names \code{x}, \code{y}, \code{seg},
+    \code{tp} representing respectively the spatial coordinates \eqn{x}
+    and \eqn{y}, and the local coordinates \code{seg} (line segment
+    index) and \code{tp} (relative position along the segment).
+  }
+  Covariates which are objects in the environment or entries in the
+  list \code{covariates} may have any of the following formats:
+  \describe{
+    \item{a pixel image,}{
+      giving the values of a spatial covariate at 
+      a fine grid of locations. It should be an object of
+      class \code{"im"}, see \code{\link[spatstat.geom]{im.object}},
+      or class \code{"linim"}, see \code{\link[spatstat.linnet]{linim}}.
+    }
+    \item{a function,}{
+      which can be evaluated
+      at any location on the network to obtain the value of the spatial
+      covariate.
+      This may be a function of class \code{"linfun"} (function on a
+      network) or \code{"funxy"} (function in two dimensional space).
+      Alternatively it may be any function in the \R language:
+      the first two arguments of the function should be the
+      Cartesian coordinates \eqn{x} and \eqn{y}. The function may have
+      additional arguments include \code{seg}, \code{tp} and
+      \code{marks} and other arguments.
+    }
+    \item{a window,}{
+      interpreted as a logical variable
+      which is \code{TRUE} inside the window and \code{FALSE} outside
+      it. This should be an object of class \code{"owin"}.
+    }
+    \item{a tessellation,}{
+      interpreted as a factor covariate.
+      For each spatial location, the factor value indicates
+      which tile of the tessellation it belongs to.
+      This should be an object of class \code{"tess"} or \code{"lintess"}.
+    }
+    \item{a single number,}{indicating a covariate that is
+      constant in this dataset.
+    }
+  }
 
   Other arguments \code{...} are passed from \code{lppm.formula}
   to \code{lppm.lpp} and from \code{lppm.lpp} to \code{\link[spatstat.model]{ppm}}.
