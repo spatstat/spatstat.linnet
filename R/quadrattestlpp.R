@@ -3,7 +3,7 @@
 #'
 #'  Quadrat counting tests for lpp and lppm
 #'
-#'  $Revision: 1.2 $ $Date: 2025/11/17 10:39:44 $
+#'  $Revision: 1.3 $ $Date: 2026/01/21 06:26:39 $
 
 quadrat.test.lpp <-
   function(X, ...,

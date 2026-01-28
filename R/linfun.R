@@ -3,7 +3,7 @@
 #
 #   Class of functions of location on a linear network
 #
-#   $Revision: 1.28 $   $Date: 2025/12/06 10:10:17 $
+#   $Revision: 1.29 $   $Date: 2026/01/21 06:26:39 $
 #
 
 linfun <- function(f, L) {

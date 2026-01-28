@@ -56,8 +56,8 @@
   \item{covariate}{
     The covariate against which residuals should be plotted.
     Either a numeric vector, a pixel image, a \code{function(x,y)},
-    an \code{expression}, or one of the strings \code{"x"} or
-    \code{"y"}. See \emph{Details} below.
+    an \code{expression}, or one of the strings \code{"x"},
+    \code{"y"} or \code{"tp"}. See \emph{Details} below.
   }
   \item{type}{
     String indicating the type of residuals or weights to be computed.
@@ -268,6 +268,10 @@
     \item
     one of the strings \code{"x"}
     or \code{"y"} representing the cartesian coordinates.
+    \item
+    the string \code{"tp"}
+    representing the local coordinate \code{tp} which measures 
+    relative position along the network segment.
   }
 
   Lurking variable plots for the \eqn{x} and \eqn{y} coordinates

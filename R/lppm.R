@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.69 $   $Date: 2026/01/19 05:49:47 $
+#  $Revision: 1.70 $   $Date: 2026/01/21 06:26:39 $
 #
 
 lppm <- function(X, ...) {

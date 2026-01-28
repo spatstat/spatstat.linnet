@@ -9,6 +9,8 @@ OVERVIEW
 
     o Identify threads in a network.
 
+    o lppm recognises the local coordinates 'seg' and 'tp'.
+    
     o Minor improvements and bug fixes.
 
 NEW FUNCTIONS
@@ -24,9 +26,13 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o integral.linfun
     New argument 'exact'. If 'exact=TRUE', a more accurate algorithm is used.
 
+    o lppm
+    The model formula may involve the local coordinates 'seg' and 'tp'
+    ('seg' is segment number, 'tp' is relative position along the segment)
+
     o lurking.lppm, lurking.lpp
     Argument 'covariate' can be a function(x,y)
-    or one of the strings "x" or "y".
+    or one of the strings "x", "y" or "tp".
 
     o persp.linim
     Improved behaviour close to vertices of the network.

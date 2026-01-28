@@ -3,7 +3,7 @@
 #'
 #'  Method for 'lurking' for lppm
 #'
-#'  $Revision: 1.7 $ $Date: 2025/12/20 04:26:26 $
+#'  $Revision: 1.8 $ $Date: 2026/01/21 06:26:39 $
 
 lurking.lpp <- lurking.lppm <- function(object, covariate,
                          type="raw",
