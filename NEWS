@@ -1,4 +1,18 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.4-1.001
+
+OVERVIEW
+
+    o Minor improvements.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o density.lpp
+    Argument 'weights' can be logical valued.
+    
+    o relrisk.lpp
+    Argument 'weights' can be logical valued.
+    
         CHANGES IN spatstat.linnet VERSION 3.4-1
 
 OVERVIEW

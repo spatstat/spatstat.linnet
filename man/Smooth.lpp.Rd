@@ -34,7 +34,8 @@
     only at the points of \code{X} (\code{at="points"}).
   }
   \item{weights}{
-    Optional numeric vector of weights attached to the observations.
+    Optional weights attached to the observations.
+    \pointweightsVector.
   }
   \item{leaveoneout}{
     Logical value indicating whether to compute a leave-one-out

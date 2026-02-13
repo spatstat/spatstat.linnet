@@ -39,8 +39,9 @@
     or \code{\link{densityEqualSplit}} depending on the algorithm chosen.
   }
   \item{weights}{
-    Optional. Numeric vector of weights associated with the
-    points of \code{x}. Weights may be positive, negative or zero.
+    Optional weights associated with the points of \code{x}.
+    \pointweightsVector.
+    Numerical weights may be positive, negative or zero.
   }
   \item{distance}{
     Character string (partially matched) specifying whether to use
