@@ -87,10 +87,42 @@ linearKdot.inhom(X, i, lambdaI=NULL, lambdadot=NULL, r=NULL, \dots,
   If \code{lambdaI} or \code{lambdadot} is missing, it will be estimated
   by kernel smoothing using \code{\link{density.lpp}}.
   
-  If \code{lambdaI} or \code{lambdadot} is a fitted point process model,
-  the default behaviour is to update the model by re-fitting it to
-  the data, before computing the fitted intensity.
-  This can be disabled by setting \code{update=FALSE}.
+  If \code{lambdaI} is a fitted point process model,
+  the intensity of points of type \code{i} is computed from this model.
+  If \code{update=TRUE} (the default), the model will first be updated
+  by re-fitting it to the data:
+  \itemize{
+    \item if \code{lambdaI} is a multitype point process, it is re-fitted to
+    the entire dataset \code{X}.
+    \item if \code{lambdaI} is an unmarked point process, it is
+    re-fitted to the subset of \code{X} consisting of points of type
+    \code{i}.
+  }
+  Then to compute the fitted intensity of points of type \code{i},
+  \itemize{
+    \item if \code{lambdaI} is a multitype point process, the
+    predicted intensity of points of type \code{i} is computed
+    \item if \code{lambdaI} is an unmarked point process,
+    the predicted intensity of the model is computed.
+  }
+
+  If \code{lambdadot} is a fitted point process model,
+  the marginal intensity (total intensity of points of any type) is computed from this model.
+  If \code{update=TRUE} (the default), the model will first be updated
+  by re-fitting it to the data:
+  \itemize{
+    \item if \code{lambdadot} is a multitype point process, it is re-fitted to
+    the entire dataset \code{X}.
+    \item if \code{lambdadot} is an unmarked point process, it is
+    re-fitted to \code{unmark(X)}.
+  }
+  Then to compute the fitted marginal intensity,
+  \itemize{
+    \item if \code{lambdadot} is a multitype point process, the
+    predicted total intensity of points of any type is computed
+    \item if \code{lambdadot} is an unmarked point process,
+    the predicted intensity of the model is computed.
+  }
 }
 \references{
   Baddeley, A, Jammalamadaka, A. and Nair, G. (2014)

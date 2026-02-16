@@ -1,11 +1,22 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-1.002
+        CHANGES IN spatstat.linnet VERSION 3.4-1.003
 
 OVERVIEW
 
+    o More flexible interpretation of arguments "lambda = <lppm>"
+    for inhomogeneous summary statistics.
+    
     o Minor improvements.
 
 SIGNIFICANT USER-VISIBLE CHANGES
+
+    o linearKcross.inhom, linearKdot.inhom, linearpcfcross.inhom, linearpcfdot.inhom
+    When argument 'lambdaI', 'lambdaJ' or 'lambdadot' is a point process model,
+    the interpretation now depends on whether the model is multitype or unmarked.
+    A multitype point process model will be interpreted as providing the intensity
+    for each possible type of point. An unmarked point process model will be interpreted
+    as providing the intensity only for the relevant type of point (type i only,
+    type j only, or total intensity for all types of points).
 
     o density.lpp
     Argument 'weights' can be logical valued.

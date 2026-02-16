@@ -106,10 +106,25 @@ linearpcfcross.inhom(X, i, j, lambdaI, lambdaJ, r=NULL, \dots,
   If \code{lambdaI} or \code{lambdaJ} is missing or \code{NULL}, it will
   be estimated by kernel smoothing using \code{\link{density.lpp}}.
 
-  If \code{lambdaI} or \code{lambdaJ} is a fitted point process model,
-  the default behaviour is to update the model by re-fitting it to
-  the data, before computing the fitted intensity.
-  This can be disabled by setting \code{update=FALSE}.
+  If \code{lambdaI} is a fitted point process model,
+  the intensity of points of type \code{i} is computed from this model.
+  If \code{update=TRUE} (the default), the model will first be updated
+  by re-fitting it to the data:
+  \itemize{
+    \item if \code{lambdaI} is a multitype point process, it is re-fitted to
+    the entire dataset \code{X}.
+    \item if \code{lambdaI} is an unmarked point process, it is
+    re-fitted to the subset of \code{X} consisting of points of type
+    \code{i} with the marks removed.
+  }
+  Then to compute the fitted intensity of points of type \code{i},
+  \itemize{
+    \item if \code{lambdaI} is a multitype point process, the
+    predicted intensity of points of type \code{i} is computed
+    \item if \code{lambdaI} is an unmarked point process,
+    the predicted intensity of the model is computed.
+  }
+  Similarly for \code{lambdaJ}.
 }
 \references{
   Baddeley, A, Jammalamadaka, A. and Nair, G. (2014)

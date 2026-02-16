@@ -113,7 +113,8 @@ linearpcfdot.inhom <- function(X, i, lambdaI, lambdadot,
                                  r=r, correction=correction,
                                  normalise=normalise,
                                  sigma=sigma, adjust.sigma=adjust.sigma,
-                                 bw=bw, adjust.bw=adjust.bw, ...)
+                                 bw=bw, adjust.bw=adjust.bw, ...,
+                                 Ilevels=i, Jlevels=lev)
   correction <- attr(result, "correction")
   type <- if(correction == "Ang") "L, inhom" else "net, inhom"
   result <- rebadge.as.dotfun(result, "g", type, i)
@@ -138,7 +139,7 @@ linearpcfcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
   #
   if(i == j) {
     I <- (marx == i)
-    result <- linearpcfinhom(X[I], lambda=lambdaI, r=r,
+    result <- linearpcfinhom(unmark(X[I]), lambda=lambdaI, r=r,
                              correction=correction, normalise=normalise,
                              sigma=sigma, adjust.sigma=adjust.sigma,
                              bw=bw, adjust.bw=adjust.bw,...)
@@ -149,7 +150,8 @@ linearpcfcross.inhom <- function(X, i, j, lambdaI, lambdaJ,
                                    r=r, correction=correction,
                                    normalise=normalise,
                                    sigma=sigma, adjust.sigma=adjust.sigma,
-                                   bw=bw, adjust.bw=adjust.bw,...)
+                                   bw=bw, adjust.bw=adjust.bw,...,
+                                   Ilevels=i, Jlevels=j)
   }
   # rebrand
   correction <- attr(result, "correction")
@@ -164,7 +166,8 @@ linearpcfmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
                                correction="Ang",
                                normalise=TRUE,
                                sigma=NULL, adjust.sigma=1,
-                               bw="nrd0", adjust.bw=1) {
+                               bw="nrd0", adjust.bw=1,
+                               Ilevels=NULL, Jlevels=NULL) {
   if(is.NAobject(X)) return(NAobject("fv"))
   stopifnot(inherits(X, "lpp"))
   correction <- pickoption("correction", correction,
@@ -187,9 +190,11 @@ linearpcfmulti.inhom <- function(X, I, J, lambdaI, lambdaJ,
 
   # validate lambda vectors
   lambdaI <- resolve.lambda.lpp(X, lambdaI, subset=I, ...,
-                                sigma=sigma, adjust=adjust.sigma)
+                                sigma=sigma, adjust=adjust.sigma,
+                                subsetlevels=Ilevels)
   lambdaJ <- resolve.lambda.lpp(X, lambdaJ, subset=J, ...,
-                                sigma=sigma, adjust=adjust.sigma)
+                                sigma=sigma, adjust=adjust.sigma,
+                                subsetlevels=Jlevels)
 
   # compute pcf
   weightsIJ <- outer(1/lambdaI, 1/lambdaJ, "*")

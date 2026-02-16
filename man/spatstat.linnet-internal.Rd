@@ -182,19 +182,19 @@ linearKengine(X, \dots, r, reweight, denom, samplesize,
               correction, ratio, showworking)
 linearKmulti(X, I, J, r, \dots, correction)
 linearKmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots, correction,
-             normalise, sigma)
+             normalise, sigma, Ilevels, Jlevels)
 linearpcfengine(X, \dots, r, reweight, denom, samplesize, correction, ratio)
 linearpcfmulti(X, I, J, r, \dots, correction)
 linearpcfmulti.inhom(X, I, J, lambdaI, lambdaJ, r, \dots,
                      correction, normalise,
-                     sigma, adjust.sigma, bw, adjust.bw)
+                     sigma, adjust.sigma, bw, adjust.bw, Ilevels, Jlevels)
 linearKmultiEngine(X, I, J, \dots,
                    r, reweight, denom, samplesize, correction, showworking)
 linearPCFmultiEngine(X, I, J, \dots,
                    r, reweight, denom, samplesize, correction, showworking)
 resampleNetworkDataFrame(df, template)
 \method{resolve.lambda}{lpp}(X, lambda, subset, \dots,
-       update, leaveoneout, everywhere, loo.given, sigma, lambdaname)
+       update, leaveoneout, everywhere, loo.given, sigma, lambdaname, subsetlevels)
 sortalongsegment(df)
 \method{spatialCovariateEvidence}{lppm}(model, covariate, \dots, lambdatype, 
           eps, dimyx, xy, rule.eps,
