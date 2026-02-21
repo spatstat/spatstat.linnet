@@ -3,7 +3,7 @@
 #'
 #' Quadrat counting on a network
 #'
-#' $Revision: 1.5 $ $Date: 2025/11/16 09:23:22 $
+#' $Revision: 1.6 $ $Date: 2026/02/21 04:46:06 $
 
 quadratcount.lpp <- function(X, ...,
                              nx=5, ny=nx,
@@ -38,7 +38,12 @@ quadratcount.lpp <- function(X, ...,
     j <- lineartileindex(cooX$seg, cooX$tp, tess)
     ## count them (one-dimensional table)
     Xcount <- table(j)
-  } else if(!inherits(tess, "lintess")) {
+  } else if(inherits(tess, "lintess")) {
+    ## classify points of X by tiles
+    j <- lineartileindex(cooX$seg, cooX$tp, tess)
+    ## count them (one-dimensional table)
+    Xcount <- table(j)
+  } else {
     stop(paste("Unrecognised format of tessellation argument", sQuote("tess")),
          call.=FALSE)
   }

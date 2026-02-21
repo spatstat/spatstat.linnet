@@ -3,7 +3,7 @@
 #'
 #'   Tessellations on a Linear Network
 #'
-#'   $Revision: 1.64 $   $Date: 2025/11/27 03:13:31 $
+#'   $Revision: 1.65 $   $Date: 2026/02/21 04:20:20 $
 #'
 
 lintess <- function(L, df, marks=NULL) {
@@ -604,5 +604,21 @@ scalardilate.lintess <- function(X, f, ...) {
   return(X)
 }
 
+mergeTiles.lintess <- function(x, group, ...) {
+  verifyclass(x, "lintess")
+  group <- as.factor(group)
+  n <- nobjects(x)
+  if(length(group) != n) 
+    stop("The length of 'group' should equal the number of tiles of x",
+         call.=FALSE)
+  ## map old tiles to new merged tiles
+  x$df$tile <- group[as.integer(x$df$tile)]
+  ## handle marks attached to old tiles
+  if(!is.null(marks(x))) {
+    warning("Marks were discarded when tiles were merged", call.=FALSE)
+    marks(x) <- NULL
+  }
+  return(x)
+}
 
 

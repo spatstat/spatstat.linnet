@@ -1,13 +1,20 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.4-1.003
+        CHANGES IN spatstat.linnet VERSION 3.4-1.004
 
 OVERVIEW
 
     o More flexible interpretation of arguments "lambda = <lppm>"
     for inhomogeneous summary statistics.
-    
-    o Minor improvements.
 
+    o Merge tiles of a tessellation on a network.
+    
+    o Minor improvements and bug fixes
+
+NEW FUNCTIONS
+
+    o mergeTiles.lintess
+    Merge some of the tiles in a tessellation on a linear network.
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o linearKcross.inhom, linearKdot.inhom, linearpcfcross.inhom, linearpcfdot.inhom
@@ -23,7 +30,13 @@ SIGNIFICANT USER-VISIBLE CHANGES
     
     o relrisk.lpp
     Argument 'weights' can be logical valued.
-    
+
+BUG FIXES
+
+    o quadratcount.lpp
+    Crashed if 'tess' was a tessellation of class 'lintess'.
+    Fixed.
+
         CHANGES IN spatstat.linnet VERSION 3.4-1
 
 OVERVIEW

@@ -704,6 +704,20 @@ local({
   }
 })
 
+local({
+  if(FULLTEST) {
+    ## from Andrea Gilardi
+    X <- runiflpp(10, simplenet)
+    D <- density(X, 0.2)
+    quadrat.test(X, lambda=D)
+    ## other cases
+    A <- as.lintess(simplenet)
+    g <- sample(letters[1:3], nobjects(A), replace=TRUE)
+    B <- mergeTiles(A, g)
+    quadrat.test(X, tess=B)
+    quadrat.test(X, lambda=D, tess=B)
+  }
+})
 reset.spatstat.options()
 
 #'
