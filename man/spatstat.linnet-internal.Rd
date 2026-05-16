@@ -160,8 +160,8 @@ marginalIntegralOfLinim(f, margin)
 \method{summary}{lintess}(object, \dots)
 \method{nobjects}{lintess}(x)
 \method{Window}{lintess}(X, \dots)
-\method{Window}{linnet}(X, \dots, check=TRUE) <- value
-\method{Window}{lpp}(X, \dots, check=TRUE) <- value
+\method{Window}{linnet}(X, \dots, check) <- value
+\method{Window}{lpp}(X, \dots, check) <- value
 densitypointsLPP(x, sigma, \dots,
                  weights, nsigma, leaveoneout, fast,
                  fastmethod, floored,
@@ -222,7 +222,7 @@ qkdeEngine(x, sigma, \dots, at, what,
 \special{Math(x, \dots)}
 \special{Ops(e1, e2)}
 \special{Complex(z)}
-\special{Summary(\dots, na.rm = FALSE)}
+\special{Summary(\dots, na.rm)}
 %NAMESPACE S3method("Math", "linimlist")
 %NAMESPACE S3method("Ops", "linimlist")
 %NAMESPACE S3method("Complex", "linimlist")

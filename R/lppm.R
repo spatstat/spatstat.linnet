@@ -3,7 +3,7 @@
 #
 #  Point process models on a linear network
 #
-#  $Revision: 1.70 $   $Date: 2026/01/21 06:26:39 $
+#  $Revision: 1.71 $   $Date: 2026/05/16 03:20:25 $
 #
 
 lppm <- function(X, ...) {
@@ -106,7 +106,14 @@ fitted.lppm <- function(object, ..., dataonly=FALSE, new.coef=NULL,
               leaveoneout=leaveoneout)
   return(v)
 }
-  
+
+intensity.lppm <- function(X, ...) {
+  do.call(predict,
+          resolve.defaults(list(object=quote(X),
+                                type="intensity"),
+                           list(...)))
+}
+
 predict.lppm <- local({
   
   predict.lppm <- function(object, ..., 

@@ -1,4 +1,15 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.5-0.001
+
+OVERVIEW
+
+    o Minor improvements.
+
+NEW FUNCTIONS
+
+    o intensity.lppm
+    Intensity of a fitted point process model on a linear network.
+    
         CHANGES IN spatstat.linnet VERSION 3.5-0
 
 OVERVIEW

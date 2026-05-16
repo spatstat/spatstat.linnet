@@ -123,12 +123,12 @@ local({
   }
 })
 ##
-## tests/xysegment.R
-##                      [SEE ALSO tests/segments.R]
+## tests/xysegment.R 
+##                      [SEE ALSO tests/segments.R -> spatstat.utils]
 ##
 ##    Test weird problems and boundary cases for line segment code
 ##
-##    $Version$ $Date: 2022/10/23 01:21:09 $ 
+##    $Revision: 1.11 $ $Date: 2026/05/07 06:07:09 $ 
 ##
 
 
