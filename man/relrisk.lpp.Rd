@@ -201,14 +201,17 @@
    X <- superimpose(A=runiflpp(20, simplenet),
                     B=runifpointOnLines(20, as.psp(simplenet)[5]))
    plot(X)
-   plot(relrisk(X, 0.15))
-   plot(relrisk(X, 0.15, case="B"))
-   head(relrisk(X, 0.15, at="points"))
+   plot(relrisk(X, 0.1))
+   plot(relrisk(X, 0.1, case="B"))
+   head(relrisk(X, 0.1, at="points"))
    ## cross-validated bandwidth selection
-   plot(relrisk(X, bw.relrisk.lpp, hmax=0.3, allow.infinite=FALSE))
-
+   if(human <- interactive()) {
+     plot(relrisk(X, bw.relrisk.lpp, hmax=0.3, allow.infinite=FALSE))
+   } else {
+     a <- relrisk(X, bw.relrisk.lpp, hmax=0.2, nh=3, allow.infinite=FALSE)
+   }
    ## more than 2 types
-   if(interactive()) {
+   if(human) {
      U <- chicago
      sig <- 170
    } else {
