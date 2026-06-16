@@ -1,4 +1,16 @@
 
+        CHANGES IN spatstat.linnet VERSION 3.5-1.001
+
+OVERVIEW
+
+    o Minor improvements.
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o rhohat.lpp, rhohat.lppm
+    Methods for 'rhohat' now recognise the argument 'delta'
+    as an alternative to argument 'breaks' when smoother="piecewise".
+    
         CHANGES IN spatstat.linnet VERSION 3.5-1
 
 OVERVIEW
