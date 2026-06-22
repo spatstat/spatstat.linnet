@@ -1,10 +1,15 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.5-1.001
+        CHANGES IN spatstat.linnet VERSION 3.5-1.002
 
 OVERVIEW
 
-    o Minor improvements.
+    o Minor additions and improvements.
 
+NEW FUNCTIONS
+
+    o distbdry.lpp
+    Distance from each data point to the nearest terminal vertex.
+    
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o rhohat.lpp, rhohat.lppm

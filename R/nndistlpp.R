@@ -1,7 +1,7 @@
 #
 # nndistlpp.R
 #
-#  $Revision: 1.29 $ $Date: 2022/05/21 09:52:11 $
+#  $Revision: 1.30 $ $Date: 2026/06/22 00:55:59 $
 #
 # Methods for nndist, nnwhich, nncross for linear networks
 #
@@ -676,3 +676,12 @@ nncross.lpp <- local({
   
   nncross.lpp
 })
+
+distbdry.lpp <- function(X) {
+  L <- domain(X)
+  V <- vertices(L)
+  d <- vertexdegree(L)
+  E <- V[d == 1]
+  b <- nncross(X, lpp(E, L), what="dist")
+  return(b)
+}

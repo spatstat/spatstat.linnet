@@ -166,6 +166,9 @@ vertexdegree(x)
   volume(simplenet)
   unitname(simplenet) <- c("cubit", "cubits")
   Window(simplenet)
+  v <- vertices(simplenet)
+  d <- vertexdegree(simplenet)
+  plot(simplenet); text(v, labels=d, cex=2)
 }
 \keyword{spatial}
 \keyword{methods}
