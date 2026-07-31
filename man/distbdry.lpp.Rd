@@ -23,8 +23,8 @@
   which is the endpoint of exactly one segment of the network.
   Distance is measured by the length of the shortest path in the network.
 
-  The function \code{distbdry} is generic, with methods for
-  class \code{"ppp"}, \code{"pp3"} and other classes.
+  The function \code{\link[spatstat.geom]{distbdry}} is generic, with methods for
+  class \code{"ppp"}, \code{"pp3"}, \code{"lpp"} and other classes.
 }
 \value{
   A numeric vector with one entry for each point of \code{X}.
@@ -33,7 +33,7 @@
   \spatstatAuthors.
 }
 \seealso{
-  \code{\link{bdist.points}}
+  \code{\link[spatstat.geom]{distbdry}}
 }
 \examples{
   X <- if(interactive()) chicago else spiders
