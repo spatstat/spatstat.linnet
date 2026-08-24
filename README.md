@@ -4,6 +4,7 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/spatstat.linnet)](http://CRAN.R-project.org/package=spatstat.linnet) 
 [![GitHub R package version](https://img.shields.io/github/r-package/v/spatstat/spatstat.linnet)](https://github.com/spatstat/spatstat.linnet)
+[![R-universe](https://spatstat.r-universe.dev/spatstat.linnet/badges/version)](https://spatstat.r-universe.dev/spatstat.linnet)
 
 You are viewing the GitHub repository which holds
 the latest **development version** of `spatstat.linnet`.
