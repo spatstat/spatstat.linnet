@@ -60,7 +60,12 @@ transect.linim(X, \dots, path=NULL, click=FALSE, add=FALSE,
     If \code{path=NULL} and \code{click=TRUE}, the user will be able to
     select successive vertices along the path by clicking on a plot of
     the network.
-    (Left-click to select a vertex; right-click or ESC to finish). 
+    (Left-click to select a vertex; right-click or ESC to finish).
+    \item
+    If \code{path=NULL} and \code{click=FALSE} (the default),
+    the algorithm will find two vertices on the network which
+    lie the furthest possible distance apart (measured by the shortest path)
+    and specify \code{path} to be the shortest path between these two vertices.
   }
   For each leg of the path,
   if the successive vertices are not joined directly by a segment of the

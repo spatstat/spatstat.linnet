@@ -3,7 +3,7 @@
 #'
 #' Transect of image on a network
 #'
-#' $Revision: 1.2 $ $Date: 2026/08/03 02:37:24 $
+#' $Revision: 1.5 $ $Date: 2026/09/08 03:30:40 $
 #'
 
 transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
@@ -18,7 +18,17 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
   L <- unmark(as.linnet(X))
   V <- unmark(vertices(L))
   nV <- npoints(V)
-  if(is.null(path) && click) {
+  if(!is.null(path)) {
+    ## 'path' is given -  should be a sequence of vertices
+    stopifnot(is.numeric(path))
+    stopifnot(length(path) >= 2)
+    path <- as.integer(path)
+    if(min(path) < 1 || max(path) > nV)
+      stop(paste("Argument 'path' should contain indices between 1 and",
+                 nV, "(= number of vertices of network)"),
+           call.=FALSE)
+  } else if(click) {
+    ## interactive selection of a sequence of vertices
     if(add) 
       plot(L, main=c("select vertices along path",
                      "tap ESC to end"))
@@ -33,13 +43,15 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
     if(length(path) < 2)
       stop("At least two vertices must be selected", call.=FALSE)
   } else {
-    stopifnot(is.numeric(path))
-    stopifnot(length(path) >= 2)
-    path <- as.integer(path)
-    if(min(path) < 1 || max(path) > nV)
-      stop(paste("Argument 'path' should contain indices between 1 and",
-                 nV, "(= number of vertices of network)"),
-           call.=FALSE)
+    ## no path information --- choose two maximally distant vertices
+    L <- as.linnet(L, sparse=FALSE)
+    d <- L$dpath
+    ok <- is.finite(d)
+    if(is.null(d) || !any(ok))
+      stop("Unable to extract path distances", call.=FALSE)
+    dmax <- max(d[ok])
+    ij <- which(ok & (d == max(d)), arr.ind=TRUE)
+    path <- as.integer(ij[1,])
   }
   #' fill in missing steps 
   VP <- lpp(V, L)
