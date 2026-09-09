@@ -3,7 +3,7 @@
 #'
 #' Transect of image on a network
 #'
-#' $Revision: 1.5 $ $Date: 2026/09/08 03:30:40 $
+#' $Revision: 1.6 $ $Date: 2026/09/09 05:01:33 $
 #'
 
 transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
@@ -127,5 +127,6 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
   ## save the path
   attr(result, "path") <- journey
   attr(result, "lines") <- L$lines[segmap]
+  attr(result, "SamplePoints") <- SamplePoints
   return(result)
 }

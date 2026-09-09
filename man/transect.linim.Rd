@@ -8,7 +8,7 @@
   along a path in the network.
 }
 \usage{
-transect.linim(X, \dots, path=NULL, click=FALSE, add=FALSE,
+\method{transect}{linim}(X, \dots, path=NULL, click=FALSE, add=FALSE,
                nsample=512, Xname=NULL)
 }
 \arguments{
@@ -46,6 +46,10 @@ transect.linim(X, \dots, path=NULL, click=FALSE, add=FALSE,
   will be extracted. The result is a function table (\code{"fv"} object)
   which can be plotted directly.
 
+  The function \code{\link[spatstat.explore]{transect}} is generic. This is the
+  method for pixel images on a network (objects of class
+  \code{"linim"}).
+  
   The argument \code{path} specifies the path in the network.
   Alternatively, if \code{path=NULL} and \code{click=TRUE}, the user can
   interactively specify the path.
@@ -97,11 +101,11 @@ transect.linim(X, \dots, path=NULL, click=FALSE, add=FALSE,
 \examples{
   if(interactive()) {
     D <- density(chicago, 150)
-    A <- transect.linim(D, path=c(1, 248))
+    A <- transect(D, path=c(1, 248))
   } else {
     Z <- as.im(function(x,y) {x-y}, Frame(simplenet))
     D <- linim(simplenet, Z)
-    A <- transect.linim(D, path=c(1, 7))
+    A <- transect(D, path=c(1, 7))
   }
   opa <- par(mfrow=c(1,2))
   plot(A, main="transect")
