@@ -17,6 +17,78 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
   check.1.integer(nsample)
   L <- unmark(as.linnet(X))
   V <- unmark(vertices(L))
+  #' determine path through network
+  co <- getNetTransectCoords(L, path=path,
+                             click=click, add=add, nsample=nsample)
+  ## look up values
+  with(co, {
+    SamplePoints <- as.lpp(x=x, y=y, seg=seg, tp=tp, L=L)
+    values <- X[SamplePoints, drop=FALSE]
+    ## package into fv object
+    df <- data.frame(t=t, v=values)
+    colnames(df) <- c(tname, Xname)
+    result <- fv(df,
+                 argu = tname,
+                 ylab = substitute(Xname(tname),
+                                   list(Xname=as.name(Xname),
+                                        tname=as.name(tname))),
+                 valu = Xname,
+                 labl = c(tname, paste0("%s", paren(tname))),
+                 desc = c(tdescrip, "pixel value of %s"),
+                 unitname = tunits,
+                 fname = Xname)
+    ## save the path
+    attr(result, "path") <- journey
+    attr(result, "lines") <- L$lines[segmap]
+    attr(result, "SamplePoints") <- SamplePoints
+    return(result)
+  })
+}
+
+transect.linfun <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
+                           nsample=512, Xname=NULL) {
+  if(is.null(Xname)) {
+    Xname <- short.deparse(substitute(X))
+    Xname <- sensiblevarname(Xname, "X")
+  }
+  stopifnot(inherits(X, "linfun"))
+  click <- isTRUE(click)
+  check.1.integer(nsample)
+  L <- unmark(as.linnet(X))
+  V <- unmark(vertices(L))
+  #' determine path through network
+  co <- getNetTransectCoords(L, path=path,
+                             click=click, add=add, nsample=nsample)
+  ## evaluate function at sample points
+  with(co, {
+    SamplePoints <- as.lpp(x=x, y=y, seg=seg, tp=tp, L=L)
+    values <- X(SamplePoints)
+    ## package into fv object
+    df <- data.frame(t=t, v=values)
+    colnames(df) <- c(tname, Xname)
+    result <- fv(df,
+                 argu = tname,
+                 ylab = substitute(Xname(tname),
+                                   list(Xname=as.name(Xname),
+                                        tname=as.name(tname))),
+                 valu = Xname,
+                 labl = c(tname, paste0("%s", paren(tname))),
+                 desc = c(tdescrip, "function value of %s"),
+                 unitname = tunits,
+                 fname = Xname)
+    ## save the path
+    attr(result, "path") <- journey
+    attr(result, "lines") <- L$lines[segmap]
+    attr(result, "SamplePoints") <- SamplePoints
+    return(result)
+  })
+}
+
+getNetTransectCoords <- function(L, ...,
+                                 path=NULL, click=FALSE, add=FALSE,
+                                 nsample=512) {
+  stopifnot(is.linnet(L))
+  V <- unmark(vertices(L))
   nV <- npoints(V)
   if(!is.null(path)) {
     ## 'path' is given -  should be a sequence of vertices
@@ -76,14 +148,14 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
   dJ     <- sum(leglen)
   cumlen <- cumsum(c(0,leglen))
   ## arc length coordinate
-  z <- seq(0, dJ, length.out=nsample)
+  s <- seq(0, dJ, length.out=nsample)
   ## which leg of journey
-  legid <- findInterval(z,
+  legid <- findInterval(s,
                         cumlen,
                         rightmost.closed=TRUE, all.inside=TRUE,
                         checkNA=FALSE, checkSorted=FALSE)
-  ## local coordinates on network (up to t <-> 1-t )
-  tp <- (z-cumlen[legid])/leglen[legid]
+  ## local coordinates on network (up to tp <-> 1-tp )
+  tp <- (s-cumlen[legid])/leglen[legid]
   tp[!is.finite(tp) | tp < 0 | tp > 1] <- 0.5
   ## map legs of journey to segments of network
   segmap <- integer(nlegs)
@@ -101,32 +173,21 @@ transect.linim <- function(X, ..., path=NULL, click=FALSE, add=FALSE,
     }
   }
   seg <- segmap[legid]
+  ## fix coordinates tp <-> 1 - tp
   if(any(revmap)) {
     reverse <- revmap[legid]
     tp <- ifelse(reverse, 1 - tp, tp)
   }
+  ## spatial coordinates
   x <- V$x[vfrom[legid]] * (1-tp) + V$x[vto[legid]] * tp
   y <- V$y[vfrom[legid]] * (1-tp) + V$y[vto[legid]] * tp
-  SamplePoints <- as.lpp(x=x, y=y, seg=seg, tp=tp, L=L)
-  ## look up values
-  values <- X[SamplePoints, drop=FALSE]
-  ## package into fv object
-  tname <- "t"
-  tdescrip <- "arc length"
-  df <- data.frame(t=z, v=values)
-  colnames(df) <- c(tname, Xname)
-  result <- fv(df,
-               argu = tname,
-               ylab = substitute(Xname(tname),
-                                 list(Xname=as.name(Xname),
-                                      tname=as.name(tname))),
-               valu=Xname,
-               labl = c(tname, paste0("%s", paren(tname))),
-               desc = c(tdescrip, "pixel value of %s"),
-               unitname = unitname(X), fname = Xname)
-  ## save the path
-  attr(result, "path") <- journey
-  attr(result, "lines") <- L$lines[segmap]
-  attr(result, "SamplePoints") <- SamplePoints
+  ## pack up
+  result <- list(t=s, # cumulative arc length
+                 x=x, y=y, seg=seg, tp=tp, # local coordinates
+                 tname="s",
+                 tdescrip="distance along transect",
+                 tunits=unitname(L),
+                 journey = journey,
+                 segmap = segmap)
   return(result)
 }

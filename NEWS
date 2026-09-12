@@ -1,14 +1,19 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.5-3.002
+        CHANGES IN spatstat.linnet VERSION 3.5-3.004
 
 OVERVIEW
 
     o Transect of an image on a network.
 
+    o Transect of a function on a network.
+
 NEW FUNCTIONS
 
     o transect.linim
     Transect of a pixel image on a network, along a path in the network.
+    
+    o transect.linfun
+    Transect of a function on a network, along a path in the network.
     
 
         CHANGES IN spatstat.linnet VERSION 3.5-3

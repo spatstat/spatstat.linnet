@@ -1,5 +1,6 @@
 \name{transect.linim}
 \alias{transect.linim}
+\alias{transect.linfun}
 \title{
   Pixel Values Along a Transect of a Linear Network
 }
@@ -10,10 +11,13 @@
 \usage{
 \method{transect}{linim}(X, \dots, path=NULL, click=FALSE, add=FALSE,
                nsample=512, Xname=NULL)
+\method{transect}{linfun}(X, \dots, path=NULL, click=FALSE, add=FALSE,
+               nsample=512, Xname=NULL)
 }
 \arguments{
   \item{X}{
-    A pixel image on a linear network (object of class \code{"linim"}).
+    A pixel image on a linear network (object of class \code{"linim"})
+    or a function on a linear network (function of class \code{"linfun"}).
   }
   \item{\dots}{
     Ignored.
@@ -42,13 +46,14 @@
   }
 }
 \details{
-  The pixel values of the image \code{X} along a path on the network
+  The pixel values (or function values) of \code{X} along a path on the network
   will be extracted. The result is a function table (\code{"fv"} object)
   which can be plotted directly.
 
-  The function \code{\link[spatstat.explore]{transect}} is generic. This is the
+  The function \code{\link[spatstat.explore]{transect}} is generic. This page documents the
   method for pixel images on a network (objects of class
-  \code{"linim"}).
+  \code{"linim"}) and the method for functions on a linear network
+  (function of class \code{"linfun"}).
   
   The argument \code{path} specifies the path in the network.
   Alternatively, if \code{path=NULL} and \code{click=TRUE}, the user can
@@ -83,7 +88,8 @@
   
   The result has attributes \code{"path"} giving the indices of
   the vertices along the (expanded) path,
-  and \code{"lines"} giving the line segments making up the path.
+  \code{"lines"} giving the line segments making up the path,
+  and \code{"SamplePoints"} giving all the sample points.
   See the examples.
 }
 \value{
@@ -96,7 +102,9 @@
 }
 \seealso{
   \code{\link[spatstat.explore]{fv.object}},
-  \code{\link[spatstat.explore]{transect.im}}
+  \code{\link[spatstat.explore]{transect.im}},
+  \code{\link[spatstat.linnet]{linim}},
+  \code{\link[spatstat.linnet]{linfun}}.
 }
 \examples{
   if(interactive()) {
@@ -105,7 +113,7 @@
   } else {
     Z <- as.im(function(x,y) {x-y}, Frame(simplenet))
     D <- linim(simplenet, Z)
-    A <- transect(D, path=c(1, 7))
+    A <- transect(D, path=c(1, 7), nsample=32)
   }
   opa <- par(mfrow=c(1,2))
   plot(A, main="transect")
@@ -113,6 +121,13 @@
   plot(attr(A, "lines"), add=TRUE, col=8, lwd=7)
   par(opa)
   attr(A, "path")
+  npoints(attr(A, "SamplePoints"))
+
+  ## linfun example
+  DS <- distfun(spiders)
+  ns <- if(interactive()) 512 else 32
+  TDS <- transect(DS, path=c(95,99), nsample=ns)
+  plot(TDS)
 }
 \keyword{spatial}
 \keyword{manip}
