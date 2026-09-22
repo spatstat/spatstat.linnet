@@ -20,7 +20,7 @@ NEW FUNCTIONS
 SIGNIFICANT USER-VISIBLE CHANGES
 
     o relrisk.lpp
-    Now handles multiple columns of marks.
+    Now handles a point pattern with multiple columns of marks.
 
     o relrisk.lpp
     New arguments 'weights' and 'normalise'.
