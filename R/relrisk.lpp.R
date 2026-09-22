@@ -3,34 +3,114 @@
 #
 #   Estimation of relative risk on network
 #
-#  $Revision: 1.10 $  $Date: 2024/06/16 02:43:20 $
+#  $Revision: 1.15 $  $Date: 2026/09/22 05:32:42 $
 #
 
-relrisk.lpp <- local({
+relrisk.lpp <- function(X, sigma, ..., 
+                        at=c("pixels", "points"),
+                        weights=NULL,
+                        relative=FALSE, normalise=FALSE,
+                        adjust=1, 
+                        casecontrol=TRUE, control=1, case,
+                        finespacing=FALSE) {
+  stopifnot(is.lpp(X))
+  if(is.NAobject(X)) return(NAobject("list"))
+  stopifnot(is.marked(X))
+  ## resolve arguments
+  control.given <- !missing(control)
+  case.given <- !missing(case) && !is.null(case)
+  if(!control.given) control <- NULL
+  if(!case.given) case <- NULL
+  at <- match.arg(at)
+  check.1.real(adjust)
+  ## evaluate numerical weights (multiple columns not allowed)
+  weights <- pointweights(X, weights=weights, parent=parent.frame())
+  ## options default to FALSE
+  relative <- isTRUE(relative) 
+  normalise <- isTRUE(normalise)
+  ## handle each column of marks
+  nc <- NCOL(marks(X))
+  result <- if(nc == 1) {
+              ## for efficiency
+              rrlppEngine(X, 
+                          ..., 
+                          sigma       = sigma, 
+                          at          = at,
+                          weights     = weights,
+                          relative    = relative,
+                          normalise   = normalise,
+                          adjust      = adjust,
+                          casecontrol = casecontrol,
+                          control     = control,
+                          case        = case,
+                          finespacing = finespacing)
+            } else {
+              context <- paste("In column", 1:nc, "of marks:")
+              MA <- list(...,
+                         sigma       = sigma, 
+                         at          = at,
+                         weights     = weights,
+                         relative    = relative,
+                         normalise   = normalise,
+                         adjust      = adjust,
+                         casecontrol = casecontrol,
+                         control     = control,
+                         case        = case,
+                         finespacing = finespacing)
+              mapply(rrlppEngine,
+                     X=unstack(X),
+                     context = context,
+                     MoreArgs=MA,
+                     SIMPLIFY=FALSE)
+            }
+  return(result)
+}
+  
+rrlppEngine <- local({
 
-  relrisk.lpp <- function(X, sigma, ..., 
-                          at=c("pixels", "points"), 
-                          relative=FALSE,
+  rrlppEngine <- function(X, sigma, ..., 
+                          at=c("pixels", "points"),
+                          weights=NULL,
+                          relative=FALSE, normalise=FALSE,
                           adjust=1, 
                           casecontrol=TRUE, control=1, case,
-                          finespacing=FALSE) {
+                          finespacing=FALSE,
+                          context="") {
     stopifnot(is.lpp(X))
-    stopifnot(is.multitype(X))
-    control.given <- !missing(control)
-    case.given <- !missing(case)
+    if(is.NAobject(X) || !is.multitype(X)) return(NAobject("linim"))
+    ##
     at <- match.arg(at)
+    case.given <- !is.null(case)
+    control.given <- !is.null(control)
+    if(!control.given) control <- 1 # set default
+    weighted <- !is.null(weights)
     ##
     marx <- marks(X)
     types <- levels(marx)
     ntypes <- length(types)
+    ##
+    splitweights <-
+      if(weighted) split(weights, marx) else rep(list(NULL), ntypes)
+    #' normalisation
+    if(normalise) {
+      if(weighted) {
+        #' total weight of points of each type
+        weightsums <- sapply(splitweights, sum, na.rm=TRUE)
+      } else {
+        #' number of points of each type
+        weightsums <- as.integer(table(marx))
+      }
+    }
     ## 
     if(ntypes == 1L)
-      stop("Data contains only one type of points")
+      stop(paste(context, "Data contains only one type of points"),
+           call.=FALSE)
     casecontrol <- casecontrol && (ntypes == 2L)
     if((control.given || case.given) && !(casecontrol || relative)) {
       aa <- c("control", "case")[c(control.given, case.given)]
       nn <- length(aa)
-      warning(paste(ngettext(nn, "Argument", "Arguments"),
+      warning(paste(context,
+                    ngettext(nn, "Argument", "Arguments"),
                     paste(sQuote(aa), collapse=" and "),
                     ngettext(nn, "was", "were"),
                     "ignored, because relative=FALSE and",
@@ -41,7 +121,8 @@ relrisk.lpp <- local({
     if(is.function(sigma)) {
       sigma <- do.call.matched(sigma, list(X=X, ...))
       if(!is.numeric(sigma))
-        stop("The function 'sigma' did not return a numerical value",
+        stop(paste(context,
+                   "The function 'sigma' did not return a numerical value"),
              call.=FALSE)
     }
     check.1.real(sigma) # includes Inf
@@ -53,21 +134,37 @@ relrisk.lpp <- local({
     switch(at,
            pixels = {
              ## intensity estimates of each type
-             Deach <- solapply(Y, density.lpp, sigma=sigma,
-                               ..., finespacing=finespacing)
+             Deach <- as.solist(mapply(density.lpp,
+                                       x=Y,
+                                       weights=splitweights,
+                                       MoreArgs=list(sigma=sigma,
+                                                     finespacing=finespacing,
+                                                     ...),
+                                       SIMPLIFY=FALSE))
              ## compute intensity estimate for unmarked pattern
-             Dall  <- density(unmark(X), sigma=sigma,
+             Dall  <- density(unmark(X), sigma=sigma, weights=weights,
                               ..., finespacing=finespacing)
            },
            points = {
              ## intensity estimates of each type **at each data point**
-             Deachfun <- solapply(Y, densityfun.lpp, sigma=sigma,
-                                  ..., finespacing=finespacing)
+             Deachfun <- mapply(densityfun.lpp,
+                                X=Y,
+                                weights=splitweights,
+                                MoreArgs=list(sigma=sigma,
+                                              finespacing=finespacing,
+                                              ...),
+                                SIMPLIFY=FALSE)
              Deach <- as.data.frame(sapply(Deachfun, function(f, P) f(P), P=X))
              ## leave-one-out estimates
-             Dself <- lapply(Y, density.lpp, sigma=sigma,
-                             at="points", leaveoneout=TRUE,
-                             ..., finespacing=finespacing)
+             Dself <- mapply(density.lpp,
+                             x=Y,
+                             weights=splitweights,
+                             MoreArgs=list(sigma=sigma,
+                                           at="points",
+                                           leaveoneout=TRUE,
+                                           finespacing=finespacing,
+                                           ...),
+                             SIMPLIFY=FALSE)
              ## insert leave-one-out estimates in correct place
              Deachsplit <- split(Deach, marx)
              for(j in 1:ntypes) {
@@ -88,9 +185,11 @@ relrisk.lpp <- local({
           stopifnot(control %in% 1:2)
         } else if(is.character(control)) {
           icontrol <- match(control, types)
-          if(is.na(icontrol)) stop(paste("No points have mark =", control))
+          if(is.na(icontrol))
+            stop(paste(context, "No points have mark =", control))
         } else
-          stop(paste("Unrecognised format for argument", sQuote("control")))
+          stop(paste(context,
+                     "Unrecognised format for argument", sQuote("control")))
         if(!case.given)
           icase <- 3 - icontrol
       }
@@ -101,11 +200,20 @@ relrisk.lpp <- local({
           stopifnot(case %in% 1:2)
         } else if(is.character(case)) {
           icase <- match(case, types)
-          if(is.na(icase)) stop(paste("No points have mark =", case))
-        } else stop(paste("Unrecognised format for argument", sQuote("case")))
+          if(is.na(icase)) stop(paste(context, "No points have mark =", case))
+        } else stop(paste(context,
+                          "Unrecognised format for argument", sQuote("case")))
         if(!control.given) 
           icontrol <- 3 - icase
       }
+      #' normalisation factor
+      normfactor <- if(!normalise) 1 else
+                    if(relative) {
+                      weightsums[icontrol]/weightsums[icase]
+                    } else {
+                      sum(weightsums)/weightsums[icase]
+                    }
+      
       ## compute ......
       switch(at,
              pixels = {
@@ -124,9 +232,14 @@ relrisk.lpp <- local({
                  pcase[nbg] <- closecase[nbg]
                }
                if(!relative) {
+                 if(normalise)
+                   pcase <- normfactor * pcase
                  result <- pcase
                } else {
-                 result <- eval.im(ifelse(pcase < 1, pcase/(1-pcase), NA))
+                 rcase <- eval.im(ifelse(pcase < 1, pcase/(1-pcase), NA))
+                 if(normalise)
+                   rcase <- normfactor * rcase
+                 result <- rcase
                }
              },
              points={
@@ -142,9 +255,14 @@ relrisk.lpp <- local({
                  pcase[nbg] <- as.integer(nntype[nbg] == icase)
                }
                if(!relative) {
+                 if(normalise) 
+                   pcase <- normfactor * pcase
                  result <- pcase
                } else {
-                 result <- ifelse(pcase < 1, pcase/(1-pcase), NA)
+                 rcase <- ifelse(pcase < 1, pcase/(1-pcase), NA)
+                 if(normalise)
+                   rcase <- normfactor * rcase
+                 result <- rcase
                }
              })
     } else {
@@ -157,10 +275,19 @@ relrisk.lpp <- local({
           stopifnot(control %in% 1:ntypes)
         } else if(is.character(control)) {
           icontrol <- match(control, types)
-          if(is.na(icontrol)) stop(paste("No points have mark =", control))
+          if(is.na(icontrol))
+            stop(paste(context, "No points have mark =", control))
         } else
-          stop(paste("Unrecognised format for argument", sQuote("control")))
+          stop(paste(context,
+                     "Unrecognised format for argument", sQuote("control")))
       }
+      #' normalisation factor
+      normfactors <- if(!normalise) rep(1, ntypes) else
+                     if(relative) {
+                       weightsums[icontrol]/weightsums
+                     } else {
+                       sum(weightsums)/weightsums
+                     }
       switch(at,
              pixels={
                probs <- as.solist(lapply(Deach, "/", e2=Dall))
@@ -179,11 +306,20 @@ relrisk.lpp <- local({
                    probs[[k]][nbg] <- (typennsub == k)
                }
                if(!relative) {
+                 if(normalise) {
+                   for(i in 1:ntypes)
+                     probs[[i]] <- normfactors[i] * probs[[i]]
+                 }
                  result <- probs
                } else {
-                 result <- solapply(probs,
-                                    divideifpositive,
-                                    d = probs[[icontrol]])
+                 risks <- solapply(probs,
+                                   divideifpositive,
+                                   d = probs[[icontrol]])
+                 if(normalise) {
+                   for(i in 1:ntypes)
+                     risks[[i]] <- normfactors[i] * risks[[i]]
+                 }
+                 result <- risks
                }
              },
              points = {
@@ -200,9 +336,14 @@ relrisk.lpp <- local({
                  probs[badrow, ] <- (typenn == col(result))[badrow, ]
                }
                if(!relative) {
+                 if(normalise)
+                   probs <- normfactors * probs
                  result <- probs
                } else {
-                 result <- probs/probs[,icontrol]
+                 risks <- probs/probs[,icontrol]
+                 if(normalise)
+                   risks <- normfactors * risks
+                 result <- risks
                }
             })
     }
@@ -226,7 +367,7 @@ relrisk.lpp <- local({
 
   divideifpositive <- function(z, d) { eval.linim(ifelse(d > 0, z/d, NA)) }
   
-  relrisk.lpp
+  rrlppEngine
 })
 
 bw.relrisklpp <- function(X, ...) {

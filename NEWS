@@ -1,5 +1,5 @@
 
-        CHANGES IN spatstat.linnet VERSION 3.5-3.004
+        CHANGES IN spatstat.linnet VERSION 3.5-3.005
 
 OVERVIEW
 
@@ -7,6 +7,8 @@ OVERVIEW
 
     o Transect of a function on a network.
 
+    o Extensions to relrisk.lpp
+    
 NEW FUNCTIONS
 
     o transect.linim
@@ -15,6 +17,13 @@ NEW FUNCTIONS
     o transect.linfun
     Transect of a function on a network, along a path in the network.
     
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o relrisk.lpp
+    Now handles multiple columns of marks.
+
+    o relrisk.lpp
+    New arguments 'weights' and 'normalise'.
 
         CHANGES IN spatstat.linnet VERSION 3.5-3
 

@@ -1,7 +1,7 @@
 \name{relrisk.lpp}
 \alias{relrisk.lpp}
 \title{
-  Nonparametric Estimate of Spatially-Varying Relative Risk on a Network
+  Nonparametric Estimate of Spatially-Varying Probability or Relative Risk on a Network
 }
 \description{
   Given a multitype point pattern on a linear network,
@@ -12,15 +12,17 @@
 \usage{
 \method{relrisk}{lpp}(X, sigma, ..., 
            at = c("pixels", "points"),
-           relative=FALSE,
+           weights=NULL,
+           relative=FALSE, normalise=FALSE,
            adjust=1, 
            casecontrol=TRUE, control=1, case,
            finespacing=FALSE)
 }
 \arguments{
   \item{X}{
-    A multitype point pattern (object of class \code{"lpp"}
-    which has factor valued marks).
+    A point pattern on a network (object of class \code{"lpp"})
+    which is multitype (has factor valued marks) or has several columns
+    of factor-valued marks.
   }
   \item{sigma}{
     The numeric value of the smoothing bandwidth
@@ -38,6 +40,10 @@
     at a grid of pixel locations (\code{at="pixels"}) or
     only at the points of \code{X} (\code{at="points"}).
   }
+  \item{weights}{
+    Optional. Weights for the data points of \code{X}.
+    \pointweightsVector.
+  }  
   \item{relative}{
     Logical.
     If \code{FALSE} (the default) the algorithm
@@ -45,6 +51,10 @@
     If \code{TRUE}, it computes the    
     \emph{relative risk}, the ratio of probabilities
     of each type relative to the probability of a control.
+  }
+  \item{normalise}{
+    Logical value specifying whether the results should be normalised
+    so that constant risk corresponds to the value 1.
   }
   \item{adjust}{
     Optional. Adjustment factor for the bandwidth \code{sigma}.
@@ -158,6 +168,11 @@
   If \code{finespacing=TRUE}, the spatial resolution is much finer
   and is determined by a rule which guarantees higher accuracy,
   but takes a longer time.
+
+  If \code{X} has multiple columns of marks, then each column 
+  will be processed separately, as described above,
+  and the result is a list containing
+  the results of processing each column.
 }
 \value{
    If \code{X} consists of only two types of points,
@@ -190,7 +205,11 @@
 
   If \code{relative=FALSE}, the resulting values always lie between 0
   and 1. If \code{relative=TRUE}, the results are either non-negative
-  numbers, or the values \code{Inf} or \code{NA}. 
+  numbers, or the values \code{Inf} or \code{NA}.
+
+  If \code{X} has \code{m > 1} columns of marks, the result is a list of
+  length \code{m} containing the results for each column of marks
+  as described above.
 }
 \seealso{
   \code{\link[spatstat.explore]{relrisk}}

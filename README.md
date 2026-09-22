@@ -8,7 +8,8 @@
 
 You are viewing the GitHub repository which holds
 the latest **development version** of `spatstat.linnet`.
-For the latest public release on CRAN, click the green badge above.
+For the latest public release on CRAN, 
+see the [CRAN page](https://CRAN.R-project.org/package=spatstat.linnet).
 
  - [Overview of `spatstat.linnet`](#overview)
  - [Where to find data](#data)
