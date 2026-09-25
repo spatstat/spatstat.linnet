@@ -556,12 +556,33 @@ local({
     #' relrisk.lpp for 3 types
     U <- do.call(superimpose, Z)
     A <- relrisk(U, 20, control=1, relative=TRUE)
+    A <- relrisk(U, 20, control=1, relative=TRUE, normalise=TRUE)
     A <- relrisk(U, 20, control=1, relative=TRUE, at="points")
+    A <- relrisk(U, 20, control=1, relative=TRUE, normalise=TRUE, at="points")
     #' relrisk.lpp for 2 types
     V <- do.call(superimpose, Z[1:2])
     A <- relrisk(V, 20, control=2, casecontrol=FALSE) # issues warning
     B <- relrisk(V, 20, control="assault", case=2, relative=TRUE)
-    D <- relrisk(V, 20, control=1, case="burglary", relative=TRUE, at="points")
+    B <- relrisk(V, 20, control="assault", case=2, relative=TRUE,
+                 normalise=TRUE)
+    D <- relrisk(V, 20, control=1, case="burglary", relative=TRUE,
+                 at="points")
+    D <- relrisk(V, 20, control=1, case="burglary", relative=TRUE,
+                 at="points", normalise=TRUE)
+    #' relrisk.lpp with multiple columns of marks
+    XX <- runiflpp(24, simplenet)
+    marks(XX) <- data.frame(lower = factor(rep(letters[1:2], 12)),
+                            upper = factor(rep(LETTERS[1:3], 8)))
+    AA <- relrisk(XX, 0.4)
+    AA <- relrisk(XX, 0.4, case=2)
+    AA <- relrisk(XX, 0.4, casecontrol=FALSE)
+    AA <- relrisk(XX, 0.4, normalise=TRUE)
+    AA <- relrisk(XX, 0.4, relative=TRUE)
+    AA <- relrisk(XX, 0.4, at="points")
+    AA <- relrisk(XX, 0.4, case=2, at="points")
+    AA <- relrisk(XX, 0.4, casecontrol=FALSE, at="points")
+    AA <- relrisk(XX, 0.4, normalise=TRUE, at="points")
+    AA <- relrisk(XX, 0.4, relative=TRUE, at="points")
     #' bw.relrisklpp
     b1 <- bw.relrisklpp(V, hmax=3, fudge=0.01,
                         method="leastsquares", reference="sigma")

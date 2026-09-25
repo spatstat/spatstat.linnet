@@ -3,7 +3,7 @@
 #
 #   Estimation of relative risk on network
 #
-#  $Revision: 1.15 $  $Date: 2026/09/22 05:32:42 $
+#  $Revision: 1.17 $  $Date: 2026/09/25 02:27:59 $
 #
 
 relrisk.lpp <- function(X, sigma, ..., 
@@ -56,7 +56,8 @@ relrisk.lpp <- function(X, sigma, ...,
                          casecontrol = casecontrol,
                          control     = control,
                          case        = case,
-                         finespacing = finespacing)
+                         finespacing = finespacing,
+                         singlecall  = FALSE)
               mapply(rrlppEngine,
                      X=unstack(X),
                      context = context,
@@ -75,7 +76,7 @@ rrlppEngine <- local({
                           adjust=1, 
                           casecontrol=TRUE, control=1, case,
                           finespacing=FALSE,
-                          context="") {
+                          context="", singlecall=TRUE) {
     stopifnot(is.lpp(X))
     if(is.NAobject(X) || !is.multitype(X)) return(NAobject("linim"))
     ##
@@ -109,13 +110,16 @@ rrlppEngine <- local({
     if((control.given || case.given) && !(casecontrol || relative)) {
       aa <- c("control", "case")[c(control.given, case.given)]
       nn <- length(aa)
-      warning(paste(context,
-                    ngettext(nn, "Argument", "Arguments"),
-                    paste(sQuote(aa), collapse=" and "),
-                    ngettext(nn, "was", "were"),
-                    "ignored, because relative=FALSE and",
-                    if(ntypes==2L) "casecontrol=FALSE" else
-                    "there are more than 2 types of points"))
+      if(singlecall) {
+        warning(paste(context,
+                      ngettext(nn, "Argument", "Arguments"),
+                      paste(sQuote(aa), collapse=" and "),
+                      ngettext(nn, "was", "were"),
+                      "ignored, because relative=FALSE and",
+                      if(ntypes==2L) "casecontrol=FALSE" else
+                      "there are more than 2 types of points"),
+                call.=FALSE)
+      }
     }
     ## compute bandwidth
     if(is.function(sigma)) {

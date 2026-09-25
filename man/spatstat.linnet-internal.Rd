@@ -50,6 +50,7 @@
 \alias{response.exactlppm}
 \alias{rmaxEuclidean}
 \alias{rotate.lintess}
+\alias{rrlppEngine}
 \alias{scalardilate.lintess}
 \alias{shift.lintess}
 \alias{shift.linearquadratcount}
@@ -154,6 +155,9 @@ marginalIntegralOfLinim(f, margin)
 \method{rescale}{lintess}(X, s, unitname)
 \method{response}{exactlppm}(object)
 \method{rotate}{lintess}(X, \dots)
+rrlppEngine(X, sigma, \dots, at, weights, relative, normalise,
+            adjust, casecontrol, control, case, finespacing,
+            context, singlecall)
 \method{shift}{lintess}(X, \dots)
 \method{shift}{linearquadratcount}(X, \dots)
 \method{scalardilate}{lintess}(X, f,\dots)
